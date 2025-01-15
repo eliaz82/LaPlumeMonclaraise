@@ -1,26 +1,26 @@
-<?= $this->extend('layout') ?>
-<?= $this->section('contenu') ?>
+<?= $this->extend('layout')?>
+<?= $this->section('contenu')?>
 
 
 <h1>Formulaire de Contact</h1>
 <div class="container">
     <h1>Formulaire de Contact</h1>
-    <?php if (session('success')): ?>
+    <?php if (session('success')):?>
         <div class="alert success">
-            <?php echo session('success'); ?>
+            <?php echo session('success');?>
         </div>
-    <?php endif; ?>
-    <?php if (session('error')): ?>
+    <?php endif;?>
+    <?php if (session('error')):?>
         <div class="alert error">
-            <?php echo session('error'); ?>
+            <?php echo session('error');?>
         </div>
-    <?php endif; ?>
-    <?php if (session('validation')): ?>
+    <?php endif;?>
+    <?php if (session('validation')):?>
         <div class="alert error">
-            <?php echo session('validation')->listErrors(); ?>
+            <?= session('validation')->listErrors()?>
         </div>
-    <?php endif; ?>
-    <form action="<?php echo route_to('contactSubmit'); ?>" method="post">
+    <?php endif;?>
+    <form action="<?php echo route_to('contactSubmit');?>" method="post">
         <div class="form-group">
             <label for="name">Nom:</label>
             <input type="text" id="name" name="name" required>
@@ -46,4 +46,4 @@
 </div>
 
 
-<?= $this->endSection() ?>
+<?= $this->endSection()?>
