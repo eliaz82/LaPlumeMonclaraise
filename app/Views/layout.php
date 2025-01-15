@@ -40,8 +40,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= url_to('calendrier') ?>">Calendrier</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Vie du club
+                    </a>
+                    <ul class="dropdown-menu">
                     <a class="nav-link" href="<?= url_to('calendrier') ?>">Evenement</a>
+                    <a class="nav-link" href="<?= url_to('albumsPhoto') ?>">Albums photo</a>
+                    </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= url_to('fichierInscription') ?>">Inscription</a>
