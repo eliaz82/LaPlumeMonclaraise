@@ -8,4 +8,12 @@ class Association extends BaseController
     {
         return view('histoire');
     }
+    public function contact(): string
+    {
+        return view('contact');
+    }
+    public function fichierInscription(): string
+    {
+        return view('inscription');
+    }
 }
