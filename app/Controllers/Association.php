@@ -11,23 +11,28 @@ class Association extends Controller
     {
         return view('contact');
     }
-    public function fichierInscription(): string
+    public function fichierInscription()
     {
         return view('inscription');
     }
 
+
     public function contactSubmit()
     {
         helper('form');
+        $validation = \Config\Services::validation();
+
         $rules = [
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|valid_email',
-            'subject' => 'required',
-            'message' => 'required'
+            'name' =>'required',
+            'phone' =>'required',
+            'email' =>'required|valid_email',
+           'subject' =>'required',
+           'message' =>'required'
         ];
 
-        if ($this->validate($rules)) {
+        $validation->setRules($rules);
+
+        if ($validation->run($this->request->getPost())) {
             $name = $this->request->getPost('name');
             $phone = $this->request->getPost('phone');
             $email = $this->request->getPost('email');
@@ -41,12 +46,12 @@ class Association extends Controller
             $emailService->setMessage("Nom: $name\nTéléphone: $phone\nEmail: $email\nObjet: $subject\nMessage: $message");
 
             if ($emailService->send()) {
-                session()->setFlashdata('success', 'Message envoyé avec succès !');
+                session()->setFlashdata('success', 'Message envoyé avec succès!');
             } else {
                 session()->setFlashdata('error', 'Une erreur est survenue lors de l\'envoi du message.');
             }
         } else {
-            session()->setFlashdata('error', 'Veuillez vérifier les champs du formulaire.');
+            session()->setFlashdata('validation', $validation);
         }
 
         return redirect()->to(route_to('contact'));
