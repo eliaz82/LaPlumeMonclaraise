@@ -5,7 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->get('/', 'Home::index',['as' => 'accueil']);
 
 //-------------------------------------------contact-------------------------------------------
 $routes->get('contact', 'Association::contact', ['as' => 'contact']);
@@ -43,7 +43,7 @@ $routes->post('albums-photo/(:num)/delete', 'AlbumsPhoto::photoDelete', ['as' =>
 
 //-------------------------------------------calendrier-------------------------------------------
 $routes->get('calendrier', 'calendrier::calendrier', ['as' => 'calendrier']);
-$routes->get('calendrier/evenement/(:num)', 'Calendrier::evenement', ['as' => 'evenement']);
+$routes->get('calendrier/evenement/(:num)', 'Calendrier::evenement', ['as' => 'evenements']);
 
 //-------------------------------------------evenement-------------------------------------------
 $routes->get('evenement', 'Evenement::evenement', ['as' => 'evenement']);
