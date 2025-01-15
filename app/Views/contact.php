@@ -1,9 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
-<title>Formulaire de Contact</title>
-<link rel="stylesheet" href="<?php echo base_url('assets/css/styles.css'); ?>">
-
 <h1>Formulaire de Contact</h1>
 <div class="container">
     <h1>Formulaire de Contact</h1>
