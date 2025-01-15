@@ -14,6 +14,7 @@ $routes->post('contact-submit', 'Association::contactSubmit', ['as' => 'contactS
 // ------------------------------------------- fichierInscription -------------------------------------------
 $routes->get('fichier-inscription', 'Association::fichierInscription', ['as' => 'fichierInscription']);
 $routes->post('fichierInscription-submit', 'Association::fichierInscriptionSubmit', ['as' => 'fichierInscriptionSubmit']);
+$routes->get('telecharger-fichier-inscription', 'Association::telechargerFichierInscription', ['as' => 'telechargerFichierInscription']);
 
 // ------------------------------------------- histoire -------------------------------------------
 $routes->get('histoire', 'Association::histoire', ['as' => 'histoire']);
