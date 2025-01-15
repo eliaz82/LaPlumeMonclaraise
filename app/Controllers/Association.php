@@ -11,6 +11,10 @@ class Association extends Controller
     {
         return view('contact');
     }
+    public function fichierInscription(): string
+    {
+        return view('inscription');
+    }
 
     public function contactSubmit()
     {
@@ -30,13 +34,13 @@ class Association extends Controller
             $subject = $this->request->getPost('subject');
             $message = $this->request->getPost('message');
 
-            $email = \Config\Services::email();
-            $email->setFrom($email, $name);
-            $email->setTo('votre-email@example.com'); // Remplacez par votre email
-            $email->setSubject($subject);
-            $email->setMessage("Nom: $name\nTéléphone: $phone\nEmail: $email\nObjet: $subject\nMessage: $message");
+            $emailService = \Config\Services::email();
+            $emailService->setFrom($email, $name);
+            $emailService->setTo('emmanuel.basck@gmail.com'); // Remplacez par votre email
+            $emailService->setSubject($subject);
+            $emailService->setMessage("Nom: $name\nTéléphone: $phone\nEmail: $email\nObjet: $subject\nMessage: $message");
 
-            if ($email->send()) {
+            if ($emailService->send()) {
                 session()->setFlashdata('success', 'Message envoyé avec succès !');
             } else {
                 session()->setFlashdata('error', 'Une erreur est survenue lors de l\'envoi du message.');
