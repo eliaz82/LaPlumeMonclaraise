@@ -1,18 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
-<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-interval="2000" data-bs-ride="carousel">
-  <style>
-    .carousel-item {
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    .carousel-item.active,
-    .carousel-item-next,
-    .carousel-item-prev {
-      opacity: 1;
-    }
-  </style>
+<div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-interval="3000" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
       <img src="image/noel.jpg" class="d-block w-100" alt="..." style="height: 400px; object-fit: cover;">
@@ -33,4 +21,6 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+
+<img src="image/tee_shirt.jpg" class="img-fluid" alt="...">
 <?= $this->endSection() ?>
