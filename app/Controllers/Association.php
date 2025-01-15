@@ -2,55 +2,49 @@
 
 namespace App\Controllers;
 
-class Association extends BaseController
+use CodeIgniter\Controller;
+use CodeIgniter\Email\Email;
+
+class Association extends Controller
 {
-    public function histoire(): string
-    {
-        return view('histoire');
-    }
-    public function contact(): string
+    public function contact()
     {
         return view('contact');
     }
 
-    public function contactSubmit() 
+    public function contactSubmit()
     {
-        $this->load->library('form_validation');
+        helper('form');
+        $rules = [
+            'name' => 'required',
+            'phone' => 'required',
+            'email' => 'required|valid_email',
+            'subject' => 'required',
+            'message' => 'required'
+        ];
 
-        $this->form_validation->set_rules('name', 'Nom', 'required');
-        $this->form_validation->set_rules('phone', 'Téléphone', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        $this->form_validation->set_rules('subject', 'Objet', 'required');
-        $this->form_validation->set_rules('message', 'Message', 'required');
+        if ($this->validate($rules)) {
+            $name = $this->request->getPost('name');
+            $phone = $this->request->getPost('phone');
+            $email = $this->request->getPost('email');
+            $subject = $this->request->getPost('subject');
+            $message = $this->request->getPost('message');
 
-        if ($this->form_validation->run() == FALSE) {
-            $this->load->view('contact_form');
-        } else {
-            $name = $this->input->post('name');
-            $phone = $this->input->post('phone');
-            $email = $this->input->post('email');
-            $subject = $this->input->post('subject');
-            $message = $this->input->post('message');
+            $email = \Config\Services::email();
+            $email->setFrom($email, $name);
+            $email->setTo('votre-email@example.com'); // Remplacez par votre email
+            $email->setSubject($subject);
+            $email->setMessage("Nom: $name\nTéléphone: $phone\nEmail: $email\nObjet: $subject\nMessage: $message");
 
-            $this->load->library('email');
-
-            $this->email->from($email, $name);
-            $this->email->to('votre-email@example.com'); // Remplacez par votre email
-            $this->email->subject($subject);
-            $this->email->message("Nom: $name\nTéléphone: $phone\nEmail: $email\nObjet: $subject\nMessage: $message");
-
-            if ($this->email->send()) {
-                $this->session->set_flashdata('success', 'Message envoyé avec succès !');
+            if ($email->send()) {
+                session()->setFlashdata('success', 'Message envoyé avec succès !');
             } else {
-                $this->session->set_flashdata('error', 'Une erreur est survenue lors de l\'envoi du message.');
+                session()->setFlashdata('error', 'Une erreur est survenue lors de l\'envoi du message.');
             }
-
-            redirect('contact');
+        } else {
+            session()->setFlashdata('error', 'Veuillez vérifier les champs du formulaire.');
         }
-    }
 
-    public function fichierInscription(): string
-    {
-        return view('inscription');
+        return redirect()->to(route_to('contact'));
     }
 }
