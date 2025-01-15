@@ -9,28 +9,53 @@ use CodeIgniter\HTTP\DownloadResponse;
 
 class Association extends Controller
 {
+    private $associationModel;
+
+    public function __construct()
+    {
+        $this->associationModel = model('Association');
+    }
     public function contact()
     {
         return view('contact');
     }
-    public function fichierInscription(): mixed
+    public function histoire()
     {
-        if ($this->request->getGet('downloadPdf')) {
-            return redirect()->to(base_url('telecharger-fichier-inscription'));
-        }
-        return view('inscription');
+        return view('histoire');
     }
-    
-    public function telechargerFichierInscription(): DownloadResponse
+    public function downloadFichier($fileName)
     {
-        $filename = 'test.pdf';
-        $filePath = WRITEPATH. '../public/downloads/'. $filename;
+        $filePath = WRITEPATH . 'uploads/downloads/' . $fileName;
+
         if (file_exists($filePath)) {
-            return $this->response->download($filePath, null, true);
+            return $this->response->download($filePath, null)->setFileName($fileName);
         } else {
-            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound("Le fichier $filename n'a pas été trouvé.");
+            return redirect()->route('fichierInscription')->with('error', 'Le fichier n\'existe pas.');
         }
     }
+
+    public function fichierInscription()
+    {
+        $association = $this->associationModel->find(1);
+        $fichierInscription = $association['fichierInscription'];
+
+        return view('inscription', ['fichierInscription' => $fichierInscription]);
+    }
+
+    public function fichierInscriptionSubmit()
+    {
+        $file = $this->request->getFile('fichier_inscription');
+        $filePath = FCPATH . 'uploads/downloads/';
+        $file->move($filePath);
+        $fileUrl = '/uploads/downloads/' . $file->getName();
+
+        $this->associationModel->update(1, [
+            'fichierInscription' => $fileUrl
+        ]);
+
+        return redirect()->route('fichierInscription')->with('success', 'Le fichier a été téléchargé avec succès.');
+    }
+
     public function contactSubmit()
     {
         helper('form');

@@ -41,7 +41,7 @@
           Plongez dans l'univers du badminton avec nous et vivez des moments uniques, qu'ils soient compétitifs ou
           purement récréatifs.
         </p>
-        <a href="#" class="btn btn-primary">Lire plus</a>
+        <a href="<?= url_to('histoire') ?>" class="btn btn-primary">Lire plus</a>
       </div>
     </div>
   </div>
