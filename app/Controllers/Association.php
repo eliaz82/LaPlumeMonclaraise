@@ -20,6 +20,10 @@ class Association extends Controller
         $association = $this->associationModel->find(1);
         return view('contact', ['association' => $association]);
     }
+    public function histoire()
+    {
+        return view('histoire');
+    }
     public function downloadFichier($fileName)
     {
         $filePath = WRITEPATH . 'uploads/downloads/' . $fileName;
