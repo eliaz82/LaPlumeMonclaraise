@@ -33,6 +33,10 @@ class Association extends Controller
             return redirect()->route('fichierInscription')->with('error', 'Le fichier n\'existe pas.');
         }
     }
+    public function histoire()
+    {
+        return view('histoire');
+    }
 
     public function fichierInscription()
     {
