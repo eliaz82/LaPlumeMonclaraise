@@ -1,7 +1,10 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
-<form id="formulaire" class="card mb-3" style="display:none;" method="post" action="<?= url_to('partenairesSubmit')?>" enctype="multipart/form-data">
+<button id="bouton-ajouter" class="btn btn-primary mb-3">
+    <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
+</button>
+<form id="formulaire" class="card mb-3" style="display:none;" method="post" action="<?= url_to('partenairesSubmit') ?>" enctype="multipart/form-data">
     <div class="card-body">
         <h5 class="card-title">Formulaire d'ajout partenaire</h5>
         <div class="mb-3">
@@ -22,8 +25,6 @@
     </div>
 </form>
 
-<button id="bouton-ajouter" class="btn btn-primary mb-3">
-    <i class="fa fa-plus" aria-hidden="true"></i> Ajouter
-</button>
+
 
 <?= $this->endSection() ?>
