@@ -41,7 +41,17 @@ class Association extends Controller
 
         return view('inscription', ['fichierInscription' => $fichierInscription]);
     }
-
+    public function fichierInscriptionSubmit()
+    {
+        $file = $this->request->getFile('fichier_inscription');
+        $filePath = FCPATH . 'uploads/downloads/';
+        $file->move($filePath);
+        $fileUrl = '/uploads/downloads/' . $file->getName();
+        $this->associationModel->update(1, [
+            'fichierInscription' => $fileUrl
+        ]);
+        return redirect()->route('fichierInscription')->with('success', 'Le fichier a été téléchargé avec succès.');
+    }
     public function contactSubmit()
     {
         helper('form');
