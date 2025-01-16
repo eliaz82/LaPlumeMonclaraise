@@ -11,6 +11,7 @@
         </div>
     <?php endif; ?>
 
+
     <!-- Error Message -->
     <?php if (session('error')): ?>
         <div class="alert alert-danger">
@@ -24,6 +25,18 @@
             <?= session('validation')->listErrors() ?>
         </div>
     <?php endif; ?>
+
+    <!-- Contact update -->
+    <form action="<?= route_to('contactUpdate'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
+        <div class="mb-3">
+            <label for="name" class="form-label">E-mail de la plume monclaraise :</label>
+          
+            <input type="text" id="mailContact" name="mailContact" class="form-control" value="<?= $association['mailContact'] ?>">
+
+        </div>
+        <input type="hidden" id="idAssociation" name="idAssociation" value="<?= $association['idAssociation'] ?>">
+        <button type="submit" class="btn btn-primary btn-block">Envoyer</button>
+    </form>
 
     <!-- Contact Form -->
     <form action="<?= route_to('contactSubmit'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
