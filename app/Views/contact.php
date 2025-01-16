@@ -27,15 +27,19 @@
     <?php endif; ?>
 
     <!-- Contact update -->
-    <form action="<?= route_to('contactUpdate'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
+    <button id="bouton-ajouter" class="btn btn-primary mb-3">
+        <i class="fa fa-plus" aria-hidden="true"></i> modifier e-mail de contact
+    </button>
+
+    <form id="formulaire" action="<?= route_to('contactUpdate'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
         <div class="mb-3">
             <label for="name" class="form-label">E-mail de la plume monclaraise :</label>
-          
+
             <input type="text" id="mailContact" name="mailContact" class="form-control" value="<?= $association['mailContact'] ?>">
 
         </div>
         <input type="hidden" id="idAssociation" name="idAssociation" value="<?= $association['idAssociation'] ?>">
-        <button type="submit" class="btn btn-primary btn-block">Envoyer</button>
+        <button type="submit" class="btn btn-primary btn-block">modifier</button>
     </form>
 
     <!-- Contact Form -->
