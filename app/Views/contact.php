@@ -31,7 +31,7 @@
         <i class="fa fa-plus" aria-hidden="true"></i> modifier e-mail de contact
     </button>
 
-    <form id="formulaire" action="<?= route_to('contactUpdate'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
+    <form id="formulaire" style="display:none;" action="<?= route_to('contactUpdate'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
         <div class="mb-3">
             <label for="name" class="form-label">E-mail de la plume monclaraise :</label>
 
