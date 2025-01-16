@@ -19,10 +19,6 @@ class Association extends Controller
     {
         return view('contact');
     }
-    public function histoire()
-    {
-        return view('histoire');
-    }
     public function downloadFichier($fileName)
     {
         $filePath = WRITEPATH . 'uploads/downloads/' . $fileName;
