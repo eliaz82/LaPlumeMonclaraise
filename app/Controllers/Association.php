@@ -17,11 +17,8 @@ class Association extends Controller
     }
     public function contact()
     {
-        return view('contact');
-    }
-    public function histoire()
-    {
-        return view('histoire');
+        $association = $this->associationModel->find(1);
+        return view('contact', ['association' => $association]);
     }
     public function downloadFichier($fileName)
     {
@@ -51,6 +48,12 @@ class Association extends Controller
         ]);
         return redirect()->route('fichierInscription')->with('success', 'Le fichier a été téléchargé avec succès.');
     }
+    public function contactUpdate()
+    {
+        $mailContact = $this->request->getPost();
+        $this->associationModel->save($mailContact);
+        return redirect()->to(route_to('contact'));
+    }
     public function contactSubmit()
     {
         helper('form');
@@ -61,14 +64,16 @@ class Association extends Controller
             'subject' => 'required',
             'message' => 'required'
         ];
-    
+        $association = $this->associationModel->find(1);
+        $mailContact = $association['mailContact'];
+
         if ($this->validate($rules)) {
             $name = $this->request->getPost('name');
             $phone = $this->request->getPost('phone');
             $email = $this->request->getPost('email');
             $subject = $this->request->getPost('subject');
             $message = $this->request->getPost('message');
-    
+
             // Création du message HTML avec du CSS intégré
             $htmlMessage = "
                 <html>
@@ -148,18 +153,17 @@ class Association extends Controller
                 </body>
                 </html>
             ";
-    
+
             // Configuration de l'email
             $emailService = \Config\Services::email();
             $emailService->setFrom($email, $name);
-            $emailService->setTo('emmanuel.basck@gmail.com'); // Remplacez par votre email
+            $emailService->setTo($mailContact); // Remplacez par votre email
             $emailService->setSubject($subject);
             $emailService->setMessage($htmlMessage); // On envoie maintenant le message HTML
-    
+
             // On s'assure que l'email est envoyé en HTML
             $emailService->setMailType('html');
-    
-            // Envoi de l'email
+
             if ($emailService->send()) {
                 session()->setFlashdata('success', 'Message envoyé avec succès !');
             } else {
@@ -168,9 +172,7 @@ class Association extends Controller
         } else {
             session()->setFlashdata('error', 'Veuillez vérifier les champs du formulaire.');
         }
-    
+
         return redirect()->to(route_to('contact'));
     }
-    
-    
 }

@@ -11,6 +11,8 @@ $routes->get('/', 'Home::index', ['as' => 'accueil']);
 $routes->get('contact', 'Association::contact', ['as' => 'contact']);
 $routes->post('contact-submit', 'Association::contactSubmit', ['as' => 'contactSubmit']);
 
+$routes->post('contact-update', 'Association::contactUpdate', ['as' => 'contactUpdate']);
+
 // ------------------------------------------- fichierInscription -------------------------------------------
 $routes->get('fichier-inscription', 'Association::fichierInscription', ['as' => 'fichierInscription']);
 $routes->post('fichierInscription-submit', 'Association::fichierInscriptionSubmit', ['as' => 'fichierInscriptionSubmit']);
