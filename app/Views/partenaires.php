@@ -12,8 +12,8 @@
             <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
         </div>
         <div class="mb-3">
-            <label for="informations" class="form-label">Informations de texte</label>
-            <textarea class="form-control" id="informations" name="informations" rows="3"></textarea>
+            <label for="info" class="form-label">Informations de texte</label>
+            <textarea class="form-control" id="info" name="info" rows="3"></textarea>
         </div>
 
         <div class="mb-3">
@@ -24,7 +24,20 @@
         <button type="submit" class="btn btn-primary">Soumettre</button>
     </div>
 </form>
-
+<div class="container">
+    <div class="row">
+        <?php foreach ($partenaire as $p) :?>
+            <div class="col-md-3">
+                <a href="<?= $p['lien']?>" class="card shadow mb-4 text-decoration-none text-dark">
+                    <img src="<?= base_url($p['logo'])?>" class="card-img-top img-fluid rounded-circle" alt="<?= $p['info']?>" style="height: 150px; width: 150px; object-fit: cover;">
+                    <div class="card-body">
+                        <p class="card-text text-center"><?= $p['info']?></p>
+                    </div>
+                </a>
+            </div>
+        <?php endforeach;?>
+    </div>
+</div>
 
 
 <?= $this->endSection() ?>
