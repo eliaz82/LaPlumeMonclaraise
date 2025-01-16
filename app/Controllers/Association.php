@@ -15,6 +15,10 @@ class Association extends Controller
     {
         return view('inscription');
     }
+    public function histoire()
+    {
+        return view('histoire');
+    }
 
 
     public function contactSubmit()
