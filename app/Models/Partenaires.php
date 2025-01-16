@@ -43,4 +43,12 @@ class Partenaires extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function insertLogo($idPartenaire, $logoFiles)
+    {
+        return $this
+            ->set('logo', $logoFiles)
+            ->where('idPartenaire', $idPartenaire)
+            ->update();
+    }
 }

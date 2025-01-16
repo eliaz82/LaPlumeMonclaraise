@@ -23,8 +23,9 @@ $routes->get('download/(:any)', 'Association::downloadFichier/$1');
 $routes->get('histoire', 'Association::histoire', ['as' => 'histoire']);
 
 // ------------------------------------------- partenaires -------------------------------------------
+// Dans votre fichier de routage
 $routes->get('partenaires', 'Partenaires::partenaires', ['as' => 'partenaires']);
-$routes->post('partenaires-submit', 'Partenaires::partenairesSumbit', ['as' => 'partenairesSubmit']);
+$routes->post('partenaires-submit', 'Partenaires::partenairesSubmit', ['as' => 'partenairesSubmit']);
 $routes->post('partenaires-update', 'Partenaires::partenairesUpdate', ['as' => 'partenairesUpdate']);
 $routes->post('partenaires-delete', 'Partenaires::partenairesDelete', ['as' => 'partenairesDelete']);
 
