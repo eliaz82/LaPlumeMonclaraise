@@ -28,7 +28,7 @@ class Email extends BaseConfig
     /**
      * SMTP Server Hostname
      */
-    public string $SMTPHost = 'localhost';
+    public string $SMTPHost = 'laplumemonclaraise.local';
 
     /**
      * SMTP Username
