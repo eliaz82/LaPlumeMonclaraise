@@ -27,9 +27,9 @@ class Adherants extends BaseController
         $photo = $this->request->getFile('photo');
 
         // Déplacer l'image du répertoire temporaire vers un répertoire de stockage définitif
-        $filePath = FCPATH . 'uploads/adherants/photos';
+        $filePath = FCPATH . 'uploads/adherants/photos/';
         $photo->move($filePath);
-        $photoUrl = 'uploads/adherants/photos' . $photo->getName();
+        $photoUrl = 'uploads/adherants/photos/' . $photo->getName();
 
         // Insérer les données de l'adhérent dans la base de données
         $this->adherantsModel->insert($adherant);
@@ -54,9 +54,9 @@ class Adherants extends BaseController
         $photo = $this->request->getFile('photo');
         if ($photo && $photo->isValid()) {
             // Déplacer la nouvelle photo dans le répertoire de stockage définitif
-            $filePath = FCPATH . 'uploads/adherants/photos';
+            $filePath = FCPATH . 'uploads/adherants/photos/';
             $photo->move($filePath);
-            $photoUrl = 'uploads/adherants/photos' . $photo->getName();
+            $photoUrl = 'uploads/adherants/photos/' . $photo->getName();
 
             // Ajouter le chemin de la nouvelle photo aux données
             $data['photo'] = $photoUrl;

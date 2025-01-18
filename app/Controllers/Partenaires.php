@@ -23,9 +23,9 @@ class Partenaires extends BaseController
         $logo = $this->request->getFile('logo');
 
         // Déplacez l'image du répertoire temporaire vers un répertoire de stockage définitif
-        $filePath = FCPATH . 'uploads/partenaires/logo';
+        $filePath = FCPATH . 'uploads/partenaires/logo/';
         $logo->move($filePath);
-        $logoUrl = 'uploads/partenaires/logo' . $logo->getName();
+        $logoUrl = 'uploads/partenaires/logo/' . $logo->getName();
 
         // Insérez les données du partenaire dans la base de données
         $this->partenairesModel->insert($partenaire);
@@ -44,9 +44,9 @@ class Partenaires extends BaseController
 
         // Si un nouveau logo est téléchargé, remplacez l'ancien
         if ($logo && $logo->isValid() && !$logo->hasMoved()) {
-            $filePath = FCPATH . 'uploads/partenaires/logo';
+            $filePath = FCPATH . 'uploads/partenaires/logo/';
             $logo->move($filePath);
-            $logoUrl = 'uploads/partenaires/logo' . $logo->getName();
+            $logoUrl = 'uploads/partenaires/logo/' . $logo->getName();
             $data['logo'] = $logoUrl;
         }
 
