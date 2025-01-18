@@ -26,7 +26,7 @@ class Association extends Controller
     }
     public function downloadFichier($fileName)
     {
-        $filePath = WRITEPATH . 'uploads/downloads/' . $fileName;
+        $filePath = WRITEPATH . 'uploads/inscription/' . $fileName;
 
         if (file_exists($filePath)) {
             return $this->response->download($filePath, null)->setFileName($fileName);
@@ -44,9 +44,9 @@ class Association extends Controller
     public function fichierInscriptionSubmit()
     {
         $file = $this->request->getFile('fichier_inscription');
-        $filePath = FCPATH . 'uploads/downloads/';
+        $filePath = FCPATH . 'uploads/inscription/';
         $file->move($filePath);
-        $fileUrl = '/uploads/downloads/' . $file->getName();
+        $fileUrl = 'uploads/inscription/' . $file->getName();
         $this->associationModel->update(1, [
             'fichierInscription' => $fileUrl
         ]);

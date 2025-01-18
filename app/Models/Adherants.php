@@ -12,7 +12,7 @@ class Adherants extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['idAssociation','nom','prenom','grade'];
+    protected $allowedFields    = ['idAssociation','nom','prenom','grade','photo'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

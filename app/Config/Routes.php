@@ -31,7 +31,7 @@ $routes->post('partenaires-delete', 'Partenaires::partenairesDelete', ['as' => '
 
 // ------------------------------------------- equipe -------------------------------------------
 $routes->get('equipe', 'Adherants::equipe', ['as' => 'equipe']);
-$routes->post('equipe-submit', 'Adherants::equipeSumbit', ['as' => 'equipeSubmit']);
+$routes->post('equipe-submit', 'Adherants::equipeSubmit', ['as' => 'equipeSubmit']);
 $routes->post('equipe-update', 'Adherants::equipeUpdate', ['as' => 'equipeUpdate']);
 $routes->post('equipe-delete', 'Adherants::equipeDelete', ['as' => 'equipeDelete']);
 

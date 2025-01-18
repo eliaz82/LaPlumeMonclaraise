@@ -1,47 +1,64 @@
 "use strict";
+
 $(document).ready(function () {
-    // Afficher ou masquer le formulaire d'ajout
+    // Afficher/Masquer le formulaire d'ajout
     $('#bouton-ajouter').click(function () {
         $('#formulaire').toggle('slow');
     });
 
-    // Remplir le formulaire de modification lorsque l'on clique sur "Modifier"
+    // Pré-remplir le formulaire de modification
     $('.bouton-modifier').click(function () {
         const id = $(this).data('id');
-        const info = $(this).data('info');
-        const lien = $(this).data('lien');
+        const nom = $(this).data('nom');
+        const prenom = $(this).data('prenom');
+        const grade = $(this).data('grade');
+        const photo = $(this).data('photo');
 
+        // Injecter les données dans les champs du formulaire
         $('#modifier-id').val(id);
-        $('#modifier-info').val(info);
-        $('#modifier-lien').val(lien);
-    });
+        $('#modifier-nom').val(nom);
+        $('#modifier-prenom').val(prenom);
+        $('#modifier-grade').val(grade);
 
+        // Prévisualiser l'image si elle existe
+        if (photo) {
+            $('#modifierPhotoPreview').attr('src', photo).show();
+        } else {
+            $('#modifierPhotoPreview').hide();
+        }
+    });
 });
+
+// Fonction de prévisualisation d'image
 function previewImage(event, previewId) {
-    var reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = function () {
-        var preview = document.getElementById(previewId);
-        preview.src = reader.result;
-        preview.style.display = 'block'; // Afficher l'image
+        $('#' + previewId).attr('src', reader.result).show(); // Afficher l'image prévisualisée
     };
     reader.readAsDataURL(event.target.files[0]);
 }
+
+// Écouteurs pour les boutons "Modifier"
 document.querySelectorAll('.bouton-modifier').forEach(button => {
     button.addEventListener('click', function () {
-        // Récupérer les données du partenaire depuis les attributs du bouton
-        var idPartenaire = this.getAttribute('data-id');
-        var info = this.getAttribute('data-info');
-        var lien = this.getAttribute('data-lien');
-        var logo = this.getAttribute('data-logo');
+        // Récupérer les données depuis les attributs du bouton
+        const idPartenaire = this.getAttribute('data-id');
+        const info = this.getAttribute('data-info');
+        const lien = this.getAttribute('data-lien');
+        const logo = this.getAttribute('data-logo');
 
         // Injecter ces données dans les champs du formulaire
         document.getElementById('modifier-id').value = idPartenaire;
         document.getElementById('modifier-info').value = info;
         document.getElementById('modifier-lien').value = lien;
 
-        // Prévisualiser l'image du logo actuel
-        var logoPreview = document.getElementById('modifierLogoPreview');
-        logoPreview.src = logo;  // Afficher l'image existante
-        logoPreview.style.display = 'block';  // Afficher l'image
+        // Prévisualiser le logo si présent
+        const logoPreview = document.getElementById('modifierLogoPreview');
+        if (logo) {
+            logoPreview.src = logo;
+            logoPreview.style.display = 'block';
+        } else {
+            logoPreview.style.display = 'none';
+        }
     });
 });
