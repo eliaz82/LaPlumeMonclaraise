@@ -44,6 +44,10 @@ class Association extends Controller
     public function fichierInscriptionSubmit()
     {
         $file = $this->request->getFile('fichier_inscription');
+        $association = $this->associationModel->find(1);
+        if (!empty($association['fichierInscription']) && file_exists(FCPATH . $association['fichierInscription'])) {
+            unlink(FCPATH . $association['fichierInscription']);
+        }
         $filePath = FCPATH . 'uploads/inscription/';
         $file->move($filePath);
         $fileUrl = 'uploads/inscription/' . $file->getName();

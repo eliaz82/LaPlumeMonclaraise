@@ -41,12 +41,16 @@ class Partenaires extends BaseController
         $idPartenaire = $this->request->getPost('idPartenaire');
         $data = $this->request->getPost();
         $logo = $this->request->getFile('logo');
+        $partenaire = $this->partenairesModel->find($idPartenaire);
 
         // Si un nouveau logo est téléchargé, remplacez l'ancien
         if ($logo && $logo->isValid() && !$logo->hasMoved()) {
             $filePath = FCPATH . 'uploads/partenaires/logo/';
             $logo->move($filePath);
             $logoUrl = 'uploads/partenaires/logo/' . $logo->getName();
+            if (!empty($partenaire['logo']) && file_exists(FCPATH . $partenaire['logo'])) {
+                unlink(FCPATH . $partenaire['logo']);
+            }
             $data['logo'] = $logoUrl;
         }
 
@@ -58,7 +62,12 @@ class Partenaires extends BaseController
     public function partenairesDelete()
     {
         $idPartenaire = $this->request->getPost('idPartenaire');
+        $partenaire = $this->partenairesModel->find($idPartenaire);
+        if (!empty($partenaire['logo']) && file_exists(FCPATH . $partenaire['logo'])) {
+            unlink(FCPATH . $partenaire['logo']);
+        }
         $this->partenairesModel->delete($idPartenaire);
+
         return redirect()->to('/partenaires')->with('success', 'Partenaire supprimé avec succès');
     }
 }

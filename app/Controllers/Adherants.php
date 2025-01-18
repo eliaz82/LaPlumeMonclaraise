@@ -49,6 +49,7 @@ class Adherants extends BaseController
         // Récupérer l'ID de l'adhérent à modifier
         $idAdherant = $this->request->getPost('idAdherant');
         $data = $this->request->getPost();
+        $adherant = $this->adherantsModel->find($idAdherant);
 
         // Gestion de l'upload de la nouvelle photo
         $photo = $this->request->getFile('photo');
@@ -57,7 +58,9 @@ class Adherants extends BaseController
             $filePath = FCPATH . 'uploads/adherants/photos/';
             $photo->move($filePath);
             $photoUrl = 'uploads/adherants/photos/' . $photo->getName();
-
+            if (!empty($adherant['photo']) && file_exists(FCPATH . $adherant['photo'])) {
+                unlink(FCPATH . $adherant['photo']);
+            }
             // Ajouter le chemin de la nouvelle photo aux données
             $data['photo'] = $photoUrl;
         }
@@ -75,7 +78,10 @@ class Adherants extends BaseController
     {
         // Récupérer l'ID de l'adhérent à supprimer
         $idAdherant = $this->request->getPost('idAdherant');
-
+        $adherant = $this->adherantsModel->find($idAdherant);
+        if (!empty($adherant['photo']) && file_exists(FCPATH . $adherant['photo'])) {
+            unlink(FCPATH . $adherant['photo']);
+        }
         // Supprimer l'adhérent
         $this->adherantsModel->delete($idAdherant);
 
