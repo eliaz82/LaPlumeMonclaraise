@@ -82,7 +82,6 @@ class Association extends Controller
             $subject = $this->request->getPost('subject');
             $message = $this->request->getPost('message');
 
-            // Création du message HTML avec du CSS intégré
             $htmlMessage = "
                 <html>
                 <head>
@@ -165,11 +164,10 @@ class Association extends Controller
             // Configuration de l'email
             $emailService = \Config\Services::email();
             $emailService->setFrom($email, $name);
-            $emailService->setTo($mailContact); // Remplacez par votre email
+            $emailService->setTo($mailContact); //email  pour recevoir
             $emailService->setSubject($subject);
-            $emailService->setMessage($htmlMessage); // On envoie maintenant le message HTML
+            $emailService->setMessage($htmlMessage); 
 
-            // On s'assure que l'email est envoyé en HTML
             $emailService->setMailType('html');
 
             if ($emailService->send()) {
