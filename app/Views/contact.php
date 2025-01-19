@@ -1,7 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
-<h1 class="text-center mb-5 text-dark">Formulaire de Contact</h1>
 
 <div class="container">
     <!-- Success Message -->
@@ -26,16 +25,20 @@
         </div>
     <?php endif; ?>
 
+    <h2 class="text-center mb-4">Formulaire de Contact</h2>
+
     <!-- Contact update -->
     <button id="bouton-ajouter" class="btn btn-primary mb-3">
         <i class="fa fa-plus" aria-hidden="true"></i> modifier e-mail de contact
     </button>
 
-    <form id="formulaire" style="display:none;" action="<?= route_to('contactUpdate'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
+    <form id="formulaire" style="display:none;" action="<?= route_to('contactUpdate'); ?>" method="post"
+        class="p-4 border border-light rounded shadow-lg bg-white">
         <div class="mb-3">
             <label for="name" class="form-label">E-mail de la plume monclaraise :</label>
 
-            <input type="text" id="mailContact" name="mailContact" class="form-control" value="<?= $association['mailContact'] ?>">
+            <input type="text" id="mailContact" name="mailContact" class="form-control"
+                value="<?= $association['mailContact'] ?>">
 
         </div>
         <input type="hidden" id="idAssociation" name="idAssociation" value="<?= $association['idAssociation'] ?>">
@@ -43,7 +46,8 @@
     </form>
 
     <!-- Contact Form -->
-    <form action="<?= route_to('contactSubmit'); ?>" method="post" class="p-4 border border-light rounded shadow-lg bg-white">
+    <form action="<?= route_to('contactSubmit'); ?>" method="post"
+        class="p-4 border border-light rounded shadow-lg bg-white">
         <div class="mb-3">
             <label for="name" class="form-label">Nom:</label>
             <input type="text" id="name" name="name" class="form-control" placeholder="Votre nom" required>
@@ -61,12 +65,14 @@
 
         <div class="mb-3">
             <label for="subject" class="form-label">Objet:</label>
-            <input type="text" id="subject" name="subject" class="form-control" placeholder="Objet de votre message" required>
+            <input type="text" id="subject" name="subject" class="form-control" placeholder="Objet de votre message"
+                required>
         </div>
 
         <div class="mb-3">
             <label for="message" class="form-label">Message:</label>
-            <textarea id="message" name="message" rows="5" class="form-control" placeholder="Votre message" required></textarea>
+            <textarea id="message" name="message" rows="5" class="form-control" placeholder="Votre message"
+                required></textarea>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block">Envoyer</button>

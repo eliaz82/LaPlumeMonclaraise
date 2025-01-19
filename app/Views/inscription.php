@@ -22,7 +22,6 @@
             <?= session('validation')->listErrors() ?>
         </div>
     <?php endif; ?>
-<div class="container mt-5">
     <h2 class="text-center mb-4">Téléchargement du fichier d'inscription</h2>
 
     <p class="lead text-center mb-4">

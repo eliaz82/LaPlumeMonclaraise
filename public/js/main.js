@@ -62,3 +62,15 @@ document.querySelectorAll('.bouton-modifier').forEach(button => {
         }
     });
 });
+// le navbar pour mettre bien a revoir
+document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.querySelector('.navbar.fixed-top');
+    const contentWrapper = document.body;
+    if (navbar) {
+        const adjustBodyPadding = () => {
+            contentWrapper.style.paddingTop = `${navbar.offsetHeight}px`;
+        };
+        adjustBodyPadding();
+        window.addEventListener('resize', adjustBodyPadding);
+    }
+});

@@ -2,7 +2,7 @@
 <?= $this->section('contenu')?>
 
 <div class="container">
-    <h1 class="text-center mt-5">Histoire du Club de Sport</h1>
+    <h1 class="text-center">Histoire du Club de Sport</h1>
     <div class="row mt-5">
         <div class="col-md-6">
             <h2 class="mb-3">Notre histoire</h2>
