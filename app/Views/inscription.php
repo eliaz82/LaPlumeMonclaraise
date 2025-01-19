@@ -61,16 +61,6 @@
                 </a>
             </div>
 
-            <?php if (session()->getFlashdata('success')): ?>
-                <div class="alert alert-success mt-4">
-                    <?= session()->getFlashdata('success') ?>
-                </div>
-            <?php elseif (session()->getFlashdata('error')): ?>
-                <div class="alert alert-danger mt-4">
-                    <?= session()->getFlashdata('error') ?>
-                </div>
-            <?php endif; ?>
-
             <form action="<?= route_to('fichierInscriptionSubmit') ?>" method="post" enctype="multipart/form-data"
                 class="mt-4">
                 <?= csrf_field() ?>
