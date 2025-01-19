@@ -5,6 +5,7 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
 $routes->get('/', 'Home::index', ['as' => 'accueil']);
 
 // ------------------------------------------- contact -------------------------------------------
@@ -55,3 +56,7 @@ $routes->get('evenement', 'Evenement::evenement', ['as' => 'evenement']);
 // ------------------------------------------- faitMarquant -------------------------------------------
 $routes->get('fais-marquand', 'Actualite::actualite', ['as' => 'actualite']);
 $routes->get('fais-marquand/(:num)', 'Actualite::actualite/$1', ['as' => 'actualiteClick']);
+
+$routes->get('/favicon.ico', function () {
+    return redirect()->to(base_url('favicon.svg'));
+});
