@@ -33,12 +33,12 @@ class Email extends BaseConfig
     /**
      * SMTP Username
      */
-    public string $SMTPUser = 'eliaz824582@gmail.com';  // Votre adresse email pour envoye mail
+    public string $SMTPUser = 'laplumemonclaraiselocal@gmail.com';  // Votre adresse email pour envoye mail
 
     /**
      * SMTP Password
      */
-    public string $SMTPPass = 'fjab qgfa vows qcxc';  // Mot de passe d'application généré google
+    public string $SMTPPass = 'mfyb yucx kwhu fknt';  // Mot de passe d'application généré google
 
     /**
      * SMTP Port
