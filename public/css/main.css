@@ -61,3 +61,21 @@ p {
 img.img-fluid {
   max-height: 100%; /* Ne dépasse jamais la hauteur du parent */
 }
+
+
+.carousel-inner.carousel-item {
+  transform: scale(0.9);
+  transition: transform 1s ease-in-out;
+}
+
+.carousel-inner.carousel-item.active {
+  transform: scale(1.1);
+  transition: transform 1s ease-in-out;
+}
+.font-size-18 {
+  font-size: 18px;
+}
+
+.font-size-24 {
+  font-size: 24px;
+}

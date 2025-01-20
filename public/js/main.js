@@ -74,3 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener('resize', adjustBodyPadding);
     }
 });
+
+function previewImage(event, id) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById(id);
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  }

@@ -11,6 +11,12 @@ class Association extends Controller
 {
     private $associationModel;
 
+    public function layout(): string
+    {
+        $logo = $this->associationModel->find(1);
+        return view('layout', ['logo' => $logo]);
+    }
+
     public function __construct()
     {
         $this->associationModel = model('Association');
@@ -61,6 +67,27 @@ class Association extends Controller
         $mailContact = $this->request->getPost();
         $this->associationModel->save($mailContact);
         return redirect()->to(route_to('contact'));
+    }
+    public function logoUpdate()
+
+    {  $data = $this->request->getPost();
+        $association = $this->associationModel->find(1);
+        $file = $this->request->getFile('logo');
+        if ($file && $file->isValid()) {
+            // Déplacer la nouvelle photo dans le répertoire de stockage définitif
+            $filePath = FCPATH . '';
+            $file->move($filePath);
+            $logoUrl = '' . $file->getName();
+            if (!empty($association['logo']) && file_exists(FCPATH . $association['logo'])) {
+                unlink(FCPATH . $association['logo']);
+            }
+            // Ajouter le chemin de la nouvelle photo aux données
+            $data['logo'] = $logoUrl;
+        }
+
+        // Mettre à jour les données de l'adhérent
+        $this->associationModel->update(1, $data);
+        return redirect()->to(route_to('accueil'));
     }
     public function contactSubmit()
     {

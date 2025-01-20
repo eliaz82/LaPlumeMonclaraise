@@ -4,8 +4,15 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
+    private $associationModel;
+
+    public function __construct()
+    {
+        $this->associationModel = model('Association');
+    }
     public function index(): string
     {
-        return view('accueil');
+        $logo = $this->associationModel->find(1);
+        return view('accueil', ['logo' => $logo]);
     }
 }
