@@ -12,10 +12,16 @@ class Association extends Controller
     private $associationModel;
 
     public function layout(): string
-    {
-        $logo = $this->associationModel->find(1);
-        return view('layout', ['logo' => $logo]);
-    }
+{
+    // Récupération de l'association (on vérifie qu'il y a une donnée)
+    $association = $this->associationModel->find(1);
+    // Vérification si la clé 'logo' existe dans la donnée récupérée
+    $logo = isset($association['logo']) ? $association['logo'] : null;
+    
+    // Passer la variable $logo à la vue
+    return view('layout', ['logo' => $logo]);
+}
+
 
     public function __construct()
     {
@@ -30,6 +36,14 @@ class Association extends Controller
     {
         return view('histoire');
     }
+    
+    public function fichierInscription()
+    {
+        $association = $this->associationModel->find(1);
+        $fichierInscription = $association['fichierInscription'];
+
+        return view('inscription', ['fichierInscription' => $fichierInscription]);
+    }
     public function downloadFichier($fileName)
     {
         $filePath = WRITEPATH . 'uploads/inscription/' . $fileName;
@@ -39,13 +53,6 @@ class Association extends Controller
         } else {
             return redirect()->route('fichierInscription')->with('error', 'Le fichier n\'existe pas.');
         }
-    }
-    public function fichierInscription()
-    {
-        $association = $this->associationModel->find(1);
-        $fichierInscription = $association['fichierInscription'];
-
-        return view('inscription', ['fichierInscription' => $fichierInscription]);
     }
     public function fichierInscriptionSubmit()
     {
@@ -69,26 +76,33 @@ class Association extends Controller
         return redirect()->to(route_to('contact'));
     }
     public function logoUpdate()
+{
+    $association = $this->associationModel->find(1);  // On récupère l'association
+    $file = $this->request->getFile('logo');  // On récupère le fichier logo téléchargé
 
-    {  $data = $this->request->getPost();
-        $association = $this->associationModel->find(1);
-        $file = $this->request->getFile('logo');
-        if ($file && $file->isValid()) {
-            // Déplacer la nouvelle photo dans le répertoire de stockage définitif
-            $filePath = FCPATH . '';
-            $file->move($filePath);
-            $logoUrl = '' . $file->getName();
-            if (!empty($association['logo']) && file_exists(FCPATH . $association['logo'])) {
-                unlink(FCPATH . $association['logo']);
-            }
-            // Ajouter le chemin de la nouvelle photo aux données
-            $data['logo'] = $logoUrl;
+    if ($file && $file->isValid()) {
+        // Déplacer le fichier dans le dossier public/uploads
+        $filePath = FCPATH . 'uploads/logos/';
+        if (!is_dir($filePath)) {
+            mkdir($filePath, 0777, true);  // Création du dossier si il n'existe pas
         }
 
-        // Mettre à jour les données de l'adhérent
-        $this->associationModel->update(1, $data);
-        return redirect()->to(route_to('accueil'));
+        $filePath = FCPATH . 'uploads/logos/';
+        $logoUrl = 'uploads/logos/' . $file->getName();
+
+        // Si un ancien logo existe, on le supprime
+        if (!empty($association['logo']) && file_exists(FCPATH . $association['logo'])) {
+            unlink(FCPATH . $association['logo']);
+        }
+
+        // Mettre à jour le logo dans la base de données
+        $this->associationModel->update(1, ['logo' => $logoUrl]);
     }
+
+    // Rediriger vers la page d'accueil ou une autre page
+    return redirect()->to(route_to('accueil'));
+}
+
     public function contactSubmit()
     {
         helper('form');

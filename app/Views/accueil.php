@@ -3,14 +3,14 @@
 <div id="carousel-container" class="position-relative">
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-interval="4500" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="image/noel.jpg" class="d-block w-100" alt="..." style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
+      <div class="carousel-item active">  
+        <img src="image/test.jpg" class="d-block w-100" alt="..." style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
       </div>
       <div class="carousel-item">
-        <img src="image/terrain.jpg" class="d-block w-100" alt="..." style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
+        <img src="image/test1.jpg" class="d-block w-100" alt="..." style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
       </div>
       <div class="carousel-item">
-        <img src="image/terrain2.jpg" class="d-block w-100" alt="..." style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
+        <img src="image/test2.jpg" class="d-block w-100" alt="..." style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
       </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -26,7 +26,7 @@
     <div class="d-flex justify-content-between align-items-center h-100 text-white">
       <div class="ms-3">
         <h2 class="fw-bold font-size-24" style="font-family: Arial, sans-serif;">La Plume Monclaraise</h2>
-        <p class="font-size-18" style="font-family: Arial, sans-serif;">Un slogan de con</p>
+        <p class="font-size-18" style="font-family: Arial, sans-serif;">Nouveau club de badminton loisirs dans la commune de Monclar de Quercy.<br> Ouvert à tous, de 8 à 88 ans</p>
       </div>
       <div class="me-3 text-end">
         <img src="<?= base_url($logo['logo']) ?>" class="img-fluid img-thumbnail rounded-circle" alt="..." style="width: 200px; height: 200px; object-fit: cover;">

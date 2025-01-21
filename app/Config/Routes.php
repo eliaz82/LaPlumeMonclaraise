@@ -57,7 +57,7 @@ $routes->get('evenement', 'Evenement::evenement', ['as' => 'evenement']);
 $routes->get('fais-marquant', 'Actualite::actualite', ['as' => 'actualite']);
 $routes->get('fais-marquant/(:num)', 'Actualite::actualite/$1', ['as' => 'actualiteClick']);
 // ------------------------------------------- Accueil -------------------------------------------
-$routes->post('acceuil', 'Association::logoUpdate', ['as' => 'logoUpdate']);
+$routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
 // ------------------------------------------- layout -------------------------------------------
 $routes->get('layout', 'Association::layout', ['as' => 'logoLayoutUpdate']);
 
