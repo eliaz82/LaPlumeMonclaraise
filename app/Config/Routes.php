@@ -56,11 +56,9 @@ $routes->get('evenement', 'Evenement::evenement', ['as' => 'evenement']);
 // ------------------------------------------- faitMarquant -------------------------------------------
 $routes->get('fais-marquant', 'Actualite::actualite', ['as' => 'actualite']);
 $routes->get('fais-marquant/(:num)', 'Actualite::actualite/$1', ['as' => 'actualiteClick']);
-// ------------------------------------------- Accueil -------------------------------------------
+// ------------------------------------------- logo -------------------------------------------
 $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
-// ------------------------------------------- layout -------------------------------------------
-$routes->get('layout', 'Association::layout', ['as' => 'logoLayoutUpdate']);
 
 $routes->get('/favicon.ico', function () {
-    return redirect()->to(base_url('favicon.svg'));
+    return redirect()->to(base_url(getAssociationLogo()));
 });

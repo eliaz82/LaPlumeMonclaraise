@@ -29,7 +29,7 @@
         <p class="font-size-18" style="font-family: Arial, sans-serif;">Nouveau club de badminton loisirs dans la commune de Monclar de Quercy.<br> Ouvert à tous, de 8 à 88 ans</p>
       </div>
       <div class="me-3 text-end">
-        <img src="<?= base_url($logo['logo']) ?>" class="img-fluid img-thumbnail rounded-circle" alt="..." style="width: 200px; height: 200px; object-fit: cover;">
+        <img src="<?= base_url(getAssociationLogo()); ?>" class="img-fluid img-thumbnail rounded-circle" alt="..." style="width: 200px; height: 200px; object-fit: cover;">
         <div style="width: 200px; text-align: center;">
           <p class="font-size-18" style="font-family: Arial, sans-serif; word-wrap: break-word;">esplanade du lac 82230 Monclar-de-Quercy</p>
           <p class="font-size-18" style="font-family: Arial, sans-serif; word-wrap: break-word;">07 82 17 69 70</p>
@@ -91,9 +91,6 @@
     </div>
   </div>
 </div>
-
-
-<iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0E4S77PN8HDLLDdFX2uvr74r9jZFY3y9YxdBHCeM17FZHxkw6zv7EM3emMBKqeQ6Ml%26id%3D61572161467983&show_text=true&width=500" width="500" height="474" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
 
 
 
