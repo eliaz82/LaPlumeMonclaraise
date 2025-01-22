@@ -40,13 +40,14 @@ function previewImage(event, previewId) {
         const reader = new FileReader();
 
         reader.onload = function (e) {
-            preview.src = e.target.result;
-            preview.style.display = 'block';
+            preview.src = e.target.result; // Charger l'image
+            preview.style.display = 'block'; // Afficher l'image
         };
 
-        reader.readAsDataURL(input.files[0]);
+        reader.readAsDataURL(input.files[0]); // Lire le fichier
     }
 }
+
 
 
 // Écouteurs pour les boutons "Modifier"
@@ -86,14 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-function previewImage(event, id) {
-    var reader = new FileReader();
-    reader.onload = function(){
-      var output = document.getElementById(id);
-      output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  }
 
 
 // Gestion du glisser-déposer pour le fichier d'inscription
