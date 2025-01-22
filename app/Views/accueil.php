@@ -79,11 +79,11 @@
   <div class="position-relative">
     <!-- Image de fond -->
     <img src="image/tee_shirt.jpg" alt="Image" class="img-fluid rounded"
-      style="max-width: 60%; height: auto; margin-left: 30%;" id="image">
+      style="max-width: 60%; height: auto; margin-left: 45%;" id="image">
 
     <!-- Texte superposé avec la même taille que l'image -->
     <div class="position-absolute top-50 start-0 bg-light p-4 rounded shadow"
-      style="width: 60%; height: 100%; transform: translateX(-30%) translateY(-30%); display: flex; justify-content: center; align-items: center; opacity: 0.8; top: calc(50% + 5%);">
+      style="width: 60%; height: 100%; transform: translateX(-13%) translateY(-30%); display: flex; justify-content: center; align-items: center; opacity: 0.8; top: calc(50% + 5%);">
       <div class="text-center">
         <h1 class="fw-bold text-primary">Rejoignez l'aventure de La Plume Monclaraise</h1>
         <p>
