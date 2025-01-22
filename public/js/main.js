@@ -83,3 +83,12 @@ function previewImage(event, id) {
     };
     reader.readAsDataURL(event.target.files[0]);
   }
+
+
+    document.querySelector(".btn-primary").addEventListener("click", function (e) {
+        const spinner = this.querySelector(".spinner-border");
+        spinner.classList.remove("d-none"); // Affiche la spinner
+        setTimeout(() => {
+            spinner.classList.add("d-none"); // Masque la spinner après 2s
+        }, 2000); // Temps d'affichage ajustable
+    });
