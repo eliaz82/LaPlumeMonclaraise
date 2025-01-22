@@ -162,3 +162,36 @@ img.img-fluid {
 }
 
 
+
+.drop-container {
+  background-color: #f9f9f9;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border: 2px dashed #007bff;
+  border-radius: 10px;
+  color: #444;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.drop-container:hover {
+  background-color: rgba(0, 140, 255, 0.1);
+  border-color: #0056b3;
+}
+
+.drop-title {
+  color: #444;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+#file-name {
+  margin-top: 10px;
+  color: #555;
+  font-size: 0.9rem;
+}
