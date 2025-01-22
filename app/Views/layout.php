@@ -104,6 +104,11 @@
                     <i class="bi bi-envelope"></i> Email : contact@club.fr<br>
                     <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
                 </p>
+                <div>
+                        <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+                    </div>
             </div>
         </div>
         <hr style="border-color: white;">

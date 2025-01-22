@@ -75,7 +75,7 @@
   </div>
 </div>
 
-<div class="container my-5">
+<div class="container my-5" style="padding-bottom: 100px;">
   <div class="position-relative">
     <!-- Image de fond -->
     <img src="image/tee_shirt.jpg" alt="Image" class="img-fluid rounded"
@@ -98,6 +98,8 @@
     </div>
   </div>
 </div>
+
+
 
 
 
