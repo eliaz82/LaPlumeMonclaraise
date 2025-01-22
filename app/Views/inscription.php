@@ -67,38 +67,39 @@
                         <span class="texto">Télécharger</span>
                     </button>
                 </a>
-                <button id="bouton-modifier" class="btn btn-primary">Modifier le fichier d'inscription</button>
+                <button id="bouton-modifier" class="btn btn-modify">Modifier le fichier d'inscription</button>
             </div>
 
 
             <div id="formulaire" class="mt-3" style="display: none;">
-    <form action="<?= route_to('fichierInscriptionSubmit') ?>" method="post" enctype="multipart/form-data"
-        class="mt-4 p-4 border shadow-sm rounded-3">
+                <form action="<?= route_to('fichierInscriptionSubmit') ?>" method="post" enctype="multipart/form-data"
+                    class="mt-4 p-4 border shadow-sm rounded-3">
 
-        <div class="text-center mb-3">
-            <span class="h4 d-block">Téléversez votre fichier</span>
-            <p class="text-muted">Le fichier doit être une image ou un document (PDF, Word, etc.). Il sera
-                ensuite disponible pour les autres utilisateurs à télécharger.</p>
-        </div>
+                    <div class="text-center mb-3">
+                        <span class="h4 d-block">Téléversez votre fichier</span>
+                        <p class="text-muted">Le fichier doit être une image ou un document (PDF, Word, etc.). Il sera
+                            ensuite disponible pour les autres utilisateurs à télécharger.</p>
+                    </div>
 
 
-        <div class="mb-3">
-            <label for="fichier_inscription" class="form-label">Sélectionner le fichier d'inscription (PDF,
-                Word, etc.) :</label>
-            <div id="drop-area" class="drop-container p-4 border-dashed text-center rounded-3">
-                <span class="drop-title d-block mb-2">Déposez les fichiers ici ou cliquez pour sélectionner</span>
-                <input type="file" name="fichier_inscription" id="fichier_inscription"
-                    accept=".pdf,.doc,.docx,.jpg,.png" class="form-control d-none" required>
-                <label for="fichier_inscription" class="btn btn-outline-primary">
-                    <i class="bi bi-upload"></i> Sélectionner un fichier
-                </label>
-                <div id="file-name" class="mt-2 text-muted"></div>
+                    <div class="mb-3">
+                        <label for="fichier_inscription" class="form-label">Sélectionner le fichier d'inscription (PDF,
+                            Word, etc.) :</label>
+                        <div id="drop-area" class="drop-container p-4 border-dashed text-center rounded-3">
+                            <span class="drop-title d-block mb-2">Déposez les fichiers ici ou cliquez pour
+                                sélectionner</span>
+                            <input type="file" name="fichier_inscription" id="fichier_inscription"
+                                accept=".pdf,.doc,.docx,.jpg,.png" class="form-control d-none" required>
+                            <label for="fichier_inscription" class="btn btn-outline-primary">
+                                <i class="upload-icon">📁</i> Sélectionner un fichier
+                            </label>
+                            <div id="file-name" class="mt-2 text-muted"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Téléverser le fichier</button>
+                </form>
             </div>
-        </div>
-
-        <button type="submit" class="btn btn-success w-100">Téléverser le fichier</button>
-    </form>
-</div>
 
 
 

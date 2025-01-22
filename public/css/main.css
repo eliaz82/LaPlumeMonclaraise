@@ -195,3 +195,37 @@ img.img-fluid {
   color: #555;
   font-size: 0.9rem;
 }
+/* Style du bouton Modifier */
+#bouton-modifier {
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  background-color: #007bff;
+  color: white;
+  border: 1px solid #007bff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Changement de couleur au survol */
+#bouton-modifier:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Effet au clic */
+#bouton-modifier:active {
+  background-color: #004085;
+  border-color: #004085;
+  transform: translateY(2px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Option de focus */
+#bouton-modifier:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5);
+}
