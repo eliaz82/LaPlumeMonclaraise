@@ -71,6 +71,7 @@
             </div>
 
 
+
             <div id="formulaire" class="mt-3" style="display: none;">
                 <form action="<?= route_to('fichierInscriptionSubmit') ?>" method="post" enctype="multipart/form-data"
                     class="mt-4 p-4 border shadow-sm rounded-3">

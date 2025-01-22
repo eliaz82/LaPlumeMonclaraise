@@ -226,41 +226,50 @@ button:active {
 
 .wrapper-dx47 {
   display: flex;
-  justify-content: space-around; /* Espacement égal entre les boutons */
+  justify-content: space-around;
+  /* Espacement égal entre les boutons */
   align-items: center;
-  gap: 2rem; /* Espacement ajusté */
+  gap: 2rem;
+  /* Espacement ajusté */
 }
 
 .circle-btn-lx93 {
   cursor: pointer;
   text-decoration: none;
   color: #ffffff;
-  width: 50px; /* Taille légèrement augmentée */
+  width: 50px;
+  /* Taille légèrement augmentée */
   height: 50px;
   border-radius: 50%;
-  background-color: #1c1e22; /* Couleur de fond */
-  border: 3px solid #1c1e22; /* Bordure */
-  transition: all 0.3s ease-in-out; /* Transition douce */
+  background-color: #1c1e22;
+  /* Couleur de fond */
+  border: 3px solid #1c1e22;
+  /* Bordure */
+  transition: all 0.3s ease-in-out;
+  /* Transition douce */
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .circle-btn-lx93:hover {
-  transform: scale(1.2); /* Effet de zoom */
-  background-color: #ffffff; /* Couleur de fond au survol */
-  color: #1c1e22; /* Inversion des couleurs */
+  transform: scale(1.2);
+  /* Effet de zoom */
+  background-color: #ffffff;
+  /* Couleur de fond au survol */
+  color: #1c1e22;
+  /* Inversion des couleurs */
 }
 
 .circle-btn-lx93:hover .icon-svg-nq71 {
-  filter: invert(50%) sepia(80%) saturate(300%) hue-rotate(200deg)
-    brightness(95%) contrast(90%);
+  filter: invert(50%) sepia(80%) saturate(300%) hue-rotate(200deg) brightness(95%) contrast(90%);
 }
 
 .icon-svg-nq71 {
   width: 22px;
   height: auto;
 }
+
 /* Style du bouton Modifier */
 #bouton-modifier {
   padding: 0.5rem 1.5rem;
@@ -294,4 +303,26 @@ button:active {
 #bouton-modifier:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5);
+}
+
+#drop-area {
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#drop-area:hover {
+  background: rgba(0, 140, 255, 0.1);
+}
+
+#drop-area .drop-title {
+  font-size: 1rem;
+  color: #666;
+}
+
+.text-center button {
+  margin-right: 15px;
 }
