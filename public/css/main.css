@@ -109,7 +109,7 @@ img.img-fluid {
   height: 50px;
   border-radius: 50%;
   transition: .5s linear;
-  padding: 0; /* Supprime tout padding supplémentaire au survol */
+  padding: 0;
 }
 
 .botao:hover .texto {
@@ -142,6 +142,14 @@ img.img-fluid {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Assurez-vous que le lien est bien positionné sur le bouton */
+.btn-download {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
 }
 
 .botao a {
