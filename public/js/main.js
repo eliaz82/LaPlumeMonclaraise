@@ -5,7 +5,9 @@ $(document).ready(function () {
     $('#bouton-ajouter').click(function () {
         $('#formulaire').toggle('slow');
     });
-
+    $('#bouton-modifier').click(function () {
+        $('#formulaire').toggle('slow');
+    });
     // Pré-remplir le formulaire de modification
     $('.bouton-modifier').click(function () {
         const id = $(this).data('id');
@@ -31,12 +33,22 @@ $(document).ready(function () {
 
 // Fonction de prévisualisation d'image
 function previewImage(event, previewId) {
-    const reader = new FileReader();
-    reader.onload = function () {
-        $('#' + previewId).attr('src', reader.result).show(); // Afficher l'image prévisualisée
-    };
-    reader.readAsDataURL(event.target.files[0]);
+    const input = event.target;
+    const preview = document.getElementById(previewId);
+
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+            preview.src = e.target.result; // Charger l'image
+            preview.style.display = 'block'; // Afficher l'image
+        };
+
+        reader.readAsDataURL(input.files[0]); // Lire le fichier
+    }
 }
+
+
 
 // Écouteurs pour les boutons "Modifier"
 document.querySelectorAll('.bouton-modifier').forEach(button => {
@@ -75,13 +87,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-function previewImage(event, id) {
-    var reader = new FileReader();
-    reader.onload = function(){
-      var output = document.getElementById(id);
-      output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  }
 
 
+// Gestion du glisser-déposer pour le fichier d'inscription
+$(document).ready(function () {
+    var dropArea = $('#drop-area');
+    var fileInput = $('#fichier_inscription');
+    var fileNameDisplay = $('#file-name');
+
+    dropArea.on('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropArea.css('background', 'rgba(0, 140, 255, 0.1)');
+    });
+
+    dropArea.on('dragleave', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropArea.css('background', 'transparent');
+    });
+
+    dropArea.on('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropArea.css('background', 'transparent');
+
+        var files = e.originalEvent.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput[0].files = files;
+            fileNameDisplay.text(files[0].name); // Afficher le nom du fichier déposé
+        }
+    });
+
+    fileInput.on('change', function () {
+        var file = fileInput[0].files[0];
+        if (file) {
+            fileNameDisplay.text(file.name); // Afficher le nom du fichier sélectionné
+        }
+    });
+
+    dropArea.on('click', function () {
+        fileInput.click(); // Déclencher l'événement de clic sur l'input
+    });
+});
