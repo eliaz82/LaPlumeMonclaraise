@@ -27,15 +27,22 @@
       <div class="ms-3">
         <h2 class="fw-bold font-size-24" style="font-family: Arial, sans-serif;">La Plume Monclaraise</h2>
         <p class="font-size-18" style="font-family: Arial, sans-serif;">Nouveau club de badminton loisirs dans la commune de Monclar de Quercy.<br> Ouvert à tous, de 8 à 88 ans</p>
+        <p class="font-size-18" style="font-family: Arial, sans-serif;">Sport · Terrain de badminton</p>
       </div>
       <div class="me-3 text-end">
         <img src="<?= base_url(getAssociationLogo()); ?>" class="img-fluid img-thumbnail rounded-circle" alt="..." style="width: 200px; height: 200px; object-fit: cover;">
-        <div style="width: 200px; text-align: center;">
-          <p class="font-size-18" style="font-family: Arial, sans-serif; word-wrap: break-word;">esplanade du lac 82230 Monclar-de-Quercy</p>
-          <p class="font-size-18" style="font-family: Arial, sans-serif; word-wrap: break-word;">07 82 17 69 70</p>
-          <p class="font-size-18" style="font-family: Arial, sans-serif; word-wrap: break-word;">Sport · Terrain de badminton</p>
-        </div>
-
+        <div class="col-md-4"style="width: 200px; text-align: center;">
+                    <p>
+                        <i class="bi bi-geo-alt"></i> Adresse : esplanade du lac 82230 Monclar-de-Quercy<br>
+                        <i class="bi bi-envelope"></i> Email : contact@club.fr<br>
+                        <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
+                    </p>
+                    <div>
+                        <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
 
 
 
