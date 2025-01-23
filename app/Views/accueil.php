@@ -99,6 +99,10 @@
   </div>
 </div>
 
+<a href="https://www.facebook.com/v21.0/dialog/oauth?client_id=603470049247384&redirect_uri=https://d474-92-154-67-66.ngrok-free.app&scope=public_profile,user_posts&response_type=code">
+    Se connecter avec Facebook
+</a>
+
 
 
 

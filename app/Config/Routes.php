@@ -62,3 +62,6 @@ $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
 $routes->get('/favicon.ico', function () {
     return redirect()->to(base_url(getAssociationLogo()));
 });
+$routes->get('/facebook/login', 'Facebook::login');
+$routes->get('/facebook/callback', 'Facebook::callback');
+$routes->get('/facebook/posts', 'Facebook::getPosts');
