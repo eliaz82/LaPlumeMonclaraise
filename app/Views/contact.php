@@ -75,10 +75,10 @@
                 required></textarea>
         </div>
 
-        <!-- From Uiverse.io by adamgiebl -->
-        <button>
-            <div class="svg-wrapper-1">
-                <div class="svg-wrapper">
+        <!-- boutton contact envoyer -->
+        <button class="btn-unique">
+            <div class="icon-wrapper-outer">
+                <div class="icon-wrapper-inner">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                         <path fill="none" d="M0 0h24v24H0z"></path>
                         <path fill="currentColor"
@@ -87,7 +87,7 @@
                     </svg>
                 </div>
             </div>
-            <span>Send</span>
+            <span class="btn-label">Envoyer</span>
         </button>
 
     </form>

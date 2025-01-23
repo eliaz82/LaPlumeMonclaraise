@@ -83,44 +83,54 @@ img.img-fluid {
   font-size: 24px;
 }
 
+/*bouton télécharger*/
 .botao {
   width: 125px;
   height: 45px;
   border-radius: 20px;
   border: none;
-  box-shadow: 1px 1px rgba(107, 221, 215, 0.37);
+  box-shadow: 1px 1px rgba(129, 161, 208, 1);
   padding: 5px 10px;
   background: rgb(47, 93, 197);
-  background: linear-gradient(160deg, rgba(47, 93, 197, 1) 0%, rgba(46, 86, 194, 1) 5%, rgba(47, 93, 197, 1) 11%, rgba(59, 190, 230, 1) 57%, rgba(0, 212, 255, 1) 71%);
+  background: linear-gradient(160deg, rgba(47, 93, 197, 1) 0%, rgba(29, 34, 67, 1) 5%, rgba(29, 34, 67, 1) 100%, rgba(129, 161, 208, 1) 57%, rgba(153, 187, 234, 1) 71%);
   color: #fff;
   font-family: Roboto, sans-serif;
   font-weight: 505;
   font-size: 16px;
   line-height: 1;
   cursor: pointer;
-  filter: drop-shadow(0 0 10px rgba(59, 190, 230, 0.568));
   position: relative;
   transition: .5s linear;
 }
 
 .botao .mysvg {
   display: none;
+  /* La flèche est cachée par défaut */
+}
+
+.botao .texto {
+  display: inline;
+  /* Le texte "Télécharger" est visible par défaut */
 }
 
 .botao:hover {
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  transition: .5s linear;
   padding: 0;
-}
-
-.botao:hover .texto {
-  display: none;
+  background: #81A1D0;
+  /* couleur de fond au survol */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 .botao:hover .mysvg {
   display: inline;
+  /* La flèche apparaît au survol */
+}
+
+.botao:hover .texto {
+  display: none;
+  /* Le texte "Télécharger" disparaît au survol */
 }
 
 .botao:hover::before {
@@ -167,8 +177,8 @@ img.img-fluid {
 }
 
 
-/* boutton envoyer */
-button {
+/* boutton envoyer contact*/
+.btn-unique {
   font-family: inherit;
   font-size: 20px;
   background-color: rgb(29, 34, 67);
@@ -184,35 +194,35 @@ button {
   cursor: pointer;
 }
 
-button span {
+.btn-unique .btn-label {
   display: block;
   margin-left: 0.3em;
   transition: all 0.3s ease-in-out;
 }
 
-button svg {
+.btn-unique svg {
   display: block;
   transform-origin: center center;
   transition: transform 0.3s ease-in-out;
 }
 
-button:hover .svg-wrapper {
-  animation: fly-1 0.6s ease-in-out infinite alternate;
+.btn-unique:hover .icon-wrapper-inner {
+  animation: fly-animation 0.6s ease-in-out infinite alternate;
 }
 
-button:hover svg {
+.btn-unique:hover svg {
   transform: translateX(1.2em) rotate(45deg) scale(1.1);
 }
 
-button:hover span {
+.btn-unique:hover .btn-label {
   transform: translateX(5em);
 }
 
-button:active {
+.btn-unique:active {
   transform: scale(0.95);
 }
 
-@keyframes fly-1 {
+@keyframes fly-animation {
   from {
     transform: translateY(0.1em);
   }
@@ -224,51 +234,130 @@ button:active {
 
 /*boutton reseaux layout*/
 
-.wrapper-dx47 {
-  display: flex;
-  justify-content: space-around;
-  /* Espacement égal entre les boutons */
-  align-items: center;
-  gap: 2rem;
-  /* Espacement ajusté */
+/* Footer général */
+.footer-section {
+  background-color: rgb(29, 34, 67);
+  color: white;
 }
 
-.circle-btn-lx93 {
-  cursor: pointer;
+.footer-section h5 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.footer-section p,
+.footer-section ul {
+  margin-bottom: 1rem;
+}
+
+.footer-links-list {
+  padding: 0;
+}
+
+.footer-link {
   text-decoration: none;
-  color: #ffffff;
-  width: 50px;
-  /* Taille légèrement augmentée */
-  height: 50px;
-  border-radius: 50%;
-  background-color: #1c1e22;
-  /* Couleur de fond */
-  border: 3px solid #1c1e22;
-  /* Bordure */
-  transition: all 0.3s ease-in-out;
-  /* Transition douce */
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Boutons réseaux sociaux */
+/* Footer général */
+.footer-section {
+  background-color: rgb(29, 34, 67);
+  color: white;
+  /* Texte par défaut en blanc */
+}
+
+.footer-section h5 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: white;
+  /* Assure que le titre est en blanc */
+}
+
+.footer-section p,
+.footer-section ul {
+  margin-bottom: 1rem;
+  color: white;
+  /* Texte de paragraphes en blanc */
+}
+
+.footer-link {
+  text-decoration: none;
+  color: white;
+  /* Liens en blanc */
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+  /* Liens au survol en blanc plus léger */
+}
+
+/* Boutons réseaux sociaux */
+.social-btn {
+  position: relative;
+  border: none;
+  margin: 10px;
+  background-color: transparent;
+}
+
+.social-link {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  /* Coins légèrement arrondis */
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 2px solid white;
+  /* Contour blanc */
+  box-shadow: 0 5px 45px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  transition: 0.5s;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  /* Fond légèrement blanc mais non rond */
 }
 
-.circle-btn-lx93:hover {
-  transform: scale(1.2);
-  /* Effet de zoom */
-  background-color: #ffffff;
-  /* Couleur de fond au survol */
-  color: #1c1e22;
-  /* Inversion des couleurs */
+.social-link:hover {
+  transform: translateY(-20px);
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Fond plus clair au survol */
 }
 
-.circle-btn-lx93:hover .icon-svg-nq71 {
-  filter: invert(50%) sepia(80%) saturate(300%) hue-rotate(200deg) brightness(95%) contrast(90%);
+.social-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: skewX(45deg) translateX(150px);
+  transition: 0.5s ease;
 }
 
-.icon-svg-nq71 {
-  width: 22px;
-  height: auto;
+.social-link:hover::before {
+  transform: skewX(45deg) translateX(-150px);
 }
+
+.social-icon {
+  width: 3em;
+  color: white;
+  /* Icône en blanc */
+}
+
+#facebook {
+  color: rgba(10, 128, 236, 0.7);
+  /* Icône bleue */
+}
+
+
 
 /* Style du bouton Modifier */
 #bouton-modifier {
@@ -276,25 +365,25 @@ button:active {
   font-size: 1rem;
   font-weight: 600;
   border-radius: 0.5rem;
-  background-color: #007bff;
+  background-color: #1D2243;
   color: white;
-  border: 1px solid #007bff;
+  border: 1px solid #1D2243;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Changement de couleur au survol */
 #bouton-modifier:hover {
-  background-color: #0056b3;
-  border-color: #0056b3;
+  background-color: #81A1D0;
+  border-color: #81A1D0;
   transform: translateY(-2px);
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Effet au clic */
 #bouton-modifier:active {
-  background-color: #004085;
-  border-color: #004085;
+  background-color: #81A1D0;
+  border-color: #1D2243;
   transform: translateY(2px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
@@ -302,7 +391,7 @@ button:active {
 /* Option de focus */
 #bouton-modifier:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(29, 34, 67, 1);
 }
 
 #drop-area {
@@ -315,7 +404,7 @@ button:active {
 }
 
 #drop-area:hover {
-  background: rgba(0, 140, 255, 0.1);
+  background: rgba(29, 34, 67, 1);
 }
 
 #drop-area .drop-title {
@@ -326,3 +415,5 @@ button:active {
 .text-center button {
   margin-right: 15px;
 }
+
+
