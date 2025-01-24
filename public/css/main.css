@@ -359,7 +359,7 @@ img.img-fluid {
 
 
 
-/* Style du bouton Modifier */
+/* Style du bouton Modifier inscription*/
 #bouton-modifier {
   padding: 0.5rem 1.5rem;
   font-size: 1rem;
@@ -417,3 +417,56 @@ img.img-fluid {
 }
 
 
+/* page histoire */
+.custom-title-color {
+  color: rgba(129, 161, 208, 1);
+}
+
+/* Effet de zoom pour l'image */
+.hover-scale {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Couleur personnalisée pour les titres */
+.custom-title-color {
+  color: rgba(129, 161, 208, 1);
+}
+
+/* Effet de grisement */
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-container img {
+  transition: transform 0.5s ease-in-out;
+}
+
+.image-container:hover img {
+  transform: scale(1.1);
+}
+
+.custom-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.custom-image-container:hover .custom-overlay {
+  opacity: 1;
+}
+
+.custom-overlay h5 {
+  font-family: 'Anton', sans-serif;
+  font-size: 24px;
+  text-transform: uppercase;
+}
