@@ -9,3 +9,4 @@ class Evenement extends BaseController
         return view('evenements');
     }
 }
+

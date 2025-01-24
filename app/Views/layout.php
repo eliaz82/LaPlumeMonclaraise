@@ -12,7 +12,6 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 </head>
 
 <style>
@@ -37,7 +36,7 @@
                         L'Association
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?= url_to('equipe') ?>">L'Équipe</a></li>
+                        <li><a class="dropdown-item" href="#sectionPage2">L'Équipe</a></li>
                         <li><a class="dropdown-item" href="<?= url_to('histoire') ?>">L'Histoire</a></li>
                         <li><a class="dropdown-item" href="<?= url_to('partenaires') ?>">Partenaires</a></li>
                     </ul>

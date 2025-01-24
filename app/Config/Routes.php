@@ -19,22 +19,23 @@ $routes->get('fichier-inscription', 'Association::fichierInscription', ['as' => 
 $routes->post('fichierInscription-submit', 'Association::fichierInscriptionSubmit', ['as' => 'fichierInscriptionSubmit']);
 $routes->get('download/(:any)', 'Association::downloadFichier/$1');
 
-
+// ------------------------------------------- FusionAssociation -------------------------------------------
+$routes->get('association', 'FusionAssociation::association', ['as' => 'FusionAssociation']);
 // ------------------------------------------- histoire -------------------------------------------
 $routes->get('histoire', 'Association::histoire', ['as' => 'histoire']);
 
 // ------------------------------------------- partenaires -------------------------------------------
 // Dans votre fichier de routage
 $routes->get('partenaires', 'Partenaires::partenaires', ['as' => 'partenaires']);
-$routes->post('partenaires-submit', 'Partenaires::partenairesSubmit', ['as' => 'partenairesSubmit']);
-$routes->post('partenaires-update', 'Partenaires::partenairesUpdate', ['as' => 'partenairesUpdate']);
-$routes->post('partenaires-delete', 'Partenaires::partenairesDelete', ['as' => 'partenairesDelete']);
+$routes->post('partenaires-submit', 'FusionAssociation::partenairesSubmit', ['as' => 'partenairesSubmit']);
+$routes->post('partenaires-update', 'FusionAssociation::partenairesUpdate', ['as' => 'partenairesUpdate']);
+$routes->post('partenaires-delete', 'FusionAssociation::partenairesDelete', ['as' => 'partenairesDelete']);
 
 // ------------------------------------------- equipe -------------------------------------------
 $routes->get('equipe', 'Adherants::equipe', ['as' => 'equipe']);
-$routes->post('equipe-submit', 'Adherants::equipeSubmit', ['as' => 'equipeSubmit']);
-$routes->post('equipe-update', 'Adherants::equipeUpdate', ['as' => 'equipeUpdate']);
-$routes->post('equipe-delete', 'Adherants::equipeDelete', ['as' => 'equipeDelete']);
+$routes->post('equipe-submit', 'FusionAssociation::equipeSubmit', ['as' => 'equipeSubmit']);
+$routes->post('equipe-update', 'FusionAssociation::equipeUpdate', ['as' => 'equipeUpdate']);
+$routes->post('equipe-delete', 'FusionAssociation::equipeDelete', ['as' => 'equipeDelete']);
 
 // ------------------------------------------- albums -------------------------------------------
 $routes->get('albums-photo', 'AlbumsPhoto::AlbumsPhoto', ['as' => 'albumsPhoto']);
