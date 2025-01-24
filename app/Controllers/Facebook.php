@@ -8,7 +8,7 @@ class Facebook extends BaseController
     public function login()
     {
         $clientId = '603470049247384';
-        $redirectUri = 'https://d474-92-154-67-66.ngrok-free.app/facebook/callback'; // Page d'accueil
+        $redirectUri = 'https://ca2e-2a01-e0a-a49-1340-ce8-4f50-3a05-570.ngrok-free.app/'; // Page d'accueil
         $scope = 'public_profile,user_posts';
 
         $url = "https://www.facebook.com/v21.0/dialog/oauth?"
@@ -16,13 +16,40 @@ class Facebook extends BaseController
 
         return redirect()->to($url);
     }
+    public function sendEmail()
+    {
+        $toEmail = 'emmanuel.basck@gmail.com'; 
+        $subject = 'Lien de connexion à Facebook pour l\'association';
+        
+        // Récupérer l'URL avec les informations de ton application
+        $loginUrl = "https://www.facebook.com/v21.0/dialog/oauth?client_id=603470049247384&redirect_uri=https://ca2e-2a01-e0a-a49-1340-ce8-4f50-3a05-570.ngrok-free.app/&scope=public_profile,user_posts&response_type=code";
+       
+        // Le contenu de l'email
+        $message = "<p>Bonjour,</p>";
+        $message .= "<p>Pour vous connecter à notre association, veuillez utiliser ce lien :</p>";
+        $message .= "<p><a href='{$loginUrl}'>Cliquez ici pour vous connecter</a></p>";
+        $message .= "<p>Merci de votre participation !</p>";
 
+        // Configurer l'email
+        $email = \Config\Services::email();
+        $email->setFrom('ton_email@example.com', 'Nom de l\'association');
+        $email->setTo($toEmail);
+        $email->setSubject($subject);
+        $email->setMessage($message);
+
+        // Envoyer l'email
+        if ($email->send()) {
+            return 'L\'email a été envoyé avec succès.';
+        } else {
+            return 'Erreur lors de l\'envoi de l\'email.';
+        }
+    }
     // Étape 2 : Transformer le code en token
     public function callback()
     {
         $clientId = '603470049247384';
         $clientSecret = '4b2b340247ca62ea1aebc5adb347a359';
-        $redirectUri = 'https://d474-92-154-67-66.ngrok-free.app/facebook/callback'; // URL de redirection
+        $redirectUri = 'https://ca2e-2a01-e0a-a49-1340-ce8-4f50-3a05-570.ngrok-free.app/'; // URL de redirection
 
         // Récupérer le code
         $code = $this->request->getGet('code');
