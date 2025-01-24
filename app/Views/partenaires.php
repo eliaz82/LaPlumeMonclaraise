@@ -1,6 +1,7 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
+
 <div >
     <!-- Messages de notification -->
     <?php if (session('success')): ?>

@@ -1,6 +1,5 @@
-<?= $this->extend('layout') ?>
-<?= $this->section('contenu') ?>
 
+<div id="sectionPage2">
 <div>
     <!-- Messages de notification -->
     <?php if (session('success')): ?>
@@ -137,4 +136,7 @@
     </div>
 </div>
 
-<?= $this->endSection() ?>
+
+</div>
+
+

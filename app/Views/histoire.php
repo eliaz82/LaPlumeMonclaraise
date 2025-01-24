@@ -1,5 +1,3 @@
-<?= $this->extend('layout') ?>
-<?= $this->section('contenu') ?>
 
 <div class="container py-5">
     <!-- Titre principal -->
@@ -60,4 +58,3 @@
 </div>
 
 
-<?= $this->endSection() ?>
