@@ -26,16 +26,6 @@ class FusionAssociation extends BaseController
 
     /*controller adhérants*/
 
-
-    public function equipe()
-    {
-        // Récupérer tous les adhérents depuis la base de données
-        $equipes = $this->adherantsModel->findAll();
-
-        // Charger la vue avec les adhérents
-        return view('equipes', ['equipes' => $equipes]);
-    }
-
     // Ajouter un adhérent
     public function equipeSubmit()
     {
@@ -127,7 +117,7 @@ class FusionAssociation extends BaseController
         // Mettez à jour la table pour ajouter le logo
         $this->partenairesModel->update($idPartenaires, ['logo' => $logoUrl]);
 
-        return redirect()->to("association#partenaire");
+        return redirect()->to('/association#partenaire')->with('success', 'Partenaire ajouté avec succès');
     }
     public function partenairesUpdate()
     {
@@ -149,8 +139,7 @@ class FusionAssociation extends BaseController
 
         // Mettez à jour les données du partenaire
         $this->partenairesModel->update($idPartenaire, $data);
-
-        return redirect()->to("association#partenaire");
+        return redirect()->to('/association#partenaire')->with('success', 'Partenaire modifié avec succès');
     }
     public function partenairesDelete()
     {

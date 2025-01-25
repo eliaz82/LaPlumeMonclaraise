@@ -26,13 +26,11 @@ $routes->get('histoire', 'Association::histoire', ['as' => 'histoire']);
 
 // ------------------------------------------- partenaires -------------------------------------------
 // Dans votre fichier de routage
-$routes->get('partenaires', 'Partenaires::partenaires', ['as' => 'partenaires']);
 $routes->post('partenaires-submit', 'FusionAssociation::partenairesSubmit', ['as' => 'partenairesSubmit']);
 $routes->post('partenaires-update', 'FusionAssociation::partenairesUpdate', ['as' => 'partenairesUpdate']);
 $routes->post('partenaires-delete', 'FusionAssociation::partenairesDelete', ['as' => 'partenairesDelete']);
 
 // ------------------------------------------- equipe -------------------------------------------
-$routes->get('equipe', 'Adherants::equipe', ['as' => 'equipe']);
 $routes->post('equipe-submit', 'FusionAssociation::equipeSubmit', ['as' => 'equipeSubmit']);
 $routes->post('equipe-update', 'FusionAssociation::equipeUpdate', ['as' => 'equipeUpdate']);
 $routes->post('equipe-delete', 'FusionAssociation::equipeDelete', ['as' => 'equipeDelete']);
@@ -63,7 +61,7 @@ $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
 $routes->get('/favicon.ico', function () {
     return redirect()->to(base_url(getAssociationLogo()));
 });
+
 $routes->get('/login', 'Facebook::login');
-$routes->get('/callback', 'Facebook::callback');
 $routes->get('/posts', 'Facebook::getPosts');
 $routes->get('send-email', 'Facebook::sendEmail');

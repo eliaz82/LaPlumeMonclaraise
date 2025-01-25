@@ -20,10 +20,6 @@ class Association extends Controller
         $association = $this->associationModel->find(1);
         return view('contact', ['association' => $association]);
     }
-    public function histoire()
-    {
-        return view('histoire');
-    }
 
     public function fichierInscription()
     {
@@ -55,19 +51,19 @@ class Association extends Controller
         $this->associationModel->update(1, [
             'fichierInscription' => $fileUrl
         ]);
-        return redirect()->route('fichierInscription')->with('success', 'Le fichier a été téléchargé avec succès.');
+        return redirect()->route('fichierInscription')->with('success', 'Le fichier a été téléversez avec succès.');
     }
     public function contactUpdate()
     {
         $mailContact = $this->request->getPost();
         $this->associationModel->save($mailContact);
-        return redirect()->to(route_to('contact'));
+        return redirect()->route('contact')->with('success', 'Le mail de contact a été modifié avec succès.');
     }
     public function logoUpdate()
     {
         $association = $this->associationModel->find(1);
         $file = $this->request->getFile('logo');
-        
+
         if ($file && $file->isValid()) {
             $filePath = FCPATH . 'uploads/logos/';
             $file->move($filePath);
@@ -77,7 +73,7 @@ class Association extends Controller
             }
             $this->associationModel->update(1, ['logo' => $logoUrl]);
         }
-        return redirect()->to(route_to('accueil'));
+        return redirect()->route('accueil')->with('success', 'Le logo a été modifié avec succès.');
     }
 
     public function contactSubmit()

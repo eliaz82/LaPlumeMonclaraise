@@ -1,29 +1,9 @@
 "use strict";
+if (window.location.hash === "#_=_") {
+    history.replaceState(null, null, window.location.href.split("#")[0]);
+}
 
 $(document).ready(function () {
-
-    $('#bouton-modifier-contact').click(function () {
-        $('#formulaire').toggle('slow');
-    });
-    $('#bouton-modifier-inscription').click(function () {
-        $('#formulaire').toggle('slow');
-    });
-    // Afficher/Masquer le formulaire d'ajout
-    $('#bouton-ajouter-partenaire').click(function () {
-        $('#formulaire').toggle('slow');
-    });
-    $('#bouton-modifier-partenaire').click(function () {
-        $('#formulaire').toggle('slow');
-    });
-
-    // Afficher/Masquer le formulaire d'ajout
-    $('#bouton-ajouter-adherent').click(function () {
-        $('#formulaire-adherent').toggle('slow');
-    });
-    $('#bouton-modifier-adherent').click(function () {
-        $('#formulaire-adherent').toggle('slow');
-    });
-
     // Pré-remplir le formulaire de modification
     $('.bouton-modifier-adherent').click(function () {
         const id = $(this).data('id');
