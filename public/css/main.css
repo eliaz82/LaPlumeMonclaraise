@@ -360,7 +360,7 @@ img.img-fluid {
 
 
 /* Style du bouton Modifier inscription*/
-#bouton-modifier {
+#bouton-modifier-inscription {
   padding: 0.5rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
@@ -373,7 +373,7 @@ img.img-fluid {
 }
 
 /* Changement de couleur au survol */
-#bouton-modifier:hover {
+#bouton-modifier-inscription:hover {
   background-color: #81A1D0;
   border-color: #81A1D0;
   transform: translateY(-2px);
@@ -381,7 +381,7 @@ img.img-fluid {
 }
 
 /* Effet au clic */
-#bouton-modifier:active {
+#bouton-modifier-inscription:active {
   background-color: #81A1D0;
   border-color: #1D2243;
   transform: translateY(2px);
@@ -389,7 +389,7 @@ img.img-fluid {
 }
 
 /* Option de focus */
-#bouton-modifier:focus {
+#bouton-modifier-inscription:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(29, 34, 67, 1);
 }

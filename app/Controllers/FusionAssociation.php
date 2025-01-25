@@ -15,15 +15,13 @@ class FusionAssociation extends BaseController
     }
     public function association()
     {
-
-        // Récupérer tous les adhérents et les partenaires depuis la base de données
         $equipes = $this->adherantsModel->findAll();
         $partenaire = $this->partenairesModel->findAll();
-
-        // Charger chaque vue/page
-        return view('equipes', ['equipes' => $equipes]) . 
-               view('histoire') . 
-               view('partenaires', ['partenaire' => $partenaire]);
+    
+        return view('association', [
+            'equipes' => $equipes,
+            'partenaire' => $partenaire,
+        ]);
     }
 
     /*controller adhérants*/
@@ -58,7 +56,7 @@ class FusionAssociation extends BaseController
         $this->adherantsModel->update($idAdherant, ['photo' => $photoUrl]);
 
         // Rediriger vers la page des équipes avec un message de succès
-        return redirect()->to('/association')->with('success', 'Adhérent ajouté avec succès');
+        return redirect()->to('/association#equipe')->with('success', 'Adhérent ajouté avec succès');
     }
 
 
@@ -88,7 +86,7 @@ class FusionAssociation extends BaseController
         $this->adherantsModel->update($idAdherant, $data);
 
         // Rediriger vers la page des équipes avec un message de succès
-        return redirect()->to('/association')->with('success', 'Adhérent modifié avec succès');
+        return redirect()->to('/association#equipe')->with('success', 'Adhérent modifié avec succès');
     }
 
 
@@ -105,7 +103,7 @@ class FusionAssociation extends BaseController
         $this->adherantsModel->delete($idAdherant);
 
         // Rediriger vers la page des équipes avec un message de succès
-        return redirect()->to('/association')->with('success', 'Le membre de l\'équipe a été supprimé avec succès.');
+        return redirect()->to('/association#equipe')->with('success', 'Le membre de l\'équipe a été supprimé avec succès.');
     }
 
 
@@ -129,7 +127,7 @@ class FusionAssociation extends BaseController
         // Mettez à jour la table pour ajouter le logo
         $this->partenairesModel->update($idPartenaires, ['logo' => $logoUrl]);
 
-        return redirect()->to("association");
+        return redirect()->to("association#partenaire");
     }
     public function partenairesUpdate()
     {
@@ -152,7 +150,7 @@ class FusionAssociation extends BaseController
         // Mettez à jour les données du partenaire
         $this->partenairesModel->update($idPartenaire, $data);
 
-        return redirect()->to("association");
+        return redirect()->to("association#partenaire");
     }
     public function partenairesDelete()
     {
@@ -163,7 +161,7 @@ class FusionAssociation extends BaseController
         }
         $this->partenairesModel->delete($idPartenaire);
 
-        return redirect()->to('/association')->with('success', 'Partenaire supprimé avec succès');
+        return redirect()->to('/association#partenaire')->with('success', 'Partenaire supprimé avec succès');
     }
 }
 

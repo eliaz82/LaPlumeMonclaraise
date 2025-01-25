@@ -1,15 +1,31 @@
 "use strict";
 
 $(document).ready(function () {
+
+    $('#bouton-modifier-contact').click(function () {
+        $('#formulaire').toggle('slow');
+    });
+    $('#bouton-modifier-inscription').click(function () {
+        $('#formulaire').toggle('slow');
+    });
     // Afficher/Masquer le formulaire d'ajout
-    $('#bouton-ajouter').click(function () {
+    $('#bouton-ajouter-partenaire').click(function () {
         $('#formulaire').toggle('slow');
     });
-    $('#bouton-modifier').click(function () {
+    $('#bouton-modifier-partenaire').click(function () {
         $('#formulaire').toggle('slow');
     });
+
+    // Afficher/Masquer le formulaire d'ajout
+    $('#bouton-ajouter-adherent').click(function () {
+        $('#formulaire-adherent').toggle('slow');
+    });
+    $('#bouton-modifier-adherent').click(function () {
+        $('#formulaire-adherent').toggle('slow');
+    });
+
     // Pré-remplir le formulaire de modification
-    $('.bouton-modifier').click(function () {
+    $('.bouton-modifier-adherent').click(function () {
         const id = $(this).data('id');
         const nom = $(this).data('nom');
         const prenom = $(this).data('prenom');
@@ -17,18 +33,33 @@ $(document).ready(function () {
         const photo = $(this).data('photo');
 
         // Injecter les données dans les champs du formulaire
-        $('#modifier-id').val(id);
-        $('#modifier-nom').val(nom);
-        $('#modifier-prenom').val(prenom);
-        $('#modifier-grade').val(grade);
+        $('#modifier-id-adherent').val(id);
+        $('#modifier-nom-adherent').val(nom);
+        $('#modifier-prenom-adherent').val(prenom);
+        $('#modifier-grade-adherent').val(grade);
 
         // Prévisualiser l'image si elle existe
         if (photo) {
-            $('#modifierPhotoPreview').attr('src', photo).show();
-        } else {
-            $('#modifierPhotoPreview').hide();
+            $('#modifierPhotoPreviewAdherent').attr('src', photo).show();
         }
     });
+
+
+    $('.bouton-modifier-partenaire').click(function () {
+        const idPartenaire = this.getAttribute('data-id');
+        const info = this.getAttribute('data-info');
+        const lien = this.getAttribute('data-lien');
+        const logo = this.getAttribute('data-logo');
+
+        document.getElementById('modifier-id').value = idPartenaire;
+        document.getElementById('modifier-info').value = info;
+        document.getElementById('modifier-lien').value = lien;
+
+        if (logo) {
+            $('#modifierLogoPreview').attr('src', logo).show();
+        }
+    });
+
 });
 
 // Fonction de prévisualisation d'image
@@ -50,30 +81,7 @@ function previewImage(event, previewId) {
 
 
 
-// Écouteurs pour les boutons "Modifier"
-document.querySelectorAll('.bouton-modifier').forEach(button => {
-    button.addEventListener('click', function () {
-        // Récupérer les données depuis les attributs du bouton
-        const idPartenaire = this.getAttribute('data-id');
-        const info = this.getAttribute('data-info');
-        const lien = this.getAttribute('data-lien');
-        const logo = this.getAttribute('data-logo');
 
-        // Injecter ces données dans les champs du formulaire
-        document.getElementById('modifier-id').value = idPartenaire;
-        document.getElementById('modifier-info').value = info;
-        document.getElementById('modifier-lien').value = lien;
-
-        // Prévisualiser le logo si présent
-        const logoPreview = document.getElementById('modifierLogoPreview');
-        if (logo) {
-            logoPreview.src = logo;
-            logoPreview.style.display = 'block';
-        } else {
-            logoPreview.style.display = 'none';
-        }
-    });
-});
 // le navbar pour mettre bien a revoir
 document.addEventListener("DOMContentLoaded", () => {
     const navbar = document.querySelector('.navbar.fixed-top');
