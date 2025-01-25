@@ -104,14 +104,17 @@
   </div>
 </div>
 
-<a
-  href="https://www.facebook.com/v21.0/dialog/oauth?client_id=603470049247384&redirect_uri=https://d474-92-154-67-66.ngrok-free.app&scope=public_profile,user_posts&response_type=code">
-  Se connecter avec Facebook
-</a>
-
-
-
-
+<?php if (!empty($posts)): ?>
+      <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": true, "imagesLoaded": true }'>
+        <?php foreach ($posts as $post): ?>
+          <div class="carousel-cell">
+            <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php else: ?>
+      <p>Aucune publication trouvée.</p>
+    <?php endif; ?>
 
 
 <?= $this->endSection() ?>

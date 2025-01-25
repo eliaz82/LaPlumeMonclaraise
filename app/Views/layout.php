@@ -12,6 +12,7 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 </head>
 
 <style>
@@ -43,7 +44,8 @@
                             <a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">L'Histoire</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a>
+                            <a class="dropdown-item"
+                                href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a>
                         </li>
                     </ul>
                 </li>
@@ -73,32 +75,37 @@
 </nav>
 
 <body>
-      <!-- Messages de notification -->
-      <?php if (session('success')): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?= session('success'); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
+    <!-- Messages de notification -->
+    <?php if (session('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= session('success'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
 
-        <?php if (session('error')): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= session('error'); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
+    <?php if (session('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= session('error'); ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
 
-        <?php if (session('validation')): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= session('validation')->listErrors() ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
+    <?php if (session('validation')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= session('validation')->listErrors() ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
     <?= $this->renderSection('contenu') ?>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=603470049247384"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="<?= base_url('js/main.js') ?>"></script>
 </body>
 
@@ -119,7 +126,8 @@
                 <h5>Liens rapides</h5>
                 <ul class="footer-links-list list-unstyled">
                     <li><a href="<?= url_to('accueil') ?>" class="footer-link text-white">Accueil</a></li>
-                    <li><a href="<?= url_to('FusionAssociation') ?>#histoire" class="footer-link text-white">À propos</a></li>
+                    <li><a href="<?= url_to('FusionAssociation') ?>#histoire" class="footer-link text-white">À
+                            propos</a></li>
                     <li><a href="<?= url_to('evenement') ?>" class="footer-link text-white">Événements</a></li>
                     <li><a href="<?= url_to('contact') ?>" class="footer-link text-white">Contact</a></li>
                 </ul>

@@ -52,7 +52,6 @@
                     data-bs-target="#modalModifierInscription">
                     Modifier le fichier d'inscription
                 </button>
-
             </div>
 
 

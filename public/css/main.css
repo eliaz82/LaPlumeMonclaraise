@@ -470,3 +470,10 @@ img.img-fluid {
   font-size: 24px;
   text-transform: uppercase;
 }
+.carousel-cell {
+  width: 400px;    /* Largeur fixe pour chaque cellule */
+  height: 500px;   /* Hauteur fixe pour chaque cellule */
+}
+.fb-post {
+  width: 100px;
+}

@@ -63,9 +63,13 @@ class Home extends BaseController
             return redirect()->to('/')->with('error', 'Erreur dans la réponse de Facebook.');
         }
 
-        // Charger la page d'accueil si aucun "code" n'est présent
+        $tokenFacebook = $this->facebookModel->find(1);
+
+        $posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
+        $posts = $posts['data'];
+        
         $logo = $this->associationModel->find(1);
-        return view('accueil', ['logo' => $logo]);
+        return view('accueil', ['logo' => $logo, 'posts' => $posts]);
     }
 
     // Méthode pour appeler l'API
