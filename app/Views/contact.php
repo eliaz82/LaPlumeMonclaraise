@@ -3,28 +3,6 @@
 
 
 <div class="container">
-    <!-- Success Message -->
-    <?php if (session('success')): ?>
-        <div class="alert alert-success">
-            <?= session('success'); ?>
-        </div>
-    <?php endif; ?>
-
-
-    <!-- Error Message -->
-    <?php if (session('error')): ?>
-        <div class="alert alert-danger">
-            <?= session('error'); ?>
-        </div>
-    <?php endif; ?>
-
-    <!-- Validation Errors -->
-    <?php if (session('validation')): ?>
-        <div class="alert alert-danger">
-            <?= session('validation')->listErrors() ?>
-        </div>
-    <?php endif; ?>
-
     <h2 class="text-center mb-4">Formulaire de Contact</h2>
 
     <!-- Contact update -->
@@ -36,29 +14,33 @@
 
 
     <!-- Modal de modification de l'e-mail de contact -->
-<div class="modal fade" id="modalModifierContact" tabindex="-1" aria-labelledby="modalModifierContactLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form action="<?= route_to('contactUpdate'); ?>" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title text-primary" id="modalModifierContactLabel">Modifier l'e-mail de contact</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3">
-                        <label for="mailContact" class="form-label">E-mail de la plume monclaraise :</label>
-                        <input type="email" id="mailContact" name="mailContact" class="form-control" value="<?= $association['mailContact'] ?>" required>
+    <div class="modal fade" id="modalModifierContact" tabindex="-1" aria-labelledby="modalModifierContactLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form action="<?= route_to('contactUpdate'); ?>" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-primary" id="modalModifierContactLabel">Modifier l'e-mail de contact
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <input type="hidden" id="idAssociation" name="idAssociation" value="<?= $association['idAssociation'] ?>">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Modifier</button>
-                </div>
-            </form>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="mailContact" class="form-label">E-mail de la plume monclaraise :</label>
+                            <input type="email" id="mailContact" name="mailContact" class="form-control"
+                                value="<?= $association['mailContact'] ?>" required>
+                        </div>
+                        <input type="hidden" id="idAssociation" name="idAssociation"
+                            value="<?= $association['idAssociation'] ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Modifier</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
     <!-- Contact Form -->

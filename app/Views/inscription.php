@@ -1,27 +1,7 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 <div class="container">
-    <!-- Success Message -->
-    <?php if (session('success')): ?>
-        <div class="alert alert-success">
-            <?= session('success'); ?>
-        </div>
-    <?php endif; ?>
 
-
-    <!-- Error Message -->
-    <?php if (session('error')): ?>
-        <div class="alert alert-danger">
-            <?= session('error'); ?>
-        </div>
-    <?php endif; ?>
-
-    <!-- Validation Errors -->
-    <?php if (session('validation')): ?>
-        <div class="alert alert-danger">
-            <?= session('validation')->listErrors() ?>
-        </div>
-    <?php endif; ?>
     <h2 class="text-center mb-4">Téléchargement du fichier d'inscription</h2>
 
     <p class="lead text-center mb-4">

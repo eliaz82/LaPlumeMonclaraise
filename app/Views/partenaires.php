@@ -1,26 +1,5 @@
 <section id="partenaire">
     <div>
-        <!-- Messages de notification -->
-        <?php if (session('success')): ?>
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <?= session('success'); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
-
-        <?php if (session('error')): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= session('error'); ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
-
-        <?php if (session('validation')): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?= session('validation')->listErrors() ?>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        <?php endif; ?>
 
         <!-- Titre principal -->
         <div class="text-center mb-5">
@@ -30,7 +9,8 @@
 
         <!-- Bouton d'ouverture du modal pour ajouter un partenaire -->
         <div class="text-center mb-4">
-            <button id="bouton-ajouter-partenaire" class="btn btn-primary btn-lg shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAjouter">
+            <button id="bouton-ajouter-partenaire" class="btn btn-primary btn-lg shadow-sm" data-bs-toggle="modal"
+                data-bs-target="#modalAjouter">
                 <i class="fa fa-plus me-2"></i> Ajouter un partenaire
             </button>
         </div>
@@ -80,7 +60,8 @@
         <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form id="formulaire-ajouter" method="post" action="<?= url_to('partenairesSubmit') ?>" enctype="multipart/form-data">
+                    <form id="formulaire-ajouter" method="post" action="<?= url_to('partenairesSubmit') ?>"
+                        enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" id="modalAjouterLabel">Ajouter un partenaire</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -92,8 +73,8 @@
                                     onchange="previewImage(event, 'logoPreview')">
                             </div>
                             <div class="text-center mb-3">
-                                <img id="logoPreview" src="#" alt="Prévisualisation" class="img-fluid rounded-circle shadow"
-                                    style="max-width: 150px; display: none;">
+                                <img id="logoPreview" src="#" alt="Prévisualisation"
+                                    class="img-fluid rounded-circle shadow" style="max-width: 150px; display: none;">
                             </div>
                             <div class="mb-3">
                                 <label for="info" class="form-label">Informations de texte</label>
@@ -101,7 +82,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="lien" class="form-label">Lien</label>
-                                <input type="url" class="form-control" id="lien" name="lien" placeholder="https://example.com">
+                                <input type="url" class="form-control" id="lien" name="lien"
+                                    placeholder="https://example.com">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -114,10 +96,12 @@
         </div>
 
         <!-- Modal de modification (existant) -->
-        <div class="modal fade" id="modalModifier" tabindex="-1" aria-labelledby="modalModifierLabel" aria-hidden="true">
+        <div class="modal fade" id="modalModifier" tabindex="-1" aria-labelledby="modalModifierLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form id="formulaire-modifier" method="post" action="<?= url_to('partenairesUpdate') ?>" enctype="multipart/form-data">
+                    <form id="formulaire-modifier" method="post" action="<?= url_to('partenairesUpdate') ?>"
+                        enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" id="modalModifierLabel">Modifier un partenaire</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
