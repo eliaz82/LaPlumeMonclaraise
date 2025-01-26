@@ -21,7 +21,7 @@ class Home extends BaseController
             // Informations nécessaires pour l'authentification Facebook
             $clientId = '603470049247384';
             $clientSecret = '4b2b340247ca62ea1aebc5adb347a359';
-            $redirectUri = 'https://c4d0-2a01-e0a-a49-1340-20d5-21d5-d382-dfe9.ngrok-free.app/'; // URL de redirection
+            $redirectUri = base_url(); // URL de redirection
             $authorizedFacebookId = '122101030388738715'; // ID utilisateur autorisé
 
             // Construire l'URL pour échanger le code contre un token
@@ -65,8 +65,23 @@ class Home extends BaseController
 
         $tokenFacebook = $this->facebookModel->find(1);
 
-        $posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
-        $posts = $posts['data'];
+    // Récupérer les posts
+$posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
+
+// Vérifier si la réponse contient une erreur
+if (isset($posts['error'])) {
+    // En cas d'erreur, afficher un message explicite et éviter de planter
+    return redirect()->to('/')->with('error', 'Impossible de récupérer les publications Facebook. Veuillez réessayer plus tard.');
+}
+
+// Vérifier si les données existent
+if (isset($posts['data']) && is_array($posts['data'])) {
+    $posts = $posts['data'];
+} else {
+    // Si "data" est manquant ou non valide
+    return redirect()->to('/')->with('error', 'Aucune publication trouvée.');
+}
+
         
         $logo = $this->associationModel->find(1);
         return view('accueil', ['logo' => $logo, 'posts' => $posts]);

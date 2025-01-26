@@ -8,7 +8,7 @@ class Facebook extends BaseController
     public function login()
     {
         $clientId = '603470049247384';
-        $redirectUri = 'https://c4d0-2a01-e0a-a49-1340-20d5-21d5-d382-dfe9.ngrok-free.app/'; // Page d'accueil
+        $redirectUri = base_url();
         $scope = 'public_profile,user_posts';
 
         $url = "https://www.facebook.com/v21.0/dialog/oauth?"
