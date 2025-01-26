@@ -71,15 +71,15 @@ $posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,cr
 // Vérifier si la réponse contient une erreur
 if (isset($posts['error'])) {
     // En cas d'erreur, afficher un message explicite et éviter de planter
-    $logo = $this->associationModel->find(1);
-    return view('accueil', ['logo' => $logo, 'posts' => $posts]);}
+    return redirect()->to('/')->with('error', 'Impossible de récupérer les publications Facebook. Veuillez réessayer plus tard.');
+}
 
 // Vérifier si les données existent
 if (isset($posts['data']) && is_array($posts['data'])) {
     $posts = $posts['data'];
 } else {
-    $logo = $this->associationModel->find(1);
-    return view('accueil', ['logo' => $logo, 'posts' => $posts]);
+    // Si "data" est manquant ou non valide
+    return redirect()->to('/')->with('error', 'Aucune publication trouvée.');
 }
 
         
