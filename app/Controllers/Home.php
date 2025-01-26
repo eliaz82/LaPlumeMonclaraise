@@ -65,24 +65,26 @@ class Home extends BaseController
 
         $tokenFacebook = $this->facebookModel->find(1);
 
-    // Récupérer les posts
-$posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
+        // Récupérer les posts
+        $posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
 
-// Vérifier si la réponse contient une erreur
-if (isset($posts['error'])) {
-    // En cas d'erreur, afficher un message explicite et éviter de planter
-    return redirect()->to('/')->with('error', 'Impossible de récupérer les publications Facebook. Veuillez réessayer plus tard.');
-}
+        // Vérifier si la réponse contient une erreur
+        if (isset($posts['error'])) {
+            // En cas d'erreur, afficher un message explicite et éviter de planter
+            $logo = $this->associationModel->find(1);
+            return view('accueil', ['logo' => $logo, 'posts' => $posts]);
+        }
 
-// Vérifier si les données existent
-if (isset($posts['data']) && is_array($posts['data'])) {
-    $posts = $posts['data'];
-} else {
-    // Si "data" est manquant ou non valide
-    return redirect()->to('/')->with('error', 'Aucune publication trouvée.');
-}
+        // Vérifier si les données existent
+        if (isset($posts['data']) && is_array($posts['data'])) {
+            $posts = $posts['data'];
+        } else {
+            // Si "data" est manquant ou non valide
+            $logo = $this->associationModel->find(1);
+            return view('accueil', ['logo' => $logo, 'posts' => $posts]);
+        }
 
-        
+
         $logo = $this->associationModel->find(1);
         return view('accueil', ['logo' => $logo, 'posts' => $posts]);
     }
