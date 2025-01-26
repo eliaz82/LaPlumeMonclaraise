@@ -97,7 +97,7 @@ if (isset($posts['data']) && is_array($posts['data'])) {
         $response = curl_exec($ch);
         if (curl_errno($ch)) {
             curl_close($ch);
-            return false;
+            return ['error' => 'Erreur cURL : ' . curl_error($ch)];
         }
 
         curl_close($ch);
