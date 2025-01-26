@@ -66,7 +66,7 @@ class Home extends BaseController
         $tokenFacebook = $this->facebookModel->find(1);
 
         $posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
-        $posts = $posts['data'];
+        
         
         $logo = $this->associationModel->find(1);
         return view('accueil', ['logo' => $logo, 'posts' => $posts]);
