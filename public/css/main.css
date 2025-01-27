@@ -178,20 +178,35 @@ img.img-fluid {
 
 
 /* boutton envoyer contact*/
+.button-container {
+  display: flex;
+  justify-content: center;
+  /* Centre horizontalement */
+  align-items: center;
+  /* Centre verticalement */
+}
+
 .btn-unique {
   font-family: inherit;
   font-size: 20px;
-  background-color: rgb(29, 34, 67);
-  color: white;
+  background-color: white;
+  /* Fond blanc */
+  color: #1D2243;
+  /* Texte en bleu (le bleu de fond original) */
   padding: 0.7em 1em;
   padding-left: 0.9em;
   display: flex;
   align-items: center;
-  border: none;
+
+  /* Bordure noire */
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.2s;
   cursor: pointer;
+  width: 150px;
+  /* Fixe la largeur du bouton */
+  justify-content: center;
+  /* Centre le contenu horizontalement */
 }
 
 .btn-unique .btn-label {
@@ -231,6 +246,7 @@ img.img-fluid {
     transform: translateY(-0.1em);
   }
 }
+
 
 /*boutton reseaux layout*/
 
@@ -470,10 +486,112 @@ img.img-fluid {
   font-size: 24px;
   text-transform: uppercase;
 }
+
 .carousel-cell {
-  width: 400px;    /* Largeur fixe pour chaque cellule */
-  height: 500px;   /* Hauteur fixe pour chaque cellule */
+  width: 400px;
+  /* Largeur fixe pour chaque cellule */
+  height: 500px;
+  /* Hauteur fixe pour chaque cellule */
 }
+
 .fb-post {
   width: 100px;
+}
+
+/* Styles pour le formulaire de contact */
+/* Agrandissement global du formulaire */
+.contact-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  /* Plus large pour occuper plus d'espace */
+  margin: 0 auto;
+  /* Centré */
+  padding: 2em;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  /* Espacement plus grand entre les champs */
+  padding: 2.5em;
+  /* Plus de padding interne */
+  background-color: #1D2243;
+  border-radius: 25px;
+  transition: 0.4s ease-in-out;
+  width: 100%;
+  
+}
+
+#contact-heading {
+  text-align: center;
+  margin-bottom: 1.5em;
+  color: #ffffff;
+  font-size: 2em;
+  /* Plus grand pour attirer l'attention */
+}
+
+.contact-field {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  /* Plus d'espace entre l'icône et le champ */
+  border-radius: 25px;
+  padding: 0.8em 1em;
+  /* Champs plus spacieux */
+  background-color: #ffffff;
+  box-shadow: inset 2px 5px 10px rgb(231, 231, 231);
+}
+
+.contact-icon {
+  height: 1.8em;
+  /* Icônes plus grandes */
+  width: 1.8em;
+  fill: white;
+}
+
+.contact-input,
+.contact-textarea {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  /* Champs s'adaptent à la largeur */
+  color: #d3d3d3;
+  font-size: 1.1em;
+  /* Texte légèrement plus grand */
+  padding: 0.5em;
+  /* Plus d'espace interne */
+}
+
+.contact-textarea {
+  resize: none;
+  height: 150px;
+  /* Zone de texte plus haute par défaut */
+}
+
+.contact-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5em;
+}
+
+.contact-btn-submit {
+  padding: 0.7em 2em;
+  /* Bouton plus grand */
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  transition: 0.4s ease-in-out;
+  background-color: #252525;
+  color: white;
+  font-size: 1.2em;
+}
+
+.contact-btn-submit:hover {
+  background-color: black;
+  color: white;
 }
