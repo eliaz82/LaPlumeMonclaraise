@@ -67,7 +67,7 @@ class Home extends BaseController
 
         // Récupérer les posts
         $posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
-
+  
         // Vérifier si la réponse contient une erreur
         if (isset($posts['error'])) {
             // En cas d'erreur, afficher un message explicite et éviter de planter
