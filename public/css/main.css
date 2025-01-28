@@ -500,57 +500,79 @@ img.img-fluid {
 
 /* Styles pour le formulaire de contact */
 /* Agrandissement global du formulaire */
+.contact-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* Aligne les éléments en haut */
+  gap: 2rem;
+  /* Espacement entre le formulaire et l'image */
+  padding: 2em;
+}
+
+.contact-image {
+  flex: none;
+  /* Empêche l'image de se redimensionner automatiquement */
+  width: 400px;
+  /* Largeur fixe */
+  height: 600px;
+  /* Hauteur fixe */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contact-image img {
+  width: 100%;
+  /* L'image occupe toute la largeur du conteneur */
+  height: 100%;
+  /* L'image occupe toute la hauteur du conteneur */
+  object-fit: cover;
+  /* Garde une belle proportion visuelle */
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .contact-container {
+  flex: none;
+  /* Empêche le formulaire de s'étirer automatiquement */
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1.5em;
+  background-color: #1D2243;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  /* Augmente la largeur maximale du formulaire */
   width: 100%;
-  max-width: 800px;
-  /* Plus large pour occuper plus d'espace */
-  margin: 0 auto;
-  /* Centré */
-  padding: 2em;
+  /* Le formulaire s'adapte à la largeur disponible */
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  /* Espacement plus grand entre les champs */
-  padding: 2.5em;
-  /* Plus de padding interne */
-  background-color: #1D2243;
-  border-radius: 25px;
-  transition: 0.4s ease-in-out;
+  gap: 10px;
+  /* Espacement entre les champs */
   width: 100%;
-  
+  /* Champs prennent toute la largeur du formulaire */
 }
 
 #contact-heading {
   text-align: center;
-  margin-bottom: 1.5em;
+  margin-bottom: 1em;
   color: #ffffff;
-  font-size: 2em;
-  /* Plus grand pour attirer l'attention */
+  font-size: 1.5em;
 }
 
 .contact-field {
   display: flex;
   align-items: center;
   gap: 1em;
-  /* Plus d'espace entre l'icône et le champ */
-  border-radius: 25px;
-  padding: 0.8em 1em;
-  /* Champs plus spacieux */
+  border-radius: 20px;
+  padding: 0.5em 1em;
   background-color: #ffffff;
-  box-shadow: inset 2px 5px 10px rgb(231, 231, 231);
-}
-
-.contact-icon {
-  height: 1.8em;
-  /* Icônes plus grandes */
-  width: 1.8em;
-  fill: white;
+  box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
 }
 
 .contact-input,
@@ -559,39 +581,47 @@ img.img-fluid {
   border: none;
   outline: none;
   width: 100%;
-  /* Champs s'adaptent à la largeur */
-  color: #d3d3d3;
-  font-size: 1.1em;
-  /* Texte légèrement plus grand */
-  padding: 0.5em;
-  /* Plus d'espace interne */
+  color: #333333;
+  font-size: 0.9em;
+  padding: 0.4em;
 }
 
 .contact-textarea {
   resize: none;
-  height: 150px;
-  /* Zone de texte plus haute par défaut */
+  height: 100px;
 }
 
-.contact-btn-container {
+.button-container {
   display: flex;
   justify-content: center;
-  margin-top: 2.5em;
+  margin-top: 1em;
 }
 
-.contact-btn-submit {
+.btn-unique {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Centrer le texte dans le bouton */
+  gap: 10px;
   padding: 0.7em 2em;
-  /* Bouton plus grand */
-  border-radius: 10px;
+  /* Ajuster la taille du bouton */
+  background-color: #ffffff;
+  /* Fond blanc */
+  color: #1D2243;
+  /* Texte en couleur sombre pour contraster avec le fond blanc */
+  font-size: 1.1em;
+  /* Taille de texte ajustée pour plus de lisibilité */
   border: none;
-  outline: none;
+  border-radius: 25px;
   transition: 0.4s ease-in-out;
-  background-color: #252525;
-  color: white;
-  font-size: 1.2em;
+  white-space: nowrap;
+  /* Empêche le texte de se couper sur une nouvelle ligne */
 }
 
-.contact-btn-submit:hover {
-  background-color: black;
-  color: white;
+.btn-unique:hover {
+  background-color: #ffffff;
+  color: rgb(31, 31, 31);
+  /* Le texte devient blanc au survol */
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
 }

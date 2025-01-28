@@ -35,59 +35,62 @@
 
 
     <!-- Contact Form -->
-    <div class="contact-container">
+    <div class="contact-wrapper">
+        <div class="contact-image">
+            <img src="image/terrain.jpg" alt="Image illustrative" />
+        </div>
+        <div class="contact-container">
+            <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
+                <p id="contact-heading">Contactez-nous</p>
 
-        <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
-            <p id="contact-heading">Contactez-nous</p>
+                <div class="contact-field">
+                    <input autocomplete="off" placeholder="Nom" id="name" name="name" class="contact-input" type="text"
+                        required>
+                </div>
 
-            <div class="contact-field">
-                <input autocomplete="off" placeholder="Nom" id="name" name="name" class="contact-input" type="text"
-                    required>
-            </div>
+                <div class="contact-field">
+                    <input autocomplete="off" placeholder="Téléphone" id="phone" name="phone" class="contact-input"
+                        type="text" required>
+                </div>
 
-            <div class="contact-field">
-                <input autocomplete="off" placeholder="Téléphone" id="phone" name="phone" class="contact-input"
-                    type="text" required>
-            </div>
+                <div class="contact-field">
+                    <input autocomplete="off" placeholder="Email" id="email" name="email" class="contact-input"
+                        type="email" required>
+                </div>
 
-            <div class="contact-field">
-                <input autocomplete="off" placeholder="Email" id="email" name="email" class="contact-input" type="email"
-                    required>
-            </div>
+                <div class="contact-field">
+                    <input autocomplete="off" placeholder="Objet" id="subject" name="subject" class="contact-input"
+                        type="text" required>
+                </div>
 
-            <div class="contact-field">
-                <input autocomplete="off" placeholder="Objet" id="subject" name="subject" class="contact-input"
-                    type="text" required>
-            </div>
+                <div class="contact-field">
+                    <textarea autocomplete="off" placeholder="Message" id="message" name="message" rows="5"
+                        class="contact-textarea" required></textarea>
+                </div>
 
-            <div class="contact-field">
-                <textarea autocomplete="off" placeholder="Message" id="message" name="message" rows="5"
-                    class="contact-textarea" required></textarea>
-            </div>
-
-            <div class="button-container">
-                <button class="btn-unique">
-                    <div class="icon-wrapper-outer">
-                        <div class="icon-wrapper-inner">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                <path fill="none" d="M0 0h24v24H0z"></path>
-                                <path fill="currentColor"
-                                    d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z">
-                                </path>
-                            </svg>
+                <div class="button-container">
+                    <button class="btn-unique">
+                        <div class="icon-wrapper-outer">
+                            <div class="icon-wrapper-inner">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                    <path fill="currentColor"
+                                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z">
+                                    </path>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <span class="btn-label">Envoyer</span>
+                        <span class="btn-label">Envoyer</span>
+                    </button>
+                </div>
+                <button id="bouton-modifier-contact" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                    data-bs-target="#modalModifierContact">
+                    <i class="fa fa-edit" aria-hidden="true"></i> Modifier e-mail de contact
                 </button>
-            </div>
-            <button id="bouton-modifier-contact" class="btn btn-primary mb-3" data-bs-toggle="modal"
-                data-bs-target="#modalModifierContact">
-                <i class="fa fa-edit" aria-hidden="true"></i> Modifier e-mail de contact
-            </button>
-
-
-        </form>
+            </form>
+        </div>
     </div>
+
 </div>
 
 <?= $this->endSection() ?>
