@@ -4,10 +4,6 @@
 
 <div class="container">
 
-    <!-- Contact update -->
-    <!-- Bouton pour ouvrir le modal -->
-
-
     <!-- Modal de modification de l'e-mail de contact -->
     <div class="modal fade" id="modalModifierContact" tabindex="-1" aria-labelledby="modalModifierContactLabel"
         aria-hidden="true">

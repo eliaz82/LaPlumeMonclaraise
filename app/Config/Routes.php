@@ -38,10 +38,11 @@ $routes->post('equipe-delete', 'FusionAssociation::equipeDelete', ['as' => 'equi
 // ------------------------------------------- albums -------------------------------------------
 $routes->get('albums-photo', 'AlbumsPhoto::AlbumsPhoto', ['as' => 'albumsPhoto']);
 $routes->post('albums-photo-create', 'AlbumsPhoto::createAlbumsPhoto', ['as' => 'createAlbumsPhoto']);
-$routes->post('albums-photo-delete', 'Adherants::AlbumsPhotoDelete', ['as' => 'albumsPhotoDelete']);
+$routes->post('albums-photo-update', 'AlbumsPhoto::updateAlbumsPhoto', ['as' => 'updateAlbumsPhoto']);
+$routes->post('albums-photo-delete', 'AlbumsPhoto::AlbumsPhotoDelete', ['as' => 'albumsPhotoDelete']);
 
 // ------------------------------------------- albumsPhotos -------------------------------------------
-$routes->get('albums-photo/(:num)', 'AlbumsPhoto::photo/$1', ['as' => 'photo']);
+$routes->get('albums-photo/(:any)', 'AlbumsPhoto::photo/$1', ['as' => 'photo']);
 $routes->post('albums-photo/(:num)/create', 'AlbumsPhoto::createPhoto', ['as' => 'createPhoto']);
 $routes->post('albums-photo/(:num)/delete', 'AlbumsPhoto::photoDelete', ['as' => 'photoDelete']);
 
