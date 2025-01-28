@@ -1,12 +1,7 @@
 <section id="partenaire">
     <div>
 
-        <!-- Titre principal -->
-        <div class="text-center mb-5">
-            <h1 class="display-5 fw-bold text-primary">Gestion des Partenaires</h1>
-            <p class="text-muted">Ajoutez, modifiez ou supprimez vos partenaires en toute simplicité.</p>
-        </div>
-
+       
         <!-- Bouton d'ouverture du modal pour ajouter un partenaire -->
         <div class="text-center mb-4">
             <button id="bouton-ajouter-partenaire" class="btn btn-primary btn-lg shadow-sm" data-bs-toggle="modal"

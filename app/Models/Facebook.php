@@ -4,6 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
+
 class Facebook extends Model
 {
     protected $table = 'facebook';

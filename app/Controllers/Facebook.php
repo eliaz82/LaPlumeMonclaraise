@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+
 class Facebook extends BaseController
 {
     // Étape 1 : Redirection vers Facebook pour authentification

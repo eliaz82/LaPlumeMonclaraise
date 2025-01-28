@@ -1,11 +1,6 @@
 <section id="equipe">
     <div>
 
-        <!-- Titre principal -->
-        <div class="text-center mb-4">
-            <h1 class="display-5 fw-bold text-primary">Gestion des Adhérents</h1>
-            <p class="text-muted">Ajoutez, modifiez ou supprimez les membres de votre association facilement.</p>
-        </div>
 
         <!-- Bouton d'ajout -->
         <div class="text-center mb-4">
@@ -16,6 +11,7 @@
         </div>
 
         <!-- Modal d'ajout -->
+        <h2 class="text-center mb-4">Nos adhérant</h2>
         <div class="modal fade" id="modalAjouterAdherent" tabindex="-1" aria-labelledby="modalAjouterAdherentLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
