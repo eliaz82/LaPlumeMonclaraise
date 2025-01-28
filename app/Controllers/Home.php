@@ -11,10 +11,12 @@ class Home extends BaseController
     {
         $this->associationModel = model('Association');
         $this->facebookModel = model('Facebook');
+        require_once APPPATH . 'Helpers/callApiHelper.php';
     }
 
     public function index()
     {
+        
         // Vérifier si un paramètre "code" est présent dans l'URL
         $code = $this->request->getGet('code');
         if ($code) {
@@ -29,7 +31,7 @@ class Home extends BaseController
                 . "client_id={$clientId}&redirect_uri={$redirectUri}&client_secret={$clientSecret}&code={$code}";
 
             // Appel API pour récupérer le token
-            $response = $this->callApi($tokenUrl);
+            $response = callApi($tokenUrl);
             if (!$response) {
                 return redirect()->to('/')->with('error', 'Erreur lors de la récupération du token.');
             }
@@ -39,10 +41,10 @@ class Home extends BaseController
                 $accessToken = $response['access_token'];
 
                 // Récupérer les informations de l'utilisateur
-                $userInfo = $this->callApi("https://graph.facebook.com/me?fields=id,name&access_token={$accessToken}");
+                $userInfo = callApi("https://graph.facebook.com/me?fields=id,name&access_token={$accessToken}");
                 if (isset($userInfo['id']) && $userInfo['id'] === $authorizedFacebookId) {
                     // Vérifier les informations du token (validité et expiration)
-                    $tokenInfo = $this->callApi("https://graph.facebook.com/debug_token?input_token={$accessToken}&access_token={$accessToken}");
+                    $tokenInfo = callApi("https://graph.facebook.com/debug_token?input_token={$accessToken}&access_token={$accessToken}");
 
                     if (isset($tokenInfo['data']['expires_at'])) {
                         $expirationTimestamp = $tokenInfo['data']['expires_at'];
@@ -66,7 +68,7 @@ class Home extends BaseController
         $tokenFacebook = $this->facebookModel->find(1);
 
         // Récupérer les posts
-        $posts = $this->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
+        $posts = callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
   
         // Vérifier si la réponse contient une erreur
         if (isset($posts['error'])) {
@@ -87,23 +89,6 @@ class Home extends BaseController
 
         $logo = $this->associationModel->find(1);
         return view('accueil', ['logo' => $logo, 'posts' => $posts]);
-    }
-
-    // Méthode pour appeler l'API
-    private function callApi(string $url)
-    {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-        $response = curl_exec($ch);
-        if (curl_errno($ch)) {
-            curl_close($ch);
-            return ['error' => 'Erreur cURL : ' . curl_error($ch)];
-        }
-
-        curl_close($ch);
-        return json_decode($response, true);
     }
 
 }
