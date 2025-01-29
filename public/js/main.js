@@ -39,7 +39,20 @@ $(document).ready(function () {
             $('#modifierLogoPreview').attr('src', logo).show();
         }
     });
+    $('.bouton-modifier-album').click(function () {
+        const date = $(this).data('date');
+        const nom = $(this).data('nom');
+        const photo = $(this).data('photo');
 
+        $('#modifier-date-album').val(date); 
+        $('#modifier-nom-album').val(nom); 
+
+        if (photo) {
+            $('#modifierPhotoPreviewAlbum').attr('src', photo).show();
+        } else {
+            $('#modifierPhotoPreviewAlbum').hide();
+        }
+    });
 });
 
 // Fonction de prévisualisation d'image

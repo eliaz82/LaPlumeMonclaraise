@@ -8,12 +8,11 @@ class Albumsphoto extends Model
 {
     protected $table            = 'albumsphoto';
     protected $primaryKey       = 'dateAlbums';
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['idAssociation','nom','photo'];
-
+    protected $allowedFields    = ['dateAlbums', 'idAssociation', 'nom', 'photo'];
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
 
