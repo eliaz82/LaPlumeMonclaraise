@@ -84,7 +84,7 @@
                         <form action="<?= route_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
                             <input type="hidden" name="idAlbums" value="<?= $album['idAlbums'] ?>">
                             <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce album photo ?');">Supprimer</button>
+                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet album photo et toutes ses photos associées ?');">Supprimer</button>
                         </form>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                <input type="hidden" id="modifier-id-album" name="idAlbums">
+                    <input type="hidden" id="modifier-id-album" name="idAlbums">
                     <!-- Champ pour la dateAlbums -->
                     <div class="mb-3">
                         <label for="modifier-date-album" class="form-label">Date de l'album</label>

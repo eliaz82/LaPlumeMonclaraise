@@ -62,6 +62,14 @@ class AlbumsPhoto extends BaseController
         $idAlbums = $this->request->getPost('idAlbums');
         $album = $this->albumsPhoto->find($idAlbums);
 
+        $photos = $this->photoModel->where('idAlbums', $idAlbums)->findAll();
+        foreach ($photos as $photo) {
+            if (!empty($photo['photo']) && file_exists(FCPATH . $photo['photo']) && is_writable(FCPATH . $photo['photo'])) {
+                unlink(FCPATH . $photo['photo']);
+            }
+        }
+        $this->photoModel->where('idAlbums', $idAlbums)->delete();
+
         if (!empty($album['photo']) && file_exists(FCPATH . $album['photo'])) {
             unlink(FCPATH . $album['photo']);
         }
@@ -70,18 +78,18 @@ class AlbumsPhoto extends BaseController
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été supprimé avec succès.");
     }
 
-       public function photo($idAlbums)
-       {
-           $photos = $this->photoModel->findPhotobyAlbumsPhotoId($idAlbums);
-       
-           $album = $this->albumsPhoto->find($idAlbums); 
-       
-           if (empty($photos)) {
-               $photos = [];
-           }
-       
-           return view('photo', ['photos' => $photos, 'idAlbums' => $idAlbums, 'album' => $album]);
-       }
+    public function photo($idAlbums)
+    {
+        $photos = $this->photoModel->findPhotobyAlbumsPhotoId($idAlbums);
+
+        $album = $this->albumsPhoto->find($idAlbums);
+
+        if (empty($photos)) {
+            $photos = [];
+        }
+
+        return view('photo', ['photos' => $photos, 'idAlbums' => $idAlbums, 'album' => $album]);
+    }
     public function createPhoto()
     {
         $idAlbums = $this->request->getPost('idAlbums');
@@ -89,15 +97,15 @@ class AlbumsPhoto extends BaseController
         $photo = $this->request->getFile('photo');
 
         if ($photo && $photo->isValid()) {
-            $filePath = FCPATH . 'uploads/albumsPhoto/';
+            $filePath = FCPATH . 'uploads/photos/';
             $photo->move($filePath);
-            $photoData['photo'] = 'uploads/albumsPhoto/' . $photo->getName();
-            $photoData['idAlbums'] = $idAlbums; 
+            $photoData['photo'] = 'uploads/photos/' . $photo->getName();
+            $photoData['idAlbums'] = $idAlbums;
         }
 
         $this->photoModel->insert($photoData);
 
-        return redirect()->to('/albums-photo/' . $idAlbums)->with('success', 'Photo ajoutée avec succès.');
+        return redirect()->to("/albums-photo/{$idAlbums}")->with('success', 'Photo ajoutée avec succès.');
     }
 
     public function photoDelete()
@@ -111,6 +119,6 @@ class AlbumsPhoto extends BaseController
 
         $this->photoModel->delete($idPhoto);
 
-        return redirect()->to('/albums-photo/' . $photo['idAlbums'])->with('success', 'Photo supprimée avec succès.');
+        return redirect()->to("/albums-photo/{$photo['idAlbums']}")->with('success', 'Photo supprimée avec succès.');
     }
 }
