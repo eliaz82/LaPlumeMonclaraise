@@ -73,7 +73,7 @@
                         </p>
                     </div>
                     <div class="card-footer text-end">
-                    <a href="<?= base_url('albums-photo/' . $album['dateAlbums']) ?>" class="btn btn-primary">Voir l'album</a>
+                    <a href="<?= base_url('albums-photo/' . $album['idAlbums']) ?>" class="btn btn-primary">Voir l'album</a>
                         <button class="btn btn-warning btn-sm me-2 bouton-modifier-album"
                             data-date="<?= $album['dateAlbums'] ?>" data-nom="<?= $album['nom'] ?>"
                             data-photo="<?= base_url($album['photo']) ?>" data-bs-toggle="modal"
@@ -104,7 +104,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Champ pour la dateAlbums (clé primaire) -->
+                    <!-- Champ pour la dateAlbums -->
                     <div class="mb-3">
                         <label for="modifier-date-album" class="form-label">Date de l'album</label>
                         <input type="date" class="form-control" id="modifier-date-album" name="dateAlbums" required>

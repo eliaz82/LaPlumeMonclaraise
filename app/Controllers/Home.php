@@ -18,7 +18,6 @@ class Home extends BaseController
     public function index()
     {
         
-        // Vérifier si un paramètre "code" est présent dans l'URL
         $code = $this->request->getGet('code');
         if ($code) {
             // Informations nécessaires pour l'authentification Facebook
