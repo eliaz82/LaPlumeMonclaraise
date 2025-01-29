@@ -2,77 +2,95 @@
 
 namespace App\Controllers;
 
+use App\Libraries\CallApi;
 
 class Facebook extends BaseController
 {
-    // Étape 1 : Redirection vers Facebook pour authentification
-    public function login()
+    private $associationModel;
+    private $facebookModel;
+    private $callApi;
+
+    public function __construct()
     {
-        $clientId = '603470049247384';
-        $redirectUri = base_url();
-        $scope = 'public_profile,user_posts';
-
-        $url = "https://www.facebook.com/v21.0/dialog/oauth?"
-            . "client_id={$clientId}&redirect_uri={$redirectUri}&scope={$scope}&response_type=code";
-
-        return redirect()->to($url);
+        $this->associationModel = model('Association');
+        $this->facebookModel = model('Facebook');
+        $this->callApi = new CallApi();
     }
-    public function sendEmail()
+
+    // Fonction pour récupérer les posts depuis Facebook
+    public function getFacebookPosts()
     {
-        $toEmail = 'emmanuel.basck@gmail.com'; 
-        $subject = 'Lien de connexion à Facebook pour l\'association';
-        
-        // Récupérer l'URL avec les informations de ton application
-        $loginUrl = "https://www.facebook.com/v21.0/dialog/oauth?client_id=603470049247384&redirect_uri=https://c4d0-2a01-e0a-a49-1340-20d5-21d5-d382-dfe9.ngrok-free.app/&scope=public_profile,user_posts&response_type=code";
-       
-        // Le contenu de l'email
-        $message = "<p>Bonjour,</p>";
-        $message .= "<p>Pour vous connecter à notre association, veuillez utiliser ce lien :</p>";
-        $message .= "<p><a href='{$loginUrl}'>Cliquez ici pour vous connecter</a></p>";
-        $message .= "<p>Merci de votre participation !</p>";
+        $tokenFacebook = $this->facebookModel->find(1);
 
-        // Configurer l'email
-        $email = \Config\Services::email();
-        $email->setFrom('ton_email@example.com', 'Nom de l\'association');
-        $email->setTo($toEmail);
-        $email->setSubject($subject);
-        $email->setMessage($message);
-
-        // Envoyer l'email
-        if ($email->send()) {
-            return 'L\'email a été envoyé avec succès.';
-        } else {
-            return 'Erreur lors de l\'envoi de l\'email.';
-        }
-    }
-  
-    public function getPosts()
-    {
-        $accessToken = 'EAAIk2lHrAJgBOzyxzUzbXFBZA4D0LpBbqQS46lXjoPeWGbkHG0zvsd8TZBHAawMzU2JgUBgheB2bAo30Lvkbcu6mnqE7wBA2xYWc3xO5F1qnGiGBjBsaZB3ZCsLFB0uoEObSX0e0LocTrjEnyKg6zbKDPMa1rfB7gRXCA3cizZBT4TxRVWrgIXFHZB5jXW1OLD2HGebEqBZBzi7ZAw7MCaAm7yUvmmoqzlLGJVflRIUIXa7qQpefHrIbkXYtkPZBy';
-        $endpoint = 'https://graph.facebook.com/v21.0/me/posts?fields=message,created_time,permalink_url&access_token=' . $accessToken;
-
-        // Appel cURL
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $endpoint);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            $error = 'Erreur cURL : ' . curl_error($ch);
-            curl_close($ch);
-            return $this->response->setBody($error);
+        // Vérifier si le token Facebook est disponible
+        if (!$tokenFacebook || empty($tokenFacebook['tokenFacebook'])) {
+            die("Erreur : Token Facebook non trouvé !");
         }
 
-        curl_close($ch);
+        // Construire l'URL pour récupérer les posts
+        $url = "https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}";
 
-        $data = json_decode($response, true);
+        // Appeler l'API pour récupérer les posts
+        $posts = $this->callApi->callApi($url);
 
-        // Vérification des erreurs dans la réponse
+        // Vérifier si la réponse est valide (JSON)
+        $data = json_decode($posts, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            die("Erreur lors du décodage JSON : " . json_last_error_msg());
+        }
+
+        // Vérifier s'il y a des erreurs dans la réponse de l'API
         if (isset($data['error'])) {
-            return $this->response->setBody('Erreur API : ' . $data['error']['message']);
+            die("Erreur API Facebook : " . $data['error']['message']);
         }
 
-        // Afficher les publications en JSON pour debug
-        return $this->response->setJSON($data);
+        // Debug : afficher la réponse de l'API pour vérifier la structure
+        log_message('debug', 'Réponse de l\'API Facebook : ' . print_r($data, true));
+
+        return $data['data'] ?? []; // Retourne un tableau de posts ou un tableau vide
     }
+
+
+    // Filtrage des posts par hashtags enregistrés
+    public function filterPostsByHashtag()
+    {
+        // Récupérer les hashtags enregistrés et leurs pages associées
+        $registeredHashtags = $this->facebookModel->select('hastag, pageName')->findAll();
+
+        // Récupérer les posts Facebook
+        $posts = $this->getFacebookPosts();
+        $filteredPosts = [];
+
+        foreach ($posts as $post) {
+            if (!isset($post['message'])) {
+                continue; // Ignore les posts sans message
+            }
+
+            // Filtrer les posts par hashtags
+            foreach ($registeredHashtags as $entry) {
+                $hashtag = trim($entry['hastag'], "#"); // Supprimer # si présent en base de données
+                $pageName = $entry['pageName'];
+
+                if (stripos($post['message'], "#$hashtag") !== false) {
+                    $filteredPosts[$pageName][] = $post;
+                }
+            }
+        }
+
+        return $filteredPosts;
+    }
+
+    // Affichage de la vue des posts filtrés par page
+    public function showView($pageName)
+    {
+        $filteredPosts = $this->filterPostsByHashtag();
+        $posts = $filteredPosts[$pageName] ?? []; // Récupérer les posts filtrés pour la page demandée
+
+        return view('facebook/' . $pageName, [
+            'posts' => $posts,
+            'pageName' => $pageName // Assurer que la variable pageName est envoyée à la vue
+        ]);
+    }
+
 }

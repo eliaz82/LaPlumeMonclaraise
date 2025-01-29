@@ -66,3 +66,5 @@ $routes->get('/favicon.ico', function () {
 $routes->get('/login', 'Facebook::login');
 $routes->get('/posts', 'Facebook::getPosts');
 $routes->get('send-email', 'Facebook::sendEmail');
+
+$routes->get('/facebook/(:segment)', 'Facebook::showView/$1');
