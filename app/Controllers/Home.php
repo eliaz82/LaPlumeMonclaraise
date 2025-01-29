@@ -51,7 +51,7 @@ class Home extends BaseController
                         $expirationTimestamp = $tokenInfo['data']['expires_at'];
                         $expirationDate = date('Y-m-d', $expirationTimestamp);
                         $daysRemaining = ceil(($expirationTimestamp - time()) / (60 * 60 * 24));
-                        $this->facebookModel->update(1, [
+                        $this->associationModel->update(1, [
                             'tokenFacebook' => $accessToken,
                             'tokenExpirationDate' => $expirationDate
                         ]);
@@ -66,7 +66,7 @@ class Home extends BaseController
             return redirect()->to('/')->with('error', 'Erreur dans la réponse de Facebook.');
         }
 
-        $tokenFacebook = $this->facebookModel->find(1);
+        $tokenFacebook = $this->associationModel->find(1);
 
         // Récupérer les posts
         $posts =  $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");

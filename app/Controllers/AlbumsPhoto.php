@@ -30,13 +30,12 @@ class AlbumsPhoto extends BaseController
 
         $this->albumsPhoto->update($dateAlbums, ['photo' => $photoUrl]);
         return redirect()->route('albumsPhoto')->with('success', 'L\'album photo a été ajouté avec succès.');
-
     }
     public function updateAlbumsPhoto()
     {
         $dateAlbums = $this->request->getPost('dateAlbums');
         $data = $this->request->getPost();
-
+    
         $album = $this->albumsPhoto->find($dateAlbums);
         $photo = $this->request->getFile('photo');
 
@@ -65,6 +64,8 @@ class AlbumsPhoto extends BaseController
         $this->albumsPhoto->delete($dateAlbums);
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été supprimé avec succès.");
     }
+
+
     public function photo($dateAlbums)
     {
         return view('photo');

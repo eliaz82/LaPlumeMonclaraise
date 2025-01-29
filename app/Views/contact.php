@@ -37,7 +37,7 @@
     <!-- Contact Form -->
     <div class="contact-wrapper">
         <div class="contact-image">
-            <img src="image/terrain.jpg" alt="Image illustrative" />
+            <img src="image/b.webp" alt="Image illustrative" />
         </div>
         <div class="contact-container">
             <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
