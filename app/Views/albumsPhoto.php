@@ -73,15 +73,16 @@
                         </p>
                     </div>
                     <div class="card-footer text-end">
-                    <a href="<?= base_url('albums-photo/' . $album['idAlbums']) ?>" class="btn btn-primary">Voir l'album</a>
+                        <a href="<?= base_url('albums-photo/' . $album['idAlbums']) ?>" class="btn btn-primary">Voir
+                            l'album</a>
                         <button class="btn btn-warning btn-sm me-2 bouton-modifier-album"
-                            data-date="<?= $album['dateAlbums'] ?>" data-nom="<?= $album['nom'] ?>"
-                            data-photo="<?= base_url($album['photo']) ?>" data-bs-toggle="modal"
-                            data-bs-target="#modalModifierAlbum">
+                            data-idalbums="<?= $album['idAlbums'] ?>" data-date="<?= $album['dateAlbums'] ?>"
+                            data-nom="<?= $album['nom'] ?>" data-photo="<?= base_url($album['photo']) ?>"
+                            data-bs-toggle="modal" data-bs-target="#modalModifierAlbum">
                             Modifier
                         </button>
                         <form action="<?= route_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
-                            <input type="hidden" name="dateAlbums" value="<?= $album['dateAlbums'] ?>">
+                            <input type="hidden" name="idAlbums" value="<?= $album['idAlbums'] ?>">
                             <button type="submit" class="btn btn-danger btn-sm"
                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce album photo ?');">Supprimer</button>
                         </form>
@@ -104,6 +105,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                <input type="hidden" id="modifier-id-album" name="idAlbums">
                     <!-- Champ pour la dateAlbums -->
                     <div class="mb-3">
                         <label for="modifier-date-album" class="form-label">Date de l'album</label>
