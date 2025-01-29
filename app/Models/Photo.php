@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class Photo extends Model
 {
-    protected $table            = 'photos';
+    protected $table            = 'photo';
     protected $primaryKey       = 'idPhoto';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
@@ -43,4 +43,12 @@ class Photo extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function findPhotobyAlbumsPhotoId($idAlbums)
+    {
+        return $this
+            ->select('idPhoto, idAlbums, photo')
+            ->where('idAlbums', $idAlbums)
+            ->findAll();
+    }
 }
