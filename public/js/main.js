@@ -40,19 +40,22 @@ $(document).ready(function () {
         }
     });
     $('.bouton-modifier-album').click(function () {
+        const idAlbums = $(this).data('idalbums'); // Récupération de l'ID
         const date = $(this).data('date');
         const nom = $(this).data('nom');
         const photo = $(this).data('photo');
-
-        $('#modifier-date-album').val(date); 
-        $('#modifier-nom-album').val(nom); 
-
+    
+        $('#modifier-id-album').val(idAlbums); // Remplissage du champ caché
+        $('#modifier-date-album').val(date);
+        $('#modifier-nom-album').val(nom);
+    
         if (photo) {
             $('#modifierPhotoPreviewAlbum').attr('src', photo).show();
         } else {
             $('#modifierPhotoPreviewAlbum').hide();
         }
     });
+    
 });
 
 // Fonction de prévisualisation d'image
