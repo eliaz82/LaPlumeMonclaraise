@@ -44,9 +44,4 @@ class Facebook extends Model
     protected $afterFind = [];
     protected $beforeDelete = [];
     protected $afterDelete = [];
-
-    public function getRegisteredHashtags()
-    {
-        return $this->select('hastag, pageName')->findAll(); // Récupère seulement les hashtags et les pages
-    }
 }
