@@ -10,7 +10,8 @@ class AlbumsPhoto extends BaseController
     {
         $this->albumsPhoto = model('AlbumsPhoto');
     }
-    public function AlbumsPhoto(): string
+
+    public function albumsPhoto(): string
     {
         $albumsPhotos = $this->albumsPhoto->findAll();
         return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos]);
@@ -18,24 +19,24 @@ class AlbumsPhoto extends BaseController
 
     public function createAlbumsPhoto()
     {
-        $albumPhoto = $this->request->getPost();
-        $dateAlbums = $this->request->getPost('dateAlbums');
+        $albumPhotoData = $this->request->getPost();
         $photo = $this->request->getFile('photo');
 
-        $filePath = FCPATH . 'uploads/albumsPhoto/';
-        $photo->move($filePath);
-        $photoUrl = 'uploads/albumsPhoto/' . $photo->getName();
+        if ($photo && $photo->isValid()) {
+            $filePath = FCPATH . 'uploads/albumsPhoto/';
+            $photo->move($filePath);
+            $albumPhotoData['photo'] = 'uploads/albumsPhoto/' . $photo->getName();
+        }
 
-        $this->albumsPhoto->insert($albumPhoto);
-
-        $this->albumsPhoto->update($dateAlbums, ['photo' => $photoUrl]);
-        return redirect()->route('albumsPhoto')->with('success', 'L\'album photo a été ajouté avec succès.');
+        $this->albumsPhoto->insert($albumPhotoData);
+        return redirect()->route('albumsPhoto')->with('success', "L'album photo a été ajouté avec succès.");
     }
+
     public function updateAlbumsPhoto()
     {
         $idAlbums = $this->request->getPost('idAlbums');
         $data = $this->request->getPost();
-    
+
         $album = $this->albumsPhoto->find($idAlbums);
         $photo = $this->request->getFile('photo');
 
@@ -51,23 +52,24 @@ class AlbumsPhoto extends BaseController
         }
 
         $this->albumsPhoto->update($idAlbums, $data);
-
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été modifié avec succès.");
     }
-    public function AlbumsPhotoDelete()
+
+    public function albumsPhotoDelete()
     {
         $idAlbums = $this->request->getPost('idAlbums');
         $album = $this->albumsPhoto->find($idAlbums);
+
         if (!empty($album['photo']) && file_exists(FCPATH . $album['photo'])) {
             unlink(FCPATH . $album['photo']);
         }
+
         $this->albumsPhoto->delete($idAlbums);
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été supprimé avec succès.");
     }
 
-
-    public function photo($dateAlbums)
+    public function photo($idAlbums)
     {
-        return view('photo');
+        return view('photo', ['idAlbums' => $idAlbums]);
     }
 }
