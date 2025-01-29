@@ -33,10 +33,10 @@ class AlbumsPhoto extends BaseController
     }
     public function updateAlbumsPhoto()
     {
-        $dateAlbums = $this->request->getPost('dateAlbums');
+        $idAlbums = $this->request->getPost('idAlbums');
         $data = $this->request->getPost();
     
-        $album = $this->albumsPhoto->find($dateAlbums);
+        $album = $this->albumsPhoto->find($idAlbums);
         $photo = $this->request->getFile('photo');
 
         if ($photo && $photo->isValid()) {
@@ -50,18 +50,18 @@ class AlbumsPhoto extends BaseController
             $data['photo'] = $photoUrl;
         }
 
-        $this->albumsPhoto->update($dateAlbums, $data);
+        $this->albumsPhoto->update($idAlbums, $data);
 
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été modifié avec succès.");
     }
     public function AlbumsPhotoDelete()
     {
-        $dateAlbums = $this->request->getPost('dateAlbums');
-        $album = $this->albumsPhoto->find($dateAlbums);
+        $idAlbums = $this->request->getPost('idAlbums');
+        $album = $this->albumsPhoto->find($idAlbums);
         if (!empty($album['photo']) && file_exists(FCPATH . $album['photo'])) {
             unlink(FCPATH . $album['photo']);
         }
-        $this->albumsPhoto->delete($dateAlbums);
+        $this->albumsPhoto->delete($idAlbums);
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été supprimé avec succès.");
     }
 
