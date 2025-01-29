@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class Partenaires extends Model
 {
     protected $table            = 'partenaires';
-    protected $primaryKey       = 'idPartenaire';
+    protected $primaryKey       = 'idPartenaires';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['idAssociation','logo','info','lien'];
+    protected $allowedFields    = ['idPartenaires','logo','info','lien'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

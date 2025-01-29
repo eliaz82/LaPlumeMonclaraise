@@ -7,12 +7,12 @@ use CodeIgniter\Model;
 class Photo extends Model
 {
     protected $table            = 'photos';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'idPhoto';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['idPhoto','idAlbums','photo'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
