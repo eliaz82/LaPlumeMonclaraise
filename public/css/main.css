@@ -533,6 +533,7 @@ img.img-fluid {
   /* Le formulaire s'adapte à la largeur disponible */
 }
 
+
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -609,4 +610,10 @@ img.img-fluid {
   /* Le texte devient blanc au survol */
   transform: scale(1.05);
   box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.recaptcha-container {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
 }
