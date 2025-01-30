@@ -80,49 +80,73 @@ class Association extends Controller
     {
         helper('form');
         $rules = [
-            'name' => 'required',
-            'phone' => 'required',
-            'email' => 'required|valid_email',
-            'subject' => 'required',
-            'message' => 'required',
-            'g-recaptcha-response' => 'required' // Ajout de la règle pour reCAPTCHA
+            'nom' => [
+                'label' => 'Nom', // Nom du champ en français
+                'rules' => 'required',
+            ],
+            'phone' => [
+                'label' => 'Téléphone',
+                'rules' => 'required',
+            ],
+            'email' => [
+                'label' => 'Email',
+                'rules' => 'required|valid_email',
+            ],
+            'subject' => [
+                'label' => 'Objet',
+                'rules' => 'required',
+            ],
+            'message' => [
+                'label' => 'Message',
+                'rules' => 'required',
+            ],
+            'g-recaptcha-response' => [
+                'label' => 'reCAPTCHA',
+                'rules' => 'required',
+            ],
+
         ];
+
+        if (!$this->validate($rules)) {
+            session()->setFlashdata('validation', $this->validator->getErrors());
+            return redirect()->to(route_to('contact'))->withInput();
+        }
         $association = $this->associationModel->find(1);
         $mailContact = $association['mailContact'];
 
-        if ($this->validate($rules)) {
-            // Récupération des champs du formulaire
-            $name = $this->request->getPost('name');
-            $phone = $this->request->getPost('phone');
-            $email = $this->request->getPost('email');
-            $subject = $this->request->getPost('subject');
-            $message = $this->request->getPost('message');
-            $recaptchaResponse = $this->request->getPost('g-recaptcha-response'); // Récupération de la réponse reCAPTCHA
 
-            // Clé secrète de reCAPTCHA v2
-            $secretKey = '6LdtAcgqAAAAAA5g8pArLvx5aMsI0gWWjD2eCm3C'; // Remplace par ta clé secrète
+        // Récupération des champs du formulaire
+        $name = $this->request->getPost('nom');
+        $phone = $this->request->getPost('phone');
+        $email = $this->request->getPost('email');
+        $subject = $this->request->getPost('subject');
+        $message = $this->request->getPost('message');
+        $recaptchaResponse = $this->request->getPost('g-recaptcha-response'); // Récupération de la réponse reCAPTCHA
 
-            // Vérification du reCAPTCHA
-            $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify';
-            $recaptchaData = [
-                'secret' => $secretKey,
-                'response' => $recaptchaResponse
-            ];
+        // Clé secrète de reCAPTCHA v2
+        $secretKey = '6LdtAcgqAAAAAA5g8pArLvx5aMsI0gWWjD2eCm3C'; // Remplace par ta clé secrète
 
-            $response = \Config\Services::curlrequest()->post($recaptchaUrl, [
-                'form_params' => $recaptchaData
-            ]);
+        // Vérification du reCAPTCHA
+        $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify';
+        $recaptchaData = [
+            'secret' => $secretKey,
+            'response' => $recaptchaResponse
+        ];
 
-            $result = json_decode($response->getBody());
+        $response = \Config\Services::curlrequest()->post($recaptchaUrl, [
+            'form_params' => $recaptchaData
+        ]);
 
-            if (!$result->success) {
-                // Si le reCAPTCHA échoue
-                session()->setFlashdata('error', 'La vérification reCAPTCHA a échoué. Veuillez réessayer.');
-                return redirect()->to(route_to('contact'));
-            }
+        $result = json_decode($response->getBody());
 
-            // Si tout est valide, envoi du message par email
-            $htmlMessage = "
+        if (!$result->success) {
+            // Si le reCAPTCHA échoue
+            session()->setFlashdata('error', 'La vérification reCAPTCHA a échoué. Veuillez réessayer.');
+            return redirect()->to(route_to('contact'))->withInput();
+        }
+
+        // Si tout est valide, envoi du message par email
+        $htmlMessage = "
             <html>
             <head>
                 <style>
@@ -201,23 +225,20 @@ class Association extends Controller
             </html>
         ";
 
-            // Configuration de l'email
-            $emailService = \Config\Services::email();
-            $emailService->setFrom($email, $name);
-            $emailService->setTo($mailContact); // email pour recevoir
-            $emailService->setSubject($subject);
-            $emailService->setMessage($htmlMessage);
-            $emailService->setMailType('html');
+        // Configuration de l'email
+        $emailService = \Config\Services::email();
+        $emailService->setFrom($email, $name);
+        $emailService->setTo($mailContact); // email pour recevoir
+        $emailService->setSubject($subject);
+        $emailService->setMessage($htmlMessage);
+        $emailService->setMailType('html');
 
-            if ($emailService->send()) {
-                session()->setFlashdata('success', 'Message envoyé avec succès !');
-            } else {
-                session()->setFlashdata('error', 'Une erreur est survenue lors de l\'envoi du message.');
-            }
+        if ($emailService->send()) {
+            session()->setFlashdata('success', 'Message envoyé avec succès !');
         } else {
-            session()->setFlashdata('error', 'Veuillez vérifier les champs du formulaire.');
+            session()->setFlashdata('error', 'Une erreur est survenue lors de l\'envoi du message.');
+            return redirect()->to(route_to('contact'))->withInput();
         }
-
         return redirect()->to(route_to('contact'));
     }
 

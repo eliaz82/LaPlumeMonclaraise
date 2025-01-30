@@ -45,29 +45,30 @@
                 <p id="contact-heading">Contactez-nous</p>
 
                 <div class="contact-field">
-                    <input autocomplete="off" placeholder="Nom" id="name" name="name" class="contact-input" type="text"
-                        required>
+                    <input autocomplete="off" placeholder="Nom" id="nom" name="nom" class="contact-input" type="text"
+                        value="<?= old('name'); ?>" >
                 </div>
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Téléphone" id="phone" name="phone" class="contact-input"
-                        type="text" required>
+                        type="text" value="<?= old('phone'); ?>" required>
                 </div>
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Email" id="email" name="email" class="contact-input"
-                        type="email" required>
+                        type="email" value="<?= old('email'); ?>" required>
                 </div>
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Objet" id="subject" name="subject" class="contact-input"
-                        type="text" required>
+                        type="text" value="<?= old('subject'); ?>" required>
                 </div>
 
                 <div class="contact-field">
                     <textarea autocomplete="off" placeholder="Message" id="message" name="message" rows="5"
-                        class="contact-textarea" required></textarea>
+                        class="contact-textarea" required><?= old('message'); ?></textarea>
                 </div>
+
 
                 <div class="recaptcha-container">
                     <div class="g-recaptcha" data-sitekey="6LdtAcgqAAAAAPhL5TB75gKZXQ8yn64CHmr09t4E"></div>
