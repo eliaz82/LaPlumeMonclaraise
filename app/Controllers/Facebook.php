@@ -27,4 +27,62 @@ class Facebook extends BaseController
 
         return redirect()->to($url);
     }
+
+    public function getHashtagsByPage($pageName)
+    {
+        $hashtags = $this->facebookModel
+            ->where('pageName', $pageName)
+            ->select('idFacebook, hashtag')
+            ->findAll();
+
+        return $this->response->setJSON($hashtags);
+    }
+
+    public function create()
+    {
+        $jsonData = $this->request->getJSON();
+
+        if ($jsonData) {
+            $hashtag = $jsonData->hashtag;
+            $pageName = $jsonData->pageName;
+
+            // Insérer le hashtag dans la base de données
+            $this->facebookModel->insert([
+                'hashtag' => $hashtag,
+                'pageName' => $pageName
+            ]);
+
+            $hashtags = $this->facebookModel->getHashtags();
+
+            return $this->response->setJSON([
+                'success' => true,
+                'hashtags' => $hashtags
+            ]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Données mal formatées']);
+        }
+    }
+
+    public function delete($id)
+    {
+        // Vérification de l'ID
+        if (empty($id)) {
+            return $this->response->setJSON(['success' => false, 'message' => 'ID invalide']);
+        }
+    
+        log_message('debug', 'ID du hashtag à supprimer : ' . $id);
+    
+        // Appel du modèle pour supprimer le hashtag
+        $deleted = $this->facebookModel->delete($id);
+    
+        if ($deleted) {
+            return $this->response->setJSON(['success' => true]);
+        } else {
+            return $this->response->setJSON(['success' => false, 'message' => 'Erreur lors de la suppression']);
+        }
+    }
+    
+    
+    
+    
 }

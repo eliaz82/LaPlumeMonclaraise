@@ -13,7 +13,7 @@ class Facebook extends Model
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
     protected $protectFields = true;
-    protected $allowedFields = ['idFacebook', 'message', 'datePublication', 'photo', 'hastag', 'pageName'];
+    protected $allowedFields = ['idFacebook', 'message', 'datePublication', 'photo', 'hashtag', 'pageName'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -44,4 +44,10 @@ class Facebook extends Model
     protected $afterFind = [];
     protected $beforeDelete = [];
     protected $afterDelete = [];
+    // App/Models/Facebook.php
+public function getHashtags()
+{
+    return $this->db->table('facebook')->select('idFacebook, hashtag, pageName')->get()->getResultArray();
+}
+
 }

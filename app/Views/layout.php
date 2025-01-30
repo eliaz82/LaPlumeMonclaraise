@@ -41,16 +41,9 @@
                         L'Association
                     </a>
                     <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#equipe">L'Équipe</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">L'Histoire</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item"
-                                href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a>
-                        </li>
+                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#equipe">L'Équipe</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">L'Histoire</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -65,18 +58,227 @@
                         Vie du club
                     </a>
                     <ul class="dropdown-menu">
-                        <a class="nav-link" href="<?= url_to('evenement') ?>">Evenement</a>
-                        <a class="nav-link" href="<?= url_to('albumsPhoto') ?>">Albums photo</a>
+                        <li><a class="dropdown-item" href="<?= url_to('evenement') ?>">Evenement</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('albumsPhoto') ?>">Albums photo</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= url_to('fichierInscription') ?>">Inscription</a>
                 </li>
-                <li class="nav-item"> <a class="nav-link" href="<?= url_to('contact') ?>">Contact</a> </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= url_to('contact') ?>">Contact</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Réglages
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Profil</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">Paramètres</a></li>
+                        <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
+<!-- Modal Paramètres -->
+<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xxl custom-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="settingsModalLabel">Paramètres</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Section Token -->
+                <h4>Gestion du Token d'Accès</h4>
+                <div class="alert alert-info">
+                    <strong>Temps restant avant expiration :</strong>
+                    <span id="tokenCountdown">Calcul en cours...</span>
+                </div>
+
+                <!-- Section Hashtags -->
+                <!-- Sélection de la page -->
+                <label for="pageSelect" class="form-label">Choisir une page :</label>
+                <select id="pageSelect" class="form-select">
+                    <option value="evenement">Événement</option>
+                    <option value="albumsphoto">Albums Photo</option>
+                    <option value="faitmarquant">Fait Marquant</option>
+                    <option value="calendrier">Calendrier</option>
+                </select>
+
+                <!-- Ajout de hashtag -->
+                <div class="input-group mt-3">
+                    <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport">
+                    <button class="btn btn-primary" id="addHashtag">Ajouter</button>
+                </div>
+
+                <!-- Liste des hashtags -->
+                <ul class="list-group mt-3" id="hashtagList">
+                    <!-- Les hashtags seront affichés ici dynamiquement -->
+                    <?php if (isset($hashtags)): ?>
+                        <?php foreach ($hashtags as $hashtag): ?>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <?= $hashtag['hashtag'] ?>
+                                <button class="btn btn-danger btn-sm remove-hashtag" data-id="<?= $hashtag['idFacebook'] ?>">X</button>
+                            </li>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </ul>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-success">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const pageSelect = document.getElementById("pageSelect");
+        const hashtagList = document.getElementById("hashtagList");
+        const addHashtagBtn = document.getElementById("addHashtag");
+        const hashtagInput = document.getElementById("hashtagInput");
+        const tokenCountdown = document.getElementById("tokenCountdown");
+
+        // Fonction pour charger les hashtags d'une page
+        function loadHashtags(pageName) {
+            fetch(`<?= site_url('facebook/hashtags') ?>/${pageName}`)
+                .then(response => response.json())
+                .then(data => {
+                    hashtagList.innerHTML = "";
+                    if (data.length > 0) {
+                        data.forEach(hashtag => {
+                            addHashtagToList(hashtag.idFacebook, hashtag.hashtag);
+                        });
+                    } else {
+                        hashtagList.innerHTML = `<li class='list-group-item text-muted' id='noHashtagMsg'>Aucun hashtag trouvé</li>`;
+                    }
+                })
+                .catch(error => console.error("Erreur lors du chargement des hashtags:", error));
+        }
+
+        // Fonction pour ajouter un hashtag à la liste
+        function addHashtagToList(id, hashtag) {
+            const noHashtagMsg = document.getElementById("noHashtagMsg");
+            if (noHashtagMsg) {
+                noHashtagMsg.remove();
+            }
+
+            const listItem = document.createElement("li");
+            listItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
+            listItem.innerHTML = `
+                ${hashtag}
+                <button class="btn btn-danger btn-sm remove-hashtag" data-id="${id}">X</button>
+            `;
+            hashtagList.appendChild(listItem);
+        }
+
+        // Fonction pour ajouter un hashtag via AJAX
+        addHashtagBtn.addEventListener("click", function() {
+            const hashtag = hashtagInput.value.trim();
+            const pageName = pageSelect.value;
+
+            if (hashtag) {
+                fetch("<?= site_url('facebook/create') ?>", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            'hashtag': hashtag,
+                            'pageName': pageName
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            addHashtagToList(data.idFacebook, hashtag);
+                            hashtagInput.value = "";
+                        } else {
+                            alert("Erreur lors de l'ajout du hashtag");
+                        }
+                    })
+                    .catch(error => console.error("Erreur AJAX:", error));
+            }
+        });
+
+        // Fonction pour supprimer un hashtag via AJAX
+        hashtagList.addEventListener("click", function(event) {
+            if (event.target.classList.contains("remove-hashtag")) {
+                const id = event.target.getAttribute("data-id");
+
+                if (!id) {
+                    console.error("ID non défini pour la suppression du hashtag.");
+                    return; // Si l'ID est manquant, ne fais pas la requête
+                }
+
+                fetch(`<?= site_url('facebook/delete') ?>/${id}`, {
+                        method: "POST", // Utilisation uniquement de POST
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            id: id // Envoyer l'ID dans le corps de la requête
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            event.target.closest("li").remove(); // Supprimer l'élément de la liste
+                            if (hashtagList.children.length === 0) {
+                                hashtagList.innerHTML = "<li class='list-group-item text-muted'>Aucun hashtag trouvé</li>";
+                            }
+                        } else {
+                            alert("Erreur lors de la suppression du hashtag : " + data.message);
+                        }
+                    })
+                    .catch(error => console.error("Erreur AJAX:", error));
+            }
+        });
+        // Charger les hashtags au changement de la page sélectionnée
+        pageSelect.addEventListener("change", function() {
+            loadHashtags(this.value);
+        });
+
+        // Charger les hashtags de la première page sélectionnée au démarrage
+        loadHashtags(pageSelect.value);
+
+        // Gestion du compte à rebours pour l'expiration du token
+        const tokenExpiration = new Date();
+        tokenExpiration.setHours(tokenExpiration.getHours() + 1);
+
+        function updateTokenCountdown() {
+            const now = new Date();
+            const diff = tokenExpiration - now;
+
+            if (diff <= 0) {
+                tokenCountdown.innerHTML = "<span class='text-danger'>Token expiré</span>";
+                return;
+            }
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            tokenCountdown.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        setInterval(updateTokenCountdown, 1000);
+        updateTokenCountdown();
+    });
+</script>
+
+<style>
+    .custom-modal {
+        max-width: 75vw;
+    }
+</style>
+
 
 <body>
     <!-- Messages de notification -->

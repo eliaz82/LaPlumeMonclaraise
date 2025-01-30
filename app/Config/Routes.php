@@ -59,9 +59,17 @@ $routes->get('fais-marquant/(:num)', 'Actualite::actualite/$1', ['as' => 'actual
 // ------------------------------------------- logo -------------------------------------------
 $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
 
+
 $routes->get('/favicon.ico', function () {
     return redirect()->to(base_url(getAssociationLogo()));
 });
 
 $routes->get('/login', 'Facebook::login');
+
+$routes->get('facebook/hashtags/(:segment)', 'Facebook::getHashtagsByPage/$1');
+$routes->post('facebook/create', 'Facebook::create');
+$routes->post('facebook/delete/(:num)', 'Facebook::delete/$1');
+
+
+
 
