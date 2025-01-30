@@ -35,7 +35,7 @@ class Facebook extends BaseController
 
         // Vérifier si la réponse est valide (JSON)
         $data = json_decode($posts, true);
-
+dd($posts);
         if (json_last_error() !== JSON_ERROR_NONE) {
             die("Erreur lors du décodage JSON : " . json_last_error_msg());
         }
