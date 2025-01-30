@@ -98,11 +98,18 @@
                     <strong>Temps restant avant expiration :</strong>
                     <span id="tokenCountdown">Calcul en cours...</span>
                 </div>
+                <div class="mt-3">
+                    <button class="btn btn-warning" id="resetTokenBtn">Réinitialiser le Token</button>
+                </div>
+                <!-- Séparateur -->
+                <hr class="my-4">
 
                 <!-- Section Hashtags -->
+                <h4>Gestion des Hashtags</h4>
+
                 <!-- Sélection de la page -->
                 <label for="pageSelect" class="form-label">Choisir une page :</label>
-                <select id="pageSelect" class="form-select">
+                <select id="pageSelect" class="form-select mb-3">
                     <option value="evenement">Événement</option>
                     <option value="albumsphoto">Albums Photo</option>
                     <option value="faitmarquant">Fait Marquant</option>
@@ -110,13 +117,13 @@
                 </select>
 
                 <!-- Ajout de hashtag -->
-                <div class="input-group mt-3">
-                    <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport" value="#">
                     <button class="btn btn-primary" id="addHashtag">Ajouter</button>
                 </div>
 
                 <!-- Liste des hashtags -->
-                <ul class="list-group mt-3" id="hashtagList">
+                <ul class="list-group" id="hashtagList">
                     <!-- Les hashtags seront affichés ici dynamiquement -->
                     <?php if (isset($hashtags)): ?>
                         <?php foreach ($hashtags as $hashtag): ?>
@@ -248,28 +255,69 @@
         // Charger les hashtags de la première page sélectionnée au démarrage
         loadHashtags(pageSelect.value);
 
-        // Gestion du compte à rebours pour l'expiration du token
-        const tokenExpiration = new Date();
-        tokenExpiration.setHours(tokenExpiration.getHours() + 1);
+    });
 
-        function updateTokenCountdown() {
-            const now = new Date();
-            const diff = tokenExpiration - now;
+    // Gestion du compte à rebours pour l'expiration du token
+    document.addEventListener("DOMContentLoaded", function() {
+        const tokenCountdown = document.getElementById("tokenCountdown");
 
-            if (diff <= 0) {
-                tokenCountdown.innerHTML = "<span class='text-danger'>Token expiré</span>";
-                return;
-            }
-
-            const hours = Math.floor(diff / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-            tokenCountdown.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+        // Fonction pour récupérer la date d'expiration via AJAX
+        function fetchTokenExpirationDate() {
+            fetch("<?= site_url('facebook/expiration') ?>") // La route que tu as définie
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const tokenExpirationDate = data.expiration_date;
+                        updateTokenCountdown(tokenExpirationDate);
+                    } else {
+                        console.error(data.message);
+                    }
+                })
+                .catch(error => console.error("Erreur AJAX:", error));
         }
 
-        setInterval(updateTokenCountdown, 1000);
-        updateTokenCountdown();
+        // Fonction de mise à jour du compte à rebours
+        function updateTokenCountdown(expirationDate) {
+            const tokenExpiration = new Date(expirationDate); // Créer un objet Date à partir de la chaîne
+
+            // Fonction de calcul du temps restant
+            function calculateCountdown() {
+                const now = new Date();
+                const diff = tokenExpiration - now;
+
+                if (diff <= 0) {
+                    tokenCountdown.innerHTML = "<span class='text-danger'>Token expiré</span>";
+                    return;
+                }
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24)); // Calcul des jours restants
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Calcul des heures
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); // Calcul des minutes
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000); // Calcul des secondes
+
+
+                if (days > 0) {
+                    tokenCountdown.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+                } else {
+                    tokenCountdown.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+                }
+            }
+
+            // Mettre à jour le compte à rebours toutes les secondes
+            setInterval(calculateCountdown, 1000);
+            calculateCountdown();
+        }
+
+        // Charger la date d'expiration au chargement de la page
+        fetchTokenExpirationDate();
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        const resetTokenBtn = document.getElementById("resetTokenBtn");
+
+        // Gestion du clic sur le bouton de réinitialisation du token
+        resetTokenBtn.addEventListener("click", function() {
+            // Rediriger vers la méthode login() de ton contrôleur Facebook
+            window.location.href = "<?= site_url('facebook/login') ?>";
+        });
     });
 </script>
 

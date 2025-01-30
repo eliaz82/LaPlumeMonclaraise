@@ -48,13 +48,14 @@ class Home extends BaseController
 
                     if (isset($tokenInfo['data']['expires_at'])) {
                         $expirationTimestamp = $tokenInfo['data']['expires_at'];
-                        $expirationDate = date('Y-m-d', $expirationTimestamp);
+                        $expirationDateDay = date('Y-m-d', $expirationTimestamp);
+                        $expirationDate = date('Y-m-d H:i:s', $expirationTimestamp);
                         $daysRemaining = ceil(($expirationTimestamp - time()) / (60 * 60 * 24));
                         $this->associationModel->update(1, [
                             'tokenFacebook' => $accessToken,
                             'tokenExpirationDate' => $expirationDate
                         ]);
-                        return redirect()->to('/')->with('success', "Le token a bien été renouvelé ! Il est valide jusqu'au {$expirationDate}, soit encore {$daysRemaining} jour(s).");
+                        return redirect()->to('/')->with('success', "Le token a bien été renouvelé ! Il est valide jusqu'au {$expirationDateDay}, soit encore {$daysRemaining} jour(s).");
                     }
                 } else {
                     return redirect()->to('/')->with('error', 'Accès refusé');

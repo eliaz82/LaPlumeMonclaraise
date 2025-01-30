@@ -64,11 +64,13 @@ $routes->get('/favicon.ico', function () {
     return redirect()->to(base_url(getAssociationLogo()));
 });
 
-$routes->get('/login', 'Facebook::login');
+$routes->get('facebook/login', 'Facebook::login');
 
 $routes->get('facebook/hashtags/(:segment)', 'Facebook::getHashtagsByPage/$1');
 $routes->post('facebook/create', 'Facebook::create');
 $routes->post('facebook/delete/(:num)', 'Facebook::delete/$1');
+$routes->get('facebook/expiration', 'Facebook::getTokenExpirationDate');
+
 
 
 

@@ -69,20 +69,28 @@ class Facebook extends BaseController
         if (empty($id)) {
             return $this->response->setJSON(['success' => false, 'message' => 'ID invalide']);
         }
-    
-        log_message('debug', 'ID du hashtag à supprimer : ' . $id);
-    
-        // Appel du modèle pour supprimer le hashtag
         $deleted = $this->facebookModel->delete($id);
-    
+
         if ($deleted) {
             return $this->response->setJSON(['success' => true]);
         } else {
             return $this->response->setJSON(['success' => false, 'message' => 'Erreur lors de la suppression']);
         }
     }
-    
-    
-    
-    
+
+    public function getTokenExpirationDate()
+    {
+        $tokenExpiration = $this->associationModel->find(1);
+        if ($tokenExpiration) {
+            return $this->response->setJSON([
+                'success' => true,
+                'expiration_date' => $tokenExpiration['tokenExpirationDate'] 
+            ]);
+        } else {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Token non trouvé'
+            ]);
+        }
+    }
 }
