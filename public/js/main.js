@@ -44,18 +44,18 @@ $(document).ready(function () {
         const date = $(this).data('date');
         const nom = $(this).data('nom');
         const photo = $(this).data('photo');
-    
+
         $('#modifier-id-album').val(idAlbums); // Remplissage du champ caché
         $('#modifier-date-album').val(date);
         $('#modifier-nom-album').val(nom);
-    
+
         if (photo) {
             $('#modifierPhotoPreviewAlbum').attr('src', photo).show();
         } else {
             $('#modifierPhotoPreviewAlbum').hide();
         }
     });
-    
+
 });
 
 // Fonction de prévisualisation d'image
@@ -134,3 +134,21 @@ $(document).ready(function () {
         fileInput.click(); // Déclencher l'événement de clic sur l'input
     });
 });
+
+/*c'est pour la carte*/
+document.addEventListener("DOMContentLoaded", function () {
+    let lat = 43.966742479238754;
+    let lon = 1.5866446106619663;
+
+    let map = L.map('map').setView([lat, lon], 15); // Zoom plus proche (15)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    L.marker([lat, lon]).addTo(map)
+        .bindPopup('Adresse <br>esplanade du lac 82230 Monclar - de - Quercy, France')
+            .openPopup();
+});
+
+

@@ -36,9 +36,8 @@
 
     <!-- Contact Form -->
     <div class="contact-wrapper">
-        <div class="contact-image">
-            <img src="image/b.webp" alt="Image illustrative" />
-        </div>
+        <div class="contact-map" id="map" style="width: 100%; height: 300px;"></div>
+
         <div class="contact-container">
             <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
                 <p id="contact-heading">Contactez-nous</p>
@@ -77,7 +76,7 @@
                                     <path fill="currentColor"
                                         d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z">
                                     </path>
-                                </svg>        
+                                </svg>
                             </div>
                         </div>
                         <span class="btn-label">Envoyer</span>
