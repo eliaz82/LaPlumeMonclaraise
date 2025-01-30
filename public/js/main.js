@@ -74,11 +74,6 @@ function previewImage(event, previewId) {
         reader.readAsDataURL(input.files[0]); // Lire le fichier
     }
 }
-
-
-
-
-// le navbar pour mettre bien a revoir
 document.addEventListener("DOMContentLoaded", () => {
     const navbar = document.querySelector('.navbar.fixed-top');
     const contentWrapper = document.body;
@@ -90,8 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.addEventListener('resize', adjustBodyPadding);
     }
 });
-
-
 
 // Gestion du glisser-déposer pour le fichier d'inscription
 $(document).ready(function () {
@@ -134,6 +127,8 @@ $(document).ready(function () {
         fileInput.click(); // Déclencher l'événement de clic sur l'input
     });
 });
+
+
 document.addEventListener("DOMContentLoaded", function () {
     let formHeight = document.querySelector('form').offsetHeight; // Récupérer la hauteur du formulaire
     let map = document.getElementById('map');
@@ -148,18 +143,30 @@ document.addEventListener("DOMContentLoaded", function () {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(leafletMap);
 
-    // Récupérer l'URL du logo depuis l'attribut data-logo
+    // Récupérer l'URL du logo depuis un attribut data-logo
     let logoUrl = document.getElementById('map-container').getAttribute('data-logo');
 
-    // Ajouter un marker avec le pop-up contenant l'image du logo et le texte
+    // Adresse complète encodée pour Google Maps
+    let address = encodeURIComponent("esplanade du lac 82230 Monclar-de-Quercy, France");
+    let googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${address}`;
+
+    // Ajouter un marker avec un pop-up cliquable qui redirige vers Google Maps avec l'adresse
     L.marker([lat, lon]).addTo(leafletMap)
         .bindPopup(`
-            <div>
-                <img src="${logoUrl}" alt="Logo de l'association" style="width: 50px; height: auto;"/>
-                <p>La Plume Monclaraise <br>esplanade du lac 82230 Monclar-de-Quercy</p>
-            </div>
+            <a href="${googleMapsUrl}" target="_blank" style="text-decoration: none; color: inherit;">
+                <div id="popup-content"
+                    style="text-align: center; font-family: Arial, sans-serif; padding: 10px; border-radius: 8px; transition: background-color 0.3s ease, color 0.3s ease;"
+                    onmouseover="this.style.backgroundColor='#1D2243'; this.style.color='white';"
+                    onmouseout="this.style.backgroundColor='white'; this.style.color='black';"
+                >
+                    <img src="${logoUrl}" alt="Logo de l'association"
+                        style="width: 70px; height: auto;"
+                    />
+                    <p style="margin: 5px 0; font-weight: bold;">La Plume Monclaraise</p>
+                    <p style="margin: 0;">Esplanade du lac, 82230 Monclar-de-Quercy</p>
+                    <p style="font-size: 12px; color: gray;">(Cliquez pour voir sur Google Maps)</p>
+                </div>
+            </a>
         `)
         .openPopup();
 });
-
-
