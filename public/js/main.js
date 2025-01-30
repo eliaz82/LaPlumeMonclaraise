@@ -134,21 +134,32 @@ $(document).ready(function () {
         fileInput.click(); // Déclencher l'événement de clic sur l'input
     });
 });
-
-/*c'est pour la carte*/
 document.addEventListener("DOMContentLoaded", function () {
+    let formHeight = document.querySelector('form').offsetHeight; // Récupérer la hauteur du formulaire
+    let map = document.getElementById('map');
+    map.style.height = formHeight + '600px'; // Donner à la carte la même hauteur que le formulaire
+
     let lat = 43.966742479238754;
     let lon = 1.5866446106619663;
 
-    let map = L.map('map').setView([lat, lon], 15); // Zoom plus proche (15)
+    let leafletMap = L.map('map').setView([lat, lon], 15);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    }).addTo(leafletMap);
 
-    L.marker([lat, lon]).addTo(map)
-        .bindPopup('La Plume Monclaraise <br>esplanade du lac 82230 Monclar-de-Quercy')
-            .openPopup();
+    // Récupérer l'URL du logo depuis l'attribut data-logo
+    let logoUrl = document.getElementById('map-container').getAttribute('data-logo');
+
+    // Ajouter un marker avec le pop-up contenant l'image du logo et le texte
+    L.marker([lat, lon]).addTo(leafletMap)
+        .bindPopup(`
+            <div>
+                <img src="${logoUrl}" alt="Logo de l'association" style="width: 50px; height: auto;"/>
+                <p>La Plume Monclaraise <br>esplanade du lac 82230 Monclar-de-Quercy</p>
+            </div>
+        `)
+        .openPopup();
 });
 
 

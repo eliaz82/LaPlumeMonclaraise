@@ -500,6 +500,13 @@ img.img-fluid {
 
 /* Styles pour le formulaire de contact */
 /* Agrandissement global du formulaire */
+.contact-map {
+  max-width: 100%;
+}
+
+
+
+
 .contact-wrapper {
   display: flex;
   justify-content: center;
@@ -508,29 +515,6 @@ img.img-fluid {
   gap: 2rem;
   /* Espacement entre le formulaire et l'image */
   padding: 2em;
-}
-
-.contact-image {
-  flex: none;
-  /* Empêche l'image de se redimensionner automatiquement */
-  width: 400px;
-  /* Largeur fixe */
-  height: 600px;
-  /* Hauteur fixe */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.contact-image img {
-  width: 100%;
-  /* L'image occupe toute la largeur du conteneur */
-  height: 100%;
-  /* L'image occupe toute la hauteur du conteneur */
-  object-fit: cover;
-  /* Garde une belle proportion visuelle */
-  border-radius: 25px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .contact-container {
@@ -557,6 +541,7 @@ img.img-fluid {
   width: 100%;
   /* Champs prennent toute la largeur du formulaire */
 }
+
 
 #contact-heading {
   text-align: center;

@@ -37,6 +37,8 @@
     <!-- Contact Form -->
     <div class="contact-wrapper">
         <div class="contact-map" id="map" style="width: 100%; height: 300px;"></div>
+        <div id="map-container" data-logo="<?= base_url(getAssociationLogo()); ?>"></div>
+
 
         <div class="contact-container">
             <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
