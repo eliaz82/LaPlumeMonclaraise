@@ -170,3 +170,21 @@ document.addEventListener("DOMContentLoaded", function () {
         `)
         .openPopup();
 });
+
+
+function zoomImage(imageSrc) {
+    const zoomContainer = document.getElementById('zoom-container');
+    const zoomedImage = document.getElementById('zoomed-image');
+    
+    // Modifie la source de l'image zoomée
+    zoomedImage.src = imageSrc;
+    
+    // Affiche le conteneur du zoom
+    zoomContainer.style.display = 'flex';
+}
+
+function closeZoom() {
+    // Cache le conteneur du zoom
+    const zoomContainer = document.getElementById('zoom-container');
+    zoomContainer.style.display = 'none';
+}
