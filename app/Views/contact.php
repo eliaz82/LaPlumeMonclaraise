@@ -68,6 +68,10 @@
                     <textarea autocomplete="off" placeholder="Message" id="message" name="message" rows="5"
                         class="contact-textarea" required></textarea>
                 </div>
+                <div class="contact-field">
+                    <div class="g-recaptcha" data-sitekey="6LdtAcgqAAAAAPhL5TB75gKZXQ8yn64CHmr09t4E"></div>
+                </div>
+
 
                 <div class="button-container">
                     <button class="btn-unique">
