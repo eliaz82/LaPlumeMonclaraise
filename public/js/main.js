@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }).addTo(map);
 
     L.marker([lat, lon]).addTo(map)
-        .bindPopup('Adresse <br>esplanade du lac 82230 Monclar - de - Quercy, France')
+        .bindPopup('La Plume Monclaraise <br>esplanade du lac 82230 Monclar-de-Quercy')
             .openPopup();
 });
 
