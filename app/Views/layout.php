@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+
 
 
 </head>
@@ -43,8 +43,10 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#equipe">L'Équipe</a></li>
-                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">L'Histoire</a></li>
-                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">L'Histoire</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                                href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -76,7 +78,8 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">Profil</a></li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">Paramètres</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                data-bs-target="#settingsModal">Paramètres</a></li>
                         <li><a class="dropdown-item" href="#">Déconnexion</a></li>
                     </ul>
                 </li>
@@ -130,7 +133,8 @@
                         <?php foreach ($hashtags as $hashtag): ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <?= $hashtag['hashtag'] ?>
-                                <button class="btn btn-danger btn-sm remove-hashtag" data-id="<?= $hashtag['idFacebook'] ?>">X</button>
+                                <button class="btn btn-danger btn-sm remove-hashtag"
+                                    data-id="<?= $hashtag['idFacebook'] ?>">X</button>
                             </li>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -146,7 +150,7 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const pageSelect = document.getElementById("pageSelect");
         const hashtagList = document.getElementById("hashtagList");
         const addHashtagBtn = document.getElementById("addHashtag");
@@ -187,21 +191,21 @@
         }
 
         // Fonction pour ajouter un hashtag via AJAX
-        addHashtagBtn.addEventListener("click", function() {
+        addHashtagBtn.addEventListener("click", function () {
             const hashtag = hashtagInput.value.trim();
             const pageName = pageSelect.value;
 
             if (hashtag) {
                 fetch("<?= site_url('facebook/create') ?>", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            'hashtag': hashtag,
-                            'pageName': pageName
-                        })
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        'hashtag': hashtag,
+                        'pageName': pageName
                     })
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
@@ -216,7 +220,7 @@
         });
 
         // Fonction pour supprimer un hashtag via AJAX
-        hashtagList.addEventListener("click", function(event) {
+        hashtagList.addEventListener("click", function (event) {
             if (event.target.classList.contains("remove-hashtag")) {
                 const id = event.target.getAttribute("data-id");
 
@@ -226,14 +230,14 @@
                 }
 
                 fetch(`<?= site_url('facebook/delete') ?>/${id}`, {
-                        method: "POST", // Utilisation uniquement de POST
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            id: id // Envoyer l'ID dans le corps de la requête
-                        })
+                    method: "POST", // Utilisation uniquement de POST
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        id: id // Envoyer l'ID dans le corps de la requête
                     })
+                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
@@ -249,7 +253,7 @@
             }
         });
         // Charger les hashtags au changement de la page sélectionnée
-        pageSelect.addEventListener("change", function() {
+        pageSelect.addEventListener("change", function () {
             loadHashtags(this.value);
         });
 
@@ -259,7 +263,7 @@
     });
 
     // Gestion du compte à rebours pour l'expiration du token
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const tokenCountdown = document.getElementById("tokenCountdown");
 
         // Fonction pour récupérer la date d'expiration via AJAX
@@ -311,11 +315,11 @@
         // Charger la date d'expiration au chargement de la page
         fetchTokenExpirationDate();
     });
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         const resetTokenBtn = document.getElementById("resetTokenBtn");
 
         // Gestion du clic sur le bouton de réinitialisation du token
-        resetTokenBtn.addEventListener("click", function() {
+        resetTokenBtn.addEventListener("click", function () {
             // Rediriger vers la méthode login() de ton contrôleur Facebook
             window.location.href = "<?= site_url('facebook/login') ?>";
         });
@@ -364,6 +368,7 @@
     <script src="<?= base_url('js/main.js') ?>"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </body>
 
 <footer class="footer-section py-4" style="background-color:rgb(29, 34, 67); color: white;">

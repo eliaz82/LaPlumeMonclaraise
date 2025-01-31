@@ -109,16 +109,20 @@
 </div>
 
 <?php if (!empty($posts)): ?>
-  <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": true, "imagesLoaded": true }'>
-    <?php foreach ($posts as $post): ?>
-      <div class="carousel-cell">
-        <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
-      </div>
-    <?php endforeach; ?>
+  <div class="carourou">
+    <div class="carousel-wrapper">
+      <?php foreach ($posts as $post): ?>
+        <div class="carousel-cell">
+          <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
+        </div>
+      <?php endforeach; ?>
+    </div>
+    <!-- Boutons de navigation -->
+    <button class="carousel-prev" id="prevButton">&#10094;</button>
+    <button class="carousel-next" id="nextButton">&#10095;</button>
   </div>
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
-
 
 <?= $this->endSection() ?>

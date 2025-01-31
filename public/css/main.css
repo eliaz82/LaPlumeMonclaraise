@@ -59,29 +59,55 @@ p {
   margin-bottom: 50px;
 }
 
-img.img-fluid {
-  max-height: 100%;
-  /* Ne dépasse jamais la hauteur du parent */
-}
 
 
-.carousel-inner.carousel-item {
-  transform: scale(0.9);
-  transition: transform 1s ease-in-out;
+/*carousel facebook*/
+
+.carourou {
+  background-color: rgba(129, 161, 208, 1);
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
-.carousel-inner.carousel-item.active {
-  transform: scale(1.1);
-  transition: transform 1s ease-in-out;
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease;
 }
 
-.font-size-18 {
-  font-size: 18px;
+.carousel-cell {
+  flex: 0 0 100%; /* Chaque post occupe 100% de la largeur de la fenêtre */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.font-size-24 {
-  font-size: 24px;
+.fb-post {
+  width: 100%;
+  max-width: 500px;
 }
+
+.carousel-prev, .carousel-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 30px;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
 
 /*bouton télécharger*/
 .botao {
