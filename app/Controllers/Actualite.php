@@ -18,7 +18,7 @@ class Actualite extends BaseController
         $tokenFacebook = $this->associationModel->find(1);
         $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
 
-        $hashtags = $this->facebookModel->where('pageName', 'faitMarquant')->findAll();
+        $hashtags = $this->facebookModel->where('pageName', 'faitmarquant')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');
 
         $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {

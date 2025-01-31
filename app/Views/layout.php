@@ -6,7 +6,6 @@
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
-    <link rel="stylesheet" href="css/main.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -263,66 +262,62 @@
     });
 
     // Gestion du compte à rebours pour l'expiration du token
-    document.addEventListener("DOMContentLoaded", function () {
-        const tokenCountdown = document.getElementById("tokenCountdown");
+    const tokenCountdown = document.getElementById("tokenCountdown");
 
-        // Fonction pour récupérer la date d'expiration via AJAX
-        function fetchTokenExpirationDate() {
-            fetch("<?= site_url('facebook/expiration') ?>") // La route que tu as définie
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        const tokenExpirationDate = data.expiration_date;
-                        updateTokenCountdown(tokenExpirationDate);
-                    } else {
-                        console.error(data.message);
-                    }
-                })
-                .catch(error => console.error("Erreur AJAX:", error));
-        }
-
-        // Fonction de mise à jour du compte à rebours
-        function updateTokenCountdown(expirationDate) {
-            const tokenExpiration = new Date(expirationDate); // Créer un objet Date à partir de la chaîne
-
-            // Fonction de calcul du temps restant
-            function calculateCountdown() {
-                const now = new Date();
-                const diff = tokenExpiration - now;
-
-                if (diff <= 0) {
-                    tokenCountdown.innerHTML = "<span class='text-danger'>Token expiré</span>";
-                    return;
-                }
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24)); // Calcul des jours restants
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Calcul des heures
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); // Calcul des minutes
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000); // Calcul des secondes
-
-
-                if (days > 0) {
-                    tokenCountdown.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+    // Fonction pour récupérer la date d'expiration via AJAX
+    function fetchTokenExpirationDate() {
+        fetch("<?= site_url('facebook/expiration') ?>") // La route que tu as définie
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const tokenExpirationDate = data.expiration_date;
+                    updateTokenCountdown(tokenExpirationDate);
                 } else {
-                    tokenCountdown.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+                    console.error(data.message);
                 }
-            }
+            })
+            .catch(error => console.error("Erreur AJAX:", error));
+    }
 
-            // Mettre à jour le compte à rebours toutes les secondes
-            setInterval(calculateCountdown, 1000);
-            calculateCountdown();
+    // Fonction de mise à jour du compte à rebours
+    function updateTokenCountdown(expirationDate) {
+        const tokenExpiration = new Date(expirationDate); // Créer un objet Date à partir de la chaîne
+
+        // Fonction de calcul du temps restant
+        function calculateCountdown() {
+            const now = new Date();
+            const diff = tokenExpiration - now;
+
+            if (diff <= 0) {
+                tokenCountdown.innerHTML = "<span class='text-danger'>Token expiré</span>";
+                return;
+            }
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24)); // Calcul des jours restants
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Calcul des heures
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); // Calcul des minutes
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000); // Calcul des secondes
+
+
+            if (days > 0) {
+                tokenCountdown.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                tokenCountdown.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+            }
         }
 
-        // Charger la date d'expiration au chargement de la page
-        fetchTokenExpirationDate();
-    });
-    document.addEventListener("DOMContentLoaded", function () {
-        const resetTokenBtn = document.getElementById("resetTokenBtn");
+        // Mettre à jour le compte à rebours toutes les secondes
+        setInterval(calculateCountdown, 1000);
+        calculateCountdown();
+    }
 
-        // Gestion du clic sur le bouton de réinitialisation du token
-        resetTokenBtn.addEventListener("click", function () {
-            // Rediriger vers la méthode login() de ton contrôleur Facebook
-            window.location.href = "<?= site_url('facebook/login') ?>";
-        });
+    // Charger la date d'expiration au chargement de la page
+    fetchTokenExpirationDate();
+    const resetTokenBtn = document.getElementById("resetTokenBtn");
+
+    // Gestion du clic sur le bouton de réinitialisation du token
+    resetTokenBtn.addEventListener("click", function () {
+        // Rediriger vers la méthode login() de ton contrôleur Facebook
+        window.location.href = "<?= site_url('facebook/login') ?>";
     });
 </script>
 
@@ -351,7 +346,11 @@
 
     <?php if (session('validation')): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <?= session('validation')->listErrors() ?>
+            <ul>
+                <?php foreach (session('validation') as $field => $error): ?>
+                    <li><strong><?= esc($field) ?>:</strong> <?= esc($error) ?></li>
+                <?php endforeach; ?>
+            </ul>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>

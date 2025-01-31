@@ -127,25 +127,4 @@ class AlbumsPhoto extends BaseController
 
         return redirect()->to("/albums-photo/{$photo['idAlbums']}")->with('success', 'Photo supprimée avec succès.');
     }
-
-    public function calendrier(): string
-    {
-        $tokenFacebook = $this->associationModel->find(1);
-        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
-
-        $hashtags = $this->facebookModel->where('pageName', 'albumsPhoto')->findAll();
-        $hashtagList = array_column($hashtags, 'hashtag');
-
-        $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
-            if (isset($post['message'])) {
-                foreach ($hashtagList as $hashtag) {
-                    if (strpos($post['message'], $hashtag) !== false) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
-        return view('albumsPhoto', ['posts' => $filteredPosts]);
-    }
 }
