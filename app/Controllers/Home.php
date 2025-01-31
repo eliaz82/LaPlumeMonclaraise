@@ -69,7 +69,7 @@ class Home extends BaseController
         $tokenFacebook = $this->associationModel->find(1);
 
         // Récupérer les posts
-        $posts =  $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
+        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
   
         // Vérifier si la réponse contient une erreur
         if (isset($posts['error'])) {

@@ -21,7 +21,7 @@ class Facebook extends BaseController
     {
         $clientId = '603470049247384';
         $redirectUri = base_url();
-        $scope = 'public_profile,user_posts';
+        $scope = 'public_profile,user_posts,user_videos,user_photos';
         $url = "https://www.facebook.com/v21.0/dialog/oauth?"
             . "client_id={$clientId}&redirect_uri={$redirectUri}&scope={$scope}&response_type=code";
 

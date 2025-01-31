@@ -16,7 +16,7 @@ class Calendrier extends BaseController
     public function calendrier(): string
     {
         $tokenFacebook = $this->associationModel->find(1);
-        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url&access_token={$tokenFacebook['tokenFacebook']}");
+        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
 
         $hashtags = $this->facebookModel->where('pageName', 'calendrier')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');
