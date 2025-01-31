@@ -46,22 +46,32 @@ class Facebook extends BaseController
             $hashtag = $jsonData->hashtag;
             $pageName = $jsonData->pageName;
 
-            // Insérer le hashtag dans la base de données
-            $this->facebookModel->insert([
+            // Insérer et récupérer l'ID généré
+            $id = $this->facebookModel->insert([
                 'hashtag' => $hashtag,
                 'pageName' => $pageName
-            ]);
+            ], true); // Le second paramètre "true" permet de récupérer l'ID inséré
 
-            $hashtags = $this->facebookModel->getHashtags();
-
-            return $this->response->setJSON([
-                'success' => true,
-                'hashtags' => $hashtags
-            ]);
+            if ($id) {
+                return $this->response->setJSON([
+                    'success' => true,
+                    'idFacebook' => $id, // Envoie l'ID du nouveau hashtag
+                    'hashtag' => $hashtag
+                ]);
+            } else {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => "Erreur lors de l'ajout du hashtag"
+                ]);
+            }
         } else {
-            return $this->response->setJSON(['success' => false, 'message' => 'Données mal formatées']);
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Données mal formatées'
+            ]);
         }
     }
+
 
     public function delete($id)
     {
@@ -84,7 +94,7 @@ class Facebook extends BaseController
         if ($tokenExpiration) {
             return $this->response->setJSON([
                 'success' => true,
-                'expiration_date' => $tokenExpiration['tokenExpirationDate'] 
+                'expiration_date' => $tokenExpiration['tokenExpirationDate']
             ]);
         } else {
             return $this->response->setJSON([
