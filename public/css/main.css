@@ -60,53 +60,39 @@ p {
 }
 
 
-
-/*carousel facebook*/
-
-.carourou {
-  background-color: rgba(129, 161, 208, 1);
-  overflow: hidden;
+/* Conteneur qui contient toutes les publications */
+.carousel-wrapper {
+  display: flex; /* Alignement horizontal des publications */
+  transition: transform 1s ease-in-out; /* Animation fluide du slide */
   position: relative;
   width: 100%;
+  margin: 0 auto;
+  overflow: hidden; /* Cache les publications en dehors du conteneur */
+  background-color: #f0f0f0; /* Fond gris clair */
+  padding: 20px; /* Optionnel : ajoute de l'espace autour du carousel */
 }
 
-.carousel-wrapper {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
+/* Centrer les posts dans chaque cellule */
 .carousel-cell {
-  flex: 0 0 30%; /* Chaque post occupe 100% de la largeur de la fenêtre */
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.fb-post {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px; /* Limiter la largeur des posts */
+  margin: 0 10px;
+  box-sizing: border-box;
 }
 
-.carousel-prev, .carousel-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  font-size: 30px;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 10;
+/* Définir la taille des posts Facebook */
+.fb-post {
+  width: 100%; /* Utiliser toute la largeur de la cellule */
+  height: auto; /* La hauteur s'ajustera automatiquement */
+  box-sizing: border-box;
 }
 
-.carousel-prev {
-  left: 10px;
-}
 
-.carousel-next {
-  right: 10px;
-}
+
+
 
 
 /*bouton télécharger*/
@@ -727,4 +713,69 @@ p {
   font-size: 0.85rem;
   text-transform: uppercase;
   padding: 5px 10px;
+}
+
+/*bouton modifier*/
+
+.edit-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1D2243;
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: #1D2243;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none !important;
+}
+
+.edit-svgIcon {
+  width: 17px;
+  transition-duration: 0.3s;
+}
+
+.edit-svgIcon path {
+  fill: white;
+}
+
+.edit-button:hover {
+  width: 120px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgba(129, 161, 208, 1);
+  align-items: center;
+}
+
+.edit-button:hover .edit-svgIcon {
+  width: 20px;
+  transition-duration: 0.3s;
+  transform: translateY(60%);
+  -webkit-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+
+.edit-button::before {
+  display: none;
+  content: attr(data-text);
+  color: white;
+  transition-duration: 0.3s;
+  font-size: 2px;
+}
+
+.edit-button:hover::before {
+  display: block;
+  padding-right: 10px;
+  font-size: 13px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition-duration: 0.3s;
 }
