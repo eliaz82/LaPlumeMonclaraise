@@ -76,7 +76,7 @@ p {
 }
 
 .carousel-cell {
-  flex: 0 0 100%; /* Chaque post occupe 100% de la largeur de la fenêtre */
+  flex: 0 0 30%; /* Chaque post occupe 100% de la largeur de la fenêtre */
   display: flex;
   justify-content: center;
   align-items: center;
