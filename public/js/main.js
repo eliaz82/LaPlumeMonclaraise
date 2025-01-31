@@ -280,3 +280,15 @@ function addPost(postHTML) {
   carouselWrapper.appendChild(newPost);
 }
 
+/*pour les boutons modifier */
+
+// Récupère tous les boutons avec la classe edit-button
+const buttons = document.querySelectorAll('.edit-button');
+
+// Modifie le texte de chaque bouton au survol
+buttons.forEach(button => {
+  button.addEventListener('mouseover', function() {
+    const text = button.getAttribute('data-text');
+    button.setAttribute('data-original-text', text);
+  });
+});
