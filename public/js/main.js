@@ -189,6 +189,8 @@ function closeZoom() {
     zoomContainer.style.display = 'none';
 }
 
+
+
 /*pour le carousel facebook*/
 setTimeout(function () {
     if (typeof FB !== "undefined") {
@@ -196,47 +198,4 @@ setTimeout(function () {
     }
 }, 1000);
 
-document.addEventListener('DOMContentLoaded', function () {
-    let currentIndex = 0;
-    const items = document.querySelectorAll('.carousel-cell');
-    const totalItems = items.length;
-    const wrapper = document.querySelector('.carousel-wrapper');
-
-    // Fonction pour changer la position du carousel
-    function moveCarousel() {
-        wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
-
-    // Bouton précédent
-    document.getElementById('prevButton').addEventListener('click', function () {
-        currentIndex = (currentIndex === 0) ? totalItems - 1 : currentIndex - 1;
-        moveCarousel();
-    });
-
-    // Bouton suivant
-    document.getElementById('nextButton').addEventListener('click', function () {
-        currentIndex = (currentIndex === totalItems - 1) ? 0 : currentIndex + 1;
-        moveCarousel();
-    });
-
-    // Fonction pour avancer automatiquement
-    function autoSlide() {
-        currentIndex = (currentIndex === totalItems - 1) ? 0 : currentIndex + 1;
-        moveCarousel();
-    }
-
-    // Avance automatiquement toutes les 5 secondes (5000ms)
-    let autoSlideInterval = setInterval(autoSlide, 5000);
-
-    // Pour arrêter l'auto-slide quand l'utilisateur clique sur un bouton
-    document.getElementById('prevButton').addEventListener('click', function () {
-        clearInterval(autoSlideInterval); // Arrête l'auto-slide
-        autoSlideInterval = setInterval(autoSlide, 5000); // Redémarre le timer
-    });
-
-    document.getElementById('nextButton').addEventListener('click', function () {
-        clearInterval(autoSlideInterval); // Arrête l'auto-slide
-        autoSlideInterval = setInterval(autoSlide, 5000); // Redémarre le timer
-    });
-});
 
