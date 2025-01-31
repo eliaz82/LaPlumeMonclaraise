@@ -45,7 +45,10 @@ class Facebook extends BaseController
         if ($jsonData) {
             $hashtag = $jsonData->hashtag;
             $pageName = $jsonData->pageName;
-
+            
+            if ($hashtag[0] !== '#') {
+                $hashtag = '#' . $hashtag;
+            }
             // Insérer et récupérer l'ID généré
             $id = $this->facebookModel->insert([
                 'hashtag' => $hashtag,
