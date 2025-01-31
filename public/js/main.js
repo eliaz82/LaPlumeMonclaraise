@@ -175,10 +175,10 @@ document.addEventListener("DOMContentLoaded", function () {
 function zoomImage(imageSrc) {
     const zoomContainer = document.getElementById('zoom-container');
     const zoomedImage = document.getElementById('zoomed-image');
-    
+
     // Modifie la source de l'image zoomée
     zoomedImage.src = imageSrc;
-    
+
     // Affiche le conteneur du zoom
     zoomContainer.style.display = 'flex';
 }
@@ -190,12 +190,93 @@ function closeZoom() {
 }
 
 
+/*carrousel facebook */
 
-/*pour le carousel facebook*/
-setTimeout(function () {
-    if (typeof FB !== "undefined") {
-        FB.XFBML.parse();
+
+document.addEventListener('DOMContentLoaded', function () {
+    let currentIndex = 0; // L'index de l'élément actuellement affiché
+    const posts = document.querySelectorAll('.carousel-cell'); // Tous les posts
+    const totalPosts = posts.length;
+    const wrapper = document.querySelector('.carousel-wrapper');
+
+    // S'assurer que la largeur du carousel est ajustée à la taille des posts
+    wrapper.style.width = `${totalPosts * 100}%`;
+
+    // Fonction pour afficher l'élément suivant
+    function showNext() {
+        if (currentIndex < totalPosts - 1) {
+            currentIndex++;
+        } else {
+            currentIndex = 0; // Si on est à la fin, on revient au début
+        }
+        updateCarousel();
     }
-}, 1000);
 
+    // Fonction pour afficher l'élément précédent
+    function showPrev() {
+        if (currentIndex > 0) {
+            currentIndex--;
+        } else {
+            currentIndex = totalPosts - 1; // Si on est au début, on revient à la fin
+        }
+        updateCarousel();
+    }
+
+    // Mettre à jour la position du carousel
+    function updateCarousel() {
+        const offset = -currentIndex * (100 / totalPosts); // Décale le carousel d'une largeur d'élément
+        wrapper.style.transform = `translateX(${offset}%)`; // Applique la transformation
+    }
+
+    // Événements pour les boutons
+    document.getElementById('nextButton').addEventListener('click', showNext);
+    document.getElementById('prevButton').addEventListener('click', showPrev);
+
+    // Slide automatique toutes les 5 secondes
+    setInterval(showNext, 5000); // Change d'élément toutes les 5 secondes
+
+    // Initialisation de l'affichage
+    updateCarousel();
+});
+
+// Récupérer l'élément du carousel
+const carouselWrapper = document.querySelector('.carousel-wrapper');
+const cells = document.querySelectorAll('.carousel-cell');
+
+// Définir la largeur totale de la wrapper
+let cellWidth = cells[0].offsetWidth + 20; // Largeur de la cellule + margin (10px de chaque côté)
+let index = 0;
+
+// Fonction pour faire défiler les publications
+function slideCarousel() {
+  index++;
+
+  // Si on a atteint la dernière publication, on revient à la première
+  if (index >= cells.length) {
+    index = 0;
+  }
+
+  // Déplacer la wrapper à la position souhaitée
+  carouselWrapper.style.transform = `translateX(-${index * cellWidth}px)`;
+}
+
+// Appeler la fonction toutes les 3 secondes
+setInterval(slideCarousel, 3000);
+
+// Fonction pour ajouter une publication à la fin du carousel
+function addPost(postHTML) {
+  const maxPosts = 10;
+  const carouselCells = document.querySelectorAll('.carousel-cell');
+
+  // Si le nombre de publications dépasse 10, supprimer la plus ancienne
+  if (carouselCells.length >= maxPosts) {
+    carouselWrapper.removeChild(carouselCells[0]); // Supprimer la première cellule
+  }
+
+  // Ajouter la nouvelle publication à la fin
+  const newPost = document.createElement('div');
+  newPost.classList.add('carousel-cell');
+  newPost.innerHTML = postHTML;
+  carouselWrapper.appendChild(newPost);
+}
 

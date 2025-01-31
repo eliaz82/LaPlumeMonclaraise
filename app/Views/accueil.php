@@ -109,17 +109,17 @@
 </div>
 
 <?php if (!empty($posts)): ?>
-  <div class="carourou">
+  <div class="carousel">
     <div class="carousel-wrapper">
-      <?php foreach ($posts as $post): ?>
-        <div class="carousel-cell">
-          <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
-        </div>
+      <?php
+        // Limiter le nombre de publications à 10
+        $limited_posts = array_slice($posts, 0, 10); // Récupérer les 10 premières publications
+        foreach ($limited_posts as $post): ?>
+          <div class="carousel-cell">
+            <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
+          </div>
       <?php endforeach; ?>
     </div>
-    <!-- Boutons de navigation -->
-    <button class="carousel-prev" id="prevButton">&#10094;</button>
-    <button class="carousel-next" id="nextButton">&#10095;</button>
   </div>
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
