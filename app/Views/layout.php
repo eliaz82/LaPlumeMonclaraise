@@ -222,6 +222,11 @@
                     .catch(error => console.error("Erreur AJAX:", error));
             }
         });
+        document.getElementById("hashtagInput").addEventListener("focus", function () {
+            if (!this.value.startsWith("#")) {
+                this.value = "#";
+            }
+        });
 
         // Fonction pour supprimer un hashtag via AJAX
         hashtagList.addEventListener("click", function (event) {
