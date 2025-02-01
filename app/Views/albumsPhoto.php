@@ -64,8 +64,14 @@
             <div class="col">
                 <div class="card h-100">
                     <!-- Photo de l'album -->
-                    <img src="<?= base_url($album['photo']) ?>" class="card-img-top" alt="Photo de l'album"
+                    <?php
+                    // Vérifier si l'URL de l'image est absolue ou relative
+                    $imageSrc = (filter_var($album['photo'], FILTER_VALIDATE_URL)) ? $album['photo'] : base_url($album['photo']);
+                    ?>
+
+                    <img src="<?= $imageSrc ?>" class="card-img-top" alt="Photo de l'album"
                         style="object-fit: cover; height: 200px;">
+
                     <div class="card-body">
                         <h5 class="card-title"><?= $album['nom'] ?></h5>
                         <p class="card-text">

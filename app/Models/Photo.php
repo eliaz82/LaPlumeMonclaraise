@@ -12,7 +12,7 @@ class Photo extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['idPhoto','idAlbums','photo'];
+    protected $allowedFields    = ['idPhoto','idAlbums','photo','photo_hash'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

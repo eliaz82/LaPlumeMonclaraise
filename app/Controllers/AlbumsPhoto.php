@@ -22,6 +22,99 @@ class AlbumsPhoto extends BaseController
     public function albumsPhoto(): string
     {
         $albumsPhotos = $this->albumsPhoto->findAll();
+
+        // Ne pas créer un nouvel album si un album existe déjà
+        $tokenFacebook = $this->associationModel->find(1);
+        // Appels à l'API pour récupérer les posts et les images
+        //$posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
+        $jsonFile = file_get_contents(base_url('/posts.json'));
+        $posts = json_decode($jsonFile, true);  // Décoder en tableau associatif
+
+        $hashtags = $this->facebookModel->where('pageName', 'albumsphoto')->findAll();
+        $hashtagList = array_column($hashtags, 'hashtag');
+
+        $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
+            if (isset($post['message'])) {
+                foreach ($hashtagList as $hashtag) {
+                    if (strpos($post['message'], $hashtag) !== false) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        });
+
+        foreach ($filteredPosts as $post) {
+            // Extraire la date de publication
+            $dateAlbums = date('Y-m-d', strtotime($post['created_time']));
+
+            // Vérifier s'il y a des pièces jointes (images)
+            if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
+                // Récupérer la première image
+                $photo = $post['attachments']['data'][0]['media']['image']['src'];
+
+                // Vérifier si un album avec la même date existe déjà
+                $existingAlbum = $this->albumsPhoto->where('dateAlbums', $dateAlbums)
+                    ->first();
+
+                // Si l'album n'existe pas déjà, on crée un nouvel album
+                if (!$existingAlbum) {
+                    // Créer un nouvel album photo
+                    $this->albumsPhoto->save([
+                        'dateAlbums' => $dateAlbums,
+                        'nom' => null, // Pas de nom pour l'album
+                        'photo' => $photo, // Première photo du post
+                    ]);
+
+                    // Récupérer l'ID de l'album nouvellement créé
+                    $idAlbums = $this->albumsPhoto->getInsertID();
+                } else {
+                    // Si l'album existe déjà, on récupère l'ID
+                    $idAlbums = $existingAlbum['idAlbums'];
+                }
+
+                // Initialiser un tableau pour stocker les URLs des photos à ajouter
+                $photosFacebook = [];
+
+                // Vérifier les pièces jointes principales (attachments)
+                if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
+                    $imageSrc = $post['attachments']['data'][0]['media']['image']['src'];
+                    if (!in_array($imageSrc, $photosFacebook)) {
+                        $photosFacebook[] = $imageSrc;
+                    }
+                }
+
+                // Vérifier les subattachments (sous-pièces jointes)
+                if (isset($post['attachments']['data'][0]['subattachments']['data'])) {
+                    foreach ($post['attachments']['data'][0]['subattachments']['data'] as $subattachment) {
+                        if (isset($subattachment['media']['image']['src'])) {
+                            $imageSrc = $subattachment['media']['image']['src'];
+                            if (!in_array($imageSrc, $photosFacebook)) {
+                                $photosFacebook[] = $imageSrc;
+                            }
+                        }
+                    }
+                }
+
+                foreach ($photosFacebook as $photoUrl) {
+                    // Vérifier si l'image existe déjà dans la base de données
+                    $imageExists = $this->photoModel->where('photo', $photoUrl)->first();
+                    if (!$imageExists) {
+                        // Enregistrer l'image si elle n'existe pas déjà
+                        $this->photoModel->save([
+                            'idAlbums' => $idAlbums,
+                            'photo' => $photoUrl,
+                        ]);
+                    }
+                }
+
+
+
+
+            }
+
+        }
+        $albumsPhotos = $this->albumsPhoto->findAll();
         return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos]);
     }
 

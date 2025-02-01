@@ -55,8 +55,9 @@
         <?php foreach ($photos as $photo): ?>
             <div class="photo-item">
                 <!-- Image cliquable pour zoom -->
-                <img src="<?= base_url($photo['photo']) ?>" alt="Photo de l'album" class="photo-img"
-                    onclick="zoomImage('<?= base_url($photo['photo']) ?>')">
+                <img src="<?= (filter_var($photo['photo'], FILTER_VALIDATE_URL)) ? $photo['photo'] : base_url($photo['photo']) ?>"
+                    alt="Photo de l'album" class="photo-img"
+                    onclick="zoomImage('<?= (filter_var($photo['photo'], FILTER_VALIDATE_URL)) ? $photo['photo'] : base_url($photo['photo']) ?>')">
 
                 <!-- Formulaire de suppression sous l'image -->
                 <div class="photo-actions text-center">
