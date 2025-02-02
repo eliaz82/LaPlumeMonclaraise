@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
 
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Flickity CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flickity@2.2.2/dist/flickity.min.css">
@@ -94,70 +95,143 @@
 </nav>
 <!-- Modal Paramètres -->
 <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xxl custom-modal">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="settingsModalLabel">Paramètres</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title" id="settingsModalLabel"><i class="bi bi-gear"></i> Paramètres</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
             <div class="modal-body">
-                <!-- Section Token -->
-                <h4>Gestion du Token d'Accès</h4>
-                <div class="alert alert-info">
-                    <strong>Temps restant avant expiration :</strong>
-                    <span id="tokenCountdown">Calcul en cours...</span>
-                </div>
-                <div class="mt-3">
-                    <button class="btn btn-warning" id="resetTokenBtn">Réinitialiser le Token</button>
-                </div>
-                <!-- Séparateur -->
-                <hr class="my-4">
-
-
-                <hr class="my-4">
-
-                <!-- Section Hashtags -->
-                <h4>Gestion des Hashtags</h4>
-
-                <!-- Sélection de la page -->
-                <label for="pageSelect" class="form-label">Choisir une page :</label>
-                <select id="pageSelect" class="form-select mb-3">
-                    <option value="evenement">Événement</option>
-                    <option value="albumsphoto">Albums Photo</option>
-                    <option value="faitmarquant">Fait Marquant</option>
-                    <option value="calendrier">Calendrier</option>
-                </select>
-
-                <!-- Ajout de hashtag -->
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport" value="#">
-                    <button class="btn btn-primary" id="addHashtag">Ajouter</button>
-                </div>
-
-                <!-- Liste des hashtags -->
-                <ul class="list-group" id="hashtagList">
-                    <!-- Les hashtags seront affichés ici dynamiquement -->
-                    <?php if (isset($hashtags)): ?>
-                        <?php foreach ($hashtags as $hashtag): ?>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <?= $hashtag['hashtag'] ?>
-                                <button class="btn btn-danger btn-sm remove-hashtag"
-                                    data-id="<?= $hashtag['idFacebook'] ?>">X</button>
-                            </li>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                <!-- Onglets de navigation -->
+                <ul class="nav nav-tabs" id="settingsTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="token-tab" data-bs-toggle="tab" data-bs-target="#token"
+                            type="button" role="tab" aria-controls="token" aria-selected="true">
+                            <i class="bi bi-key"></i> Token d'Accès
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo" type="button"
+                            role="tab" aria-controls="logo" aria-selected="false">
+                            <i class="bi bi-image"></i> Logo
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="hashtags-tab" data-bs-toggle="tab" data-bs-target="#hashtags"
+                            type="button" role="tab" aria-controls="hashtags" aria-selected="false">
+                            <i class="bi bi-hash"></i> Hashtags
+                        </button>
+                    </li>
+                    <!-- Onglet Email de Réception -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email"
+                            type="button" role="tab" aria-controls="email" aria-selected="false">
+                            <i class="bi bi-envelope"></i> Email de Réception
+                        </button>
+                    </li>
                 </ul>
 
+                <!-- Contenu des onglets -->
+                <div class="tab-content mt-3" id="settingsTabContent">
+                    <!-- Gestion du Token -->
+                    <div class="tab-pane fade show active" id="token" role="tabpanel" aria-labelledby="token-tab">
+                        <h4><i class="bi bi-shield-lock"></i> Gestion du Token d'Accès</h4>
+                        <div class="alert alert-info">
+                            <strong>Temps restant avant expiration :</strong>
+                            <span id="tokenCountdown">Calcul en cours...</span>
+                        </div>
+                        <button class="btn btn-warning mt-2" id="resetTokenBtn">
+                            <i class="bi bi-arrow-clockwise"></i> Réinitialiser le Token
+                        </button>
+                    </div>
+                    <!-- Gestion du Logo -->
+                    <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
+                        <h4><i class="bi bi-image"></i> Gestion du Logo</h4>
+
+                        <!-- Aperçu du logo -->
+                        <div class="mb-3 text-center">
+                            <img id="logoPreview" src="<?= base_url(getAssociationLogo()); ?>"
+                                class="img-fluid rounded shadow" alt="Logo actuel" style="max-width: 200px;">
+                        </div>
+
+                        <!-- Formulaire d'upload -->
+                        <form id="logoForm" method="post" action="<?= url_to('logoUpdate') ?>"
+                            enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <input type="file" class="form-control" id="logoUpload" name="logo" accept="image/*"
+                                    onchange="previewImage(event, 'logoPreview')">
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-upload"></i> Mettre à jour le Logo
+                            </button>
+                        </form>
+                    </div>
+
+
+                    <!-- Gestion des Hashtags -->
+                    <div class="tab-pane fade" id="hashtags" role="tabpanel" aria-labelledby="hashtags-tab">
+                        <h4><i class="bi bi-tags"></i> Gestion des Hashtags</h4>
+
+                        <!-- Sélection de la page -->
+                        <label for="pageSelect" class="form-label">Choisir une page :</label>
+                        <select id="pageSelect" class="form-select mb-3">
+                            <option value="evenement">Événement</option>
+                            <option value="albumsphoto">Albums Photo</option>
+                            <option value="faitmarquant">Fait Marquant</option>
+                            <option value="calendrier">Calendrier</option>
+                        </select>
+
+                        <!-- Ajout de hashtag -->
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport"
+                                value="#">
+                            <button class="btn btn-primary" id="addHashtag">
+                                <i class="bi bi-plus-lg"></i> Ajouter
+                            </button>
+                        </div>
+
+                        <!-- Liste des hashtags -->
+                        <ul class="list-group" id="hashtagList">
+                            <?php if (isset($hashtags)): ?>
+                                <?php foreach ($hashtags as $hashtag): ?>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <?= $hashtag['hashtag'] ?>
+                                        <button class="btn btn-danger btn-sm remove-hashtag"
+                                            data-id="<?= $hashtag['idFacebook'] ?>">
+                                            <i class="bi bi-x-circle"></i>
+                                        </button>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                    <!-- Contenu de l'onglet "Email de Réception" -->
+                    <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
+                        <h4><i class="bi bi-envelope-at"></i> Modifier l'Email de Réception</h4>
+
+                        <!-- Formulaire pour modifier l'email de contact -->
+                        <form action="<?= route_to('contactUpdate'); ?>" method="post">
+                            <div class="mb-3">
+                                <label for="mailContact" class="form-label">E-mail de réception :</label>
+                                <input type="email" id="mailContact" name="mailContact" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Modifier</button>
+                        </form>
+                    </div>
+                </div>
             </div>
 
-
+            <!-- Footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-success">Enregistrer</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-lg"></i> Fermer
+                </button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xxl custom-modal">
@@ -188,6 +262,7 @@
         const addHashtagBtn = document.getElementById("addHashtag");
         const hashtagInput = document.getElementById("hashtagInput");
         const tokenCountdown = document.getElementById("tokenCountdown");
+
 
         // Fonction pour charger les hashtags d'une page
         function loadHashtags(pageName) {
@@ -357,6 +432,21 @@
         // Rediriger vers la méthode login() de ton contrôleur Facebook
         window.location.href = "<?= site_url('facebook/login') ?>";
     });
+    const emailReceptionInput = document.getElementById("mailContact");
+    const idAssociationInput = document.getElementById("idAssociation");
+
+    // Requête AJAX pour récupérer l'email de réception
+    fetch('<?= route_to("getEmailReception") ?>')
+        .then(response => response.json())
+        .then(data => {
+            if (data.emailContact) {
+                emailReceptionInput.value = data.emailContact;
+                idAssociationInput.value = data.idAssociation;
+            } else {
+                console.error("Erreur de récupération de l'email de réception.");
+            }
+        })
+        .catch(error => console.error("Erreur AJAX:", error));
 </script>
 
 <style>

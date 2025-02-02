@@ -91,7 +91,7 @@
                     </button>
                 </div>
 
-                
+
                 <button class="edit-button" data-bs-toggle="modal" data-bs-target="#modalModifierContact"
                     data-text="Modifier votre e-mail">
                     <svg class="edit-svgIcon" viewBox="0 0 512 512">

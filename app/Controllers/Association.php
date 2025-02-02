@@ -56,9 +56,16 @@ class Association extends Controller
     public function contactUpdate()
     {
         $mailContact = $this->request->getPost();
-        $this->associationModel->save($mailContact);
+        $this->associationModel->update(1, ['mailContact' => $mailContact]);
         return redirect()->route('contact')->with('success', 'Le mail de contact a été modifié avec succès.');
     }
+    public function getEmailReception()
+    {
+        // Récupérer l'association depuis le modèle
+        $association = $this->associationModel->find(1); 
+        return $this->response->setJSON(['emailContact' => $association['mailContact']]);
+    }
+
     public function logoUpdate()
     {
         $association = $this->associationModel->find(1);
