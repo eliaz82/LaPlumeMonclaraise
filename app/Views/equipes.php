@@ -74,12 +74,12 @@
                         </div>
                         <div class="card-footer text-center">
                             <button class="btn btn-warning btn-sm me-2 bouton-modifier-adherent"
-                                data-id="<?= $e['idAdherant'] ?>" data-nom="<?= $e['nom'] ?>"
+                                data-id="<?= $e['idAdherants'] ?>" data-nom="<?= $e['nom'] ?>"
                                 data-prenom="<?= $e['prenom'] ?>" data-grade="<?= $e['grade'] ?>"
                                 data-photo="<?= base_url($e['photo']) ?>" data-bs-toggle="modal"
                                 data-bs-target="#modalModifierAdherent">Modifier</button>
                             <form action="<?= route_to('equipeDelete') ?>" method="post" class="d-inline">
-                                <input type="hidden" name="idAdherant" value="<?= $e['idAdherant'] ?>">
+                                <input type="hidden" name="idAdherant" value="<?= $e['idAdherants'] ?>">
                                 <button type="submit" class="btn btn-danger btn-sm"
                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet adhérent ?');">
                                     Supprimer

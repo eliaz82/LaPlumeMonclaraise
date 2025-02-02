@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class Adherants extends Model
 {
     protected $table            = 'adherants';
-    protected $primaryKey       = 'idAdherant';
+    protected $primaryKey       = 'idAdherants';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;

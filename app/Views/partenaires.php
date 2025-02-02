@@ -32,7 +32,7 @@
                             <?php endif; ?>
                             <div class="card-footer text-center">
                                 <button class="btn btn-warning btn-sm me-2 bouton-modifier-partenaire"
-                                    data-id="<?= $p['idPartenaire'] ?>"
+                                    data-id="<?= $p['idPartenaires'] ?>"
                                     data-info="<?= htmlspecialchars($p['info'], ENT_QUOTES) ?>"
                                     data-lien="<?= htmlspecialchars($p['lien'], ENT_QUOTES) ?>"
                                     data-logo="<?= base_url($p['logo']) ?>" data-bs-toggle="modal"
@@ -40,7 +40,7 @@
                                     Modifier
                                 </button>
                                 <form action="<?= route_to('partenairesDelete') ?>" method="post" class="d-inline">
-                                    <input type="hidden" name="idPartenaire" value="<?= $p['idPartenaire'] ?>">
+                                    <input type="hidden" name="idPartenaire" value="<?= $p['idPartenaires'] ?>">
                                     <button type="submit" class="btn btn-danger btn-sm"
                                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">Supprimer</button>
                                 </form>
