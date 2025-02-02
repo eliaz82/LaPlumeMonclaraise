@@ -2,17 +2,20 @@
 
 namespace App\Controllers;
 use App\Libraries\CallApi;
+use App\Libraries\FacebookCache;
 
 class Home extends BaseController
 {
     private $associationModel;
     private $facebookModel;
+    private $facebookCache;
     private $callApi;
     public function __construct()
     {
         $this->associationModel = model('Association');
         $this->facebookModel = model('Facebook');
         $this->callApi = new CallApi();
+        $this->facebookCache = new FacebookCache();
     }
 
     public function index()
@@ -65,11 +68,8 @@ class Home extends BaseController
             // Si une erreur survient dans la réponse de Facebook
             return redirect()->to('/')->with('error', 'Erreur dans la réponse de Facebook.');
         }
-
-        $tokenFacebook = $this->associationModel->find(1);
-
         // Récupérer les posts
-        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
+        $posts = $this->facebookCache->getFacebookPosts();
   
         // Vérifier si la réponse contient une erreur
         if (isset($posts['error'])) {

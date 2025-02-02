@@ -1,27 +1,25 @@
 <?php
 
 namespace App\Controllers;
-use App\Libraries\CallApi;
+use App\Libraries\FacebookCache;
 class Actualite extends BaseController
 {
-    private $associationModel;
     private $facebookModel;
-    private $callApi;
+    private $facebookCache;
+
     public function __construct()
     {
-        $this->associationModel = model('Association');
         $this->facebookModel = model('Facebook');
-        $this->callApi = new CallApi();
+        $this->facebookCache = new FacebookCache();
     }
     public function actualite(): string
     {
-        $tokenFacebook = $this->associationModel->find(1);
-        // Appels à l'API pour récupérer les posts et les images
-        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
-       
+        //Pour récupérer les posts et les images
+        $posts = $this->facebookCache->getFacebookPosts();
+
         $hashtags = $this->facebookModel->where('pageName', 'faitmarquant')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');
-        
+
         $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
             if (isset($post['message'])) {
                 foreach ($hashtagList as $hashtag) {
@@ -32,7 +30,7 @@ class Actualite extends BaseController
             }
             return false;
         });
-        
+
         $photosFacebook = [];
         foreach ($filteredPosts as $post) {
             // Vérifier les pièces jointes principales
@@ -42,7 +40,7 @@ class Actualite extends BaseController
                     $photosFacebook[] = $imageSrc;
                 }
             }
-        
+
             // Vérifier les subattachments
             if (isset($post['attachments']['data'][0]['subattachments']['data'])) {
                 foreach ($post['attachments']['data'][0]['subattachments']['data'] as $subattachment) {
@@ -59,7 +57,7 @@ class Actualite extends BaseController
         foreach ($photosFacebook as $photo) {
             echo "<img src='{$photo}' alt='Photo Facebook' />";
         }
-        
+
         return view('faitMarquant', ['posts' => $filteredPosts]);
     }
 

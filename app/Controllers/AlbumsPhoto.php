@@ -1,34 +1,29 @@
 <?php
 
 namespace App\Controllers;
-use App\Libraries\CallApi;
+use App\Libraries\FacebookCache;
+
 class AlbumsPhoto extends BaseController
 {
     private $albumsPhoto;
     private $photoModel;
-    private $associationModel;
     private $facebookModel;
-    private $callApi;
+    private $facebookCache;
 
     public function __construct()
     {
         $this->albumsPhoto = model('AlbumsPhoto');
         $this->photoModel = model('Photo');
-        $this->associationModel = model('Association');
         $this->facebookModel = model('Facebook');
-        $this->callApi = new CallApi();
+        $this->facebookCache = new FacebookCache();
     }
 
     public function albumsPhoto(): string
     {
         $albumsPhotos = $this->albumsPhoto->findAll();
 
-        // Ne pas créer un nouvel album si un album existe déjà
-        $tokenFacebook = $this->associationModel->find(1);
         // Appels à l'API pour récupérer les posts et les images
-        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
-        $jsonFile = file_get_contents(base_url('/posts.json'));
-        //$posts = json_decode($jsonFile, true);  // Décoder en tableau associatif
+        $posts = $this->facebookCache->getFacebookPosts();
 
         $hashtags = $this->facebookModel->where('pageName', 'albumsphoto')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');

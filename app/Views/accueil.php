@@ -114,6 +114,8 @@
   </div>
 </div>
 
+
+<button id="refreshButton" data-refresh-url="<?= site_url('facebook/refresh'); ?>">Rafraîchir</button>
 <?php if (!empty($posts)): ?>
   <div class="carousel">
     <div class="carousel-wrapper">

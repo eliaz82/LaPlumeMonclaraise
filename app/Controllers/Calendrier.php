@@ -1,22 +1,19 @@
 <?php
 
 namespace App\Controllers;
-use App\Libraries\CallApi;
+use App\Libraries\FacebookCache;
 class Calendrier extends BaseController
 {
-    private $associationModel;
     private $facebookModel;
-    private $callApi;
+    private $facebookCache;
     public function __construct()
     {
-        $this->associationModel = model('Association');
         $this->facebookModel = model('Facebook');
-        $this->callApi = new CallApi();
+        $this->facebookCache = new FacebookCache();
     }
     public function calendrier(): string
     {
-        $tokenFacebook = $this->associationModel->find(1);
-        $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
+        $posts = $this->facebookCache->getFacebookPosts();
 
         $hashtags = $this->facebookModel->where('pageName', 'calendrier')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');

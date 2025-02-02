@@ -71,6 +71,9 @@ $routes->post('facebook/create', 'Facebook::create');
 $routes->post('facebook/delete/(:num)', 'Facebook::delete/$1');
 $routes->get('facebook/expiration', 'Facebook::getTokenExpirationDate');
 
+$routes->get('facebook/getPosts', 'Facebook::getPosts', ['as' => 'facebook.getPosts']);
+$routes->post('facebook/refresh', 'Facebook::refresh', ['as' => 'facebook.refresh']);
+
 
 
 

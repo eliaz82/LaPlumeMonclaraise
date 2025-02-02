@@ -1,20 +1,19 @@
 <?php
 
 namespace App\Controllers;
-
-use App\Libraries\CallApi;
+use App\Libraries\FacebookCache;
 
 class Facebook extends BaseController
 {
     private $associationModel;
     private $facebookModel;
-    private $callApi;
+    private $facebookCache;
 
     public function __construct()
     {
         $this->associationModel = model('Association');
         $this->facebookModel = model('Facebook');
-        $this->callApi = new CallApi();
+        $this->facebookCache = new FacebookCache();
     }
 
     public function login()
@@ -105,5 +104,20 @@ class Facebook extends BaseController
                 'message' => 'Token non trouvé'
             ]);
         }
+    }
+    public function getPosts()
+    {
+        $posts = $this->facebookCache->getFacebookPosts();
+        return $this->response->setJSON(['posts' => $posts['data'] ?? []]);
+    }
+    public function refresh()
+    {
+        $this->facebookCache->clearCache(); // Supprimer le cache
+        $this->facebookCache->getFacebookPosts(); // Recréer le cache
+
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Cache Facebook rafraîchi !'
+        ]);
     }
 }
