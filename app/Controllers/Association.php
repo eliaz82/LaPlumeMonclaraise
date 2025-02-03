@@ -17,9 +17,26 @@ class Association extends Controller
     }
     public function contact()
     {
+        // Récupérer l'association (par exemple avec l'ID 1)
         $association = $this->associationModel->find(1);
-        return view('contact', ['association' => $association]);
+        // Vérifie si l'association existe et contient les coordonnées
+        if ($association) {
+            $lat = $association['latitude']; // Latitude de l'association
+            $lon = $association['longitude']; // Longitude de l'association
+        } else {
+            // Valeurs par défaut en cas d'absence de données
+            $lat = 43.966742479238754;
+            $lon = 1.5866446106619663;
+        }
+
+        // Passer les coordonnées à la vue
+        return view('contact', [
+            'association' => $association,
+            'lat' => $lat,
+            'lon' => $lon
+        ]);
     }
+
 
     public function fichierInscription()
     {
@@ -28,6 +45,8 @@ class Association extends Controller
 
         return view('inscription', ['fichierInscription' => $fichierInscription]);
     }
+
+
     public function downloadFichier($fileName)
     {
         $filePath = WRITEPATH . 'uploads/inscription/' . $fileName;
@@ -59,10 +78,18 @@ class Association extends Controller
         $this->associationModel->update(1, ['mailContact' => $mailContact]);
         return redirect()->route('contact')->with('success', 'Le mail de contact a été modifié avec succès.');
     }
+    public function localisation()
+    {
+        $data = $this->request->getPost();
+        $this->associationModel->update(1, $data);
+        return redirect()->route('contact')->with('success', 'La localisation a été modifié avec succès.');
+    }
+
+
     public function getEmailReception()
     {
         // Récupérer l'association depuis le modèle
-        $association = $this->associationModel->find(1); 
+        $association = $this->associationModel->find(1);
         return $this->response->setJSON(['emailContact' => $association['mailContact']]);
     }
 
@@ -248,7 +275,4 @@ class Association extends Controller
         }
         return redirect()->to(route_to('contact'));
     }
-
-
-
 }

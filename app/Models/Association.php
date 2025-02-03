@@ -12,7 +12,7 @@ class Association extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['idAssociation','adresse','tel','logo','mailContact','fichierInscription','tokenFacebook','tokenExpirationDate'];
+    protected $allowedFields    = ['idAssociation','adresse','tel','logo','mailContact','fichierInscription','tokenFacebook','tokenExpirationDate','latitude','longitude'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

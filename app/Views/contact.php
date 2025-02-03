@@ -37,7 +37,44 @@
     <!-- Contact Form -->
     <div class="contact-wrapper">
         <div class="contact-map" id="map" style="width: 100%; height: 300px;"></div>
-        <div id="map-container" data-logo="<?= base_url(getAssociationLogo()); ?>"></div>
+        <div id="map-container" data-logo="<?= base_url(getAssociationLogo()); ?>"
+            data-lat="<?= $lat ?>" data-lon="<?= $lon ?>"></div>
+        
+
+
+        <!-- Modal Modifier Localisation -->
+        <div class="modal fade" id="modifierLocalisation" tabindex="-1" aria-labelledby="modalModifierLocalisation" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <!-- Assurez-vous que l'action pointe vers le bon routeur CodeIgniter -->
+                    <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
+                        <?= csrf_field() ?>
+                        <div class="modal-header">
+                            <h5 class="modal-title text-primary" id="modalModifierLocalisation">Modifier la localisation</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Champ pour l'adresse -->
+                            <div class="contact-field">
+                                <label for="adresse" class="form-label">Adresse</label>
+                                <input type="text" id="adresse" name="adresse" class="form-control" value="<?= esc($association['adresse']); ?>" required>
+                            </div>
+                            <!-- Champs cachés pour latitude et longitude -->
+                            <input type="hidden" id="latitude" name="latitude" value="<?= esc($association['latitude']); ?>">
+                            <input type="hidden" id="longitude" name="longitude" value="<?= esc($association['longitude']); ?>">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Modifier</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
 
 
         <div class="contact-container">
@@ -100,6 +137,14 @@
                         </path>
                     </svg>
                 </button>
+
+                <!-- Bouton pour ouvrir le modal -->
+                <div class="container my-4">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modifierLocalisation">
+                        Modifier la localisation
+                    </button>
+                </div>
+
             </form>
         </div>
     </div>
