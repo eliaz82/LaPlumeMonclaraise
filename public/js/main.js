@@ -241,9 +241,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-
-
-
 function zoomImage(imageSrc) {
     const zoomContainer = document.getElementById('zoom-container');
     const zoomedImage = document.getElementById('zoomed-image');

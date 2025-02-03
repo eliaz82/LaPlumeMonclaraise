@@ -859,3 +859,37 @@ html, body {
   border-radius: 5px;
 }
 
+.post {
+  display: flex;  /* Aligne le texte et l'image sur la même ligne */
+  align-items: center;  /* Assure que l'image et le texte sont bien alignés verticalement */
+}
+
+.post p {
+  margin-right: 10px; /* Ajoute un espace légèrement plus grand entre le texte et l'image */
+  flex-grow: 1;  /* Permet au texte de prendre tout l'espace restant */
+}
+
+.post-image {
+  width: 80px; /* Agrandit l'image */
+  height: 80px;
+  object-fit: cover; /* Maintient l'intégrité de l'image sans la déformer */
+}
+#zoom-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Masque tout sauf l'image zoomée */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* S'assure que le zoom est au-dessus de tous les autres éléments */
+}
+
+#zoomed-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain; 
+}
+

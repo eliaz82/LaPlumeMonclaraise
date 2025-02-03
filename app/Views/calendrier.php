@@ -11,7 +11,16 @@
                     <i class="fas fa-chevron-up"></i>
                 </button>
                 <!-- Le carousel -->
-                <div class="carousel"></div>
+                <div class="carousel">
+                    <!-- Les éléments du carousel (posts avec images cliquables) vont ici -->
+                </div>
+                <!-- Conteneur pour zoomer sur l'image -->
+                <div id="zoom-container" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+                    background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center;">
+                    <img id="zoomed-image" src="" alt="Zoomed Image" style="max-width: 90%; max-height: 90%;" />
+                    <button onclick="closeZoom()"
+                        style="position: absolute; top: 20px; right: 20px; color: white; font-size: 30px; background: none; border: none;">X</button>
+                </div>
                 <!-- Flèche du bas -->
                 <button id="scroll-down" class="carousel-nav-down">
                     <i class="fas fa-chevron-down"></i>
@@ -24,6 +33,8 @@
         </div>
     </div>
 </div>
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -38,10 +49,13 @@
             <?php foreach ($posts as $post): ?>
                 originalPosts.push({
                     date: "<?= isset($post['date']) ? esc($post['date']) : '' ?>",
-                    message: "<?= esc($post['message']) ?>"
+                    message: "<?= esc($post['message']) ?>",
+                    image: <?= isset($post['image']) ? json_encode($post['image']) : 'null' ?> // Utilisation de json_encode()
                 });
             <?php endforeach; ?>
         <?php endif; ?>
+
+
 
         // Nombre de posts originaux
         const count = originalPosts.length;
@@ -52,9 +66,26 @@
             const postEl = document.createElement('div');
             postEl.classList.add('post');
             postEl.setAttribute('data-date', post.date);
+
             const p = document.createElement('p');
             p.textContent = post.message;
             postEl.appendChild(p);
+
+            // Ajouter l'image si elle existe et la rendre cliquable
+            if (post.image) {
+                const img = document.createElement('img');
+                img.src = post.image;
+                img.alt = 'Image associée à l\'événement';
+                img.classList.add('post-image');  // Applique la classe pour la redimensionner
+                img.style.cursor = 'pointer';  // Change le curseur pour indiquer qu'on peut cliquer
+                postEl.appendChild(img);
+
+                // Ajoute l'événement de clic pour zoomer sur l'image
+                img.addEventListener('click', function () {
+                    zoomImage(this.src);  // Appelle la fonction de zoom avec l'image cliquée
+                });
+            }
+
             return postEl;
         }
 
@@ -148,6 +179,7 @@
             }
         });
 
+
         // Initialisation de FullCalendar
         var events = <?= json_encode($events); ?>;
         events = events.map(event => {
@@ -205,7 +237,6 @@
                 activeDay.classList.add('highlight');
             }
         }
-
     });
 </script>
 
