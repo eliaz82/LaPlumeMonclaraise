@@ -779,3 +779,110 @@ p {
   transform: translateY(0px);
   transition-duration: 0.3s;
 }
+/* Conteneur principal du carousel */
+.carousel-container {
+  width: 400px; /* Augmenter la largeur du carousel */
+  height: 500px; /* Hauteur du carousel (fixée) */
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  overflow: hidden; /* Empêche les messages de sortir du conteneur */
+  position: relative; /* Nécessaire pour l'alignement des flèches */
+}
+
+/* Conteneur des flèches à l'extérieur du carousel */
+.carousel-nav-container {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000; /* Assurez-vous que les flèches sont au-dessus du carousel */
+}
+
+/* Flèches de navigation (haut et bas) */
+.carousel-nav-up, .carousel-nav-down {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 18px;
+  z-index: 999; /* Assurez-vous que les flèches sont au-dessus du carousel */
+}
+
+/* Positionner les flèches hors du conteneur */
+.carousel-nav-up {
+  position: absolute;
+  top: -25px; /* Positionne la flèche du haut un peu plus haut */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.carousel-nav-down {
+  position: absolute;
+  bottom: -25px; /* Positionne la flèche du bas un peu plus bas */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Effet de survol pour les flèches */
+.carousel-nav-up:hover, .carousel-nav-down:hover {
+  background-color: #0056b3;
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Icônes des flèches */
+.carousel-nav-up i, .carousel-nav-down i {
+  font-size: 20px;
+}
+
+/* Animation pour les posts */
+.carousel {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Style des posts */
+.carousel .post {
+  padding: 20px;
+  box-sizing: border-box;
+  /* Retirer height: 100% pour éviter les débordements */
+  background: #ffffff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+/* Survol des posts */
+.carousel .post:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Texte des posts */
+.carousel .post p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* Mettre en surbrillance l'élément sélectionné */
+.highlight {
+  background-color: #4a90e2 !important;
+  border: 2px solid #f5a623 !important;
+  border-radius: 5px;
+}

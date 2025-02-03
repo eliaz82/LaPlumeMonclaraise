@@ -12,13 +12,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Flickity CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flickity@2.2.2/dist/flickity.min.css">
 
-    <!-- Flickity JS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 
 
 
@@ -255,7 +256,7 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         const pageSelect = document.getElementById("pageSelect");
         const hashtagList = document.getElementById("hashtagList");
         const addHashtagBtn = document.getElementById("addHashtag");
@@ -297,21 +298,21 @@
         }
 
         // Fonction pour ajouter un hashtag via AJAX
-        addHashtagBtn.addEventListener("click", function () {
+        addHashtagBtn.addEventListener("click", function() {
             const hashtag = hashtagInput.value.trim();
             const pageName = pageSelect.value;
 
             if (hashtag) {
                 fetch("<?= site_url('facebook/create') ?>", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        'hashtag': hashtag,
-                        'pageName': pageName
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            'hashtag': hashtag,
+                            'pageName': pageName
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
@@ -324,14 +325,14 @@
                     .catch(error => console.error("Erreur AJAX:", error));
             }
         });
-        document.getElementById("hashtagInput").addEventListener("focus", function () {
+        document.getElementById("hashtagInput").addEventListener("focus", function() {
             if (!this.value.startsWith("#")) {
                 this.value = "#";
             }
         });
 
         // Fonction pour supprimer un hashtag via AJAX
-        hashtagList.addEventListener("click", function (event) {
+        hashtagList.addEventListener("click", function(event) {
             if (event.target.classList.contains("remove-hashtag")) {
                 const id = event.target.getAttribute("data-id");
 
@@ -341,14 +342,14 @@
                 }
 
                 fetch(`<?= site_url('facebook/delete') ?>/${id}`, {
-                    method: "POST", // Utilisation uniquement de POST
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        id: id // Envoyer l'ID dans le corps de la requête
+                        method: "POST", // Utilisation uniquement de POST
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            id: id // Envoyer l'ID dans le corps de la requête
+                        })
                     })
-                })
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
@@ -364,7 +365,7 @@
             }
         });
         // Charger les hashtags au changement de la page sélectionnée
-        pageSelect.addEventListener("change", function () {
+        pageSelect.addEventListener("change", function() {
             loadHashtags(this.value);
         });
 
@@ -427,7 +428,7 @@
     const resetTokenBtn = document.getElementById("resetTokenBtn");
 
     // Gestion du clic sur le bouton de réinitialisation du token
-    resetTokenBtn.addEventListener("click", function () {
+    resetTokenBtn.addEventListener("click", function() {
         // Rediriger vers la méthode login() de ton contrôleur Facebook
         window.location.href = "<?= site_url('facebook/login') ?>";
     });
@@ -441,8 +442,6 @@
             if (data.emailContact) {
                 emailReceptionInput.value = data.emailContact;
                 idAssociationInput.value = data.idAssociation;
-            } else {
-                console.error("Erreur de récupération de l'email de réception.");
             }
         })
         .catch(error => console.error("Erreur AJAX:", error));
@@ -495,6 +494,8 @@
     <script src="<?= base_url('js/facebook.js') ?>"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/locales/fr.js"></script>
 </body>
 
 <footer class="footer-section py-4" style="background-color:rgb(29, 34, 67); color: white;">
