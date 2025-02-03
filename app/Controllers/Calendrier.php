@@ -31,6 +31,7 @@ class Calendrier extends BaseController
         });
     
         $events = [];
+        $currentDate = new \DateTime();
         
         foreach ($filteredPosts as &$post) { // Utilisation de "&" pour modifier directement le post
             $eventDate = null;
@@ -46,7 +47,11 @@ class Calendrier extends BaseController
             if (!checkdate($month, $day, $year)) {
                 continue; // Ignorer les dates invalides
             }
-    
+            $eventDateTime = new \DateTime("$year-$month-$day");
+
+            if ($eventDateTime < $currentDate->setTime(0, 0)) {
+                continue; // Ignore les événements dans le passé
+            }
             preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
             $eventTitle = isset($titleMatches[1]) ? $titleMatches[1] : substr($post['message'], 0, 50);
 

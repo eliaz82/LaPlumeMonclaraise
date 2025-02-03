@@ -40,6 +40,10 @@
     document.addEventListener('DOMContentLoaded', function () {
         const calendarEl = document.getElementById('calendar');
         const carousel = document.querySelector('.carousel');
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];  // Date au format YYYY-MM-DD
+        today.setHours(0, 0, 0, 0);  // Réinitialise l'heure à 00:00:00.000
+        const todayMidnightStr = today.toISOString().split('T')[0];  // Date sans heure (pour comparaison)
         const scrollUpButton = document.getElementById('scroll-up');
         const scrollDownButton = document.getElementById('scroll-down');
 
@@ -55,10 +59,14 @@
             <?php endforeach; ?>
         <?php endif; ?>
 
+        // Filtrer les posts pour ne garder que ceux après aujourd'hui à 00:00
+        const futurePosts = originalPosts.filter(post => {
+            const postDate = post.date.split('/').reverse().join('-'); // Convertir la date au format "YYYY-MM-DD"
+            return postDate > todayMidnightStr; // Comparer avec la date d'aujourd'hui à minuit
+        });
 
-
-        // Nombre de posts originaux
-        const count = originalPosts.length;
+        // Nombre de posts futurs
+        const count = futurePosts.length;
         if (count === 0) return;
 
         // Fonction pour créer un élément post sans image
@@ -92,10 +100,10 @@
         // Construction du carousel en dupliquant la liste trois fois
         const allPosts = [];
         for (let i = 0; i < 3; i++) {
-            originalPosts.forEach(post => {
+            futurePosts.forEach(post => {
                 const postEl = createPostElement(post);
                 // Stocker l'index original pour pouvoir le retrouver lors du clic
-                postEl.setAttribute('data-original-index', originalPosts.indexOf(post));
+                postEl.setAttribute('data-original-index', futurePosts.indexOf(post));
                 allPosts.push(postEl);
             });
         }
@@ -239,5 +247,6 @@
         }
     });
 </script>
+
 
 <?= $this->endSection() ?>
