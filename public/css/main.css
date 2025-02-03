@@ -785,7 +785,8 @@ html, body {
 }
 /* Conteneur principal du carousel */
 .carousel-container {
-  width: 400px; /* Augmenter la largeur du carousel */
+  width: 100%; /* Ajuste la largeur pour être responsive */
+  max-width: 400px; /* Limite la largeur maximale */
   height: 500px; /* Hauteur du carousel (fixée) */
   position: relative;
   background: #f8f9fa;
@@ -798,7 +799,18 @@ html, body {
   overflow: hidden; /* Empêche les messages de sortir du conteneur */
   position: relative; /* Nécessaire pour l'alignement des flèches */
 }
-
+@media (max-width: 768px) {
+  .carousel-container {
+    width: 90%; /* Prend 90% de la largeur de l'écran */
+    height: auto; /* Ajuste la hauteur automatiquement */
+  }
+  .carousel-nav-up, .carousel-nav-down {
+    padding: 10px; /* Réduit la taille des flèches sur petits écrans */
+  }
+  .carousel .post p {
+    font-size: 14px; /* Ajuste la taille du texte pour mieux s'adapter */
+  }
+}
 /* Conteneur des flèches à l'extérieur du carousel */
 .carousel-nav-container {
   position: absolute;
