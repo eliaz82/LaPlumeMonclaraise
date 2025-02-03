@@ -785,77 +785,34 @@ html, body {
 }
 /* Conteneur principal du carousel */
 .carousel-container {
-  width: 100%; /* Ajuste la largeur pour être responsive */
-  max-width: 400px; /* Limite la largeur maximale */
-  height: 500px; /* Hauteur du carousel (fixée) */
   position: relative;
+  height: 500px; /* Fixe la hauteur du carousel */
   background: #f8f9fa;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  overflow: hidden; /* Empêche les messages de sortir du conteneur */
-  position: relative; /* Nécessaire pour l'alignement des flèches */
-}
-@media (max-width: 768px) {
-  .carousel-container {
-    width: 90%; /* Prend 90% de la largeur de l'écran */
-    height: auto; /* Ajuste la hauteur automatiquement */
-  }
-  .carousel-nav-up, .carousel-nav-down {
-    padding: 10px; /* Réduit la taille des flèches sur petits écrans */
-  }
-  .carousel .post p {
-    font-size: 14px; /* Ajuste la taille du texte pour mieux s'adapter */
-  }
-}
-/* Conteneur des flèches à l'extérieur du carousel */
-.carousel-nav-container {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 1000; /* Assurez-vous que les flèches sont au-dessus du carousel */
+  overflow: hidden; /* Empêche les éléments de déborder */
 }
 
-/* Flèches de navigation (haut et bas) */
+/* Positionner les flèches dans leur conteneur spécifique */
 .carousel-nav-up, .carousel-nav-down {
-  background-color: #007bff;
-  color: #fff;
+  position: absolute; /* Positionnement absolu pour les flèches */
+  width: 100%;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+  padding: 10px 0;
   border: none;
-  border-radius: 50%;
-  padding: 15px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 18px;
-  z-index: 999; /* Assurez-vous que les flèches sont au-dessus du carousel */
+  z-index: 10;
 }
 
-/* Positionner les flèches hors du conteneur */
+/* Positionner la flèche du haut en haut du conteneur */
 .carousel-nav-up {
-  position: absolute;
-  top: -25px; /* Positionne la flèche du haut un peu plus haut */
-  left: 50%;
-  transform: translateX(-50%);
+  top: 0; /* Aligne la flèche en haut du conteneur */
 }
 
+/* Positionner la flèche du bas en bas du conteneur */
 .carousel-nav-down {
-  position: absolute;
-  bottom: -25px; /* Positionne la flèche du bas un peu plus bas */
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Effet de survol pour les flèches */
-.carousel-nav-up:hover, .carousel-nav-down:hover {
-  background-color: #0056b3;
-  transform: translateX(-50%) scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  bottom: 0; /* Aligne la flèche en bas du conteneur */
 }
 
 /* Icônes des flèches */
@@ -863,7 +820,7 @@ html, body {
   font-size: 20px;
 }
 
-/* Animation pour les posts */
+/* Style du carousel */
 .carousel {
   display: flex;
   flex-direction: column;
@@ -874,7 +831,6 @@ html, body {
 .carousel .post {
   padding: 20px;
   box-sizing: border-box;
-  /* Retirer height: 100% pour éviter les débordements */
   background: #ffffff;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -902,3 +858,4 @@ html, body {
   border: 2px solid #f5a623 !important;
   border-radius: 5px;
 }
+

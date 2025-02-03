@@ -49,15 +49,22 @@ class Calendrier extends BaseController
     
             preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
             $eventTitle = isset($titleMatches[1]) ? $titleMatches[1] : substr($post['message'], 0, 50);
+
+            $imageUrl = null;
+            if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
+                $imageUrl = $post['attachments']['data'][0]['media']['image']['src'];
+            }
     
             // Ajouter l'événement
             $events[] = [
                 'title' => $eventTitle,
-                'start' => $eventDate
+                'start' => $eventDate,
+                'image' => $imageUrl
             ];
     
             // Ajouter la date directement dans le post
             $post['date'] = $eventDate;
+            $post['image'] = $imageUrl;
         }
     
         return view('calendrier', ['events' => $events, 'posts' => $filteredPosts]);
