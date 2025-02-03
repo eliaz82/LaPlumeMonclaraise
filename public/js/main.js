@@ -130,46 +130,118 @@ $(document).ready(function () {
 
 /*pour la carte*/
 document.addEventListener("DOMContentLoaded", function () {
-    let formHeight = document.querySelector('form').offsetHeight; // Récupérer la hauteur du formulaire
-    let map = document.getElementById('map');
-    map.style.height = formHeight + '600px'; // Donner à la carte la même hauteur que le formulaire
+    // Récupérer le conteneur et ses données initiales
+    let mapContainer = document.getElementById('map-container');
+    let initialLat = parseFloat(mapContainer.getAttribute('data-lat'));
+    let initialLon = parseFloat(mapContainer.getAttribute('data-lon'));
 
-    let lat = 43.966742479238754;
-    let lon = 1.5866446106619663;
+    if (isNaN(initialLat) || isNaN(initialLon)) {
+        console.error("Les coordonnées initiales sont invalides.");
+        return;
+    }
 
-    let leafletMap = L.map('map').setView([lat, lon], 15);
-
+    // Initialiser la carte avec Leaflet
+    let leafletMap = L.map('map').setView([initialLat, initialLon], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(leafletMap);
 
-    // Récupérer l'URL du logo depuis un attribut data-logo
-    let logoUrl = document.getElementById('map-container').getAttribute('data-logo');
+    leafletMap.invalidateSize();
 
-    // Adresse complète encodée pour Google Maps
-    let address = encodeURIComponent("esplanade du lac 82230 Monclar-de-Quercy, France");
-    let googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${address}`;
+    // Récupérer l'URL du logo
+    let logoUrl = mapContainer.getAttribute('data-logo');
 
-    // Ajouter un marker avec un pop-up cliquable qui redirige vers Google Maps avec l'adresse
-    L.marker([lat, lon]).addTo(leafletMap)
-        .bindPopup(`
+    // Créer le marker initial
+    let marker = L.marker([initialLat, initialLon]).addTo(leafletMap)
+        .bindPopup(getPopupContent(logoUrl))
+        .openPopup();
+
+    /**
+     * Fonction utilitaire pour générer le contenu du popup.
+     */
+    function getPopupContent(logoUrl) {
+        let address = encodeURIComponent("esplanade du lac 82230 Monclar-de-Quercy, France");
+        let googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${address}`;
+        return `
             <a href="${googleMapsUrl}" target="_blank" style="text-decoration: none; color: inherit;">
                 <div id="popup-content"
                     style="text-align: center; font-family: Arial, sans-serif; padding: 10px; border-radius: 8px; transition: background-color 0.3s ease, color 0.3s ease;"
                     onmouseover="this.style.backgroundColor='#1D2243'; this.style.color='white';"
                     onmouseout="this.style.backgroundColor='white'; this.style.color='black';"
                 >
-                    <img src="${logoUrl}" alt="Logo de l'association"
-                        style="width: 70px; height: auto;"
-                    />
+                    <img src="${logoUrl}" alt="Logo de l'association" style="width: 70px; height: auto;" />
                     <p style="margin: 5px 0; font-weight: bold;">La Plume Monclaraise</p>
                     <p style="margin: 0;">Esplanade du lac, 82230 Monclar-de-Quercy</p>
                     <p style="font-size: 12px; color: gray;">(Cliquez pour voir sur Google Maps)</p>
                 </div>
             </a>
-        `)
-        .openPopup();
+        `;
+    }
+
+    // Gestion de la soumission du formulaire de localisation
+    let localisationForm = document.getElementById('localisationForm');
+    localisationForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // Empêche la soumission immédiate
+
+        // Récupérer l'adresse saisie
+        let adresseInput = document.getElementById('adresse');
+        let adresse = adresseInput.value.trim();
+        if (!adresse) {
+            alert("Veuillez saisir une adresse.");
+            return;
+        }
+
+        // Construire l'URL de requête pour Nominatim
+        let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(adresse)}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.length > 0) {
+                    // Utiliser le premier résultat de géocodage
+                    let newLat = parseFloat(data[0].lat);
+                    let newLon = parseFloat(data[0].lon);
+
+                    // Mettre à jour les champs cachés du formulaire
+                    document.getElementById('latitude').value = newLat;
+                    document.getElementById('longitude').value = newLon;
+
+                    // Mettre à jour la carte
+                    leafletMap.setView([newLat, newLon], 15);
+                    marker.setLatLng([newLat, newLon]);
+                    marker.bindPopup(getPopupContent(logoUrl)).openPopup();
+
+                    // Optionnel : mettre à jour les attributs data- si vous en avez besoin
+                    mapContainer.setAttribute('data-lat', newLat);
+                    mapContainer.setAttribute('data-lon', newLon);
+
+                    // Puis soumettre le formulaire (cela enverra l'adresse, latitude et longitude au contrôleur CodeIgniter)
+                    localisationForm.submit();
+                } else {
+                    alert("Adresse non trouvée. Veuillez vérifier et réessayer.");
+                }
+            })
+            .catch(error => {
+                console.error("Erreur lors du géocodage :", error);
+                alert("Une erreur est survenue lors de la recherche de l'adresse.");
+            });
+    });
+
+    // (Optionnel) Ajuster la hauteur de la carte si nécessaire
+    let form = document.querySelector('form');
+    if (form) {
+        let formHeight = form.offsetHeight;
+        let map = document.getElementById('map');
+        map.style.height = (formHeight + 600) + 'px';
+    }
+    setTimeout(function () {
+        leafletMap.invalidateSize();
+    }, 300);
+    
+
 });
+
+
 
 
 function zoomImage(imageSrc) {
@@ -249,15 +321,15 @@ let index = 0;
 
 // Fonction pour faire défiler les publications
 function slideCarousel() {
-  index++;
+    index++;
 
-  // Si on a atteint la dernière publication, on revient à la première
-  if (index >= cells.length) {
-    index = 0;
-  }
+    // Si on a atteint la dernière publication, on revient à la première
+    if (index >= cells.length) {
+        index = 0;
+    }
 
-  // Déplacer la wrapper à la position souhaitée
-  carouselWrapper.style.transform = `translateX(-${index * cellWidth}px)`;
+    // Déplacer la wrapper à la position souhaitée
+    carouselWrapper.style.transform = `translateX(-${index * cellWidth}px)`;
 }
 
 // Appeler la fonction toutes les 3 secondes
@@ -265,19 +337,19 @@ setInterval(slideCarousel, 3000);
 
 // Fonction pour ajouter une publication à la fin du carousel
 function addPost(postHTML) {
-  const maxPosts = 10;
-  const carouselCells = document.querySelectorAll('.carousel-cell');
+    const maxPosts = 10;
+    const carouselCells = document.querySelectorAll('.carousel-cell');
 
-  // Si le nombre de publications dépasse 10, supprimer la plus ancienne
-  if (carouselCells.length >= maxPosts) {
-    carouselWrapper.removeChild(carouselCells[0]); // Supprimer la première cellule
-  }
+    // Si le nombre de publications dépasse 10, supprimer la plus ancienne
+    if (carouselCells.length >= maxPosts) {
+        carouselWrapper.removeChild(carouselCells[0]); // Supprimer la première cellule
+    }
 
-  // Ajouter la nouvelle publication à la fin
-  const newPost = document.createElement('div');
-  newPost.classList.add('carousel-cell');
-  newPost.innerHTML = postHTML;
-  carouselWrapper.appendChild(newPost);
+    // Ajouter la nouvelle publication à la fin
+    const newPost = document.createElement('div');
+    newPost.classList.add('carousel-cell');
+    newPost.innerHTML = postHTML;
+    carouselWrapper.appendChild(newPost);
 }
 
 /*pour les boutons modifier */
@@ -287,9 +359,9 @@ const buttons = document.querySelectorAll('.edit-button');
 
 // Modifie le texte de chaque bouton au survol
 buttons.forEach(button => {
-  button.addEventListener('mouseover', function() {
-    const text = button.getAttribute('data-text');
-    button.setAttribute('data-original-text', text);
-  });
+    button.addEventListener('mouseover', function () {
+        const text = button.getAttribute('data-text');
+        button.setAttribute('data-original-text', text);
+    });
 });
 

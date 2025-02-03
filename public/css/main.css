@@ -59,6 +59,10 @@ p {
   margin-bottom: 50px;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 
 /* Conteneur qui contient toutes les publications */
 .carousel-wrapper {

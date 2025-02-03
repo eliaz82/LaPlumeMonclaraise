@@ -59,7 +59,8 @@ $routes->get('fais-marquant', 'Actualite::actualite', ['as' => 'actualite']);
 $routes->get('fais-marquant/(:num)', 'Actualite::actualite/$1', ['as' => 'actualiteClick']);
 // ------------------------------------------- logo -------------------------------------------
 $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
-
+// ------------------------------------------- localisation -------------------------------------------
+$routes->post('localisation', 'Association::localisation', ['as' => 'localisation']);
 
 $routes->get('/favicon.ico', function () {
     return redirect()->to(base_url(getAssociationLogo()));
