@@ -240,15 +240,26 @@
                 <h5 class="modal-title" id="settingsModalLabel">Profil</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <button class="edit-button" data-bs-toggle="modal" data-bs-target="#modalModifierContact"
-                data-text="Modifier votre e-mail">
-                <svg class="edit-svgIcon" viewBox="0 0 512 512">
-                    <path
-                        d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z">
-                    </path>
-                </svg>
-            </button>
-
+            <div class="container my-4">
+                <h5 class="text-primary">Modifier la localisation</h5>
+                <!-- Le formulaire pointe vers la route de mise à jour -->
+                <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
+                    <?= csrf_field() ?>
+                    <div class="mb-3">
+                        <label for="adresse" class="form-label">Adresse</label>
+                        <input
+                            type="text"
+                            id="adresse"
+                            name="adresse"
+                            class="form-control"
+                            required>
+                    </div>
+                    <!-- Champs cachés pour latitude et longitude -->
+                    <input type="hidden" id="latitude" name="latitude">
+                    <input type="hidden" id="longitude" name="longitude">
+                    <button type="submit" class="btn btn-primary">Modifier la localisation</button>
+                </form>
+            </div>
 
 
         </div>
@@ -445,6 +456,33 @@
             }
         })
         .catch(error => console.error("Erreur AJAX:", error));
+
+
+    fetch("<?= route_to('getAssociationData'); ?>")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Erreur lors de la récupération des données.");
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Met à jour les champs uniquement si des données sont renvoyées
+            if (data.adresse) {
+                const adresseInput = document.getElementById("adresse");
+                adresseInput.value = data.adresse;
+                // Déclenche l'événement 'input' pour mettre à jour le popup de la carte
+                adresseInput.dispatchEvent(new Event("input"));
+            }
+            if (data.latitude) {
+                document.getElementById("latitude").value = data.latitude;
+            }
+            if (data.longitude) {
+                document.getElementById("longitude").value = data.longitude;
+            }
+        })
+        .catch(error => {
+            console.error("Erreur lors de la récupération des données de localisation :", error);
+        });
 </script>
 
 <style>

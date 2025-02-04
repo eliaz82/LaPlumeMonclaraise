@@ -76,6 +76,8 @@ $routes->get('facebook/expiration', 'Facebook::getTokenExpirationDate');
 $routes->get('facebook/getPosts', 'Facebook::getPosts', ['as' => 'facebook.getPosts']);
 $routes->post('facebook/refresh', 'Facebook::refresh', ['as' => 'facebook.refresh']);
 
+$routes->get('getAssociationData', 'Association::getAssociationData');
+
 
 
 

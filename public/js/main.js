@@ -128,8 +128,13 @@ $(document).ready(function () {
     });
 });
 
+
 /*pour la carte*/
 document.addEventListener("DOMContentLoaded", function () {
+    // Vérifier que l'élément de la carte existe
+    let mapElement = document.getElementById('map');
+    if (!mapElement) return;
+
     // Récupérer le conteneur et ses données initiales
     let mapContainer = document.getElementById('map-container');
     let initialLat = parseFloat(mapContainer.getAttribute('data-lat'));
@@ -145,23 +150,15 @@ document.addEventListener("DOMContentLoaded", function () {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(leafletMap);
-
-    leafletMap.invalidateSize();
+    leafletMap.invalidateSize(); // Permet de bien afficher la carte
 
     // Récupérer l'URL du logo
     let logoUrl = mapContainer.getAttribute('data-logo');
 
-    // Créer le marker initial
-    let marker = L.marker([initialLat, initialLon]).addTo(leafletMap)
-        .bindPopup(getPopupContent(logoUrl))
-        .openPopup();
-
-    /**
-     * Fonction utilitaire pour générer le contenu du popup.
-     */
-    function getPopupContent(logoUrl) {
-        let address = encodeURIComponent("esplanade du lac 82230 Monclar-de-Quercy, France");
-        let googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${address}`;
+    // Fonction utilitaire pour générer le contenu du popup
+    function getPopupContent(logoUrl, adresse) {
+        let encodedAdresse = encodeURIComponent(adresse);
+        let googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAdresse}`;
         return `
             <a href="${googleMapsUrl}" target="_blank" style="text-decoration: none; color: inherit;">
                 <div id="popup-content"
@@ -171,75 +168,72 @@ document.addEventListener("DOMContentLoaded", function () {
                 >
                     <img src="${logoUrl}" alt="Logo de l'association" style="width: 70px; height: auto;" />
                     <p style="margin: 5px 0; font-weight: bold;">La Plume Monclaraise</p>
-                    <p style="margin: 0;">Esplanade du lac, 82230 Monclar-de-Quercy</p>
+                    <p style="margin: 0;">${adresse}</p>
                     <p style="font-size: 12px; color: gray;">(Cliquez pour voir sur Google Maps)</p>
                 </div>
             </a>
         `;
     }
 
-    // Gestion de la soumission du formulaire de localisation
-    let localisationForm = document.getElementById('localisationForm');
-    localisationForm.addEventListener('submit', function (e) {
-        e.preventDefault(); // Empêche la soumission immédiate
+    // Créer le marker initial et lui attacher un popup
+    let adresseInput = document.getElementById('adresse'); // le champ de saisie de l'adresse
+    let initialAdresse = adresseInput ? adresseInput.value.trim() : "Adresse non renseignée";
 
-        // Récupérer l'adresse saisie
-        let adresseInput = document.getElementById('adresse');
-        let adresse = adresseInput.value.trim();
-        if (!adresse) {
-            alert("Veuillez saisir une adresse.");
-            return;
-        }
+    let marker = L.marker([initialLat, initialLon]).addTo(leafletMap);
+    marker.bindPopup(getPopupContent(logoUrl, initialAdresse)).openPopup();
 
-        // Construire l'URL de requête pour Nominatim
-        let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(adresse)}`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.length > 0) {
-                    // Utiliser le premier résultat de géocodage
-                    let newLat = parseFloat(data[0].lat);
-                    let newLon = parseFloat(data[0].lon);
-
-                    // Mettre à jour les champs cachés du formulaire
-                    document.getElementById('latitude').value = newLat;
-                    document.getElementById('longitude').value = newLon;
-
-                    // Mettre à jour la carte
-                    leafletMap.setView([newLat, newLon], 15);
-                    marker.setLatLng([newLat, newLon]);
-                    marker.bindPopup(getPopupContent(logoUrl)).openPopup();
-
-                    // Optionnel : mettre à jour les attributs data- si vous en avez besoin
-                    mapContainer.setAttribute('data-lat', newLat);
-                    mapContainer.setAttribute('data-lon', newLon);
-
-                    // Puis soumettre le formulaire (cela enverra l'adresse, latitude et longitude au contrôleur CodeIgniter)
-                    localisationForm.submit();
-                } else {
-                    alert("Adresse non trouvée. Veuillez vérifier et réessayer.");
-                }
-            })
-            .catch(error => {
-                console.error("Erreur lors du géocodage :", error);
-                alert("Une erreur est survenue lors de la recherche de l'adresse.");
-            });
-    });
-
-    // (Optionnel) Ajuster la hauteur de la carte si nécessaire
-    let form = document.querySelector('form');
-    if (form) {
-        let formHeight = form.offsetHeight;
-        let map = document.getElementById('map');
-        map.style.height = (formHeight + 600) + 'px';
+    // Fonction debounce pour éviter trop d'appels API à chaque frappe
+    function debounce(func, delay) {
+        let debounceTimer;
+        return function () {
+            const context = this;
+            const args = arguments;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => func.apply(context, args), delay);
+        };
     }
-    setTimeout(function () {
-        leafletMap.invalidateSize();
-    }, 300);
-    
 
+    // Mettre à jour en temps réel le popup ET la position du marker dès qu'on saisit une nouvelle adresse
+    adresseInput.addEventListener('input', debounce(function () {
+        let nouvelleAdresse = this.value.trim();
+        let popupContent = nouvelleAdresse !== "" 
+                           ? getPopupContent(logoUrl, nouvelleAdresse) 
+                           : getPopupContent(logoUrl, "Adresse non renseignée");
+
+        // Mettre à jour le contenu du popup et l'afficher
+        if (marker.getPopup()) {
+            marker.getPopup().setContent(popupContent);
+        } else {
+            marker.bindPopup(popupContent);
+        }
+        marker.openPopup();
+
+        // Si une adresse est saisie, effectuer le géocodage pour obtenir de nouvelles coordonnées
+        if (nouvelleAdresse !== "") {
+            let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(nouvelleAdresse)}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        let newLat = parseFloat(data[0].lat);
+                        let newLon = parseFloat(data[0].lon);
+                        // Mettre à jour la vue de la carte et la position du marker
+                        leafletMap.setView([newLat, newLon], 15);
+                        marker.setLatLng([newLat, newLon]);
+                    }
+                })
+                .catch(error => console.error("Erreur lors du géocodage :", error));
+        }
+    }, 800));
 });
+
+
+
+
+
+
+
+
 
 function zoomImage(imageSrc) {
     const zoomContainer = document.getElementById('zoom-container');

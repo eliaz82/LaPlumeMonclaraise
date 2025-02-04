@@ -36,46 +36,10 @@
 
     <!-- Contact Form -->
     <div class="contact-wrapper">
-        <div class="contact-map" id="map" style="width: 100%; height: 300px;"></div>
+        <div class="contact-map" id="map" style="width: 100%; height: 600px;"></div>
         <div id="map-container" data-logo="<?= base_url(getAssociationLogo()); ?>"
             data-lat="<?= $lat ?>" data-lon="<?= $lon ?>"></div>
         
-
-
-        <!-- Modal Modifier Localisation -->
-        <div class="modal fade" id="modifierLocalisation" tabindex="-1" aria-labelledby="modalModifierLocalisation" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <!-- Assurez-vous que l'action pointe vers le bon routeur CodeIgniter -->
-                    <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
-                        <?= csrf_field() ?>
-                        <div class="modal-header">
-                            <h5 class="modal-title text-primary" id="modalModifierLocalisation">Modifier la localisation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Champ pour l'adresse -->
-                            <div class="contact-field">
-                                <label for="adresse" class="form-label">Adresse</label>
-                                <input type="text" id="adresse" name="adresse" class="form-control" value="<?= esc($association['adresse']); ?>" required>
-                            </div>
-                            <!-- Champs cachés pour latitude et longitude -->
-                            <input type="hidden" id="latitude" name="latitude" value="<?= esc($association['latitude']); ?>">
-                            <input type="hidden" id="longitude" name="longitude" value="<?= esc($association['longitude']); ?>">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="submit" class="btn btn-primary">Modifier</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
 
         <div class="contact-container">
             <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
@@ -128,22 +92,7 @@
                     </button>
                 </div>
 
-
-                <button class="edit-button" data-bs-toggle="modal" data-bs-target="#modalModifierContact"
-                    data-text="Modifier votre e-mail">
-                    <svg class="edit-svgIcon" viewBox="0 0 512 512">
-                        <path
-                            d="M410.3 231l11.3-11.3-33.9-33.9-62.1-62.1L291.7 89.8l-11.3 11.3-22.6 22.6L58.6 322.9c-10.4 10.4-18 23.3-22.2 37.4L1 480.7c-2.5 8.4-.2 17.5 6.1 23.7s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L387.7 253.7 410.3 231zM160 399.4l-9.1 22.7c-4 3.1-8.5 5.4-13.3 6.9L59.4 452l23-78.1c1.4-4.9 3.8-9.4 6.9-13.3l22.7-9.1v32c0 8.8 7.2 16 16 16h32zM362.7 18.7L348.3 33.2 325.7 55.8 314.3 67.1l33.9 33.9 62.1 62.1 33.9 33.9 11.3-11.3 22.6-22.6 14.5-14.5c25-25 25-65.5 0-90.5L453.3 18.7c-25-25-65.5-25-90.5 0zm-47.4 168l-144 144c-6.2 6.2-16.4 6.2-22.6 0s-6.2-16.4 0-22.6l144-144c6.2-6.2 16.4-6.2 22.6 0s6.2 16.4 0 22.6z">
-                        </path>
-                    </svg>
-                </button>
-
-                <!-- Bouton pour ouvrir le modal -->
-                <div class="container my-4">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modifierLocalisation">
-                        Modifier la localisation
-                    </button>
-                </div>
+               
 
             </form>
         </div>
