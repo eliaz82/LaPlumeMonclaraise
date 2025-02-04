@@ -1,6 +1,7 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
+<!-- Vos styles personnalisés -->
 <style>
     .card {
         transition: transform 0.3s ease;
@@ -15,7 +16,6 @@
         height: 100%;
         /* Assurer que les cartes aient une hauteur flexible */
         background-color: #fff;
-        /* Fond blanc pour les cartes */
     }
 
     .card:hover {
@@ -44,7 +44,6 @@
         /* Caché par défaut */
     }
 
-
     .btn-primary {
         background-color: #2980b9;
         border-color: #2980b9;
@@ -54,7 +53,6 @@
         background-color: #3498db;
         border-color: #3498db;
     }
-
 
     /* Cadrage de l'image dans la carte */
     .card-img-top {
@@ -72,9 +70,16 @@
         /* Bordures arrondies en haut à droite */
     }
 
+    /* Style pour limiter la taille de l'image dans le modal */
+    .modal-image {
+        max-height: 150px;
+        /* Ajustez cette valeur selon vos besoins */
+        object-fit: cover;
+        width: 100%;
+    }
+
     /* Pour améliorer l'apparence de la carte dans une colonne */
     .col-md-4 {
-
         justify-content: center;
         margin-bottom: 30px;
         /* Espacement entre les cartes */
@@ -116,6 +121,13 @@
         border: 2px solid #ff9800;
         box-shadow: 0 0 10px rgba(255, 152, 0, 0.8);
     }
+
+    /* (Optionnel) Pour forcer une hauteur uniforme dans la rangée,
+       vous pouvez garder align-items: stretch sur le conteneur .row.
+       Sinon, retirez ou adaptez cette règle. */
+    .row {
+        /* Par défaut Bootstrap aligne en stretch, donc on peut omettre ou ajuster cette règle */
+    }
 </style>
 
 <div class="container mt-5">
@@ -125,10 +137,19 @@
                 <?php
                 // Vérifier si l'événement doit être mis en valeur
                 $isHighlighted = (isset($highlightId) && $highlightId === $post['id']);
-                $messageId = 'message-' . $index; // Identifiant unique pour chaque post
+
+                // Récupérer le message et déterminer s'il dépasse 100 caractères
+                $message = $post['message'];
+                if (mb_strlen($message) > 100) {
+                    $shortText = mb_substr($message, 0, 100);
+                    $displayToggle = true;
+                } else {
+                    $shortText = $message;
+                    $displayToggle = false;
+                }
                 ?>
                 <div class="col-md-4 col-12 mb-4">
-                    <div class="card shadow-sm <?= $isHighlighted ? 'highlight' : '' ?>">
+                    <div class="card shadow-sm <?= $isHighlighted ? 'highlight' : '' ?>" <?= $isHighlighted ? 'id="highlightedEvent"' : '' ?>>
                         <?php if (!empty($post['image'])): ?>
                             <img src="<?= esc($post['image']) ?>" alt="Image de l'événement" class="card-img-top">
                         <?php else: ?>
@@ -137,19 +158,24 @@
                         <div class="card-body">
                             <h5 class="card-title"><?= esc($post['titre']) ?></h5>
 
-                            <!-- Affichage du message avec "Voir plus" -->
-                            <p class="card-text">
-                                <span class="short-text" id="<?= $messageId ?>-short">
-                                    <?= esc(substr($post['message'], 0, 100)) ?>...
+                            <div class="card-text">
+                                <!-- Affichage du texte court -->
+                                <span class="short-text">
+                                    <?= nl2br(esc($shortText)) ?>
+                                    <?= ($displayToggle ? '...' : '') ?>
                                 </span>
-                                <span class="full-text d-none" id="<?= $messageId ?>-full">
-                                    <?= nl2br(esc($post['message'])) ?>
-                                </span>
-                                <button class="toggle-text btn btn-link p-0" data-id="<?= $messageId ?>">Voir plus</button>
-                            </p>
+                                <?php if ($displayToggle): ?>
+                                    <!-- Texte complet caché, qui servira à alimenter le modal -->
+                                    <span class="full-text">
+                                        <?= nl2br(esc($message)) ?>
+                                    </span>
+                                    <!-- Bouton pour ouvrir le modal -->
+                                    <button class="toggle-text btn btn-link p-0">Voir plus</button>
+                                <?php endif; ?>
+                            </div>
 
                             <a href="<?= esc($post['permalink_url']) ?>" class="btn btn-primary" target="_blank">
-                                Voir l'événement
+                                Ouvrir sur Facebook
                             </a>
                         </div>
                     </div>
@@ -163,31 +189,63 @@
     </div>
 </div>
 
+<!-- Modal Bootstrap pour afficher l'image et le contenu complet -->
+<div class="modal fade" id="fullMessageModal" tabindex="-1" aria-labelledby="fullMessageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fullMessageModalLabel">Message complet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Le contenu complet et l'image seront insérés ici via JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Script pour ouvrir le modal au clic sur "Voir plus" -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll(".toggle-text").forEach(button => {
-            button.addEventListener("click", function() {
-                let messageId = this.getAttribute("data-id");
-                let shortText = document.getElementById(messageId + "-short");
-                let fullText = document.getElementById(messageId + "-full");
+    document.addEventListener("DOMContentLoaded", function () {
+        // Créer une instance du modal (Bootstrap 5)
+        const modalElement = document.getElementById('fullMessageModal');
+        const modal = new bootstrap.Modal(modalElement);
 
-                if (fullText.style.display === "none" || fullText.style.display === "") {
-                    shortText.style.display = "none";
-                    fullText.style.display = "inline";
-                    this.textContent = "Voir moins";
-                } else {
-                    shortText.style.display = "inline";
-                    fullText.style.display = "none";
-                    this.textContent = "Voir plus";
+        // Ajouter un écouteur d'événement sur chaque bouton "Voir plus"
+        document.querySelectorAll(".toggle-text").forEach(button => {
+            button.addEventListener("click", function () {
+                // Récupérer le conteneur parent .card-text
+                let cardText = this.closest(".card-text");
+                // Récupérer le contenu complet depuis la span .full-text
+                let fullText = cardText.querySelector(".full-text").innerHTML;
+
+                // Récupérer la carte parente pour extraire l'image
+                let card = this.closest('.card');
+                let cardImageElement = card.querySelector('img.card-img-top');
+                let modalContent = '';
+
+                // Si l'image existe, l'ajouter en haut du contenu du modal
+                if (cardImageElement) {
+                    modalContent += `<img src="${cardImageElement.src}" alt="${cardImageElement.alt}" class="img-fluid mb-3 modal-image">`;
                 }
+
+                // Ajouter ensuite le texte complet
+                modalContent += fullText;
+
+                // Insérer le contenu dans le body du modal
+                modalElement.querySelector(".modal-body").innerHTML = modalContent;
+
+                // Afficher le modal
+                modal.show();
             });
         });
+        // Si un événement est mis en valeur, défiler jusqu'à lui
+        const highlighted = document.getElementById('highlightedEvent');
+        if (highlighted) {
+            highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     });
+
 </script>
-
-
-
-
 
 <?= $this->endSection() ?>
