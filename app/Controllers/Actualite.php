@@ -31,31 +31,23 @@ class Actualite extends BaseController
             return false;
         });
 
-        $photosFacebook = [];
-        foreach ($filteredPosts as $post) {
+        foreach ($filteredPosts as &$post) { // Utilisation de & pour modifier le tableau
+            $post['image'] = null; // Par défaut, pas d'image
+    
             // Vérifier les pièces jointes principales
             if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
-                $imageSrc = $post['attachments']['data'][0]['media']['image']['src'];
-                if (!in_array($imageSrc, $photosFacebook)) {
-                    $photosFacebook[] = $imageSrc;
-                }
+                $post['image'] = $post['attachments']['data'][0]['media']['image']['src'];
             }
-
-            // Vérifier les subattachments
+    
+            // Vérifier les subattachments (plusieurs images)
             if (isset($post['attachments']['data'][0]['subattachments']['data'])) {
                 foreach ($post['attachments']['data'][0]['subattachments']['data'] as $subattachment) {
                     if (isset($subattachment['media']['image']['src'])) {
-                        $imageSrc = $subattachment['media']['image']['src'];
-                        if (!in_array($imageSrc, $photosFacebook)) {
-                            $photosFacebook[] = $imageSrc;
-                        }
+                        $post['image'] = $subattachment['media']['image']['src']; // Prend la première trouvée
+                        break;
                     }
                 }
             }
-        }
-        // Afficher les photos (exemple)
-        foreach ($photosFacebook as $photo) {
-            echo "<img src='{$photo}' alt='Photo Facebook' />";
         }
 
         return view('faitMarquant', ['posts' => $filteredPosts]);
