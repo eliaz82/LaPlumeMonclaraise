@@ -893,3 +893,37 @@ html, body {
     object-fit: contain; 
 }
 
+.post {
+  display: flex;
+  align-items: center; /* Aligner verticalement */
+  gap: 10px; /* Ajoute un espace entre l'image et le bouton */
+}
+
+.post img {
+  max-width: 100px; /* Ajuste selon tes besoins */
+  height: auto;
+  border-radius: 5px;
+}
+
+.read-more-button {
+  font-size: 14px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  white-space: nowrap;
+  min-width: 80px;
+  text-align: center;
+}
+
+.read-more-button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.read-more-button:active {
+  transform: scale(0.98);
+}

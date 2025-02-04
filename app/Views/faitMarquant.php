@@ -105,7 +105,7 @@
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p style="text-align: center;">Aucun événement trouvé</p>
+        <p style="text-align: center;">Aucun fait marquant trouvé</p>
     <?php endif; ?>
 </div>
 
