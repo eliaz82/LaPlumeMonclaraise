@@ -36,6 +36,33 @@ class Association extends Controller
             'lon' => $lon
         ]);
     }
+    public function getAssociationData()
+    {
+        // Récupérer l'association (par exemple avec l'ID 1)
+        $association = $this->associationModel->find(1);
+    
+        // Vérifier si l'association existe et contient les coordonnées
+        if ($association) {
+            $lat        = $association['latitude'];  // Latitude de l'association
+            $lon        = $association['longitude']; // Longitude de l'association
+            $adresse    = $association['adresse'];   // Adresse de l'association
+        } else {
+            // Valeurs par défaut en cas d'absence de données
+            $lat         = 43.966742479238754;
+            $lon         = 1.5866446106619663;
+            $adresse     = "Adresse non définie";
+        }
+    
+        // Préparer les données à renvoyer
+        $data = [
+            'latitude'    => $lat,
+            'longitude'   => $lon,
+            'adresse'     => $adresse,
+        ];
+    
+        return $this->response->setJSON($data);
+    }
+    
 
 
     public function fichierInscription()
