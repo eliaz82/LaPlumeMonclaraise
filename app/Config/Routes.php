@@ -52,6 +52,8 @@ $routes->get('calendrier', 'Calendrier::calendrier', ['as' => 'calendrier']);
 $routes->get('calendrier/evenement/(:num)', 'Calendrier::evenement', ['as' => 'evenements']);
 
 // ------------------------------------------- evenement -------------------------------------------
+
+$routes->get('evenement/(:segment)', 'Evenement::evenement/$1');
 $routes->get('evenement', 'Evenement::evenement', ['as' => 'evenement']);
 
 // ------------------------------------------- faitMarquant -------------------------------------------
@@ -75,8 +77,3 @@ $routes->get('facebook/expiration', 'Facebook::getTokenExpirationDate');
 
 $routes->get('facebook/getPosts', 'Facebook::getPosts', ['as' => 'facebook.getPosts']);
 $routes->post('facebook/refresh', 'Facebook::refresh', ['as' => 'facebook.refresh']);
-
-
-
-
-
