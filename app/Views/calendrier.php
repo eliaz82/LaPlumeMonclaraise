@@ -46,7 +46,7 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const calendarEl = document.getElementById('calendar');
         const carousel = document.querySelector('.carousel');
         const today = new Date();
@@ -99,7 +99,7 @@
                 postEl.appendChild(img);
 
                 // Ajoute l'événement de clic pour zoomer sur l'image
-                img.addEventListener('click', function() {
+                img.addEventListener('click', function () {
                     zoomImage(this.src); // Appelle la fonction de zoom avec l'image cliquée
                 });
             }
@@ -161,20 +161,20 @@
 
 
         // Boutons de défilement (avec animation)
-        scrollUpButton.addEventListener('click', function() {
+        scrollUpButton.addEventListener('click', function () {
             currentIndex--;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
-        scrollDownButton.addEventListener('click', function() {
+        scrollDownButton.addEventListener('click', function () {
             currentIndex++;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
         // Gestion du clic sur un post du carousel
-        carousel.addEventListener('click', function(e) {
+        carousel.addEventListener('click', function (e) {
             let target = e.target;
 
             // Vérifier si le clic provient du bouton "Lire plus"
@@ -234,6 +234,20 @@
             locale: 'fr',
             initialView: 'dayGridMonth',
             themeSystem: 'bootstrap5',
+            eventDidMount: function (info) {
+                const eventTitle = info.event.title;
+                const titleElement = info.el.querySelector('.fc-event-title');
+
+                if (titleElement) {
+                    // Créer un conteneur pour l'animation du texte
+                    const span = document.createElement('span');
+                    span.textContent = eventTitle;
+                    span.classList.add('scrolling-text'); // Ajout de la classe d'animation
+
+                    titleElement.innerHTML = ''; // Effacer l'ancien contenu
+                    titleElement.appendChild(span); // Ajouter le nouveau contenu
+                }
+            },
             buttonText: {
                 today: 'Aujourd\'hui',
                 month: 'Mois',
@@ -243,7 +257,39 @@
             events: events,
             eventColor: '#2980b9',
             eventTextColor: '#f5c542',
-            dateClick: function(info) {
+            eventClick: function (info) {
+                const clickedDate = info.event.startStr; // Récupère la date de l'événement
+                const posts = carousel.querySelectorAll('.post');
+                let foundIndices = [];
+
+                console.log("Événement cliqué :", info.event.title, "| Date :", clickedDate);
+
+                // Recherche des posts correspondant à la date de l'événement
+                posts.forEach((post, index) => {
+                    const postDate = post.getAttribute('data-date');
+                    if (postDate) {
+                        const parts = postDate.split('/');
+                        if (parts.length === 3) {
+                            const formattedPostDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                            if (formattedPostDate === clickedDate) {
+                                foundIndices.push(index);
+                            }
+                        }
+                    }
+                });
+
+                if (foundIndices.length > 0) {
+                    posts.forEach(post => post.classList.remove('highlight'));
+                    foundIndices.forEach(idx => posts[idx].classList.add('highlight'));
+
+                    const origIdx = foundIndices[0] % count;
+                    currentIndex = count + origIdx;
+                    updateCarouselPosition();
+                }
+
+                highlightDayInCalendar(clickedDate);
+            },
+            dateClick: function (info) {
                 const clickedDate = info.dateStr; // Format "YYYY-MM-DD"
                 const posts = carousel.querySelectorAll('.post');
                 let foundIndices = [];

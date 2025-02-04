@@ -927,3 +927,18 @@ html, body {
 .read-more-button:active {
   transform: scale(0.98);
 }
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: scrollText 8s linear infinite;
+}
+
+@keyframes scrollText {
+  from {
+      transform: translateX(0);
+  }
+  to {
+      transform: translateX(-100%);
+  }
+}
