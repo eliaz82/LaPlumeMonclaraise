@@ -32,10 +32,18 @@
     }
 
     .card-text {
-        color: #555;
-        font-size: 1rem;
-        margin-bottom: 20px;
+        overflow: hidden;
     }
+
+    .short-text {
+        display: inline;
+    }
+
+    .full-text {
+        display: none;
+        /* Caché par défaut */
+    }
+
 
     .btn-primary {
         background-color: #2980b9;
@@ -47,9 +55,6 @@
         border-color: #3498db;
     }
 
-    .container {
-        padding: 20px;
-    }
 
     /* Cadrage de l'image dans la carte */
     .card-img-top {
@@ -69,7 +74,7 @@
 
     /* Pour améliorer l'apparence de la carte dans une colonne */
     .col-md-4 {
-        display: flex;
+
         justify-content: center;
         margin-bottom: 30px;
         /* Espacement entre les cartes */
@@ -116,10 +121,11 @@
 <div class="container mt-5">
     <div class="row">
         <?php if (!empty($posts)): ?>
-            <?php foreach ($posts as $post): ?>
+            <?php foreach ($posts as $index => $post): ?>
                 <?php
                 // Vérifier si l'événement doit être mis en valeur
                 $isHighlighted = (isset($highlightId) && $highlightId === $post['id']);
+                $messageId = 'message-' . $index; // Identifiant unique pour chaque post
                 ?>
                 <div class="col-md-4 col-12 mb-4">
                     <div class="card shadow-sm <?= $isHighlighted ? 'highlight' : '' ?>">
@@ -129,8 +135,19 @@
                             <div class="no-image">Pas d'image disponible</div>
                         <?php endif; ?>
                         <div class="card-body">
-                            <h5 class="card-title"><?= esc($post['message']) ?></h5>
-                            <p class="card-text"><?= isset($post['message']) ? substr(esc($post['message']), 0, 100) . '...' : '' ?></p>
+                            <h5 class="card-title"><?= esc($post['titre']) ?></h5>
+
+                            <!-- Affichage du message avec "Voir plus" -->
+                            <p class="card-text">
+                                <span class="short-text" id="<?= $messageId ?>-short">
+                                    <?= esc(substr($post['message'], 0, 100)) ?>...
+                                </span>
+                                <span class="full-text d-none" id="<?= $messageId ?>-full">
+                                    <?= nl2br(esc($post['message'])) ?>
+                                </span>
+                                <button class="toggle-text btn btn-link p-0" data-id="<?= $messageId ?>">Voir plus</button>
+                            </p>
+
                             <a href="<?= esc($post['permalink_url']) ?>" class="btn btn-primary" target="_blank">
                                 Voir l'événement
                             </a>
@@ -145,6 +162,31 @@
         <?php endif; ?>
     </div>
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".toggle-text").forEach(button => {
+            button.addEventListener("click", function() {
+                let messageId = this.getAttribute("data-id");
+                let shortText = document.getElementById(messageId + "-short");
+                let fullText = document.getElementById(messageId + "-full");
+
+                if (fullText.style.display === "none" || fullText.style.display === "") {
+                    shortText.style.display = "none";
+                    fullText.style.display = "inline";
+                    this.textContent = "Voir moins";
+                } else {
+                    shortText.style.display = "inline";
+                    fullText.style.display = "none";
+                    this.textContent = "Voir plus";
+                }
+            });
+        });
+    });
+</script>
+
+
 
 
 

@@ -35,11 +35,11 @@ class Evenement extends BaseController
 
         // Ajouter l'image (si présente) à chaque post
         foreach ($filteredPosts as &$post) {
-            if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
-                $post['image'] = $post['attachments']['data'][0]['media']['image']['src'];
-            } else {
-                $post['image'] = null; // Pas d'image associée
-            }
+            $post['image'] = $post['attachments']['data'][0]['media']['image']['src'] ?? null;
+
+            // Extraction du titre (entre *...*)
+            preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
+            $post['titre'] = isset($titleMatches[1]) ? $titleMatches[1] : substr($post['message'], 0, 50);
         }
 
 
