@@ -16,9 +16,9 @@ class Calendrier extends BaseController
     public function calendrier(): string
     {
         $posts = $this->facebookCache->getFacebookPosts();
-        $hashtags = $this->facebookModel->where('pageName', 'calendrier')->findAll();
+        $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');
-    
+
         $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
             if (isset($post['message'])) {
                 foreach ($hashtagList as $hashtag) {
@@ -29,20 +29,20 @@ class Calendrier extends BaseController
             }
             return false;
         });
-    
+
         $events = [];
         $currentDate = new \DateTime();
-        
+
         foreach ($filteredPosts as &$post) { // Utilisation de "&" pour modifier directement le post
             $eventDate = null;
             if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
-                $eventDate = $matches[1]; 
+                $eventDate = $matches[1];
             }
-            
+
             if (!$eventDate) {
                 continue; // Si pas de date trouvée, on ignore ce post
             }
-    
+
             list($day, $month, $year) = explode('/', $eventDate);
             if (!checkdate($month, $day, $year)) {
                 continue; // Ignorer les dates invalides
@@ -59,22 +59,21 @@ class Calendrier extends BaseController
             if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
                 $imageUrl = $post['attachments']['data'][0]['media']['image']['src'];
             }
-    
+
             // Ajouter l'événement
             $events[] = [
                 'title' => $eventTitle,
                 'start' => $eventDate,
-                'image' => $imageUrl
+                'image' => $imageUrl,
+                'id' => $post['id'] ?? uniqid()
             ];
-    
+
             // Ajouter la date directement dans le post
             $post['date'] = $eventDate;
             $post['image'] = $imageUrl;
+            $post['titre'] = $eventTitle;
+            $post['id'] = $post['id'] ?? uniqid();
         }
-    
         return view('calendrier', ['events' => $events, 'posts' => $filteredPosts]);
     }
-    
-    
-    
 }

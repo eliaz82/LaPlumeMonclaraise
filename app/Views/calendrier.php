@@ -37,13 +37,13 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
         const carousel = document.querySelector('.carousel');
         const today = new Date();
-        const todayStr = today.toISOString().split('T')[0];  // Date au format YYYY-MM-DD
-        today.setHours(0, 0, 0, 0);  // Réinitialise l'heure à 00:00:00.000
-        const todayMidnightStr = today.toISOString().split('T')[0];  // Date sans heure (pour comparaison)
+        const todayStr = today.toISOString().split('T')[0]; // Date au format YYYY-MM-DD
+        today.setHours(0, 0, 0, 0); // Réinitialise l'heure à 00:00:00.000
+        const todayMidnightStr = today.toISOString().split('T')[0]; // Date sans heure (pour comparaison)
         const scrollUpButton = document.getElementById('scroll-up');
         const scrollDownButton = document.getElementById('scroll-down');
 
@@ -53,8 +53,9 @@
             <?php foreach ($posts as $post): ?>
                 originalPosts.push({
                     date: "<?= isset($post['date']) ? esc($post['date']) : '' ?>",
-                    message: "<?= esc($post['message']) ?>",
-                    image: <?= isset($post['image']) ? json_encode($post['image']) : 'null' ?> // Utilisation de json_encode()
+                    titre: "<?= isset($post['titre']) ? esc($post['titre']) : '' ?>",
+                    image: <?= isset($post['image']) ? json_encode($post['image']) : 'null' ?>,
+                    id: "<?= isset($post['id']) ? esc($post['id']) : '' ?>"
                 });
             <?php endforeach; ?>
         <?php endif; ?>
@@ -76,7 +77,7 @@
             postEl.setAttribute('data-date', post.date);
 
             const p = document.createElement('p');
-            p.textContent = post.message;
+            p.textContent = post.titre;
             postEl.appendChild(p);
 
             // Ajouter l'image si elle existe et la rendre cliquable
@@ -84,30 +85,41 @@
                 const img = document.createElement('img');
                 img.src = post.image;
                 img.alt = 'Image associée à l\'événement';
-                img.classList.add('post-image');  // Applique la classe pour la redimensionner
-                img.style.cursor = 'pointer';  // Change le curseur pour indiquer qu'on peut cliquer
+                img.classList.add('post-image'); // Applique la classe pour la redimensionner
+                img.style.cursor = 'pointer'; // Change le curseur pour indiquer qu'on peut cliquer
                 postEl.appendChild(img);
 
                 // Ajoute l'événement de clic pour zoomer sur l'image
-                img.addEventListener('click', function () {
-                    zoomImage(this.src);  // Appelle la fonction de zoom avec l'image cliquée
+                img.addEventListener('click', function() {
+                    zoomImage(this.src); // Appelle la fonction de zoom avec l'image cliquée
                 });
             }
-
+            const readMoreButton = document.createElement('button');
+            readMoreButton.textContent = 'Lire plus';
+            readMoreButton.classList.add('read-more-button');
+            readMoreButton.setAttribute('data-event-id', post.id); // L'attribut data-event-id contient l'ID de l'événement
+            postEl.appendChild(readMoreButton);
             return postEl;
         }
 
-        // Construction du carousel en dupliquant la liste trois fois
+        // Construction du carousel
         const allPosts = [];
-        for (let i = 0; i < 3; i++) {
-            futurePosts.forEach(post => {
-                const postEl = createPostElement(post);
-                // Stocker l'index original pour pouvoir le retrouver lors du clic
-                postEl.setAttribute('data-original-index', futurePosts.indexOf(post));
-                allPosts.push(postEl);
-            });
+        if (futurePosts.length > 1) {
+            for (let i = 0; i < 3; i++) { // Duplique seulement s'il y a plusieurs événements
+                futurePosts.forEach(post => {
+                    const postEl = createPostElement(post);
+                    postEl.setAttribute('data-original-index', futurePosts.indexOf(post));
+                    allPosts.push(postEl);
+                });
+            }
+        } else {
+            // Si un seul événement, on l'ajoute une seule fois sans duplication
+            const postEl = createPostElement(futurePosts[0]);
+            postEl.setAttribute('data-original-index', 0);
+            allPosts.push(postEl);
         }
         allPosts.forEach(el => carousel.appendChild(el));
+
 
         // On positionne le carousel sur la copie centrale (indices de count à 2*count-1)
         let currentIndex = count;
@@ -138,54 +150,64 @@
             }
         }
 
+
         // Boutons de défilement (avec animation)
-        scrollUpButton.addEventListener('click', function () {
+        scrollUpButton.addEventListener('click', function() {
             currentIndex--;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
-        scrollDownButton.addEventListener('click', function () {
+        scrollDownButton.addEventListener('click', function() {
             currentIndex++;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
         // Gestion du clic sur un post du carousel
-        carousel.addEventListener('click', function (e) {
+        carousel.addEventListener('click', function(e) {
             let target = e.target;
-            // Remonter jusqu'à l'élément qui possède la classe "post"
-            while (target && !target.classList.contains('post')) {
-                target = target.parentElement;
-            }
-            if (!target) return;
 
-            // Récupérer l'index original stocké dans l'attribut
-            const origIdx = parseInt(target.getAttribute('data-original-index'));
+            // Vérifier si le clic provient du bouton "Lire plus"
+            if (target && target.classList.contains('read-more-button')) {
+                const eventId = target.getAttribute('data-event-id');
+                if (eventId) {
+                    // Rediriger vers l'événement spécifique
+                    window.location.href = `<?= site_url('evenement') ?>/${eventId}`;
+                } else {
+                    console.error('ID de l\'événement non trouvé');
+                }
+            } else {
+                // Logique existante pour gérer le carousel
+                // Remonter jusqu'à l'élément qui possède la classe "post"
+                while (target && !target.classList.contains('post')) {
+                    target = target.parentElement;
+                }
+                if (!target) return;
 
-            // Positionner le carousel pour centrer la copie centrale correspondante
-            currentIndex = count + origIdx;
-            updateCarouselPosition(false); // Mise à jour immédiate sans animation
+                const origIdx = parseInt(target.getAttribute('data-original-index'));
+                currentIndex = count + origIdx;
+                updateCarouselPosition(false);
 
-            // Une fois le repositionnement fait, on met à jour la surbrillance
-            const posts = carousel.querySelectorAll('.post');
-            posts.forEach(post => post.classList.remove('highlight'));
-            if (posts[count + origIdx]) {
-                posts[count + origIdx].classList.add('highlight');
-            }
+                const posts = carousel.querySelectorAll('.post');
+                posts.forEach(post => post.classList.remove('highlight'));
+                if (posts[count + origIdx]) {
+                    posts[count + origIdx].classList.add('highlight');
+                }
 
-            // Mise à jour du calendrier
-            const postDate = target.getAttribute('data-date');
-            if (postDate) {
-                const parts = postDate.split('/');
-                if (parts.length === 3) {
-                    const formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
-                    calendar.changeView('dayGridMonth', formattedDate);
-                    calendar.gotoDate(formattedDate);
-                    highlightDayInCalendar(formattedDate);
+                const postDate = target.getAttribute('data-date');
+                if (postDate) {
+                    const parts = postDate.split('/');
+                    if (parts.length === 3) {
+                        const formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+                        calendar.changeView('dayGridMonth', formattedDate);
+                        calendar.gotoDate(formattedDate);
+                        highlightDayInCalendar(formattedDate);
+                    }
                 }
             }
         });
+
 
 
         // Initialisation de FullCalendar
@@ -193,7 +215,10 @@
         events = events.map(event => {
             const parts = event.start.split('/'); // [jour, mois, année]
             const formatted = parts[2] + '-' + parts[1] + '-' + parts[0];
-            return { ...event, start: formatted };
+            return {
+                ...event,
+                start: formatted
+            };
         });
 
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -209,8 +234,8 @@
             events: events,
             eventColor: '#2980b9',
             eventTextColor: '#f5c542',
-            dateClick: function (info) {
-                const clickedDate = info.dateStr;  // Format "YYYY-MM-DD"
+            dateClick: function(info) {
+                const clickedDate = info.dateStr; // Format "YYYY-MM-DD"
                 const posts = carousel.querySelectorAll('.post');
                 let foundIndices = [];
                 // Recherche des posts dont la date correspond
