@@ -175,10 +175,9 @@
                         <!-- Sélection de la page -->
                         <label for="pageSelect" class="form-label">Choisir une page :</label>
                         <select id="pageSelect" class="form-select mb-3">
-                            <option value="evenement">Événement</option>
+                            <option value="evenementCalendrier">Événement+Calendrier</option>
                             <option value="albumsphoto">Albums Photo</option>
                             <option value="faitmarquant">Fait Marquant</option>
-                            <option value="calendrier">Calendrier</option>
                         </select>
 
                         <!-- Ajout de hashtag -->
@@ -233,38 +232,110 @@
 
 
 
+<!-- Modal Profil -->
 <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xxl custom-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="settingsModalLabel">Profil</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="container my-4">
-                <h5 class="text-primary">Modifier la localisation</h5>
-                <!-- Le formulaire pointe vers la route de mise à jour -->
-                <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
-                    <?= csrf_field() ?>
-                    <div class="mb-3">
-                        <label for="adresse" class="form-label">Adresse</label>
-                        <input
-                            type="text"
-                            id="adresse"
-                            name="adresse"
-                            class="form-control"
-                            required>
-                    </div>
-                    <!-- Champs cachés pour latitude et longitude -->
-                    <input type="hidden" id="latitude" name="latitude">
-                    <input type="hidden" id="longitude" name="longitude">
-                    <button type="submit" class="btn btn-primary">Modifier la localisation</button>
-                </form>
-            </div>
+  <div class="modal-dialog modal-xxl custom-modal">
+    <div class="modal-content">
+      <!-- En-tête du modal -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="profilModalLabel">
+          <i class="bi bi-person"></i> Profil
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
 
+      <!-- Corps du modal avec navigation par onglets -->
+      <div class="modal-body">
+        <!-- Onglets de navigation -->
+        <ul class="nav nav-tabs" id="profilTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="localisation-tab" data-bs-toggle="tab" data-bs-target="#localisation"
+              type="button" role="tab" aria-controls="localisation" aria-selected="true">
+              <i class="bi bi-geo-alt"></i> Localisation
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo"
+              type="button" role="tab" aria-controls="logo" aria-selected="false">
+              <i class="bi bi-image"></i> Logo
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email"
+              type="button" role="tab" aria-controls="email" aria-selected="false">
+              <i class="bi bi-envelope"></i> Email
+            </button>
+          </li>
+        </ul>
 
+        <!-- Contenu des onglets -->
+        <div class="tab-content mt-3" id="profilTabContent">
+          <!-- Onglet Localisation -->
+          <div class="tab-pane fade show active" id="localisation" role="tabpanel" aria-labelledby="localisation-tab">
+            <h5 class="text-primary"><i class="bi bi-geo-alt"></i> Modifier la localisation</h5>
+            <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
+              <?= csrf_field() ?>
+              <div class="mb-3">
+                <label for="adresse" class="form-label">Adresse</label>
+                <input type="text" id="adresse" name="adresse" class="form-control" required>
+              </div>
+              <!-- Champs cachés pour latitude et longitude -->
+              <input type="hidden" id="latitude" name="latitude">
+              <input type="hidden" id="longitude" name="longitude">
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Modifier la localisation
+              </button>
+            </form>
+          </div>
+
+          <!-- Onglet Logo -->
+          <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
+            <h5 class="text-primary"><i class="bi bi-image"></i> Gestion du Logo</h5>
+            <!-- Aperçu du logo -->
+            <div class="mb-3 text-center">
+              <img id="logoPreview" src="<?= base_url(getAssociationLogo()); ?>"
+                class="img-fluid rounded shadow" alt="Logo actuel" style="max-width: 200px;">
+            </div>
+            <!-- Formulaire d'upload -->
+            <form id="logoForm" method="post" action="<?= url_to('logoUpdate') ?>" enctype="multipart/form-data">
+              <?= csrf_field() ?>
+              <div class="mb-3">
+                <input type="file" class="form-control" id="logoUpload" name="logo" accept="image/*"
+                  onchange="previewImage(event, 'logoPreview')">
+              </div>
+              <button type="submit" class="btn btn-success">
+                <i class="bi bi-upload"></i> Mettre à jour le Logo
+              </button>
+            </form>
+          </div>
+
+          <!-- Onglet Email -->
+          <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
+            <h5 class="text-primary"><i class="bi bi-envelope-at"></i> Modifier l'Email de Réception</h5>
+            <form action="<?= route_to('contactUpdate'); ?>" method="post">
+              <?= csrf_field() ?>
+              <div class="mb-3">
+                <label for="mailContact" class="form-label">E-mail de réception :</label>
+                <input type="email" id="mailContact" name="mailContact" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-save"></i> Modifier
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
+
+      <!-- Footer du modal -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <i class="bi bi-x-lg"></i> Fermer
+        </button>
+      </div>
     </div>
+  </div>
 </div>
+
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
