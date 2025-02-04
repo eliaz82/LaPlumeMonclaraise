@@ -18,7 +18,7 @@ class Evenement extends BaseController
     {
         // Récupération des posts depuis Facebook
         $posts = $this->facebookCache->getFacebookPosts();
-        $hashtags = $this->facebookModel->where('pageName', 'evenement')->findAll();
+        $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');
 
         // Filtrer les posts pour ne conserver que ceux qui contiennent l'un des hashtags
@@ -42,19 +42,12 @@ class Evenement extends BaseController
             }
         }
 
-        // Si un ID est fourni, rechercher l'événement correspondant
-        if ($id !== null) {
-            $event = null;
-            foreach ($filteredPosts as $post) {
-                if (isset($post['id']) && $post['id'] === $id) {
-                    $event = $post;
-                    break;
-                }
-            }
-            return view('evenements', ['posts' => [$event]]);
-        }
+
 
         // Afficher la vue de l'événement en lui passant les données de l'événement trouvé
-        return view('evenements', ['posts' => $filteredPosts]);
+        return view('evenements', [
+            'posts'       => $filteredPosts,
+            'highlightId' => $id  // Peut être null si aucun ID n'est fourni
+        ]);
     }
 }

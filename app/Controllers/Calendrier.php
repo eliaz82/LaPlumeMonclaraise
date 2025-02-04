@@ -16,7 +16,7 @@ class Calendrier extends BaseController
     public function calendrier(): string
     {
         $posts = $this->facebookCache->getFacebookPosts();
-        $hashtags = $this->facebookModel->where('pageName', 'calendrier')->findAll();
+        $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll();
         $hashtagList = array_column($hashtags, 'hashtag');
 
         $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
