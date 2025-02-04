@@ -49,8 +49,6 @@ $routes->post('albums-photo/(:num)/delete', 'AlbumsPhoto::photoDelete', ['as' =>
 
 // ------------------------------------------- calendrier -------------------------------------------
 $routes->get('calendrier', 'Calendrier::calendrier', ['as' => 'calendrier']);
-$routes->get('calendrier/evenement/(:num)', 'Calendrier::evenement', ['as' => 'evenements']);
-
 // ------------------------------------------- evenement -------------------------------------------
 
 $routes->get('evenement/(:segment)', 'Evenement::evenement/$1');

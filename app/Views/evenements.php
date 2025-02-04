@@ -131,7 +131,7 @@
                         <div class="card-body">
                             <h5 class="card-title"><?= esc($post['message']) ?></h5>
                             <p class="card-text"><?= isset($post['message']) ? substr(esc($post['message']), 0, 100) . '...' : '' ?></p>
-                            <a href="<?= site_url('evenement/' . $post['id']) ?>" class="btn btn-primary">
+                            <a href="<?= esc($post['permalink_url']) ?>" class="btn btn-primary" target="_blank">
                                 Voir l'événement
                             </a>
                         </div>
