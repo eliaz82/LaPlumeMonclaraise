@@ -101,7 +101,8 @@ class Association extends Controller
     }
     public function contactUpdate()
     {
-        $mailContact = $this->request->getPost();
+        $mailContact = $this->request->getPost('mailContact');
+      
         $this->associationModel->update(1, ['mailContact' => $mailContact]);
         return redirect()->route('contact')->with('success', 'Le mail de contact a été modifié avec succès.');
     }
