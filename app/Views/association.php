@@ -1,7 +1,7 @@
 <?= $this->extend('layout') ?>
 
 <?= $this->section('contenu') ?>
+<?= view('histoire') ?>
+<?= view('equipes', ['equipes' => $equipes]) ?>
 <?= view('partenaires', ['partenaire' => $partenaire]) ?>
-    <?= view('equipes', ['equipes' => $equipes]) ?>
-    <?= view('histoire') ?>
 <?= $this->endSection() ?>
