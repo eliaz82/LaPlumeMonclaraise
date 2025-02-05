@@ -114,7 +114,7 @@
         // Construction du carousel
         const allPosts = [];
         // Duplique uniquement si on a plus de 2 posts
-        if (futurePosts.length > 2) {
+        if (futurePosts.length > 1) {
             for (let i = 0; i < 3; i++) {
                 futurePosts.forEach((post, index) => {
                     const postEl = createPostElement(post);
