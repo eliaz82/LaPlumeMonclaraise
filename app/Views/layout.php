@@ -216,7 +216,7 @@
             <!-- En-tête du modal -->
             <div class="modal-header">
                 <h5 class="modal-title" id="profilModalLabel">
-                    <i class="bi bi-person"></i> Profil
+                    <i class="bi bi-person"></i> Profil de l'association
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
