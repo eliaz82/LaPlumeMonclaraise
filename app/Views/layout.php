@@ -78,16 +78,23 @@
                     <a class="nav-link" href="<?= url_to('contact') ?>">Contact</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Réglages
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-cog settings-icon"></i>
                     </a>
+
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                data-bs-target="#profilModal">Profil</a></li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                data-bs-target="#settingsModal">Paramètres</a></li>
-                        <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profilModal">
+                                <i class="fas fa-user"></i> Profil
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                                <i class="fas fa-tools"></i> Paramètres
+                            </a>
+                        </li>
+                        <li><a class="dropdown-item" href="#">
+                                <i class="fas fa-sign-out-alt"></i> Déconnexion
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -191,6 +198,14 @@
 <style>
     .custom-modal {
         max-width: 75vw;
+    }
+
+    .settings-icon {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .nav-link:hover .settings-icon {
+        transform: rotate(180deg);
     }
 </style>
 
