@@ -94,7 +94,7 @@
 
 <!-- En-tête de la page -->
 <div class="header">
-    <h1>Club de Badminton XYZ</h1>
+    <h1>La Plume MonClaraise </h1>
     <p>Découvrez nos faits marquants et moments forts de la saison</p>
 </div>
 
@@ -129,14 +129,11 @@ document.addEventListener("DOMContentLoaded", function() {
         button.addEventListener('click', function() {
             var content = this.previousElementSibling; // Accéder à l'élément <p> contenant le message
             var fullText = content.dataset.fullText; // Texte complet stocké dans data-full-text
-            var truncatedText = content.innerText; // Texte tronqué actuel
+            var truncatedText = content.dataset.truncatedText; // Texte tronqué actuel
 
-            // Réduit les espaces en trop dans le texte
-            fullText = fullText.replace(/\s+/g, ' ').trim();
-            truncatedText = truncatedText.replace(/\s+/g, ' ').trim();
-
+            // Si le texte est déjà développé, le rétrécir à nouveau
             if (content.classList.contains('expanded')) {
-                content.innerText = truncatedText; // Restaure le texte tronqué
+                content.innerText = truncatedText; // Réduit le texte et remet les points de suspension
                 this.textContent = 'Lire plus'; // Remet "Lire plus"
             } else {
                 content.innerText = fullText; // Affiche le texte complet
@@ -152,14 +149,15 @@ document.addEventListener("DOMContentLoaded", function() {
         var posts = document.querySelectorAll('.post-message');
         posts.forEach(function(post) {
             var words = post.innerText.split(/\s+/); // Divise le texte en mots
-            var maxWords = 15; // Nombre maximum de mots à afficher avant la coupure
+            var maxWords = 25; // Nombre maximum de mots à afficher avant la coupure
 
             if (words.length > maxWords) {
                 var truncated = words.slice(0, maxWords).join(' ') + '...'; // Crée le texte tronqué
-                var fullText = post.innerText; // Sauvegarde le texte complet
+                var fullText = post.innerText.trim().replace(/\s+/g, ' '); // Supprime les espaces superflus et réduit les espaces multiples
 
                 post.innerText = truncated; // Affiche le texte tronqué
                 post.dataset.fullText = fullText; // Stocke le texte complet dans l'attribut data-full-text
+                post.dataset.truncatedText = truncated; // Stocke le texte tronqué pour le restaurer plus tard
             }
         });
     }
