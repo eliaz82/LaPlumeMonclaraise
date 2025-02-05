@@ -36,7 +36,6 @@ class Evenement extends BaseController
         $currentDate->setTime(23, 59, 59);
         $limitDate = new \DateTime();
         $limitDate->add(new \DateInterval('P10D')); // Ajouter 10 jours
-        $validPosts = [];
         // Ajouter l'image (si présente) à chaque post
         foreach ($filteredPosts as &$post) {
             $post['image'] = $post['attachments']['data'][0]['media']['image']['src'] ?? null;
@@ -61,9 +60,6 @@ class Evenement extends BaseController
 
                     if ($eventDateTime < $currentDate) {
                         $post['status'] = "Événement passé";
-                    } elseif ($eventDateTime <= $limitDate) {
-                        // Si la date est dans les 10 jours après aujourd'hui, on ne l'affiche pas
-                        continue;
                     } else {
                         $post['status'] = "Événement futur";
                     }
