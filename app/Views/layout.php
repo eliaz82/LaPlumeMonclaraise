@@ -47,9 +47,10 @@
                         L'Association
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#equipe">L'Équipe</a></li>
-                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">L'Histoire</a>
+                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">Histoire</a>
                         </li>
+                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#equipe">Équipe</a></li>
+
                         <li><a class="dropdown-item"
                                 href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a></li>
                     </ul>
