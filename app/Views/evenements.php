@@ -157,7 +157,9 @@
                         <?php endif; ?>
                         <div class="card-body">
                             <h5 class="card-title"><?= esc($post['titre']) ?></h5>
-
+                            <p class="event-status <?= ($post['status'] === 'Événement passé') ? 'text-danger' : 'text-success' ?>">
+                                <?= esc($post['status']) ?>
+                            </p>
                             <div class="card-text">
                                 <!-- Affichage du texte court -->
                                 <span class="short-text">
@@ -206,14 +208,14 @@
 
 <!-- Script pour ouvrir le modal au clic sur "Voir plus" -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         // Créer une instance du modal (Bootstrap 5)
         const modalElement = document.getElementById('fullMessageModal');
         const modal = new bootstrap.Modal(modalElement);
 
         // Ajouter un écouteur d'événement sur chaque bouton "Voir plus"
         document.querySelectorAll(".toggle-text").forEach(button => {
-            button.addEventListener("click", function () {
+            button.addEventListener("click", function() {
                 // Récupérer le conteneur parent .card-text
                 let cardText = this.closest(".card-text");
                 // Récupérer le contenu complet depuis la span .full-text
@@ -242,10 +244,12 @@
         // Si un événement est mis en valeur, défiler jusqu'à lui
         const highlighted = document.getElementById('highlightedEvent');
         if (highlighted) {
-            highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            highlighted.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
         }
     });
-
 </script>
 
 <?= $this->endSection() ?>

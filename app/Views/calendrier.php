@@ -46,7 +46,7 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar');
         const carousel = document.querySelector('.carousel');
         const today = new Date();
@@ -99,7 +99,7 @@
                 postEl.appendChild(img);
 
                 // Ajoute l'événement de clic pour zoomer sur l'image
-                img.addEventListener('click', function () {
+                img.addEventListener('click', function() {
                     zoomImage(this.src); // Appelle la fonction de zoom avec l'image cliquée
                 });
             }
@@ -113,21 +113,26 @@
 
         // Construction du carousel
         const allPosts = [];
-        if (futurePosts.length > 1) {
-            for (let i = 0; i < 3; i++) { // Duplique seulement s'il y a plusieurs événements
-                futurePosts.forEach(post => {
+        // Duplique uniquement si on a plus de 2 posts
+        if (futurePosts.length > 2) {
+            for (let i = 0; i < 3; i++) {
+                futurePosts.forEach((post, index) => {
                     const postEl = createPostElement(post);
-                    postEl.setAttribute('data-original-index', futurePosts.indexOf(post));
+                    postEl.setAttribute('data-original-index', index);
                     allPosts.push(postEl);
                 });
             }
         } else {
-            // Si un seul événement, on l'ajoute une seule fois sans duplication
-            const postEl = createPostElement(futurePosts[0]);
-            postEl.setAttribute('data-original-index', 0);
-            allPosts.push(postEl);
+            // Si on a 1 ou 2 posts, on les ajoute une seule fois
+            futurePosts.forEach((post, index) => {
+                const postEl = createPostElement(post);
+                postEl.setAttribute('data-original-index', index);
+                allPosts.push(postEl);
+            });
         }
+
         allPosts.forEach(el => carousel.appendChild(el));
+
 
 
         // On positionne le carousel sur la copie centrale (indices de count à 2*count-1)
@@ -161,20 +166,20 @@
 
 
         // Boutons de défilement (avec animation)
-        scrollUpButton.addEventListener('click', function () {
+        scrollUpButton.addEventListener('click', function() {
             currentIndex--;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
-        scrollDownButton.addEventListener('click', function () {
+        scrollDownButton.addEventListener('click', function() {
             currentIndex++;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
         // Gestion du clic sur un post du carousel
-        carousel.addEventListener('click', function (e) {
+        carousel.addEventListener('click', function(e) {
             let target = e.target;
 
             // Vérifier si le clic provient du bouton "Lire plus"
@@ -234,7 +239,7 @@
             locale: 'fr',
             initialView: 'dayGridMonth',
             themeSystem: 'bootstrap5',
-            eventDidMount: function (info) {
+            eventDidMount: function(info) {
                 const eventTitle = info.event.title;
                 const titleElement = info.el.querySelector('.fc-event-title');
 
@@ -257,7 +262,7 @@
             events: events,
             eventColor: '#2980b9',
             eventTextColor: '#f5c542',
-            eventClick: function (info) {
+            eventClick: function(info) {
                 const clickedDate = info.event.startStr; // Récupère la date de l'événement
                 const posts = carousel.querySelectorAll('.post');
                 let foundIndices = [];
@@ -289,7 +294,7 @@
 
                 highlightDayInCalendar(clickedDate);
             },
-            dateClick: function (info) {
+            dateClick: function(info) {
                 const clickedDate = info.dateStr; // Format "YYYY-MM-DD"
                 const posts = carousel.querySelectorAll('.post');
                 let foundIndices = [];
