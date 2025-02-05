@@ -1,7 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
-<!-- On ne réintroduit pas de balises HTML ou HEAD ici si votre layout s'en charge déjà -->
 <style>
     /* Réinitialisation de base */
     * {
@@ -10,103 +9,164 @@
         box-sizing: border-box;
     }
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f7f7f7;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        background-color: #eef2f3;
+        color: #333;
     }
-    /* Conteneur global de la page */
+    /* En-tête de la page */
+    .header {
+        background: linear-gradient(135deg, #0f4c75, #3282b8);
+        color: #fff;
+        padding: 40px 20px;
+        text-align: center;
+    }
+    .header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    .header p {
+        font-size: 1.2rem;
+        font-weight: 300;
+    }
+    /* Conteneur global */
     .page-container {
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 10px;
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 20px;
     }
     /* Conteneur de chaque post */
     .post {
         display: flex;
-        flex-direction: row;
-        align-items: stretch; /* Les deux colonnes auront la même hauteur */
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden; /* Empêche tout débordement */
-        margin-bottom: 20px;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    /* Colonne pour l'image */
-    .image-container {
-        flex: 0 0 200px; /* Largeur fixe de 200px */
-        height: 200px;   /* Hauteur fixe */
-        background-color: #eee;
-        overflow: hidden; /* On cache le débordement */
-        display: flex;
         align-items: center;
-        justify-content: center;
+        margin-bottom: 30px;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        padding: 20px;
     }
-    .image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* L'image remplit le conteneur sans être déformée */
-        display: block;
+    .post:hover {
+        transform: translateY(-5px);
     }
-    /* Colonne pour le contenu (texte et lien) */
+    /* Inverse l'ordre pour les posts pairs */
+    .post:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+    /* Zone d'affichage de l'image */
+    .post-image {
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        flex-shrink: 0;
+        border-radius: 8px;
+    }
+    /* Contenu du post */
     .content-container {
         flex: 1;
-        padding: 15px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        padding: 20px;
+        text-align: center;
     }
     .content-container p {
-        color: #333;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #555;
+        margin-bottom: 10px;
+        white-space: pre-line;
+    }
+    /* Bouton "Lire plus" */
+    .read-more {
+        color: #0f4c75;
+        cursor: pointer;
+        font-weight: bold;
         font-size: 1rem;
-        margin-bottom: 15px;
-        line-height: 1.4;
+        margin-top: 10px;
     }
-    .content-container a {
-        align-self: flex-start;
-        text-decoration: none;
-        background-color: #2980b9;
-        color: #fff;
-        padding: 8px 12px;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
-    }
-    .content-container a:hover {
-        background-color: #3498db;
-    }
-    /* Style pour le cas d'absence d'image */
-    .no-image {
-        color: #777;
-        font-size: 0.9rem;
+    /* Message en cas d'absence de faits marquants */
+    .no-posts {
         text-align: center;
-        padding: 10px;
+        font-size: 1.4rem;
+        margin-top: 40px;
     }
 </style>
 
+<!-- En-tête de la page -->
+<div class="header">
+    <h1>Club de Badminton XYZ</h1>
+    <p>Découvrez nos faits marquants et moments forts de la saison</p>
+</div>
+
 <div class="page-container">
     <?php if (!empty($posts)): ?>
-        <?php foreach ($posts as $post): ?>
+        <?php foreach ($posts as $index => $post): ?>
             <div class="post">
-                <!-- Colonne pour l'image -->
-                <div class="image-container">
-              
-                    <?php if (!empty($post['image'])): ?>
-                        <img src="<?= esc($post['image']) ?>" alt="Image de l'événement">
-                    <?php else: ?>
-                        <div class="no-image">Pas d'image disponible</div>
-                    <?php endif; ?>
-                </div>
-                <!-- Colonne pour le contenu -->
+                <?php if (!empty($post['image'])): ?>
+                    <div class="post-image" style="background-image: url('<?= esc($post['image']) ?>');"></div>
+                <?php endif; ?>
                 <div class="content-container">
-                    <p><?= esc($post['message']) ?></p>
-                    <?php if (!empty($post['permalink_url'])): ?>
-                        <a href="<?= esc($post['permalink_url']) ?>" target="_blank">Voir l'événement</a>
-                    <?php endif; ?>
+                    <?php 
+                        $message = esc($post['message']);
+                        $message = trim($message); // Supprime les espaces en début et fin de chaîne
+                    ?>
+                    <p class="post-message"><?= nl2br($message) ?></p>
+                    <span class="read-more">Lire plus</span>
                 </div>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
-        <p style="text-align: center;">Aucun fait marquant trouvé</p>
+        <p class="no-posts">Aucun fait marquant trouvé pour le moment.</p>
     <?php endif; ?>
 </div>
+
+<!-- JavaScript pour gérer le bouton "Lire plus" -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var readMoreButtons = document.querySelectorAll('.read-more');
+    
+    readMoreButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var content = this.previousElementSibling; // Accéder à l'élément <p> contenant le message
+            var fullText = content.dataset.fullText; // Texte complet stocké dans data-full-text
+            var truncatedText = content.innerText; // Texte tronqué actuel
+
+            // Réduit les espaces en trop dans le texte
+            fullText = fullText.replace(/\s+/g, ' ').trim();
+            truncatedText = truncatedText.replace(/\s+/g, ' ').trim();
+
+            if (content.classList.contains('expanded')) {
+                content.innerText = truncatedText; // Restaure le texte tronqué
+                this.textContent = 'Lire plus'; // Remet "Lire plus"
+            } else {
+                content.innerText = fullText; // Affiche le texte complet
+                this.textContent = 'Lire moins'; // Change le texte en "Lire moins"
+            }
+
+            content.classList.toggle('expanded');
+        });
+    });
+
+    // Fonction pour tronquer le texte après un certain nombre de mots
+    function truncateText() {
+        var posts = document.querySelectorAll('.post-message');
+        posts.forEach(function(post) {
+            var words = post.innerText.split(/\s+/); // Divise le texte en mots
+            var maxWords = 15; // Nombre maximum de mots à afficher avant la coupure
+
+            if (words.length > maxWords) {
+                var truncated = words.slice(0, maxWords).join(' ') + '...'; // Crée le texte tronqué
+                var fullText = post.innerText; // Sauvegarde le texte complet
+
+                post.innerText = truncated; // Affiche le texte tronqué
+                post.dataset.fullText = fullText; // Stocke le texte complet dans l'attribut data-full-text
+            }
+        });
+    }
+
+    // Appel initial pour tronquer les textes
+    truncateText();
+});
+</script>
 
 <?= $this->endSection() ?>
