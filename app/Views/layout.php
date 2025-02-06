@@ -539,6 +539,10 @@
     .custom-modal {
         max-width: 75vw;
     }
+    body {
+        cursor: url('/image/cursor.cur') 16 16, auto;
+        
+    }
 </style>
 
 

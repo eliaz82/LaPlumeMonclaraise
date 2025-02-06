@@ -8,11 +8,14 @@
         padding: 0;
         box-sizing: border-box;
     }
+
     body {
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         background-color: #eef2f3;
         color: #333;
+
     }
+
     /* En-tête de la page */
     .header {
         background: linear-gradient(135deg, #0f4c75, #3282b8);
@@ -20,20 +23,24 @@
         padding: 40px 20px;
         text-align: center;
     }
+
     .header h1 {
         font-size: 2.5rem;
         margin-bottom: 10px;
     }
+
     .header p {
         font-size: 1.2rem;
         font-weight: 300;
     }
+
     /* Conteneur global */
     .page-container {
         max-width: 1200px;
         margin: 30px auto;
         padding: 20px;
     }
+
     /* Conteneur de chaque post */
     .post {
         display: flex;
@@ -42,17 +49,20 @@
         background: #fff;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease;
         padding: 20px;
     }
+
     .post:hover {
         transform: translateY(-5px);
     }
+
     /* Inverse l'ordre pour les posts pairs */
     .post:nth-child(even) {
         flex-direction: row-reverse;
     }
+
     /* Zone d'affichage de l'image */
     .post-image {
         width: 300px;
@@ -63,12 +73,14 @@
         flex-shrink: 0;
         border-radius: 8px;
     }
+
     /* Contenu du post */
     .content-container {
         flex: 1;
         padding: 20px;
         text-align: center;
     }
+
     .content-container p {
         font-size: 1.2rem;
         line-height: 1.8;
@@ -76,6 +88,7 @@
         margin-bottom: 10px;
         white-space: pre-line;
     }
+
     /* Bouton "Lire plus" */
     .read-more {
         color: #0f4c75;
@@ -84,6 +97,7 @@
         font-size: 1rem;
         margin-top: 10px;
     }
+
     /* Message en cas d'absence de faits marquants */
     .no-posts {
         text-align: center;
@@ -106,9 +120,9 @@
                     <div class="post-image" style="background-image: url('<?= esc($post['image']) ?>');"></div>
                 <?php endif; ?>
                 <div class="content-container">
-                    <?php 
-                        $message = esc($post['message']);
-                        $message = trim($message); // Supprime les espaces en début et fin de chaîne
+                    <?php
+                    $message = esc($post['message']);
+                    $message = trim($message); // Supprime les espaces en début et fin de chaîne
                     ?>
                     <p class="post-message"><?= nl2br($message) ?></p>
                     <span class="read-more">Lire plus</span>
@@ -122,49 +136,41 @@
 
 <!-- JavaScript pour gérer le bouton "Lire plus" -->
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    var readMoreButtons = document.querySelectorAll('.read-more');
-    
-    readMoreButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var content = this.previousElementSibling; // Accéder à l'élément <p> contenant le message
-            var fullText = content.dataset.fullText; // Texte complet stocké dans data-full-text
-            var truncatedText = content.dataset.truncatedText; // Texte tronqué actuel
-
-            // Si le texte est déjà développé, le rétrécir à nouveau
-            if (content.classList.contains('expanded')) {
-                content.innerText = truncatedText; // Réduit le texte et remet les points de suspension
-                this.textContent = 'Lire plus'; // Remet "Lire plus"
-            } else {
-                content.innerText = fullText; // Affiche le texte complet
-                this.textContent = 'Lire moins'; // Change le texte en "Lire moins"
-            }
-
-            content.classList.toggle('expanded');
-        });
-    });
-
-    // Fonction pour tronquer le texte après un certain nombre de mots
-    function truncateText() {
+    document.addEventListener("DOMContentLoaded", function() {
         var posts = document.querySelectorAll('.post-message');
+
         posts.forEach(function(post) {
             var words = post.innerText.split(/\s+/); // Divise le texte en mots
-            var maxWords = 25; // Nombre maximum de mots à afficher avant la coupure
+            var maxWords = 25; // Nombre maximum de mots avant la coupure
 
             if (words.length > maxWords) {
-                var truncated = words.slice(0, maxWords).join(' ') + '...'; // Crée le texte tronqué
-                var fullText = post.innerText.trim().replace(/\s+/g, ' '); // Supprime les espaces superflus et réduit les espaces multiples
+                var truncated = words.slice(0, maxWords).join(' ') + '...'; // Tronque le texte
+                var fullText = post.innerText.trim().replace(/\s+/g, ' '); // Texte complet nettoyé
 
-                post.innerText = truncated; // Affiche le texte tronqué
-                post.dataset.fullText = fullText; // Stocke le texte complet dans l'attribut data-full-text
-                post.dataset.truncatedText = truncated; // Stocke le texte tronqué pour le restaurer plus tard
+                post.innerText = truncated; // Affiche la version tronquée
+                post.dataset.fullText = fullText; // Stocke le texte complet
+                post.dataset.truncatedText = truncated; // Stocke le texte tronqué
+
+                // Crée le bouton "Lire plus"
+                var readMore = document.createElement("span");
+                readMore.classList.add("read-more");
+                readMore.textContent = "Lire plus";
+                post.parentNode.appendChild(readMore); // Ajoute le bouton après le texte
+
+                // Gère l'affichage du texte complet / tronqué
+                readMore.addEventListener("click", function() {
+                    if (post.classList.contains("expanded")) {
+                        post.innerText = truncated; // Revenir au texte tronqué
+                        this.textContent = "Lire plus";
+                    } else {
+                        post.innerText = fullText; // Afficher le texte complet
+                        this.textContent = "Lire moins";
+                    }
+                    post.classList.toggle("expanded");
+                });
             }
         });
-    }
-
-    // Appel initial pour tronquer les textes
-    truncateText();
-});
+    });
 </script>
 
 <?= $this->endSection() ?>

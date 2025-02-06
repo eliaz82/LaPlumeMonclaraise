@@ -11,7 +11,7 @@
         </div>
 
         <!-- Modal d'ajout -->
-        <h2 class="text-center mb-4">Nos adhérant</h2>
+        <h2 class="text-center mb-4">Nos adhérents</h2>
         <div class="modal fade" id="modalAjouterAdherent" tabindex="-1" aria-labelledby="modalAjouterAdherentLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
