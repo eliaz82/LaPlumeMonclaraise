@@ -75,137 +75,144 @@
     </div>
 
     <style>
-/* Galerie de photos */
-.photo-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    margin-top: 40px;
-    border-radius: 10px;
-    background-color: #f5f5f5;
-}
-
-/* Élément de chaque photo */
-.photo-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    background-color: #fff;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Effet au survol de l'image */
-.photo-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-/* Image dans l'élément photo */
-.photo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Remplissage de l'image sans déformation */
-    border-radius: 15px;
-    image-rendering: auto; /* Utilisation du meilleur algorithme pour afficher l'image */
-}
-
-/* Assurer que l'image garde une bonne qualité (éviter l'étirement) */
-.photo-img {
-    display: block;
-    max-width: 100%;
-    height: auto; /* Maintien du ratio de l'image */
-    object-fit: cover; /* Garde la couverture de l'espace sans déformation */
-}
-
-/* Prévenir le flou pour les zooms importants */
-.photo-img {
-    image-rendering: -webkit-optimize-contrast; /* Meilleur rendu d'image sur Chrome */
-    image-rendering: crisp-edges; /* Meilleur rendu d'image pour autres navigateurs */
-}
-
-/* Effet de zoom sur l'image au survol (éviter un zoom trop grand) */
-.photo-img:hover {
-    transform: scale(1.1);
-}
-
-/* Actions sous l'image */
-.photo-actions {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.photo-item:hover .photo-actions {
-    opacity: 1;
-}
-
-/* Bouton de suppression */
-.photo-actions button {
-    background-color: #3498db;
-    border: none;
-    color: #fff;
-    padding: 8px 20px;
-    border-radius: 25px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.photo-actions button:hover {
-    background-color: #2980b9;
-    transform: translateY(-3px);
-}
-
-/* Conteneur pour l'image agrandie */
-.zoom-container {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-/* Image agrandie avec haute qualité */
-.zoomed-image {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Fermeture du zoom */
-#close-zoom {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    font-size: 36px;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-}
-
-#close-zoom:hover {
-    opacity: 1;
-}
-</style>
+        /* --- Conteneur de la galerie avec effet mural d'art --- */
+        .photo-gallery {
+            column-count: 3;
+            column-gap: 15px;
+            padding: 20px;
+            background: linear-gradient(120deg, #00bcd4, #3f51b5);
+            /* Gris clair avec blanc */
+        }
 
 
+        /* --- Chaque photo s’adapte naturellement en hauteur --- */
+        .photo-item {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 15px;
+            /* Espacement naturel */
+            position: relative;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
 
+        /* --- Effet artistique au survol --- */
+        .photo-item:hover {
+            transform: scale(1.03);
+            filter: brightness(0.85);
+        }
+
+        /* --- Images avec tailles variées pour un effet dynamique --- */
+        .photo-img {
+            width: 100%;
+            border-radius: 5px;
+            /* Coins légèrement arrondis */
+            display: block;
+        }
+
+        /* --- Apparition du bouton seulement au survol --- */
+        .photo-actions {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .photo-item:hover .photo-actions {
+            opacity: 1;
+        }
+
+        /* --- Bouton de suppression moderne et discret --- */
+        .photo-actions button {
+            background: rgba(255, 69, 58, 0.9);
+            border: none;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: background 0.3s ease;
+        }
+
+        .photo-actions button:hover {
+            background: #ff453a;
+        }
+
+        /* --- Zoom en mode galerie immersive --- */
+        .zoom-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* --- Image zoomée en mode expo --- */
+        .zoomed-image {
+            max-width: 85%;
+            max-height: 85%;
+            border-radius: 5px;
+            animation: zoomIn 0.3s ease-in-out;
+        }
+
+        /* --- Fermeture avec un effet subtil --- */
+        #close-zoom {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 40px;
+            color: #fff;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        #close-zoom:hover {
+            opacity: 0.8;
+        }
+
+        /* --- Animations douces --- */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        /* --- Responsive : Ajustement du nombre de colonnes selon la taille d’écran --- */
+        @media (max-width: 1200px) {
+            .photo-gallery {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .photo-gallery {
+                column-count: 1;
+            }
+        }
+    </style>
+    
     <!-- Conteneur pour l'image agrandie (style simple) -->
     <div id="zoom-container" class="zoom-container">
         <span id="close-zoom" class="close" onclick="closeZoom()">X</span>
