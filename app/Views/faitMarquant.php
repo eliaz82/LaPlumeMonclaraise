@@ -122,9 +122,23 @@
                 <div class="content-container">
                     <?php
                     $message = esc($post['message']);
-                    $message = trim($message); // Supprime les espaces en début et fin de chaîne
+                    $message = trim($message); // Supprime les espaces au début et à la fin du texte
+                    // Normalisation des retours à la ligne : on remplace toutes les formes par un seul \n
+                    $message = str_replace(["\r\n", "\r"], "\n", $message);
+                    // Remplace les espaces multiples par un seul espace
+                    $message = preg_replace('/\s{2,}/', ' ', $message);
+                    // Ajoute un <br> après chaque '.'
+                    $message = preg_replace('/([.])\s*/', '$1<br>', $message);
+                    // Applique les retours à la ligne HTML
+                    $message = nl2br($message);
                     ?>
-                    <p class="post-message"><?= nl2br($message) ?></p>
+                    <p class="post-message"><?= $message ?></p>
+
+
+
+
+
+
                     <span class="read-more">Lire plus</span>
                 </div>
             </div>
@@ -139,25 +153,20 @@
     document.addEventListener("DOMContentLoaded", function() {
         var readMoreButtons = document.querySelectorAll('.read-more');
 
-        // Fonction pour tronquer le texte après un certain nombre de mots
         function truncateText() {
             var posts = document.querySelectorAll('.post-message');
             posts.forEach(function(post) {
-                var words = post.innerText.split(/\s+/); // Divise le texte en mots
-                var maxWords = 25; // Nombre maximum de mots avant affichage du bouton "Lire plus"
+                var fullText = post.innerHTML.trim(); // Récupère le texte avec les sauts de ligne
+                var words = fullText.split(/\s+/); // Divise le texte en mots
+                var maxWords = 25;
 
                 if (words.length > maxWords) {
-                    var truncated = words.slice(0, maxWords).join(' ') + '...'; // Crée le texte tronqué
-                    var fullText = post.innerText.trim().replace(/\s+/g, ' '); // Supprime les espaces superflus
-
-                    post.innerText = truncated; // Affiche le texte tronqué
+                    var truncated = words.slice(0, maxWords).join(' ') + '...'; // Tronque le texte
+                    post.innerHTML = truncated; // Affiche le texte tronqué
                     post.dataset.fullText = fullText; // Stocke le texte complet
                     post.dataset.truncatedText = truncated; // Stocke le texte tronqué
-
-                    // Rendre le bouton "Lire plus" visible
                     post.nextElementSibling.style.display = 'inline-block';
                 } else {
-                    // Cacher le bouton "Lire plus" si le texte est court
                     post.nextElementSibling.style.display = 'none';
                 }
             });
@@ -165,16 +174,15 @@
 
         readMoreButtons.forEach(function(button) {
             button.addEventListener('click', function() {
-                var content = this.previousElementSibling; // Accéder à l'élément <p> contenant le message
+                var content = this.previousElementSibling;
                 var fullText = content.dataset.fullText;
                 var truncatedText = content.dataset.truncatedText;
 
-                // Si le texte est déjà développé, le rétrécir à nouveau
                 if (content.classList.contains('expanded')) {
-                    content.innerText = truncatedText;
+                    content.innerHTML = truncatedText;
                     this.textContent = 'Lire plus';
                 } else {
-                    content.innerText = fullText;
+                    content.innerHTML = fullText; // Affiche le texte complet avec les sauts de ligne
                     this.textContent = 'Lire moins';
                 }
 
@@ -182,7 +190,6 @@
             });
         });
 
-        // Appel initial pour tronquer les textes
         truncateText();
     });
 </script>
