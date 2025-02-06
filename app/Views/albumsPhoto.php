@@ -31,24 +31,19 @@
 <style>
     .dropdown-item.active {
         background-color: #007bff;
-        /* Couleur de fond personnalisée */
         color: white;
-        /* Couleur du texte */
     }
 
     .dropdown-item.active i {
         color: white;
-        /* Changer la couleur de l'icône si nécessaire */
     }
 </style>
-
-
 
 <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="formulaire-ajouter" method="post" action="<?= url_to('createAlbumsPhoto') ?>"
-                enctype="multipart/form-data">
+            <form id="formulaire-ajouter" method="post" action="<?= site_url('createAlbumsPhoto') ?>" enctype="multipart/form-data">
+                <?= csrf_field() ?>
                 <div class="modal-header">
                     <h5 class="modal-title text-primary" id="modalAjouterLabel">Ajouter un Album photo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -57,8 +52,7 @@
                     <!-- Champ pour la dateAlbums -->
                     <div class="mb-3">
                         <label for="dateAlbums" class="form-label">Date de l'album</label>
-                        <input type="date" value="<?= date('Y-m-d'); ?>" class="form-control" id="dateAlbums"
-                            name="dateAlbums" required>
+                        <input type="date" value="<?= date('Y-m-d'); ?>" class="form-control" id="dateAlbums" name="dateAlbums" required>
                     </div>
 
                     <!-- Champ pour le nom -->
@@ -89,8 +83,6 @@
     </div>
 </div>
 
-
-
 <div class="container mt-4">
     <!-- Grille des albums -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -101,7 +93,7 @@
                     <?php
                     $imageSrc = (filter_var($album['photo'], FILTER_VALIDATE_URL)) ? $album['photo'] : base_url($album['photo']);
                     ?>
-                    <img src="<?= $imageSrc ?>" class="img-fluid rounded album-photo" alt="Photo de l'album">
+                    <img src="<?= esc($imageSrc) ?>" class="img-fluid rounded album-photo" alt="Photo de l'album">
 
                     <!-- Overlay au survol -->
                     <div class="custom-overlay d-flex justify-content-center align-items-center">
@@ -113,21 +105,22 @@
                             </div>
                         <?php endif; ?>
                         <div class="overlay-text text-center">
-                            <h5 class="text-white fw-bold"><?= $album['nom'] ?></h5>
+                            <h5 class="text-white fw-bold"><?= esc($album['nom']) ?></h5>
                             <p class="text-white"><?= (new DateTime($album['dateAlbums']))->format('d/m/Y') ?></p>
                             <div class="mt-3">
-                                <a href="<?= base_url('albums-photo/' . $album['idAlbums']) ?>" class="btn btn-primary btn-sm">Voir Album</a>
+                                <a href="<?= site_url('albums-photo/' . esc($album['idAlbums'])) ?>" class="btn btn-primary btn-sm">Voir Album</a>
                                 <button class="btn btn-warning btn-sm me-2 bouton-modifier-album"
-                                    data-idalbums="<?= $album['idAlbums'] ?>"
-                                    data-date="<?= $album['dateAlbums'] ?>"
-                                    data-nom="<?= $album['nom'] ?>"
-                                    data-photo="<?= base_url($album['photo']) ?>"
+                                    data-idalbums="<?= esc($album['idAlbums']) ?>"
+                                    data-date="<?= esc($album['dateAlbums']) ?>"
+                                    data-nom="<?= esc($album['nom']) ?>"
+                                    data-photo="<?= esc(base_url($album['photo'])) ?>"
                                     data-bs-toggle="modal"
                                     data-bs-target="#modalModifierAlbum">
                                     Modifier
                                 </button>
                                 <form action="<?= route_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
-                                    <input type="hidden" name="idAlbums" value="<?= $album['idAlbums'] ?>">
+                                    <?= csrf_field() ?>
+                                    <input type="hidden" name="idAlbums" value="<?= esc($album['idAlbums']) ?>">
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet album photo ?');">Supprimer</button>
                                 </form>
                             </div>
@@ -154,17 +147,15 @@
         width: 35px;
         height: 35px;
         color: #1877F2;
-        /* Bleu Facebook */
         transition: color 0.3s ease-in-out;
     }
+
     .custom-image-container {
         position: relative;
         width: 100%;
         height: 350px;
-        /* Image plus grande et rectangulaire */
         overflow: hidden;
         border-radius: 20px;
-        /* Coins arrondis plus prononcés */
     }
 
     .custom-image-container img {
@@ -180,14 +171,12 @@
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, 0.6);
-        /* Fond sombre avec plus d'opacité */
         opacity: 0;
         transition: opacity 0.3s ease;
     }
 
     .custom-image-container:hover .custom-overlay {
         opacity: 1;
-        /* Afficher l'overlay au survol */
     }
 
     .overlay-text {
@@ -198,7 +187,6 @@
 
     .overlay-text h5 {
         font-size: 1.75rem;
-        /* Texte plus grand */
     }
 
     .overlay-text p {
@@ -210,7 +198,6 @@
         margin: 5px;
     }
 
-    /* Personnalisation des boutons */
     .btn-primary,
     .btn-warning,
     .btn-danger {
@@ -222,7 +209,6 @@
     .btn-danger:hover {
         background-color: #0056b3;
         transform: scale(1.1);
-        /* Agrandissement plus visible */
     }
 
     .btn-primary {
@@ -238,31 +224,28 @@
     }
 </style>
 
-
 <!-- Modal de modification pour les albums photos -->
 <div class="modal fade" id="modalModifierAlbum" tabindex="-1" aria-labelledby="modalModifierAlbumLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="formulaire-modifier-album" method="post" action="<?= url_to('updateAlbumsPhoto') ?>"
+            <form id="formulaire-modifier-album" method="post" action="<?= site_url('updateAlbumsPhoto') ?>"
                 enctype="multipart/form-data">
+                <?= csrf_field() ?>
                 <div class="modal-header">
                     <h5 class="modal-title text-primary" id="modalModifierAlbumLabel">Modifier un Album Photo</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <input type="hidden" id="modifier-id-album" name="idAlbums">
-                    <!-- Champ pour la dateAlbums -->
                     <div class="mb-3">
                         <label for="modifier-date-album" class="form-label">Date de l'album</label>
                         <input type="date" class="form-control" id="modifier-date-album" name="dateAlbums" required>
                     </div>
-                    <!-- Nom de l'album -->
                     <div class="mb-3">
                         <label for="modifier-nom-album" class="form-label">Nom de l'album</label>
                         <input type="text" class="form-control" id="modifier-nom-album" name="nom" required>
                     </div>
-                    <!-- Champ pour la photo -->
                     <div class="mb-3">
                         <label for="modifier-photo-album" class="form-label">Photo</label>
                         <input type="file" class="form-control" id="modifier-photo-album" name="photo" accept="image/*"
@@ -281,11 +264,5 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
 
 <?= $this->endSection() ?>
