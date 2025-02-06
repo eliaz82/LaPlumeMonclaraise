@@ -137,39 +137,53 @@
 <!-- JavaScript pour gérer le bouton "Lire plus" -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var posts = document.querySelectorAll('.post-message');
+        var readMoreButtons = document.querySelectorAll('.read-more');
 
-        posts.forEach(function(post) {
-            var words = post.innerText.split(/\s+/); // Divise le texte en mots
-            var maxWords = 25; // Nombre maximum de mots avant la coupure
+        // Fonction pour tronquer le texte après un certain nombre de mots
+        function truncateText() {
+            var posts = document.querySelectorAll('.post-message');
+            posts.forEach(function(post) {
+                var words = post.innerText.split(/\s+/); // Divise le texte en mots
+                var maxWords = 25; // Nombre maximum de mots avant affichage du bouton "Lire plus"
 
-            if (words.length > maxWords) {
-                var truncated = words.slice(0, maxWords).join(' ') + '...'; // Tronque le texte
-                var fullText = post.innerText.trim().replace(/\s+/g, ' '); // Texte complet nettoyé
+                if (words.length > maxWords) {
+                    var truncated = words.slice(0, maxWords).join(' ') + '...'; // Crée le texte tronqué
+                    var fullText = post.innerText.trim().replace(/\s+/g, ' '); // Supprime les espaces superflus
 
-                post.innerText = truncated; // Affiche la version tronquée
-                post.dataset.fullText = fullText; // Stocke le texte complet
-                post.dataset.truncatedText = truncated; // Stocke le texte tronqué
+                    post.innerText = truncated; // Affiche le texte tronqué
+                    post.dataset.fullText = fullText; // Stocke le texte complet
+                    post.dataset.truncatedText = truncated; // Stocke le texte tronqué
 
-                // Crée le bouton "Lire plus"
-                var readMore = document.createElement("span");
-                readMore.classList.add("read-more");
-                readMore.textContent = "Lire plus";
-                post.parentNode.appendChild(readMore); // Ajoute le bouton après le texte
+                    // Rendre le bouton "Lire plus" visible
+                    post.nextElementSibling.style.display = 'inline-block';
+                } else {
+                    // Cacher le bouton "Lire plus" si le texte est court
+                    post.nextElementSibling.style.display = 'none';
+                }
+            });
+        }
 
-                // Gère l'affichage du texte complet / tronqué
-                readMore.addEventListener("click", function() {
-                    if (post.classList.contains("expanded")) {
-                        post.innerText = truncated; // Revenir au texte tronqué
-                        this.textContent = "Lire plus";
-                    } else {
-                        post.innerText = fullText; // Afficher le texte complet
-                        this.textContent = "Lire moins";
-                    }
-                    post.classList.toggle("expanded");
-                });
-            }
+        readMoreButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var content = this.previousElementSibling; // Accéder à l'élément <p> contenant le message
+                var fullText = content.dataset.fullText;
+                var truncatedText = content.dataset.truncatedText;
+
+                // Si le texte est déjà développé, le rétrécir à nouveau
+                if (content.classList.contains('expanded')) {
+                    content.innerText = truncatedText;
+                    this.textContent = 'Lire plus';
+                } else {
+                    content.innerText = fullText;
+                    this.textContent = 'Lire moins';
+                }
+
+                content.classList.toggle('expanded');
+            });
         });
+
+        // Appel initial pour tronquer les textes
+        truncateText();
     });
 </script>
 
