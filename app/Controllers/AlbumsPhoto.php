@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Libraries\FacebookCache;
 
 class AlbumsPhoto extends BaseController
@@ -39,8 +40,31 @@ class AlbumsPhoto extends BaseController
             return false;
         });
         foreach ($filteredPosts as $post) {
-            // Extraire la date de publication
-            $dateAlbums = date('Y-m-d', strtotime($post['created_time']));
+
+            // Extraire la date de l'événement depuis le message du post
+            $dateAlbums = null;
+            if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
+                $dateAlbums = $matches[1];
+            }
+
+            // Vérifier la validité de la date extraite
+            if ($dateAlbums) {
+                list($day, $month, $year) = explode('/', $dateAlbums);
+                if (!checkdate($month, $day, $year)) {
+                    $dateAlbums = null; // Date invalide, on l'ignore
+                }
+            }
+
+            // Si aucune date n'a été extraite, utiliser la date de publication
+            if (!$dateAlbums) {
+                $dateAlbums = date('Y-m-d', strtotime($post['created_time']));
+            } else {
+                // Convertir en format `Y-m-d`
+                $dateAlbums = "$year-$month-$day";
+            }
+
+            preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
+            $titreAlbums = isset($titleMatches[1]) ? $titleMatches[1] : $dateAlbums;
 
             // Vérifier s'il y a des pièces jointes (images)
             if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
@@ -56,7 +80,7 @@ class AlbumsPhoto extends BaseController
                     // Créer un nouvel album photo
                     $this->albumsPhoto->save([
                         'dateAlbums' => $dateAlbums,
-                        'nom' => $dateAlbums, // Pas de nom pour l'album
+                        'nom' => $titreAlbums, // Pas de nom pour l'album
                         'photo' => $photo, // Première photo du post
                     ]);
                     // Récupérer l'ID de l'album nouvellement créé
@@ -104,10 +128,11 @@ class AlbumsPhoto extends BaseController
                     }
                 }
             }
-
         }
-        $albumsPhotos = $this->albumsPhoto->findAll();
-        return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos]);
+        $tri = $this->request->getGet('tri') ?? 'desc'; // Par défaut, tri du plus récent au plus ancien
+
+        $albumsPhotos = $this->albumsPhoto->orderBy('dateAlbums', $tri)->findAll();
+        return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos, 'tri' => $tri]);
     }
 
     public function createAlbumsPhoto()

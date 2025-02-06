@@ -7,6 +7,42 @@
         <i class="fa fa-plus me-2"></i> Ajouter un Album photo
     </button>
 </div>
+<form method="get" action="<?= site_url('albums-photo') ?>" class="filter-form mb-3">
+    <div class="d-flex align-items-center justify-content-start">
+        <div class="dropdown">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="triDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-sort-down me-2"></i> Trier les albums
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="triDropdown">
+                <li>
+                    <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'desc') ? 'active' : '' ?>" href="<?= site_url('albums-photo?tri=desc') ?>">
+                        <i class="bi bi-sort-down me-2"></i> Du plus récent au plus ancien
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'asc') ? 'active' : '' ?>" href="<?= site_url('albums-photo?tri=asc') ?>">
+                        <i class="bi bi-sort-up me-2"></i> Du plus ancien au plus récent
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+<style>
+    .dropdown-item.active {
+        background-color: #007bff;
+        /* Couleur de fond personnalisée */
+        color: white;
+        /* Couleur du texte */
+    }
+
+    .dropdown-item.active i {
+        color: white;
+        /* Changer la couleur de l'icône si nécessaire */
+    }
+</style>
+
+
 
 <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
