@@ -21,7 +21,8 @@
                                 <?php endif; ?>
                                 <div class="text-center mt-4">
                                     <img src="<?= esc(base_url($p['logo'])) ?>" class="img-fluid rounded-circle shadow"
-                                        alt="<?= esc($p['info']) ?>" style="width: 150px; height: 150px; object-fit: cover;">
+                                        alt="<?= esc($p['info']) ?>"
+                                        style="width: 150px; height: 150px; object-fit: cover;">
                                 </div>
                                 <div class="card-body text-center">
                                     <h5 class="card-title fw-bold"><?= esc($p['info']) ?></h5>
@@ -31,11 +32,9 @@
                             <?php endif; ?>
                             <div class="card-footer text-center">
                                 <button class="btn btn-warning btn-sm me-2 bouton-modifier-partenaire"
-                                    data-id="<?= esc($p['idPartenaires']) ?>"
-                                    data-info="<?= esc($p['info'], 'html') ?>"
-                                    data-lien="<?= esc($p['lien'], 'html') ?>"
-                                    data-logo="<?= esc(base_url($p['logo'])) ?>" data-bs-toggle="modal"
-                                    data-bs-target="#modalModifier">
+                                    data-id="<?= esc($p['idPartenaires']) ?>" data-info="<?= esc($p['info'], 'html') ?>"
+                                    data-lien="<?= esc($p['lien'], 'html') ?>" data-logo="<?= esc(base_url($p['logo'])) ?>"
+                                    data-bs-toggle="modal" data-bs-target="#modalModifier">
                                     Modifier
                                 </button>
                                 <form action="<?= route_to('partenairesDelete') ?>" method="post" class="d-inline">

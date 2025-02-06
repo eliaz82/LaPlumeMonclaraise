@@ -105,4 +105,10 @@
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Charger ton script après jQuery -->
+<?= script_tag('js/file-drag-and-drop.js') ?>
+
+
 <?= $this->endSection() ?>

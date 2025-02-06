@@ -78,7 +78,8 @@
                     <a class="nav-link" href="<?= url_to('contact') ?>">Contact</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
                         <i class="fas fa-cog settings-icon"></i>
                     </a>
 
@@ -226,14 +227,15 @@
                 <!-- Onglets de navigation -->
                 <ul class="nav nav-tabs" id="profilTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="localisation-tab" data-bs-toggle="tab" data-bs-target="#localisation"
-                            type="button" role="tab" aria-controls="localisation" aria-selected="true">
+                        <button class="nav-link active" id="localisation-tab" data-bs-toggle="tab"
+                            data-bs-target="#localisation" type="button" role="tab" aria-controls="localisation"
+                            aria-selected="true">
                             <i class="bi bi-geo-alt"></i> Localisation
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo"
-                            type="button" role="tab" aria-controls="logo" aria-selected="false">
+                        <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo" type="button"
+                            role="tab" aria-controls="logo" aria-selected="false">
                             <i class="bi bi-image"></i> Logo
                         </button>
                     </li>
@@ -248,7 +250,8 @@
                 <!-- Contenu des onglets -->
                 <div class="tab-content mt-3" id="profilTabContent">
                     <!-- Onglet Localisation -->
-                    <div class="tab-pane fade show active" id="localisation" role="tabpanel" aria-labelledby="localisation-tab">
+                    <div class="tab-pane fade show active" id="localisation" role="tabpanel"
+                        aria-labelledby="localisation-tab">
                         <h5 class="text-primary"><i class="bi bi-geo-alt"></i> Modifier la localisation</h5>
                         <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
                             <?= csrf_field() ?>
@@ -274,7 +277,8 @@
                                 class="img-fluid rounded shadow" alt="Logo actuel" style="max-width: 200px;">
                         </div>
                         <!-- Formulaire d'upload -->
-                        <form id="logoForm" method="post" action="<?= url_to('logoUpdate') ?>" enctype="multipart/form-data">
+                        <form id="logoForm" method="post" action="<?= url_to('logoUpdate') ?>"
+                            enctype="multipart/form-data">
                             <?= csrf_field() ?>
                             <div class="mb-3">
                                 <input type="file" class="form-control" id="logoUpload" name="logo" accept="image/*"
@@ -295,6 +299,8 @@
                                 <label for="mailContact" class="form-label">E-mail de réception :</label>
                                 <input type="email" id="mailContact" name="mailContact" class="form-control" required>
                             </div>
+                            <!-- Champ caché pour l'id de l'association -->
+                            <input type="hidden" id="idAssociation" name="idAssociation">
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-save"></i> Modifier
                             </button>
@@ -312,248 +318,18 @@
         </div>
     </div>
 </div>
-
-
-
-
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const pageSelect = document.getElementById("pageSelect");
-        const hashtagList = document.getElementById("hashtagList");
-        const addHashtagBtn = document.getElementById("addHashtag");
-        const hashtagInput = document.getElementById("hashtagInput");
-        const tokenCountdown = document.getElementById("tokenCountdown");
-
-
-        // Fonction pour charger les hashtags d'une page
-        function loadHashtags(pageName) {
-            fetch(`<?= site_url('facebook/hashtags') ?>/${pageName}`)
-                .then(response => response.json())
-                .then(data => {
-                    hashtagList.innerHTML = "";
-                    if (data.length > 0) {
-                        data.forEach(hashtag => {
-                            addHashtagToList(hashtag.idFacebook, hashtag.hashtag);
-                        });
-                    } else {
-                        hashtagList.innerHTML = `<li class='list-group-item text-muted' id='noHashtagMsg'>Aucun hashtag trouvé</li>`;
-                    }
-                })
-                .catch(error => console.error("Erreur lors du chargement des hashtags:", error));
-        }
-
-        // Fonction pour ajouter un hashtag à la liste
-        function addHashtagToList(id, hashtag) {
-            const noHashtagMsg = document.getElementById("noHashtagMsg");
-            if (noHashtagMsg) {
-                noHashtagMsg.remove();
-            }
-
-            const listItem = document.createElement("li");
-            listItem.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
-            listItem.innerHTML = `
-                ${hashtag}
-                <button class="btn btn-danger btn-sm remove-hashtag" data-id="${id}">X</button>
-            `;
-            hashtagList.appendChild(listItem);
-        }
-
-        // Fonction pour ajouter un hashtag via AJAX
-        addHashtagBtn.addEventListener("click", function() {
-            const hashtag = hashtagInput.value.trim();
-            const pageName = pageSelect.value;
-
-            if (hashtag) {
-                fetch("<?= site_url('facebook/create') ?>", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            'hashtag': hashtag,
-                            'pageName': pageName
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            addHashtagToList(data.idFacebook, hashtag);
-                            hashtagInput.value = "";
-                        } else {
-                            alert("Erreur lors de l'ajout du hashtag");
-                        }
-                    })
-                    .catch(error => console.error("Erreur AJAX:", error));
-            }
-        });
-        document.getElementById("hashtagInput").addEventListener("focus", function() {
-            if (!this.value.startsWith("#")) {
-                this.value = "#";
-            }
-        });
-
-        // Fonction pour supprimer un hashtag via AJAX
-        hashtagList.addEventListener("click", function(event) {
-            if (event.target.classList.contains("remove-hashtag")) {
-                const id = event.target.getAttribute("data-id");
-
-                if (!id) {
-                    console.error("ID non défini pour la suppression du hashtag.");
-                    return; // Si l'ID est manquant, ne fais pas la requête
-                }
-
-                fetch(`<?= site_url('facebook/delete') ?>/${id}`, {
-                        method: "POST", // Utilisation uniquement de POST
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({
-                            id: id // Envoyer l'ID dans le corps de la requête
-                        })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            event.target.closest("li").remove(); // Supprimer l'élément de la liste
-                            if (hashtagList.children.length === 0) {
-                                hashtagList.innerHTML = "<li class='list-group-item text-muted'>Aucun hashtag trouvé</li>";
-                            }
-                        } else {
-                            alert("Erreur lors de la suppression du hashtag : " + data.message);
-                        }
-                    })
-                    .catch(error => console.error("Erreur AJAX:", error));
-            }
-        });
-        // Charger les hashtags au changement de la page sélectionnée
-        pageSelect.addEventListener("change", function() {
-            loadHashtags(this.value);
-        });
-
-        // Charger les hashtags de la première page sélectionnée au démarrage
-        loadHashtags(pageSelect.value);
-
-    });
-
-    // Gestion du compte à rebours pour l'expiration du token
-    const tokenCountdown = document.getElementById("tokenCountdown");
-
-    // Fonction pour récupérer la date d'expiration via AJAX
-    function fetchTokenExpirationDate() {
-        fetch("<?= site_url('facebook/expiration') ?>") // La route que tu as définie
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const tokenExpirationDate = data.expiration_date;
-                    updateTokenCountdown(tokenExpirationDate);
-                } else {
-                    console.error(data.message);
-                }
-            })
-            .catch(error => console.error("Erreur AJAX:", error));
-    }
-
-    // Fonction de mise à jour du compte à rebours
-    function updateTokenCountdown(expirationDate) {
-        const tokenExpiration = new Date(expirationDate); // Créer un objet Date à partir de la chaîne
-
-        // Fonction de calcul du temps restant
-        function calculateCountdown() {
-            const now = new Date();
-            const diff = tokenExpiration - now;
-
-            if (diff <= 0) {
-                tokenCountdown.innerHTML = "<span class='text-danger'>Token expiré</span>";
-                return;
-            }
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24)); // Calcul des jours restants
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); // Calcul des heures
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)); // Calcul des minutes
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000); // Calcul des secondes
-
-
-            if (days > 0) {
-                tokenCountdown.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
-            } else {
-                tokenCountdown.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
-            }
-        }
-
-        // Mettre à jour le compte à rebours toutes les secondes
-        setInterval(calculateCountdown, 1000);
-        calculateCountdown();
-    }
-
-    // Charger la date d'expiration au chargement de la page
-    fetchTokenExpirationDate();
-    const resetTokenBtn = document.getElementById("resetTokenBtn");
-
-    // Gestion du clic sur le bouton de réinitialisation du token
-    resetTokenBtn.addEventListener("click", function() {
-        // Rediriger vers la méthode login() de ton contrôleur Facebook
-        window.location.href = "<?= site_url('facebook/login') ?>";
-    });
-    const emailReceptionInput = document.getElementById("mailContact");
-    const idAssociationInput = document.getElementById("idAssociation");
-
-    // Requête AJAX pour récupérer l'email de réception
-    fetch('<?= route_to("getEmailReception") ?>')
-        .then(response => response.json())
-        .then(data => {
-            if (data.emailContact) {
-                emailReceptionInput.value = data.emailContact;
-                idAssociationInput.value = data.idAssociation;
-            }
-        })
-        .catch(error => console.error("Erreur AJAX:", error));
-
-
-    fetch("<?= route_to('getAssociationData'); ?>")
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Erreur lors de la récupération des données.");
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Met à jour les champs uniquement si des données sont renvoyées
-            if (data.adresse) {
-                const adresseInput = document.getElementById("adresse");
-                adresseInput.value = data.adresse;
-                // Déclenche l'événement 'input' pour mettre à jour le popup de la carte
-                adresseInput.dispatchEvent(new Event("input"));
-            }
-            if (data.latitude) {
-                document.getElementById("latitude").value = data.latitude;
-            }
-            if (data.longitude) {
-                document.getElementById("longitude").value = data.longitude;
-            }
-        })
-        .catch(error => {
-            console.error("Erreur lors de la récupération des données de localisation :", error);
-        });
-    // Fonction qui affiche ou cache le bouton selon la position du scroll
-    window.onscroll = function() {
-        var backToTopButton = document.getElementById("back-to-top");
-
-        // Si l'utilisateur a défilé de plus de 100px, on affiche le bouton
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            backToTopButton.style.display = "flex"; // Afficher le bouton
-        } else {
-            backToTopButton.style.display = "none"; // Cacher le bouton quand on est en haut
-        }
-    };
-
-    // Fonction qui fait défiler la page en haut lorsque le bouton est cliqué
-    document.getElementById("back-to-top").onclick = function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        }); // Défilement fluide vers le haut
-        return false; // Empêche l'action par défaut
-    };
+    const siteUrl = "<?= site_url() ?>";
+    const createUrl = "<?= site_url('facebook/create') ?>";
+    const deleteUrl = "<?= site_url('facebook/delete') ?>";
+    const expirationUrl = "<?= site_url('facebook/expiration') ?>";
+    const loginUrl = "<?= site_url('facebook/login') ?>";
+    const getEmailReceptionUrl = "<?= route_to('getEmailReception') ?>";
+    const getAssociationDataUrl = "<?= route_to('getAssociationData') ?>";
 </script>
+
+
+
 
 <style>
     .custom-modal {
@@ -654,21 +430,14 @@
         </div>
     <?php endif; ?>
     <?= $this->renderSection('contenu') ?>
-    <div id="fb-root"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script async defer crossorigin="anonymous"
-        src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=603470049247384"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-    <script src="<?= base_url('js/main.js') ?>"></script>
-    <script src="<?= base_url('js/facebook.js') ?>"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/locales/fr.js"></script>
+    <?= script_tag('js/main.js') ?>
+    <?= script_tag('js/image-preview.js') ?>
+    <?= script_tag('js/facebook.js') ?>
+
 </body>
 
 <footer class="footer-section py-4" style="background-color:rgb(29, 34, 67); color: white;">
@@ -706,7 +475,8 @@
                 <div class="footer-socials">
                     <!-- Bouton Facebook -->
                     <button class="social-btn">
-                        <a href="https://www.facebook.com/profile.php?id=61562422197352" class="social-link" target="_blank" rel="noopener noreferrer">
+                        <a href="https://www.facebook.com/profile.php?id=61562422197352" class="social-link"
+                            target="_blank" rel="noopener noreferrer">
                             <svg viewBox="0 0 16 16" fill="currentColor" class="social-icon" id="facebook">
                                 <path
                                     d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z">
@@ -723,7 +493,9 @@
     <a href="#top">
         <button class="button" id="back-to-top">
             <svg class="svgIcon" viewBox="0 0 384 512">
-                <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+                <path
+                    d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z">
+                </path>
             </svg>
         </button>
     </a>

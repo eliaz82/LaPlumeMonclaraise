@@ -321,19 +321,8 @@
                 activeDay.classList.add('highlight');
             }
         }
-
-        // Fonction de zoom sur l'image
-        function zoomImage(src) {
-            const zoomedImage = document.getElementById('zoomed-image');
-            zoomedImage.src = src;
-            document.getElementById('zoom-container').style.display = 'flex';
-        }
-
-        // Fonction pour fermer l'élément de zoom
-        function closeZoom() {
-            document.getElementById('zoom-container').style.display = 'none';
-        }
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/locales/fr.js"></script>
 <?= $this->endSection() ?>

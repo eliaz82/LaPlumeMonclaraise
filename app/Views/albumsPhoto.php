@@ -10,17 +10,20 @@
 <form method="get" action="<?= site_url('albums-photo') ?>" class="filter-form mb-3">
     <div class="d-flex align-items-center justify-content-start">
         <div class="dropdown">
-            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="triDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="triDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-sort-down me-2"></i> Trier les albums
             </button>
             <ul class="dropdown-menu" aria-labelledby="triDropdown">
                 <li>
-                    <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'desc') ? 'active' : '' ?>" href="<?= site_url('albums-photo?tri=desc') ?>">
+                    <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'desc') ? 'active' : '' ?>"
+                        href="<?= site_url('albums-photo?tri=desc') ?>">
                         <i class="bi bi-sort-down me-2"></i> Du plus récent au plus ancien
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'asc') ? 'active' : '' ?>" href="<?= site_url('albums-photo?tri=asc') ?>">
+                    <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'asc') ? 'active' : '' ?>"
+                        href="<?= site_url('albums-photo?tri=asc') ?>">
                         <i class="bi bi-sort-up me-2"></i> Du plus ancien au plus récent
                     </a>
                 </li>
@@ -42,7 +45,8 @@
 <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="formulaire-ajouter" method="post" action="<?= site_url('createAlbumsPhoto') ?>" enctype="multipart/form-data">
+            <form id="formulaire-ajouter" method="post" action="<?= url_to('createAlbumsPhoto') ?>"
+                enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="modal-header">
                     <h5 class="modal-title text-primary" id="modalAjouterLabel">Ajouter un Album photo</h5>
@@ -52,7 +56,8 @@
                     <!-- Champ pour la dateAlbums -->
                     <div class="mb-3">
                         <label for="dateAlbums" class="form-label">Date de l'album</label>
-                        <input type="date" value="<?= date('Y-m-d'); ?>" class="form-control" id="dateAlbums" name="dateAlbums" required>
+                        <input type="date" value="<?= date('Y-m-d'); ?>" class="form-control" id="dateAlbums"
+                            name="dateAlbums" required>
                     </div>
 
                     <!-- Champ pour le nom -->
@@ -100,7 +105,9 @@
                         <?php if (filter_var($album['photo'], FILTER_VALIDATE_URL)): ?>
                             <div class="facebook-overlay-icon">
                                 <svg viewBox="0 0 16 16" fill="currentColor" class="facebook-icon">
-                                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+                                    <path
+                                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z">
+                                    </path>
                                 </svg>
                             </div>
                         <?php endif; ?>
@@ -108,20 +115,20 @@
                             <h5 class="text-white fw-bold"><?= esc($album['nom']) ?></h5>
                             <p class="text-white"><?= (new DateTime($album['dateAlbums']))->format('d/m/Y') ?></p>
                             <div class="mt-3">
-                                <a href="<?= site_url('albums-photo/' . esc($album['idAlbums'])) ?>" class="btn btn-primary btn-sm">Voir Album</a>
+                                <a href="<?= site_url('albums-photo/' . esc($album['idAlbums'])) ?>"
+                                    class="btn btn-primary btn-sm">Voir Album</a>
                                 <button class="btn btn-warning btn-sm me-2 bouton-modifier-album"
                                     data-idalbums="<?= esc($album['idAlbums']) ?>"
-                                    data-date="<?= esc($album['dateAlbums']) ?>"
-                                    data-nom="<?= esc($album['nom']) ?>"
-                                    data-photo="<?= esc(base_url($album['photo'])) ?>"
-                                    data-bs-toggle="modal"
+                                    data-date="<?= esc($album['dateAlbums']) ?>" data-nom="<?= esc($album['nom']) ?>"
+                                    data-photo="<?= esc(base_url($album['photo'])) ?>" data-bs-toggle="modal"
                                     data-bs-target="#modalModifierAlbum">
                                     Modifier
                                 </button>
-                                <form action="<?= route_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
+                                <form action="<?= url_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="idAlbums" value="<?= esc($album['idAlbums']) ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet album photo ?');">Supprimer</button>
+                                    <button type="submit" class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet album photo ?');">Supprimer</button>
                                 </form>
                             </div>
                         </div>
@@ -229,7 +236,7 @@
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form id="formulaire-modifier-album" method="post" action="<?= site_url('updateAlbumsPhoto') ?>"
+            <form id="formulaire-modifier-album" method="post" action="<?= url_to('updateAlbumsPhoto') ?>"
                 enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="modal-header">
@@ -264,5 +271,6 @@
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<?= script_tag('js/form-modifications.js') ?>
 <?= $this->endSection() ?>

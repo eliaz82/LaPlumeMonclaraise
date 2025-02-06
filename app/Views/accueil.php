@@ -33,8 +33,8 @@
         <p class="font-size-18" style="font-family: Arial, sans-serif;">Sport · Terrain de badminton</p>
       </div>
       <div class="me-3 text-end">
-        <img src="<?= esc(base_url(getAssociationLogo()), 'attr'); ?>" class="img-fluid img-thumbnail rounded-circle" alt="Logo"
-          style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
+        <img src="<?= esc(base_url(getAssociationLogo()), 'attr'); ?>" class="img-fluid img-thumbnail rounded-circle"
+          alt="Logo" style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
 
         <div class="col-md-4" style="width: 200px; text-align: center;">
           <p>
@@ -82,7 +82,7 @@
     <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 3000 }'>
       <?php
       // Limiter le nombre de publications à 10
-      $limited_posts = array_slice($posts, 0, 10); 
+      $limited_posts = array_slice($posts, 0, 10);
       foreach ($limited_posts as $post): ?>
         <div class="carousel-cell">
           <div class="fb-post-container">
@@ -97,4 +97,8 @@
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
 
+<?= script_tag('js/carousel.js') ?>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=603470049247384"></script>
 <?= $this->endSection() ?>

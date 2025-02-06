@@ -93,5 +93,7 @@
     </div>
 
 </div>
-
+<?= script_tag('js/leaflet-map.js') ?>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <?= $this->endSection() ?>
