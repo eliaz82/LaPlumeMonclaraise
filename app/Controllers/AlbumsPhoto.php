@@ -74,7 +74,6 @@ class AlbumsPhoto extends BaseController
                 // Vérifier si un album avec la même date existe déjà
                 $existingAlbum = $this->albumsPhoto->where('dateAlbums', $dateAlbums)
                     ->first();
-
                 // Si l'album n'existe pas déjà, on crée un nouvel album
                 if (!$existingAlbum) {
                     // Créer un nouvel album photo
