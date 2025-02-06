@@ -1,7 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
-
 <div class="container">
 
     <!-- Modal de modification de l'e-mail de contact -->
@@ -19,10 +18,10 @@
                         <div class="mb-3">
                             <label for="mailContact" class="form-label">E-mail de la plume monclaraise :</label>
                             <input type="email" id="mailContact" name="mailContact" class="form-control"
-                                value="<?= $association['mailContact'] ?>" required>
+                                value="<?= esc($association['mailContact']) ?>" required>
                         </div>
                         <input type="hidden" id="idAssociation" name="idAssociation"
-                            value="<?= $association['idAssociation'] ?>">
+                            value="<?= esc($association['idAssociation']) ?>">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -33,48 +32,45 @@
         </div>
     </div>
 
-
     <!-- Contact Form -->
     <div class="contact-wrapper">
         <div class="contact-map" id="map" style="width: 100%; height: 600px;"></div>
-        <div id="map-container" data-logo="<?= base_url(getAssociationLogo()); ?>"
-            data-lat="<?= $lat ?>" data-lon="<?= $lon ?>"></div>
-        
+        <div id="map-container" data-logo="<?= esc(base_url(getAssociationLogo())); ?>"
+            data-lat="<?= esc($lat) ?>" data-lon="<?= esc($lon) ?>"></div>
 
         <div class="contact-container">
             <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
+                <?= csrf_field() ?>
                 <p id="contact-heading">Contactez-nous</p>
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Nom" id="nom" name="nom" class="contact-input" type="text"
-                        value="<?= old('name'); ?>">
+                        value="<?= esc(old('name')); ?>">
                 </div>
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Téléphone" id="phone" name="phone" class="contact-input"
-                        type="text" value="<?= old('phone'); ?>" required>
+                        type="text" value="<?= esc(old('phone')); ?>" required>
                 </div>
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Email" id="email" name="email" class="contact-input"
-                        type="email" value="<?= old('email'); ?>" required>
+                        type="email" value="<?= esc(old('email')); ?>" required>
                 </div>
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Objet" id="subject" name="subject" class="contact-input"
-                        type="text" value="<?= old('subject'); ?>" required>
+                        type="text" value="<?= esc(old('subject')); ?>" required>
                 </div>
 
                 <div class="contact-field">
                     <textarea autocomplete="off" placeholder="Message" id="message" name="message" rows="5"
-                        class="contact-textarea" required><?= old('message'); ?></textarea>
+                        class="contact-textarea" required><?= esc(old('message')); ?></textarea>
                 </div>
-
 
                 <div class="recaptcha-container">
                     <div class="g-recaptcha" data-sitekey="6LdtAcgqAAAAAPhL5TB75gKZXQ8yn64CHmr09t4E"></div>
                 </div>
-
 
                 <div class="button-container">
                     <button class="btn-unique">
@@ -91,8 +87,6 @@
                         <span class="btn-label">Envoyer</span>
                     </button>
                 </div>
-
-               
 
             </form>
         </div>

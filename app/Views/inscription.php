@@ -17,13 +17,13 @@
                     <?php if (strpos($fichierInscription, '.pdf') !== false): ?>
                         <h3 class="text-center">Prévisualisation du fichier d'inscription :</h3>
                         <div class="d-flex justify-content-center mb-4" style="width: 100%; overflow: hidden;">
-                            <embed src="<?= base_url($fichierInscription) ?>" type="application/pdf"
+                            <embed src="<?= esc(base_url($fichierInscription)) ?>" type="application/pdf"
                                 style="width: 80%; height: 500px;">
                         </div>
                     <?php elseif (in_array(pathinfo($fichierInscription, PATHINFO_EXTENSION), ['jpg', 'png', 'jpeg'])): ?>
                         <h3 class="text-center">Prévisualisation de l'image :</h3>
                         <div class="d-flex justify-content-center mb-4">
-                            <img src="<?= base_url($fichierInscription) ?>" alt="Image d'inscription" class="img-fluid"
+                            <img src="<?= esc(base_url($fichierInscription)) ?>" alt="Image d'inscription" class="img-fluid"
                                 style="max-width: 80%; height: auto;">
                         </div>
                     <?php else: ?>
@@ -35,25 +35,27 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="<?= base_url($fichierInscription) ?>" class="btn-download" download>
-                    <button class="botao">
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" class="mysvg">
-                            <g id="SVGRepo_iconCarrier">
-                                <path id="Vector" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#f1f1f1"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                            </g>
-                        </svg>
-                        <span class="texto">Télécharger</span>
-                    </button>
-                </a>
+                <?php if (isset($fichierInscription)): ?>
+                    <a href="<?= esc(base_url($fichierInscription)) ?>" class="btn-download" download>
+                        <button class="botao">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" class="mysvg">
+                                <g id="SVGRepo_iconCarrier">
+                                    <path id="Vector" d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12" stroke="#f1f1f1"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                            <span class="texto">Télécharger</span>
+                        </button>
+                    </a>
+                <?php endif; ?>
+
                 <!-- Bouton pour ouvrir le modal -->
                 <button id="bouton-modifier-inscription" class="btn btn-modify" data-bs-toggle="modal"
                     data-bs-target="#modalModifierInscription">
                     Modifier le fichier d'inscription
                 </button>
             </div>
-
 
             <!-- Modal de modification du fichier d'inscription -->
             <div class="modal fade" id="modalModifierInscription" tabindex="-1"
@@ -68,6 +70,7 @@
                         <div class="modal-body">
                             <form action="<?= route_to('fichierInscriptionSubmit') ?>" method="post"
                                 enctype="multipart/form-data" class="mt-4 p-4 border shadow-sm rounded-3">
+                                <?= csrf_field() ?>
                                 <div class="text-center mb-3">
                                     <span class="h4 d-block">Téléversez votre fichier</span>
                                     <p class="text-muted">Le fichier doit être une image ou un document (PDF, Word,
@@ -97,7 +100,6 @@
                     </div>
                 </div>
             </div>
-
 
         </div>
     </div>

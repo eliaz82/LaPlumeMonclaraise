@@ -149,7 +149,7 @@
                 }
                 ?>
                 <div class="col-md-4 col-12 mb-4">
-                    <div class="card shadow-sm <?= $isHighlighted ? 'highlight' : '' ?>" <?= $isHighlighted ? 'id="highlightedEvent"' : '' ?>>
+                    <div class="card shadow-sm <?= esc($isHighlighted ? 'highlight' : '') ?>" <?= esc($isHighlighted ? 'id="highlightedEvent"' : '') ?>>
                         <?php if (!empty($post['image'])): ?>
                             <img src="<?= esc($post['image']) ?>" alt="Image de l'événement" class="card-img-top">
                         <?php else: ?>
@@ -157,7 +157,7 @@
                         <?php endif; ?>
                         <div class="card-body">
                             <h5 class="card-title"><?= esc($post['titre']) ?></h5>
-                            <p class="event-status <?= ($post['status'] === 'Événement passé') ? 'text-danger' : 'text-success' ?>">
+                            <p class="event-status <?= esc($post['status'] === 'Événement passé' ? 'text-danger' : 'text-success') ?>">
                                 <?= esc($post['status']) ?>
                             </p>
                             <div class="card-text">
