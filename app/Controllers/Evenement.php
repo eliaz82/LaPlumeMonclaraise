@@ -51,25 +51,17 @@ class Evenement extends BaseController
                     $eventDateTime = new \DateTime("$year-$month-$day");
                     $eventDateTime->setTime(23, 59, 59);
                     $post['status'] = ($eventDateTime < $currentDate) ? "Événement passé" : "Événement futur";
+                    $post['timestamp'] = $eventDateTime->getTimestamp();
                 }
             } else {
                 $post['status'] = "Date inconnue";
             }
         }
-
-        // Seuil pour afficher les événements futurs ou passés depuis moins d'1 jour
-        $threshold = (clone $currentDate)->sub(new \DateInterval('P1D'));
-        // Seuil pour afficher les événements futurs ou passés depuis moins d'1 mois
-        //$threshold = (clone $currentDate)->sub(new \DateInterval('P1M'));
-        $filteredPosts = array_filter($filteredPosts, function ($post) use ($threshold) {
-            if (isset($post['date'])) {
-                list($day, $month, $year) = explode('/', $post['date']);
-                $eventDateTime = new \DateTime("$year-$month-$day");
-                $eventDateTime->setTime(23, 59, 59);
-                return $eventDateTime >= $threshold;
-            }
-            return true;
+        usort($filteredPosts, function ($a, $b) {
+            return $b['timestamp'] <=> $a['timestamp']; 
         });
+        // Limiter à 30 posts maximum
+        $filteredPosts = array_slice($filteredPosts, 0, 15);
 
         return view('evenements', [
             'posts'       => $filteredPosts,
