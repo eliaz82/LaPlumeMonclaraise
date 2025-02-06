@@ -92,48 +92,152 @@
 
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Albums Photos</h1>
-
     <!-- Grille des albums -->
-    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         <?php foreach ($albumsPhotos as $album): ?>
             <div class="col">
-                <div class="card h-100">
-                    <!-- Photo de l'album -->
+                <div class="custom-image-container position-relative">
+                    <!-- Image de l'album -->
                     <?php
-                    // Vérifier si l'URL de l'image est absolue ou relative
                     $imageSrc = (filter_var($album['photo'], FILTER_VALIDATE_URL)) ? $album['photo'] : base_url($album['photo']);
                     ?>
+                    <img src="<?= $imageSrc ?>" class="img-fluid rounded album-photo" alt="Photo de l'album">
 
-                    <img src="<?= $imageSrc ?>" class="card-img-top" alt="Photo de l'album"
-                        style="object-fit: cover; height: 200px;">
-
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $album['nom'] ?></h5>
-                        <p class="card-text">
-                            Date de l'album : <?= $album['dateAlbums'] ?>
-                        </p>
-                    </div>
-                    <div class="card-footer text-end">
-                        <a href="<?= base_url('albums-photo/' . $album['idAlbums']) ?>" class="btn btn-primary">Voir
-                            l'album</a>
-                        <button class="btn btn-warning btn-sm me-2 bouton-modifier-album"
-                            data-idalbums="<?= $album['idAlbums'] ?>" data-date="<?= $album['dateAlbums'] ?>"
-                            data-nom="<?= $album['nom'] ?>" data-photo="<?= base_url($album['photo']) ?>"
-                            data-bs-toggle="modal" data-bs-target="#modalModifierAlbum">
-                            Modifier
-                        </button>
-                        <form action="<?= route_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
-                            <input type="hidden" name="idAlbums" value="<?= $album['idAlbums'] ?>">
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet album photo et toutes ses photos associées ?');">Supprimer</button>
-                        </form>
+                    <!-- Overlay au survol -->
+                    <div class="custom-overlay d-flex justify-content-center align-items-center">
+                        <?php if (filter_var($album['photo'], FILTER_VALIDATE_URL)): ?>
+                            <div class="facebook-overlay-icon">
+                                <svg viewBox="0 0 16 16" fill="currentColor" class="facebook-icon">
+                                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+                                </svg>
+                            </div>
+                        <?php endif; ?>
+                        <div class="overlay-text text-center">
+                            <h5 class="text-white fw-bold"><?= $album['nom'] ?></h5>
+                            <p class="text-white"><?= (new DateTime($album['dateAlbums']))->format('d/m/Y') ?></p>
+                            <div class="mt-3">
+                                <a href="<?= base_url('albums-photo/' . $album['idAlbums']) ?>" class="btn btn-primary btn-sm">Voir Album</a>
+                                <button class="btn btn-warning btn-sm me-2 bouton-modifier-album"
+                                    data-idalbums="<?= $album['idAlbums'] ?>"
+                                    data-date="<?= $album['dateAlbums'] ?>"
+                                    data-nom="<?= $album['nom'] ?>"
+                                    data-photo="<?= base_url($album['photo']) ?>"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#modalModifierAlbum">
+                                    Modifier
+                                </button>
+                                <form action="<?= route_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
+                                    <input type="hidden" name="idAlbums" value="<?= $album['idAlbums'] ?>">
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet album photo ?');">Supprimer</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
 </div>
+
+<style>
+    .facebook-overlay-icon {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: white;
+        padding: 8px;
+        border-radius: 50%;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .facebook-icon {
+        width: 35px;
+        height: 35px;
+        color: #1877F2;
+        /* Bleu Facebook */
+        transition: color 0.3s ease-in-out;
+    }
+    .custom-image-container {
+        position: relative;
+        width: 100%;
+        height: 350px;
+        /* Image plus grande et rectangulaire */
+        overflow: hidden;
+        border-radius: 20px;
+        /* Coins arrondis plus prononcés */
+    }
+
+    .custom-image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .custom-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        /* Fond sombre avec plus d'opacité */
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .custom-image-container:hover .custom-overlay {
+        opacity: 1;
+        /* Afficher l'overlay au survol */
+    }
+
+    .overlay-text {
+        text-align: center;
+        color: white;
+        padding: 20px;
+    }
+
+    .overlay-text h5 {
+        font-size: 1.75rem;
+        /* Texte plus grand */
+    }
+
+    .overlay-text p {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+
+    .overlay-text .btn {
+        margin: 5px;
+    }
+
+    /* Personnalisation des boutons */
+    .btn-primary,
+    .btn-warning,
+    .btn-danger {
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover,
+    .btn-warning:hover,
+    .btn-danger:hover {
+        background-color: #0056b3;
+        transform: scale(1.1);
+        /* Agrandissement plus visible */
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+</style>
+
 
 <!-- Modal de modification pour les albums photos -->
 <div class="modal fade" id="modalModifierAlbum" tabindex="-1" aria-labelledby="modalModifierAlbumLabel"
