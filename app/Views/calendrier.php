@@ -1,7 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('contenu') ?>
 
-
 <div class="container mt-5">
     <div class="row">
         <?php if (!empty($posts)): ?>
@@ -41,9 +40,6 @@
         </div>
     </div>
 </div>
-
-
-
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -133,8 +129,6 @@
 
         allPosts.forEach(el => carousel.appendChild(el));
 
-
-
         // On positionne le carousel sur la copie centrale (indices de count à 2*count-1)
         let currentIndex = count;
 
@@ -164,7 +158,6 @@
             }
         }
 
-
         // Boutons de défilement (avec animation)
         scrollUpButton.addEventListener('click', function() {
             currentIndex--;
@@ -187,7 +180,7 @@
                 const eventId = target.getAttribute('data-event-id');
                 if (eventId) {
                     // Rediriger vers l'événement spécifique
-                    window.location.href = `<?= site_url('evenement') ?>/${eventId}`;
+                    window.location.href = `<?= site_url('evenement') ?>/${encodeURIComponent(eventId)}`;
                 } else {
                     console.error('ID de l\'événement non trouvé');
                 }
@@ -221,8 +214,6 @@
                 }
             }
         });
-
-
 
         // Initialisation de FullCalendar
         var events = <?= json_encode($events); ?>;
@@ -325,13 +316,24 @@
 
         function highlightDayInCalendar(dateStr) {
             document.querySelectorAll('.fc-day').forEach(day => day.classList.remove('highlight'));
-            const activeDay = document.querySelector(`.fc-day[data-date="${dateStr}"]`);
+            const activeDay = document.querySelector(`.fc-day[data-date='${dateStr}']`);
             if (activeDay) {
                 activeDay.classList.add('highlight');
             }
         }
+
+        // Fonction de zoom sur l'image
+        function zoomImage(src) {
+            const zoomedImage = document.getElementById('zoomed-image');
+            zoomedImage.src = src;
+            document.getElementById('zoom-container').style.display = 'flex';
+        }
+
+        // Fonction pour fermer l'élément de zoom
+        function closeZoom() {
+            document.getElementById('zoom-container').style.display = 'none';
+        }
     });
 </script>
-
 
 <?= $this->endSection() ?>

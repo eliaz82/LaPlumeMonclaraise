@@ -1,7 +1,6 @@
 <section id="equipe">
     <div>
 
-
         <!-- Bouton d'ajout -->
         <div class="text-center mb-4">
             <button id="bouton-ajouter-adherent" class="btn btn-primary btn-lg shadow-sm" data-bs-toggle="modal"
@@ -16,7 +15,7 @@
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form id="formulaire-ajouter-adherent" method="post" action="<?= url_to('equipeSubmit') ?>"
+                    <form id="formulaire-ajouter-adherent" method="post" action="<?= esc(url_to('equipeSubmit'), 'attr') ?>"
                         enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" id="modalAjouterAdherentLabel">Ajouter un adhérent</h5>
@@ -64,22 +63,22 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="card shadow-lg border-0 h-100">
                         <div class="text-center mt-4">
-                            <img src="<?= base_url($e['photo']) ?>" class="img-fluid rounded-circle shadow"
-                                alt="<?= $e['prenom'] . ' ' . $e['nom'] ?>"
+                            <img src="<?= esc(base_url($e['photo']), 'attr') ?>" class="img-fluid rounded-circle shadow"
+                                alt="<?= esc($e['prenom'] . ' ' . $e['nom'], 'attr') ?>"
                                 style="width: 150px; height: 150px; object-fit: cover;">
                         </div>
                         <div class="card-body text-center">
-                            <h5 class="card-title fw-bold text-primary"><?= $e['prenom'] . ' ' . $e['nom'] ?></h5>
-                            <span class="badge bg-secondary"><?= $e['grade'] ?></span>
+                            <h5 class="card-title fw-bold text-primary"><?= esc($e['prenom'] . ' ' . $e['nom'], 'attr') ?></h5>
+                            <span class="badge bg-secondary"><?= esc($e['grade'], 'attr') ?></span>
                         </div>
                         <div class="card-footer text-center">
                             <button class="btn btn-warning btn-sm me-2 bouton-modifier-adherent"
-                                data-id="<?= $e['idAdherants'] ?>" data-nom="<?= $e['nom'] ?>"
-                                data-prenom="<?= $e['prenom'] ?>" data-grade="<?= $e['grade'] ?>"
-                                data-photo="<?= base_url($e['photo']) ?>" data-bs-toggle="modal"
+                                data-id="<?= esc($e['idAdherants'], 'attr') ?>" data-nom="<?= esc($e['nom'], 'attr') ?>"
+                                data-prenom="<?= esc($e['prenom'], 'attr') ?>" data-grade="<?= esc($e['grade'], 'attr') ?>"
+                                data-photo="<?= esc(base_url($e['photo']), 'attr') ?>" data-bs-toggle="modal"
                                 data-bs-target="#modalModifierAdherent">Modifier</button>
-                            <form action="<?= route_to('equipeDelete') ?>" method="post" class="d-inline">
-                                <input type="hidden" name="idAdherant" value="<?= $e['idAdherants'] ?>">
+                            <form action="<?= esc(route_to('equipeDelete'), 'attr') ?>" method="post" class="d-inline">
+                                <input type="hidden" name="idAdherant" value="<?= esc($e['idAdherants'], 'attr') ?>">
                                 <button type="submit" class="btn btn-danger btn-sm"
                                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet adhérent ?');">
                                     Supprimer
@@ -97,7 +96,7 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form id="formulaire-modifier-adherent" method="post" action="<?= url_to('equipeUpdate') ?>"
+                <form id="formulaire-modifier-adherent" method="post" action="<?= esc(url_to('equipeUpdate'), 'attr') ?>"
                     enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title text-primary" id="modalModifierAdherentLabel">Modifier un adhérent</h5>

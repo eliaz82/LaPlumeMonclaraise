@@ -13,7 +13,6 @@
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         background-color: #eef2f3;
         color: #333;
-
     }
 
     /* En-tête de la page */
@@ -117,28 +116,22 @@
         <?php foreach ($posts as $index => $post): ?>
             <div class="post">
                 <?php if (!empty($post['image'])): ?>
-                    <div class="post-image" style="background-image: url('<?= esc($post['image']) ?>');"></div>
+                    <div class="post-image" style="background-image: url('<?= esc($post['image'], 'attr') ?>');"></div>
                 <?php endif; ?>
                 <div class="content-container">
                     <?php
-                    $message = esc($post['message']);
+                    $message = esc($post['message']); // Échapper le message pour éviter les attaques XSS
                     $message = trim($message); // Supprime les espaces au début et à la fin du texte
                     // Normalisation des retours à la ligne : on remplace toutes les formes par un seul \n
                     $message = str_replace(["\r\n", "\r"], "\n", $message);
                     // Remplace les espaces multiples par un seul espace
                     $message = preg_replace('/\s{2,}/', ' ', $message);
-                    // Ajoute un <br> après chaque '.'
+                    // Ajoute un <br> après chaque '.' pour gérer les retours à la ligne HTML
                     $message = preg_replace('/([.])\s*/', '$1<br>', $message);
                     // Applique les retours à la ligne HTML
                     $message = nl2br($message);
                     ?>
                     <p class="post-message"><?= $message ?></p>
-
-
-
-
-
-
                     <span class="read-more">Lire plus</span>
                 </div>
             </div>

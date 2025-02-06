@@ -5,15 +5,15 @@
   <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-interval="4500" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="image/test.jpg" class="d-block w-100" alt="..."
+        <img src="<?= esc(base_url('image/test.jpg'), 'attr'); ?>" class="d-block w-100" alt="Image 1"
           style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
       </div>
       <div class="carousel-item">
-        <img src="image/test1.jpg" class="d-block w-100" alt="..."
+        <img src="<?= esc(base_url('image/test1.jpg'), 'attr'); ?>" class="d-block w-100" alt="Image 2"
           style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
       </div>
       <div class="carousel-item">
-        <img src="image/test2.jpg" class="d-block w-100" alt="..."
+        <img src="<?= esc(base_url('image/test2.jpg'), 'attr'); ?>" class="d-block w-100" alt="Image 3"
           style="height: 400px; object-fit: cover; transition: transform 1s ease-in-out;">
       </div>
     </div>
@@ -33,7 +33,7 @@
         <p class="font-size-18" style="font-family: Arial, sans-serif;">Sport · Terrain de badminton</p>
       </div>
       <div class="me-3 text-end">
-        <img src="<?= base_url(getAssociationLogo()); ?>" class="img-fluid img-thumbnail rounded-circle" alt="..."
+        <img src="<?= esc(base_url(getAssociationLogo()), 'attr'); ?>" class="img-fluid img-thumbnail rounded-circle" alt="Logo"
           style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
 
         <div class="col-md-4" style="width: 200px; text-align: center;">
@@ -51,7 +51,7 @@
 <div class="container my-5" style="padding-bottom: 100px;">
   <div class="position-relative">
     <!-- Image de fond -->
-    <img src="image/tee_shirt.jpg" alt="Image" class="img-fluid rounded"
+    <img src="<?= esc(base_url('image/tee_shirt.jpg'), 'attr'); ?>" alt="Image" class="img-fluid rounded"
       style="max-width: 60%; height: auto; margin-left: 45%;" id="image">
 
     <!-- Texte superposé avec la même taille que l'image -->
@@ -66,14 +66,13 @@
           Plongez dans l'univers du badminton avec nous et vivez des moments uniques, qu'ils soient compétitifs ou
           purement récréatifs.
         </p>
-        <a href="<?= url_to('FusionAssociation') ?>#histoire" class="btn btn-primary">Lire plus</a>
+        <a href="<?= esc(url_to('FusionAssociation')) ?>#histoire" class="btn btn-primary">Lire plus</a>
       </div>
     </div>
   </div>
 </div>
 
-
-<button id="refreshButton" data-refresh-url="<?= site_url('facebook/refresh'); ?>">Rafraîchir</button>
+<button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>">Rafraîchir</button>
 
 <?php if (!empty($posts)): ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
@@ -87,7 +86,7 @@
       foreach ($limited_posts as $post): ?>
         <div class="carousel-cell">
           <div class="fb-post-container">
-            <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
+            <div class="fb-post" data-href="<?= esc($post['permalink_url'], 'attr'); ?>" data-width="500"></div>
           </div>
         </div>
       <?php endforeach; ?>
@@ -97,8 +96,5 @@
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
-
-
-
 
 <?= $this->endSection() ?>
