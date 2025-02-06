@@ -73,7 +73,7 @@ html, body {
   margin: 0 auto;
   overflow: hidden; /* Cache les publications en dehors du conteneur */
   background-color: #f0f0f0; /* Fond gris clair */
-  padding: 20px; /* Optionnel : ajoute de l'espace autour du carousel */
+  padding: 40px; /* Optionnel : ajoute de l'espace autour du carousel */
 }
 
 /* Centrer les posts dans chaque cellule */
@@ -82,14 +82,14 @@ html, body {
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 600px; /* Limiter la largeur des posts */
+  max-width: 500px; /* Limiter la largeur des posts */
   margin: 0 10px;
   box-sizing: border-box;
 }
 
 /* Définir la taille des posts Facebook */
 .fb-post {
-  width: 100%; /* Utiliser toute la largeur de la cellule */
+  width: 90%; /* Utiliser toute la largeur de la cellule */
   height: auto; /* La hauteur s'ajustera automatiquement */
   box-sizing: border-box;
 }
