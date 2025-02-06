@@ -42,11 +42,6 @@
             <i class="bi bi-envelope"></i> Email : contact@club.fr<br>
             <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
           </p>
-          <div>
-            <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
-          </div>
         </div>
       </div>
     </div>
@@ -79,21 +74,31 @@
 
 
 <button id="refreshButton" data-refresh-url="<?= site_url('facebook/refresh'); ?>">Rafraîchir</button>
+
 <?php if (!empty($posts)): ?>
-  <div class="carousel">
-    <div class="carousel-wrapper">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
+
+  <div class="carousel-container" style="background: #e2e6ea; padding: 1rem;">
+    <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 3000 }'>
       <?php
       // Limiter le nombre de publications à 10
-      $limited_posts = array_slice($posts, 0, 10); // Récupérer les 10 premières publications
+      $limited_posts = array_slice($posts, 0, 10); 
       foreach ($limited_posts as $post): ?>
         <div class="carousel-cell">
-          <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
+          <div class="fb-post-container">
+            <div class="fb-post" data-href="<?php echo $post['permalink_url']; ?>" data-width="500"></div>
+          </div>
         </div>
       <?php endforeach; ?>
     </div>
   </div>
+
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
+
+
+
 
 <?= $this->endSection() ?>

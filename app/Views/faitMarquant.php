@@ -108,7 +108,7 @@
 
 <!-- En-tête de la page -->
 <div class="header">
-    <h1>La Plume MonClaraise </h1>
+    <h1>La Plume Monclaraise </h1>
     <p>Découvrez nos faits marquants et moments forts de la saison</p>
 </div>
 
