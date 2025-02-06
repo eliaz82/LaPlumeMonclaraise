@@ -533,15 +533,96 @@
         .catch(error => {
             console.error("Erreur lors de la récupération des données de localisation :", error);
         });
+    // Fonction qui affiche ou cache le bouton selon la position du scroll
+    window.onscroll = function() {
+        var backToTopButton = document.getElementById("back-to-top");
+
+        // Si l'utilisateur a défilé de plus de 100px, on affiche le bouton
+        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            backToTopButton.style.display = "flex"; // Afficher le bouton
+        } else {
+            backToTopButton.style.display = "none"; // Cacher le bouton quand on est en haut
+        }
+    };
+
+    // Fonction qui fait défiler la page en haut lorsque le bouton est cliqué
+    document.getElementById("back-to-top").onclick = function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        }); // Défilement fluide vers le haut
+        return false; // Empêche l'action par défaut
+    };
 </script>
 
 <style>
     .custom-modal {
         max-width: 75vw;
     }
+
     body {
         cursor: url('/image/cursor.cur') 16 16, auto;
-        
+
+    }
+
+    .button {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgb(20, 20, 20);
+        border: none;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 0px 0px 4px rgba(112, 177, 238, 0.25);
+        cursor: pointer;
+        transition-duration: 0.3s;
+        overflow: hidden;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .svgIcon {
+        width: 12px;
+        transition-duration: 0.3s;
+    }
+
+    .svgIcon path {
+        fill: white;
+    }
+
+    /* Nouvelle couleur et texte au survol */
+    .button:hover {
+        width: 140px;
+        border-radius: 50px;
+        transition-duration: 0.3s;
+        background-color: rgba(129, 161, 208, 1);
+        align-items: center;
+    }
+
+    .button:hover .svgIcon {
+        transform: translateY(-200%);
+        transition-duration: 0.3s;
+    }
+
+    /* Texte affiché au survol */
+    .button::before {
+        position: absolute;
+        bottom: -20px;
+        content: "Haut de page";
+        color: white;
+        font-size: 0px;
+        transition-duration: 0.3s;
+    }
+
+    .button:hover::before {
+        font-size: 13px;
+        opacity: 1;
+        bottom: unset;
+        transition-duration: 0.3s;
     }
 </style>
 
@@ -639,4 +720,15 @@
     </div>
     <hr style="border-color: white;">
     <p class="footer-copyright text-center">© 2025 La plume Monclaraise. Tous droits réservés.</p>
+    <a href="#top">
+        <button class="button" id="back-to-top">
+            <svg class="svgIcon" viewBox="0 0 384 512">
+                <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+            </svg>
+        </button>
+    </a>
+
+
+
+
 </footer>
