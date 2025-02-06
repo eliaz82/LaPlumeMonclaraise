@@ -122,9 +122,23 @@
                 <div class="content-container">
                     <?php
                     $message = esc($post['message']);
-                    $message = trim($message); // Supprime les espaces en début et fin de chaîne
+                    $message = trim($message); // Supprime les espaces au début et à la fin du texte
+                    // Normalisation des retours à la ligne : on remplace toutes les formes par un seul \n
+                    $message = str_replace(["\r\n", "\r"], "\n", $message);
+                    // Remplace les espaces multiples par un seul espace
+                    $message = preg_replace('/\s{2,}/', ' ', $message);
+                    // Ajoute un <br> après chaque '.'
+                    $message = preg_replace('/([.])\s*/', '$1<br>', $message);
+                    // Applique les retours à la ligne HTML
+                    $message = nl2br($message);
                     ?>
-                    <p class="post-message"><?= nl2br($message) ?></p>
+                    <p class="post-message"><?= $message ?></p>
+
+
+
+
+
+
                     <span class="read-more">Lire plus</span>
                 </div>
             </div>
@@ -137,39 +151,46 @@
 <!-- JavaScript pour gérer le bouton "Lire plus" -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var posts = document.querySelectorAll('.post-message');
+        var readMoreButtons = document.querySelectorAll('.read-more');
 
-        posts.forEach(function(post) {
-            var words = post.innerText.split(/\s+/); // Divise le texte en mots
-            var maxWords = 25; // Nombre maximum de mots avant la coupure
+        function truncateText() {
+            var posts = document.querySelectorAll('.post-message');
+            posts.forEach(function(post) {
+                var fullText = post.innerHTML.trim(); // Récupère le texte avec les sauts de ligne
+                var words = fullText.split(/\s+/); // Divise le texte en mots
+                var maxWords = 25;
 
-            if (words.length > maxWords) {
-                var truncated = words.slice(0, maxWords).join(' ') + '...'; // Tronque le texte
-                var fullText = post.innerText.trim().replace(/\s+/g, ' '); // Texte complet nettoyé
+                if (words.length > maxWords) {
+                    var truncated = words.slice(0, maxWords).join(' ') + '...'; // Tronque le texte
+                    post.innerHTML = truncated; // Affiche le texte tronqué
+                    post.dataset.fullText = fullText; // Stocke le texte complet
+                    post.dataset.truncatedText = truncated; // Stocke le texte tronqué
+                    post.nextElementSibling.style.display = 'inline-block';
+                } else {
+                    post.nextElementSibling.style.display = 'none';
+                }
+            });
+        }
 
-                post.innerText = truncated; // Affiche la version tronquée
-                post.dataset.fullText = fullText; // Stocke le texte complet
-                post.dataset.truncatedText = truncated; // Stocke le texte tronqué
+        readMoreButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var content = this.previousElementSibling;
+                var fullText = content.dataset.fullText;
+                var truncatedText = content.dataset.truncatedText;
 
-                // Crée le bouton "Lire plus"
-                var readMore = document.createElement("span");
-                readMore.classList.add("read-more");
-                readMore.textContent = "Lire plus";
-                post.parentNode.appendChild(readMore); // Ajoute le bouton après le texte
+                if (content.classList.contains('expanded')) {
+                    content.innerHTML = truncatedText;
+                    this.textContent = 'Lire plus';
+                } else {
+                    content.innerHTML = fullText; // Affiche le texte complet avec les sauts de ligne
+                    this.textContent = 'Lire moins';
+                }
 
-                // Gère l'affichage du texte complet / tronqué
-                readMore.addEventListener("click", function() {
-                    if (post.classList.contains("expanded")) {
-                        post.innerText = truncated; // Revenir au texte tronqué
-                        this.textContent = "Lire plus";
-                    } else {
-                        post.innerText = fullText; // Afficher le texte complet
-                        this.textContent = "Lire moins";
-                    }
-                    post.classList.toggle("expanded");
-                });
-            }
+                content.classList.toggle('expanded');
+            });
         });
+
+        truncateText();
     });
 </script>
 
