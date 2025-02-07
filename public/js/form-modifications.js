@@ -42,6 +42,7 @@ $(document).ready(function () {
         const date = $(this).data('date');
         const nom = $(this).data('nom');
         const photo = $(this).data('photo');
+        const isFacebook = $(this).data('facebook');
 
         $('#modifier-id-album').val(idAlbums);
         $('#modifier-date-album').val(date);
@@ -51,6 +52,11 @@ $(document).ready(function () {
             $('#modifierPhotoPreviewAlbum').attr('src', photo).show();
         } else {
             $('#modifierPhotoPreviewAlbum').hide();
+        }
+        if (isFacebook == 1) {
+            $('#modifier-date-album').prop('disabled', true);
+        } else {
+            $('#modifier-date-album').prop('disabled', false);
         }
     });
 });

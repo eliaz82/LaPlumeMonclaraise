@@ -40,7 +40,6 @@ class AlbumsPhoto extends BaseController
             return false;
         });
         foreach ($filteredPosts as $post) {
-
             // Extraire la date de l'événement depuis le message du post
             $dateAlbums = null;
             if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
@@ -62,6 +61,10 @@ class AlbumsPhoto extends BaseController
                 // Convertir en format `Y-m-d`
                 $dateAlbums = "$year-$month-$day";
             }
+            if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
+                $facebookMapping[$dateAlbums] = $post['id'];
+            }
+            
 
             preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
             $titreAlbums = isset($titleMatches[1]) ? $titleMatches[1] : $dateAlbums;
@@ -131,6 +134,17 @@ class AlbumsPhoto extends BaseController
         $tri = $this->request->getGet('tri') ?? 'desc'; // Par défaut, tri du plus récent au plus ancien
 
         $albumsPhotos = $this->albumsPhoto->orderBy('dateAlbums', $tri)->findAll();
+
+        foreach ($albumsPhotos as $key => $album) {
+            // Si une correspondance a été trouvée pour la date de cet album, on ajoute l'URL
+            if (isset($facebookMapping[$album['dateAlbums']])) {
+                $albumsPhotos[$key]['postFacebookUrl'] = "https://www.facebook.com/" . $facebookMapping[$album['dateAlbums']];
+            } else {
+                $albumsPhotos[$key]['postFacebookUrl'] = ""; // ou null si aucune correspondance
+            }
+        }
+
+dd($albumsPhotos);
         return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos, 'tri' => $tri]);
     }
 

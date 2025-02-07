@@ -87,7 +87,6 @@
         </div>
     </div>
 </div>
-
 <div class="container mt-4">
     <!-- Grille des albums -->
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
@@ -121,14 +120,18 @@
                                     data-idalbums="<?= esc($album['idAlbums']) ?>"
                                     data-date="<?= esc($album['dateAlbums']) ?>" data-nom="<?= esc($album['nom']) ?>"
                                     data-photo="<?= esc(base_url($album['photo'])) ?>" data-bs-toggle="modal"
+                                    data-facebook="<?= filter_var($album['photo'], FILTER_VALIDATE_URL) ? '1' : '0' ?>"
                                     data-bs-target="#modalModifierAlbum">
                                     Modifier
                                 </button>
-                                <form action="<?= url_to('albumsPhotoDelete') ?>" method="post" class="d-inline">
+                                <?php
+                                $isFacebookAlbum = filter_var($album['photo'], FILTER_VALIDATE_URL);
+                                ?>
+                                <form action="<?= url_to('albumsPhotoDelete') ?>" method="post" class="d-inline"
+                                    onsubmit="return confirmerSuppression(this, '<?= esc($album['postFacebookUrl']) ?>');">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="idAlbums" value="<?= esc($album['idAlbums']) ?>">
-                                    <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet album photo ?');">Supprimer</button>
+                                    <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                                 </form>
                             </div>
                         </div>
@@ -138,7 +141,17 @@
         <?php endforeach; ?>
     </div>
 </div>
-
+<script>
+function confirmerSuppression(form, facebookPostUrl) {
+    if (facebookPostUrl) {
+        if (confirm("Cet album provient de Facebook. Vous devez d'abord le supprimer sur Facebook, puis ici pour qu'il soit complètement supprimé.\n\nVoulez-vous aller sur le post Facebook ?")) {
+            window.open(facebookPostUrl, "_blank");
+        }
+        return false;
+    }
+    return confirm("Êtes-vous sûr de vouloir supprimer cet album photo ?");
+}
+</script>
 <style>
     .facebook-overlay-icon {
         position: absolute;
