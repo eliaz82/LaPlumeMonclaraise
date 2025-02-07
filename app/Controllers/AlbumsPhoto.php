@@ -143,8 +143,6 @@ class AlbumsPhoto extends BaseController
                 $albumsPhotos[$key]['postFacebookUrl'] = ""; // ou null si aucune correspondance
             }
         }
-
-dd($albumsPhotos);
         return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos, 'tri' => $tri]);
     }
 
