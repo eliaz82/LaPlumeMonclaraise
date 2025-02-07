@@ -37,11 +37,16 @@
           alt="Logo" style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
 
         <div class="col-md-4" style="width: 200px; text-align: center;">
+          <?php
+          // Supposons que $localisation contienne les données de localisation récupérées en BDD
+          ?>
           <p>
-            <i class="bi bi-geo-alt"></i> Adresse : esplanade du lac 82230 Monclar-de-Quercy<br>
+            <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
             <i class="bi bi-envelope"></i> Email : contact@club.fr<br>
             <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
           </p>
+
+
         </div>
       </div>
     </div>

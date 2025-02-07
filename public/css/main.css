@@ -63,43 +63,21 @@ html, body {
   overflow-x: hidden;
 }
 
-
-/* Conteneur qui contient toutes les publications */
-.carousel-wrapper {
-  display: flex; /* Alignement horizontal des publications */
-  transition: transform 1s ease-in-out; /* Animation fluide du slide */
-  position: relative;
-  width: 100%;
-  margin: 0 auto;
-  overflow: hidden; /* Cache les publications en dehors du conteneur */
-  background-color: #f0f0f0; /* Fond gris clair */
-  padding: 40px; /* Optionnel : ajoute de l'espace autour du carousel */
-}
-
-/* Centrer les posts dans chaque cellule */
+/*carousel actualite page d'accueil*/
 .carousel-cell {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 500px; /* Limiter la largeur des posts */
-  margin: 0 10px;
-  box-sizing: border-box;
+  width: 400px;
+  /* Largeur fixe pour chaque cellule */
+  height: 450px;
+  /* Hauteur fixe pour chaque cellule */
+  
 }
 
-/* Définir la taille des posts Facebook */
 .fb-post {
-  width: 90%; /* Utiliser toute la largeur de la cellule */
-  height: auto; /* La hauteur s'ajustera automatiquement */
-  box-sizing: border-box;
+  width: 100px;
 }
 
 
-
-
-
-
-/*bouton télécharger*/
+/*bouton télécharger page inscription*/
 .botao {
   width: 125px;
   height: 45px;
@@ -193,7 +171,7 @@ html, body {
 }
 
 
-/* boutton envoyer contact*/
+/* boutton envoyer page contact*/
 .button-container {
   display: flex;
   justify-content: center;
@@ -263,10 +241,8 @@ html, body {
   }
 }
 
-
-/*boutton reseaux layout*/
-
 /* Footer général */
+/*boutton reseaux layout*/
 .footer-section {
   background-color: rgb(29, 34, 67);
   color: white;
@@ -296,8 +272,7 @@ html, body {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Boutons réseaux sociaux */
-/* Footer général */
+
 .footer-section {
   background-color: rgb(29, 34, 67);
   color: white;
@@ -391,7 +366,7 @@ html, body {
 
 
 
-/* Style du bouton Modifier inscription*/
+/* Style du bouton Modifier page inscription*/
 #bouton-modifier-inscription {
   padding: 0.5rem 1.5rem;
   font-size: 1rem;
@@ -497,59 +472,15 @@ html, body {
   opacity: 1;
 }
 
-.custom-overlay h5 {
-  font-family: 'Anton', sans-serif;
-  font-size: 24px;
-  text-transform: uppercase;
-}
 
-.carousel-cell {
-  width: 400px;
-  /* Largeur fixe pour chaque cellule */
-  height: 500px;
-  /* Hauteur fixe pour chaque cellule */
-}
-
-.fb-post {
-  width: 100px;
-}
 
 /* Styles pour le formulaire de contact */
+
+
 /* Agrandissement global du formulaire */
 .contact-map {
   max-width: 100%;
 }
-
-
-
-
-.contact-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  /* Aligne les éléments en haut */
-  gap: 2rem;
-  /* Espacement entre le formulaire et l'image */
-  padding: 2em;
-}
-
-.contact-container {
-  flex: none;
-  /* Empêche le formulaire de s'étirer automatiquement */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5em;
-  background-color: #1D2243;
-  border-radius: 25px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  /* Augmente la largeur maximale du formulaire */
-  width: 100%;
-  /* Le formulaire s'adapte à la largeur disponible */
-}
-
-
 .contact-form {
   display: flex;
   flex-direction: column;
@@ -635,78 +566,43 @@ html, body {
 }
 
 
-/* Bouton de suppression */
+
+.contact-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* Aligne les éléments en haut */
+  gap: 2rem;
+  /* Espacement entre le formulaire et l'image */
+  padding: 2em;
+}
+
+.contact-container {
+  flex: none;
+  /* Empêche le formulaire de s'étirer automatiquement */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5em;
+  background-color: #1D2243;
+  border-radius: 25px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  /* Augmente la largeur maximale du formulaire */
+  width: 100%;
+  /* Le formulaire s'adapte à la largeur disponible */
+}
+
+/* Bouton de suppression page association */
 .btn-danger {
   font-size: 0.85rem;
   text-transform: uppercase;
   padding: 5px 10px;
 }
 
-/*bouton modifier*/
 
-.edit-button {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: #1D2243;
-  border: none;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: #1D2243;
-  cursor: pointer;
-  transition-duration: 0.3s;
-  overflow: hidden;
-  position: relative;
-  text-decoration: none !important;
-}
 
-.edit-svgIcon {
-  width: 17px;
-  transition-duration: 0.3s;
-}
-
-.edit-svgIcon path {
-  fill: white;
-}
-
-.edit-button:hover {
-  width: 120px;
-  border-radius: 50px;
-  transition-duration: 0.3s;
-  background-color: rgba(129, 161, 208, 1);
-  align-items: center;
-}
-
-.edit-button:hover .edit-svgIcon {
-  width: 20px;
-  transition-duration: 0.3s;
-  transform: translateY(60%);
-  -webkit-transform: rotate(360deg);
-  -moz-transform: rotate(360deg);
-  -o-transform: rotate(360deg);
-  -ms-transform: rotate(360deg);
-  transform: rotate(360deg);
-}
-
-.edit-button::before {
-  display: none;
-  content: attr(data-text);
-  color: white;
-  transition-duration: 0.3s;
-  font-size: 2px;
-}
-
-.edit-button:hover::before {
-  display: block;
-  padding-right: 10px;
-  font-size: 13px;
-  opacity: 1;
-  transform: translateY(0px);
-  transition-duration: 0.3s;
-}
-/* Conteneur principal du carousel */
+/* Conteneur principal du carousel page calendrier */
 .carousel-container {
   position: relative;
   height: 500px; /* Fixe la hauteur du carousel */

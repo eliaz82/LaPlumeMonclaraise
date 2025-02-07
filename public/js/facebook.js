@@ -188,26 +188,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Récupération des données de l'association
     fetch(getAssociationDataUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Erreur lors de la récupération des données.");
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.adresse) {
-                const adresseInput = document.getElementById("adresse");
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Erreur lors de la récupération des données.");
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.adresse) {
+            // Mise à jour du champ input dans le formulaire
+            const adresseInput = document.getElementById("adresse");
+            if (adresseInput) {
                 adresseInput.value = data.adresse;
                 adresseInput.dispatchEvent(new Event("input"));
             }
-            if (data.latitude) {
-                document.getElementById("latitude").value = data.latitude;
-            }
-            if (data.longitude) {
-                document.getElementById("longitude").value = data.longitude;
-            }
-        })
-        .catch(error => console.error("Erreur lors de la récupération des données de localisation :", error));
+
+            // Mise à jour de tous les éléments affichant l'adresse
+            document.querySelectorAll(".adresseDisplay").forEach(el => {
+                el.textContent = data.adresse;
+            });
+        }
+        if (data.latitude) {
+            document.getElementById("latitude").value = data.latitude;
+        }
+        if (data.longitude) {
+            document.getElementById("longitude").value = data.longitude;
+        }
+    })
+    .catch(error => console.error("Erreur lors de la récupération des données de localisation :", error));
+
 
     // -------------------------------
     // Bouton "Back to Top"
