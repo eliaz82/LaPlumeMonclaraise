@@ -42,7 +42,7 @@
           ?>
           <p>
             <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
-            <i class="bi bi-envelope"></i> Email : contact@club.fr<br>
+            <i class="bi bi-envelope"></i> Email : <span class="emailDisplay">contact@club.fr</span><br>
             <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
           </p>
 
