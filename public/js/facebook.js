@@ -268,4 +268,36 @@ $(document).ready(function () {
             }
         });
     });
+
+    // ----------------------------------------------
+    // Gestion du bouton on/off fichierInscription
+    // ----------------------------------------------
+    fetch(getFichierInscriptionEtatUrl)
+        .then(response => response.json())
+        .then(data => {
+            let switchInput = document.getElementById("switchFichierInscription");
+            let switchLabel = document.getElementById("switchLabel");
+
+            if (switchInput && switchLabel) {
+                switchInput.checked = (data.etat == 1);
+                switchLabel.textContent = (data.etat == 1) ? "Activé" : "Désactivé";
+            }
+        })
+        .catch(error => console.error("Erreur lors de la récupération de l'état :", error));
+});
+
+// Modification du switch avec AJAX
+document.getElementById("switchFichierInscription")?.addEventListener("change", function () {
+    let etat = this.checked ? 1 : 0;
+    let switchLabel = document.getElementById("switchLabel");
+
+    if (switchLabel) {
+        switchLabel.textContent = this.checked ? "Activé" : "Désactivé";
+    }
+
+    fetch(updateFichierInscriptionEtatUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ etat: etat })
+    }).catch(error => console.error("Erreur lors de la mise à jour :", error));
 });

@@ -13,16 +13,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Flickity CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flickity@2.2.2/dist/flickity.min.css">
 
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
-
-
-
 </head>
 
 <style>
@@ -72,9 +67,6 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= url_to('fichierInscription') ?>">Inscription</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="<?= url_to('contact') ?>">Contact</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -106,10 +98,14 @@
 <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
+            <!-- En-tête de la modal -->
             <div class="modal-header">
-                <h5 class="modal-title" id="settingsModalLabel"><i class="bi bi-gear"></i> Paramètres</h5>
+                <h5 class="modal-title" id="settingsModalLabel">
+                    <i class="bi bi-gear"></i> Paramètres
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
             </div>
+            <!-- Corps de la modal -->
             <div class="modal-body">
                 <!-- Onglets de navigation -->
                 <ul class="nav nav-tabs" id="settingsTab" role="tablist">
@@ -119,11 +115,17 @@
                             <i class="bi bi-key"></i> Token d'Accès
                         </button>
                     </li>
-                    </li>
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="hashtags-tab" data-bs-toggle="tab" data-bs-target="#hashtags"
                             type="button" role="tab" aria-controls="hashtags" aria-selected="false">
                             <i class="bi bi-hash"></i> Hashtags
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="fichier-inscription-tab" data-bs-toggle="tab"
+                            data-bs-target="#fichier-inscription" type="button" role="tab"
+                            aria-controls="fichier-inscription" aria-selected="false">
+                            <i class="bi bi-file-earmark-text"></i> Fichier Inscription
                         </button>
                     </li>
                 </ul>
@@ -132,7 +134,9 @@
                 <div class="tab-content mt-3" id="settingsTabContent">
                     <!-- Gestion du Token -->
                     <div class="tab-pane fade show active" id="token" role="tabpanel" aria-labelledby="token-tab">
-                        <h4><i class="bi bi-shield-lock"></i> Gestion du Token d'Accès</h4>
+                        <h4>
+                            <i class="bi bi-shield-lock"></i> Gestion du Token d'Accès
+                        </h4>
                         <div class="alert alert-info">
                             <strong>Temps restant avant expiration :</strong>
                             <span id="tokenCountdown">Calcul en cours...</span>
@@ -142,11 +146,11 @@
                         </button>
                     </div>
 
-
                     <!-- Gestion des Hashtags -->
                     <div class="tab-pane fade" id="hashtags" role="tabpanel" aria-labelledby="hashtags-tab">
-                        <h4><i class="bi bi-tags"></i> Gestion des Hashtags</h4>
-
+                        <h4>
+                            <i class="bi bi-tags"></i> Gestion des Hashtags
+                        </h4>
                         <!-- Sélection de la page -->
                         <label for="pageSelect" class="form-label">Choisir une page :</label>
                         <select id="pageSelect" class="form-select mb-3">
@@ -154,7 +158,6 @@
                             <option value="albumsphoto">Albums Photo</option>
                             <option value="faitmarquant">Fait Marquant</option>
                         </select>
-
                         <!-- Ajout de hashtag -->
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport"
@@ -163,7 +166,6 @@
                                 <i class="bi bi-plus-lg"></i> Ajouter
                             </button>
                         </div>
-
                         <!-- Liste des hashtags -->
                         <ul class="list-group" id="hashtagList">
                             <?php if (isset($hashtags)): ?>
@@ -179,10 +181,23 @@
                             <?php endif; ?>
                         </ul>
                     </div>
+                    <!-- Gestion du Fichier d'Inscription -->
+                    <div class="tab-pane fade" id="fichier-inscription" role="tabpanel"
+                        aria-labelledby="fichier-inscription-tab">
+                        <h4>
+                            <i class="bi bi-file-earmark-check"></i> Fichier d'Inscription
+                        </h4>
+                        <!-- Switch ON/OFF pour activer/désactiver l'affichage du fichier d'inscription -->
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="switchFichierInscription">
+                            <label class="form-check-label" for="switchFichierInscription" id="switchLabel">
+                                Chargement...
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <!-- Footer -->
+            <!-- Footer de la modal -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="bi bi-x-lg"></i> Fermer
@@ -191,6 +206,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 
 
@@ -326,6 +344,8 @@
     const loginUrl = "<?= site_url('facebook/login') ?>";
     const getEmailReceptionUrl = "<?= route_to('getEmailReception') ?>";
     const getAssociationDataUrl = "<?= route_to('getAssociationData') ?>";
+    const getFichierInscriptionEtatUrl = "<?= base_url('getFichierInscriptionEtat') ?>";
+    const updateFichierInscriptionEtatUrl = "<?= base_url('updateFichierInscriptionEtat') ?>";
 </script>
 
 
@@ -467,7 +487,8 @@
             <div class="footer-contact col-md-4">
                 <h5>Contact</h5>
                 <p>
-                    <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
+                    <i class="bi bi-geo-alt"></i> Adresse : <span
+                        class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
                     <i class="bi bi-envelope"></i> Email : <span class="emailDisplay">contact@club.fr</span><br>
                     <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
                 </p>

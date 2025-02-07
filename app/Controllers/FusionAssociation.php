@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class FusionAssociation extends BaseController
 {
-
+    private $associationModel;
     private $partenairesModel;
     private $adherantsModel;
 
@@ -12,15 +12,19 @@ class FusionAssociation extends BaseController
     {
         $this->adherantsModel = model('Adherants');
         $this->partenairesModel = model('Partenaires');
+        $this->associationModel = model('Association');
+
     }
     public function association()
     {
         $equipes = $this->adherantsModel->findAll();
         $partenaire = $this->partenairesModel->findAll();
-    
+        $association = $this->associationModel->find(1);
+
         return view('association', [
             'equipes' => $equipes,
             'partenaire' => $partenaire,
+            'association' => $association,
         ]);
     }
 

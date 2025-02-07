@@ -68,9 +68,11 @@ class Association extends Controller
     public function fichierInscription()
     {
         $association = $this->associationModel->find(1);
-        $fichierInscription = $association['fichierInscription'];
-
-        return view('inscription', ['fichierInscription' => $fichierInscription]);
+        $data = [
+            'fichierInscription' => $association['fichierInscription'],
+            'inscriptionsClosed' => ($association['fichierInscriptionVisible'] == 0)
+        ];
+        return view('inscription', $data);
     }
 
 
@@ -98,6 +100,27 @@ class Association extends Controller
             'fichierInscription' => $fileUrl
         ]);
         return redirect()->route('fichierInscription')->with('success', 'Le fichier a été téléversez avec succès.');
+    }
+    public function getFichierInscriptionEtat()
+    {
+        // Récupère l'enregistrement avec l'ID 1
+        $association = $this->associationModel->find(1);
+        // On suppose que la colonne s'appelle "fichierInscriptionVisible"
+        // Par défaut, si elle n'existe pas, on considère TRUE (1)
+        $etat = isset($association['fichierInscriptionVisible']) ? $association['fichierInscriptionVisible'] : 1;
+
+        return $this->response->setJSON(['etat' => $etat]);
+    }
+
+    public function updateFichierInscriptionEtat()
+    {
+        $json = $this->request->getJSON();
+        $etat = $json->etat; // Attendu : 1 (activé) ou 0 (désactivé)
+
+        // Met à jour l'enregistrement (ID 1) avec la nouvelle valeur
+        $this->associationModel->update(1, ['fichierInscriptionVisible' => $etat]);
+
+        return $this->response->setJSON(['status' => 'success']);
     }
     public function contactUpdate()
     {

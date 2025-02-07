@@ -20,6 +20,10 @@ $routes->get('fichier-inscription', 'Association::fichierInscription', ['as' => 
 $routes->post('fichierInscription-submit', 'Association::fichierInscriptionSubmit', ['as' => 'fichierInscriptionSubmit']);
 $routes->get('download/(:any)', 'Association::downloadFichier/$1');
 
+$routes->get('getFichierInscriptionEtat', 'Association::getFichierInscriptionEtat');
+$routes->post('updateFichierInscriptionEtat', 'Association::updateFichierInscriptionEtat');
+
+
 // ------------------------------------------- FusionAssociation -------------------------------------------
 $routes->get('association', 'FusionAssociation::association', ['as' => 'FusionAssociation']);
 // ------------------------------------------- histoire -------------------------------------------
