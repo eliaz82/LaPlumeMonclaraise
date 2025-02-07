@@ -180,11 +180,22 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch(getEmailReceptionUrl)
         .then(response => response.json())
         .then(data => {
-            if (data.emailContact && emailReceptionInput) {
-                emailReceptionInput.value = data.emailContact;
+            if (data.emailContact) {
+                // Pré-remplissage du champ input dans le formulaire
+                const mailContactInput = document.getElementById("mailContact");
+                if (mailContactInput) {
+                    mailContactInput.value = data.emailContact;
+                    mailContactInput.dispatchEvent(new Event("input")); // Déclenche un éventuel écouteur d'événements
+                }
+
+                // Mise à jour de tous les affichages de l'email
+                document.querySelectorAll(".emailDisplay").forEach(el => {
+                    el.textContent = data.emailContact;
+                });
             }
         })
         .catch(error => console.error("Erreur AJAX:", error));
+
 
     // Récupération des données de l'association
     fetch(getAssociationDataUrl)
@@ -196,9 +207,17 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(data => {
             if (data.adresse) {
+                // Mise à jour du champ input dans le formulaire
                 const adresseInput = document.getElementById("adresse");
-                adresseInput.value = data.adresse;
-                adresseInput.dispatchEvent(new Event("input"));
+                if (adresseInput) {
+                    adresseInput.value = data.adresse;
+                    adresseInput.dispatchEvent(new Event("input"));
+                }
+
+                // Mise à jour de tous les éléments affichant l'adresse
+                document.querySelectorAll(".adresseDisplay").forEach(el => {
+                    el.textContent = data.adresse;
+                });
             }
             if (data.latitude) {
                 document.getElementById("latitude").value = data.latitude;
@@ -208,6 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
         .catch(error => console.error("Erreur lors de la récupération des données de localisation :", error));
+
 
     // -------------------------------
     // Bouton "Back to Top"

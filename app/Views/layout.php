@@ -467,8 +467,8 @@
             <div class="footer-contact col-md-4">
                 <h5>Contact</h5>
                 <p>
-                    <i class="bi bi-geo-alt"></i> Adresse : Esplanade du Lac, 82230 Monclar-de-Quercy<br>
-                    <i class="bi bi-envelope"></i> Email : laplumemonclaraise.outlook.com<br>
+                    <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
+                    <i class="bi bi-envelope"></i> Email : <span class="emailDisplay">contact@club.fr</span><br>
                     <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
                 </p>
                 <!-- Boutons réseaux sociaux -->

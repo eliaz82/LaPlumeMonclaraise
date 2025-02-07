@@ -80,7 +80,7 @@
             column-count: 3;
             column-gap: 15px;
             padding: 20px;
-            background: linear-gradient(120deg, #00bcd4, #3f51b5);
+            background:rgb(219, 219, 219);
             /* Gris clair avec blanc */
         }
 
