@@ -3,24 +3,20 @@
 
 <!-- Vos styles personnalisés -->
 <style>
+    /* Style général de la carte */
     .card {
         transition: transform 0.3s ease;
         border: none;
-        /* Supprimer la bordure de la carte pour un rendu plus moderne */
         border-radius: 10px;
-        /* Bordures arrondies pour la carte */
         overflow: hidden;
-        /* Assure que l'image ne déborde pas */
         display: flex;
         flex-direction: column;
         height: 100%;
-        /* Assurer que les cartes aient une hauteur flexible */
         background-color: #fff;
     }
 
     .card:hover {
         transform: translateY(-5px);
-        /* Effet de survol */
         box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
     }
 
@@ -41,9 +37,9 @@
 
     .full-text {
         display: none;
-        /* Caché par défaut */
     }
 
+    /* Bouton par défaut */
     .btn-primary {
         background-color: #2980b9;
         border-color: #2980b9;
@@ -54,38 +50,78 @@
         border-color: #3498db;
     }
 
+    /* Conteneur des boutons d'action */
+    .action-buttons {
+        display: flex;
+        gap: 10px;
+        /* Espace entre les boutons */
+        margin-top: 10px;
+    }
+
+    /* Assurer que tous les boutons ont la même taille */
+    .action-buttons>* {
+        flex: 1;
+    }
+
+    .btn-primary,
+    .btn-warning,
+    .btn-danger {
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover,
+    .btn-warning:hover,
+    .btn-danger:hover {
+        background-color: #0056b3;
+        transform: scale(1.1);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+    }
+
+    .btn-warning {
+        background-color: #ffc107;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+    }
+
+    /* Bouton "Ouvrir sur Facebook" */
+    .btn-facebook {
+        background-color: #3b5998;
+        color: white;
+        border: none;
+    }
+
+    .btn-facebook:hover {
+        background-color: #2d4373;
+    }
+
+
     /* Cadrage de l'image dans la carte */
     .card-img-top {
         width: 100%;
-        /* S'assurer que l'image prend toute la largeur */
         height: 200px;
-        /* Hauteur fixe */
         object-fit: cover;
-        /* Couvre toute la surface sans déformer l'image */
         object-position: center center;
-        /* Centrer l'image */
         border-top-left-radius: 10px;
-        /* Bordures arrondies en haut à gauche */
         border-top-right-radius: 10px;
-        /* Bordures arrondies en haut à droite */
     }
 
-    /* Style pour limiter la taille de l'image dans le modal */
     .modal-image {
         max-height: 150px;
-        /* Ajustez cette valeur selon vos besoins */
         object-fit: cover;
         width: 100%;
     }
 
-    /* Pour améliorer l'apparence de la carte dans une colonne */
+    /* Divers styles */
     .col-md-4 {
         justify-content: center;
         margin-bottom: 30px;
-        /* Espacement entre les cartes */
     }
 
-    /* Style pour les messages sans image */
     .no-image {
         text-align: center;
         font-style: italic;
@@ -93,25 +129,20 @@
         padding: 20px 0;
     }
 
-    /* Pour la grille responsive */
     @media (max-width: 768px) {
         .col-md-4 {
             flex: 0 0 50%;
-            /* 2 cartes par ligne sur les écrans plus petits */
         }
     }
 
     @media (max-width: 576px) {
         .col-md-4 {
             flex: 0 0 100%;
-            /* 1 carte par ligne sur les petits écrans */
         }
     }
 
-    /* Ajustement pour les cartes avec plus de contenu */
     .card-body {
         flex-grow: 1;
-        /* Permet à la carte de grandir pour remplir l'espace */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -121,24 +152,67 @@
         border: 2px solid #ff9800;
         box-shadow: 0 0 10px rgba(255, 152, 0, 0.8);
     }
-
-    /* (Optionnel) Pour forcer une hauteur uniforme dans la rangée,
-       vous pouvez garder align-items: stretch sur le conteneur .row.
-       Sinon, retirez ou adaptez cette règle. */
-    .row {
-        /* Par défaut Bootstrap aligne en stretch, donc on peut omettre ou ajuster cette règle */
-    }
 </style>
 
+<!-- Bouton pour ouvrir le modal d'ajout d'événement -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">
+    Ajouter un événement
+</button>
+
+<!-- Modal d'ajout d'événement -->
+<div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary" id="addEventModalLabel">Ajouter un événement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <form action="<?= esc(url_to('createEvenement')) ?>" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="titre" class="form-label">Titre de l'événement</label>
+                        <input type="text" class="form-control" id="titre" name="titre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date de l'événement</label>
+                        <input type="date" class="form-control" id="date" name="date" required
+                            value="<?= date('Y-m-d') ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label for="createImage" class="form-label">Image (optionnel)</label>
+                        <input type="file" class="form-control" id="createImage" name="image"
+                            onchange="previewImage(event, 'createImagePreview')">
+                    </div>
+                    <!-- Prévisualisation de l'image -->
+                    <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                        <img id="createImagePreview" src="" alt="Aperçu de l'image"
+                            style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Affichage des événements -->
 <div class="container mt-5">
     <div class="row">
         <?php if (!empty($posts)): ?>
             <?php foreach ($posts as $index => $post): ?>
                 <?php
-                // Vérifier si l'événement doit être mis en valeur
-                $isHighlighted = (isset($highlightId) && $highlightId === $post['id']);
+                // Identification et mise en valeur d'un événement particulier
+                $postId = $post['id'] ?? $post['idEvenement'] ?? null;
+                $isHighlighted = (isset($highlightId) && $highlightId == $postId);
 
-                // Récupérer le message et déterminer s'il dépasse 100 caractères
+                // Détermination du texte court et complet
                 $message = $post['message'];
                 if (mb_strlen($message) > 100) {
                     $shortText = mb_substr($message, 0, 100);
@@ -149,36 +223,46 @@
                 }
                 ?>
                 <div class="col-md-4 col-12 mb-4">
-                    <div class="card shadow-sm <?= esc($isHighlighted ? 'highlight' : '') ?>" <?= esc($isHighlighted ? 'id="highlightedEvent"' : '') ?>>
-                        <?php if (!empty($post['image'])): ?>
-                            <img src="<?= esc($post['image']) ?>" alt="Image de l'événement" class="card-img-top">
+                    <div class="card shadow-sm <?= $isHighlighted ? 'highlight' : '' ?>" <?= $isHighlighted ? 'id="highlightedEvent"' : '' ?>>
+                        <?php
+                        $imageUrl = isset($post['image']) ? $post['image'] : null;
+                        if ($imageUrl && !str_starts_with($imageUrl, 'http')) {
+                            $imageUrl = base_url($imageUrl);
+                        }
+                        ?>
+                        <?php if (!empty($imageUrl)): ?>
+                            <img src="<?= esc($imageUrl) ?>" alt="Image de l'événement" class="card-img-top">
                         <?php else: ?>
                             <div class="no-image">Pas d'image disponible</div>
                         <?php endif; ?>
                         <div class="card-body">
                             <h5 class="card-title"><?= esc($post['titre']) ?></h5>
-                            <p class="event-status <?= esc($post['status'] === 'Événement passé' ? 'text-danger' : 'text-success') ?>">
+                            <p
+                                class="event-status <?= esc($post['status'] === 'Événement passé' ? 'text-danger' : 'text-success') ?>">
                                 <?= esc($post['status']) ?>
                             </p>
                             <div class="card-text">
-                                <!-- Affichage du texte court -->
                                 <span class="short-text">
                                     <?= nl2br(esc($shortText)) ?>
                                     <?= ($displayToggle ? '...' : '') ?>
                                 </span>
                                 <?php if ($displayToggle): ?>
-                                    <!-- Texte complet caché, qui servira à alimenter le modal -->
                                     <span class="full-text">
                                         <?= nl2br(esc($message)) ?>
                                     </span>
-                                    <!-- Bouton pour ouvrir le modal -->
                                     <button class="toggle-text btn btn-link p-0">Voir plus</button>
                                 <?php endif; ?>
                             </div>
+                            <div class="action-buttons">
+                                <?php if (isset($post['permalink_url'])): ?>
+                                    <a href="<?= esc($post['permalink_url']) ?>" class="btn btn-facebook" target="_blank">
+                                        Ouvrir sur Facebook
+                                    </a>
+                                <?php else: ?>
+                                 
+                                <?php endif; ?>
+                            </div>
 
-                            <a href="<?= esc($post['permalink_url']) ?>" class="btn btn-primary" target="_blank">
-                                Ouvrir sur Facebook
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -191,7 +275,7 @@
     </div>
 </div>
 
-<!-- Modal Bootstrap pour afficher l'image et le contenu complet -->
+<!-- Modal d'affichage du message complet -->
 <div class="modal fade" id="fullMessageModal" tabindex="-1" aria-labelledby="fullMessageModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -206,50 +290,79 @@
     </div>
 </div>
 
-<!-- Script pour ouvrir le modal au clic sur "Voir plus" -->
+<!-- Modal de modification d'événement -->
+<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-primary" id="editEventModalLabel">Modifier l'événement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <form action="<?= esc(url_to('updateEvenement')) ?>" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="idEvenement" id="editEventId">
+                    <div class="mb-3">
+                        <label for="editTitre" class="form-label">Titre</label>
+                        <input type="text" class="form-control" id="editTitre" name="titre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMessage" class="form-label">Message</label>
+                        <textarea class="form-control" id="editMessage" name="message" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDate" class="form-label">Date de l'événement</label>
+                        <input type="date" class="form-control" id="editDate" name="date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editImage" class="form-label">Image (optionnel)</label>
+                        <input type="file" class="form-control" id="editImage" name="image"
+                            onchange="previewImage(event, 'editImagePreview')">
+                    </div>
+                    <!-- Prévisualisation de l'image -->
+
+                    <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                        <img id="editImagePreview" src="" alt="Aperçu de l'image"
+                            style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Script pour afficher le modal "Voir plus" -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Créer une instance du modal (Bootstrap 5)
+    document.addEventListener("DOMContentLoaded", function () {
         const modalElement = document.getElementById('fullMessageModal');
         const modal = new bootstrap.Modal(modalElement);
 
-        // Ajouter un écouteur d'événement sur chaque bouton "Voir plus"
         document.querySelectorAll(".toggle-text").forEach(button => {
-            button.addEventListener("click", function() {
-                // Récupérer le conteneur parent .card-text
-                let cardText = this.closest(".card-text");
-                // Récupérer le contenu complet depuis la span .full-text
-                let fullText = cardText.querySelector(".full-text").innerHTML;
-
-                // Récupérer la carte parente pour extraire l'image
-                let card = this.closest('.card');
-                let cardImageElement = card.querySelector('img.card-img-top');
+            button.addEventListener("click", function () {
+                const cardText = this.closest(".card-text");
+                const fullText = cardText.querySelector(".full-text").innerHTML;
+                const card = this.closest('.card');
+                const cardImageElement = card.querySelector('img.card-img-top');
                 let modalContent = '';
 
-                // Si l'image existe, l'ajouter en haut du contenu du modal
                 if (cardImageElement) {
                     modalContent += `<img src="${cardImageElement.src}" alt="${cardImageElement.alt}" class="img-fluid mb-3 modal-image">`;
                 }
-
-                // Ajouter ensuite le texte complet
                 modalContent += fullText;
-
-                // Insérer le contenu dans le body du modal
                 modalElement.querySelector(".modal-body").innerHTML = modalContent;
-
-                // Afficher le modal
                 modal.show();
             });
         });
-        // Si un événement est mis en valeur, défiler jusqu'à lui
+
         const highlighted = document.getElementById('highlightedEvent');
         if (highlighted) {
-            highlighted.scrollIntoView({
-                behavior: 'smooth',
-                block: 'center'
-            });
+            highlighted.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
 </script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<?= script_tag('js/form-modifications.js') ?>
 <?= $this->endSection() ?>

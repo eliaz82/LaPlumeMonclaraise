@@ -42,7 +42,7 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const calendarEl = document.getElementById('calendar');
         const carousel = document.querySelector('.carousel');
         const today = new Date();
@@ -95,7 +95,7 @@
                 postEl.appendChild(img);
 
                 // Ajoute l'événement de clic pour zoomer sur l'image
-                img.addEventListener('click', function() {
+                img.addEventListener('click', function () {
                     zoomImage(this.src); // Appelle la fonction de zoom avec l'image cliquée
                 });
             }
@@ -159,20 +159,20 @@
         }
 
         // Boutons de défilement (avec animation)
-        scrollUpButton.addEventListener('click', function() {
+        scrollUpButton.addEventListener('click', function () {
             currentIndex--;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
-        scrollDownButton.addEventListener('click', function() {
+        scrollDownButton.addEventListener('click', function () {
             currentIndex++;
             updateCarouselPosition();
             setTimeout(adjustIndexIfNeeded, 350);
         });
 
         // Gestion du clic sur un post du carousel
-        carousel.addEventListener('click', function(e) {
+        carousel.addEventListener('click', function (e) {
             let target = e.target;
 
             // Vérifier si le clic provient du bouton "Lire plus"
@@ -202,35 +202,42 @@
                     posts[count + origIdx].classList.add('highlight');
                 }
 
-                const postDate = target.getAttribute('data-date');
+                const postDate = target.getAttribute('data-date'); // Récupère la date du post
+
                 if (postDate) {
-                    const parts = postDate.split('/');
-                    if (parts.length === 3) {
-                        const formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
-                        calendar.changeView('dayGridMonth', formattedDate);
-                        calendar.gotoDate(formattedDate);
-                        highlightDayInCalendar(formattedDate);
+                    // Vérifie si la date est déjà au format YYYY-MM-DD
+                    let formattedDate = postDate;
+                    if (!formattedDate.includes('-')) {
+                        // Si la date est au format DD/MM/YYYY, la convertir en YYYY-MM-DD
+                        const parts = formattedDate.split('/');
+                        if (parts.length === 3) {
+                            formattedDate = parts[2] + '-' + parts[1] + '-' + parts[0];
+                        }
                     }
+                    // Mettre à jour le calendrier avec la date formatée
+                    calendar.changeView('dayGridMonth', formattedDate);
+                    calendar.gotoDate(formattedDate);
+                    highlightDayInCalendar(formattedDate);
                 }
+
             }
         });
 
-        // Initialisation de FullCalendar
         var events = <?= json_encode($events); ?>;
         events = events.map(event => {
-            const parts = event.start.split('/'); // [jour, mois, année]
-            const formatted = parts[2] + '-' + parts[1] + '-' + parts[0];
-            return {
-                ...event,
-                start: formatted
-            };
+            if (event.start.indexOf('/') !== -1) {
+                const parts = event.start.split('/');
+                if (parts.length === 3) {
+                    event.start = parts[2] + '-' + parts[1] + '-' + parts[0];
+                }
+            }
+            return event;
         });
-
         var calendar = new FullCalendar.Calendar(calendarEl, {
             locale: 'fr',
             initialView: 'dayGridMonth',
             themeSystem: 'bootstrap5',
-            eventDidMount: function(info) {
+            eventDidMount: function (info) {
                 const eventTitle = info.event.title;
                 const titleElement = info.el.querySelector('.fc-event-title');
 
@@ -253,27 +260,32 @@
             events: events,
             eventColor: '#2980b9',
             eventTextColor: '#f5c542',
-            eventClick: function(info) {
-                const clickedDate = info.event.startStr; // Récupère la date de l'événement
+            eventClick: function (info) {
+                const clickedDate = info.event.startStr; // Date de l'événement (YYYY-MM-DD)
+
                 const posts = carousel.querySelectorAll('.post');
                 let foundIndices = [];
 
-                console.log("Événement cliqué :", info.event.title, "| Date :", clickedDate);
-
-                // Recherche des posts correspondant à la date de l'événement
                 posts.forEach((post, index) => {
-                    const postDate = post.getAttribute('data-date');
+                    let postDate = post.getAttribute('data-date'); // Date du post
+
                     if (postDate) {
-                        const parts = postDate.split('/');
-                        if (parts.length === 3) {
-                            const formattedPostDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
-                            if (formattedPostDate === clickedDate) {
-                                foundIndices.push(index);
-                            }
+                        let formattedPostDate = postDate; // Par défaut, on suppose que la date est déjà bien formatée
+
+                        // Vérifier si la date est au format DD/MM/YYYY (et non YYYY-MM-DD)
+                        const regexDMY = /^\d{2}\/\d{2}\/\d{4}$/;
+                        if (regexDMY.test(postDate)) {
+                            // Conversion en format YYYY-MM-DD
+                            const parts = postDate.split('/');
+                            formattedPostDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+                        }
+
+                        // Comparaison avec la date cliquée
+                        if (formattedPostDate === clickedDate) {
+                            foundIndices.push(index);
                         }
                     }
                 });
-
                 if (foundIndices.length > 0) {
                     posts.forEach(post => post.classList.remove('highlight'));
                     foundIndices.forEach(idx => posts[idx].classList.add('highlight'));
@@ -285,35 +297,50 @@
 
                 highlightDayInCalendar(clickedDate);
             },
-            dateClick: function(info) {
+
+            dateClick: function (info) {
                 const clickedDate = info.dateStr; // Format "YYYY-MM-DD"
-                const posts = carousel.querySelectorAll('.post');
+
+                const posts = document.querySelectorAll('.post');
                 let foundIndices = [];
-                // Recherche des posts dont la date correspond
+
                 posts.forEach((post, index) => {
-                    const postDate = post.getAttribute('data-date');
+                    let postDate = post.getAttribute('data-date');
+
                     if (postDate) {
-                        const parts = postDate.split('/');
-                        if (parts.length === 3) {
-                            const formattedPostDate = parts[2] + '-' + parts[1] + '-' + parts[0];
-                            if (formattedPostDate === clickedDate) {
-                                foundIndices.push(index);
+                        let formattedPostDate = postDate; // Par défaut, on suppose que c'est déjà YYYY-MM-DD
+
+                        // Si la date contient '/', c'est du format DD/MM/YYYY => Convertir en YYYY-MM-DD
+                        if (postDate.includes('/')) {
+                            const parts = postDate.split('/');
+                            if (parts.length === 3) {
+                                formattedPostDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
                             }
+                        }
+                        if (formattedPostDate === clickedDate) {
+                            foundIndices.push(index);
                         }
                     }
                 });
+
                 if (foundIndices.length > 0) {
+                    // Supprimer les anciens highlights
                     posts.forEach(post => post.classList.remove('highlight'));
+
+                    // Ajouter le highlight aux posts trouvés
                     foundIndices.forEach(idx => posts[idx].classList.add('highlight'));
+
+                    // Ajuster la position du carousel
                     const origIdx = foundIndices[0] % count;
                     currentIndex = count + origIdx;
                     updateCarouselPosition();
                 }
+
                 highlightDayInCalendar(clickedDate);
             }
+
         });
         calendar.render();
-
         function highlightDayInCalendar(dateStr) {
             document.querySelectorAll('.fc-day').forEach(day => day.classList.remove('highlight'));
             const activeDay = document.querySelector(`.fc-day[data-date='${dateStr}']`);
@@ -321,6 +348,7 @@
                 activeDay.classList.add('highlight');
             }
         }
+
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>

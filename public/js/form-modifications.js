@@ -59,4 +59,27 @@ $(document).ready(function () {
             $('#modifier-date-album').prop('disabled', false);
         }
     });
+    // Pré-remplir le formulaire de modification d'événement
+    $(document).ready(function () {
+        $('.bouton-modifier-evenement').click(function () {
+            const idEvenement = $(this).data('id');
+            const titre = $(this).data('titre');
+            const message = $(this).data('message');
+            const date = $(this).data('date');
+            const image = $(this).data('image');
+
+            // Injecter les données dans les champs du formulaire de manière sécurisée
+            $('#editEventId').val(idEvenement);
+            $('#editTitre').val(titre);
+            $('#editMessage').val(message);
+            $('#editDate').val(date);
+
+            // Prévisualiser l'image si elle existe
+            if (image) {
+                $('#editImagePreview').attr('src', image).show();
+            } else {
+                $('#editImagePreview').hide(); // Cacher l'image si elle n'existe pas
+            }
+        });
+    });
 });

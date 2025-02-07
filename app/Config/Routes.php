@@ -58,6 +58,10 @@ $routes->get('calendrier', 'Calendrier::calendrier', ['as' => 'calendrier']);
 $routes->get('evenement/(:segment)', 'Evenement::evenement/$1');
 $routes->get('evenement', 'Evenement::evenement', ['as' => 'evenement']);
 
+$routes->post('evenement-create', 'Evenement::createEvenement', ['as' => 'createEvenement']);
+$routes->post('evenement-update', 'Evenement::updateEvenement', ['as' => 'updateEvenement']);
+$routes->post('evenement-delete', 'Evenement::evenementDelete', ['as' => 'evenementDelete']);
+
 // ------------------------------------------- faitMarquant -------------------------------------------
 $routes->get('fais-marquant', 'Actualite::actualite', ['as' => 'actualite']);
 $routes->get('fais-marquant/(:num)', 'Actualite::actualite/$1', ['as' => 'actualiteClick']);
