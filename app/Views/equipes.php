@@ -15,8 +15,8 @@
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form id="formulaire-ajouter-adherent" method="post" action="<?= esc(url_to('equipeSubmit'), 'attr') ?>"
-                        enctype="multipart/form-data">
+                    <form id="formulaire-ajouter-adherent" method="post"
+                        action="<?= esc(url_to('equipeSubmit'), 'attr') ?>" enctype="multipart/form-data">
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" id="modalAjouterAdherentLabel">Ajouter un adhérent</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -41,10 +41,9 @@
                                 <label for="photo-adherent" class="form-label">Photo</label>
                                 <input type="file" class="form-control" id="photo-adherent" name="photo"
                                     accept="image/*" onchange="previewImage(event, 'photoPreviewAdherent')">
-                                <div class="text-center mt-3">
+                                <div class="mb-3 d-flex justify-content-center align-items-center text-center">
                                     <img id="photoPreviewAdherent" src="#" alt="Prévisualisation"
-                                        class="img-fluid shadow rounded-circle"
-                                        style="max-width: 150px; display: none;">
+                                        style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
                                 </div>
                             </div>
                         </div>
@@ -68,7 +67,8 @@
                                 style="width: 150px; height: 150px; object-fit: cover;">
                         </div>
                         <div class="card-body text-center">
-                            <h5 class="card-title fw-bold text-primary"><?= esc($e['prenom'] . ' ' . $e['nom'], 'attr') ?></h5>
+                            <h5 class="card-title fw-bold text-primary"><?= esc($e['prenom'] . ' ' . $e['nom'], 'attr') ?>
+                            </h5>
                             <span class="badge bg-secondary"><?= esc($e['grade'], 'attr') ?></span>
                         </div>
                         <div class="card-footer text-center">
@@ -96,8 +96,8 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form id="formulaire-modifier-adherent" method="post" action="<?= esc(url_to('equipeUpdate'), 'attr') ?>"
-                    enctype="multipart/form-data">
+                <form id="formulaire-modifier-adherent" method="post"
+                    action="<?= esc(url_to('equipeUpdate'), 'attr') ?>" enctype="multipart/form-data">
                     <div class="modal-header">
                         <h5 class="modal-title text-primary" id="modalModifierAdherentLabel">Modifier un adhérent</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -121,9 +121,9 @@
                             <label for="modifier-photo-adherent" class="form-label">Photo</label>
                             <input type="file" class="form-control" id="modifier-photo-adherent" name="photo"
                                 accept="image/*" onchange="previewImage(event, 'modifierPhotoPreviewAdherent')">
-                            <div class="text-center mt-3">
-                                <img id="modifierPhotoPreviewAdherent" src="#" alt="Prévisualisation"
-                                    class="img-fluid shadow rounded-circle" style="max-width: 150px; display: none;">
+                            <div class="mb-3 d-flex justify-content-center align-items-center text-center"> <img
+                                    id="modifierPhotoPreviewAdherent" src="#" alt="Prévisualisation"
+                                    style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
                             </div>
                         </div>
                     </div>

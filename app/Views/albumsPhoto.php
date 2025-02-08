@@ -72,11 +72,10 @@
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*"
                             onchange="previewImage(event, 'photoPreview')" required>
                     </div>
-
                     <!-- Prévisualisation de la photo -->
-                    <div class="text-center mb-3">
-                        <img id="photoPreview" src="#" alt="Prévisualisation" class="img-fluid rounded-circle shadow"
-                            style="max-width: 150px; display: none;">
+                    <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                        <img id="photoPreview" src="#" alt="Prévisualisation"
+                            style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -142,15 +141,15 @@
     </div>
 </div>
 <script>
-function confirmerSuppression(form, facebookPostUrl) {
-    if (facebookPostUrl) {
-        if (confirm("Cet album provient de Facebook. Vous devez d'abord le supprimer sur Facebook, puis ici pour qu'il soit complètement supprimé.\n\nVoulez-vous aller sur le post Facebook ?")) {
-            window.open(facebookPostUrl, "_blank");
+    function confirmerSuppression(form, facebookPostUrl) {
+        if (facebookPostUrl) {
+            if (confirm("Cet album provient de Facebook. Vous devez d'abord le supprimer sur Facebook, puis ici pour qu'il soit complètement supprimé.\n\nVoulez-vous aller sur le post Facebook ?")) {
+                window.open(facebookPostUrl, "_blank");
+            }
+            return false;
         }
-        return false;
+        return confirm("Êtes-vous sûr de vouloir supprimer cet album photo ?");
     }
-    return confirm("Êtes-vous sûr de vouloir supprimer cet album photo ?");
-}
 </script>
 <style>
     .facebook-overlay-icon {
@@ -270,10 +269,10 @@ function confirmerSuppression(form, facebookPostUrl) {
                         <label for="modifier-photo-album" class="form-label">Photo</label>
                         <input type="file" class="form-control" id="modifier-photo-album" name="photo" accept="image/*"
                             onchange="previewImage(event, 'modifierPhotoPreviewAlbum')">
-                        <div class="text-center mt-3">
-                            <img id="modifierPhotoPreviewAlbum" src="#" alt="Prévisualisation"
-                                class="img-fluid shadow rounded-circle" style="max-width: 150px; display: none;">
-                        </div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                        <img id="modifierPhotoPreviewAlbum" src="#" alt="Prévisualisation"
+                            style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
                     </div>
                 </div>
                 <div class="modal-footer">

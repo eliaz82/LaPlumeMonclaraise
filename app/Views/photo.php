@@ -34,11 +34,10 @@
                             <input type="file" class="form-control" id="photo" name="photo" accept="image/*"
                                 onchange="previewImage(event, 'photoPreview')" required>
                         </div>
-
                         <!-- Prévisualisation de la photo -->
-                        <div class="text-center mb-3">
+                        <div class="mb-3 d-flex justify-content-center align-items-center text-center">
                             <img id="photoPreview" src="#" alt="Prévisualisation"
-                                class="img-fluid rounded-circle shadow" style="max-width: 150px; display: none;">
+                                style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -80,7 +79,7 @@
             column-count: 3;
             column-gap: 15px;
             padding: 20px;
-            background:rgb(219, 219, 219);
+            background: rgb(219, 219, 219);
             /* Gris clair avec blanc */
         }
 
@@ -212,7 +211,7 @@
             }
         }
     </style>
-    
+
     <!-- Conteneur pour l'image agrandie (style simple) -->
     <div id="zoom-container" class="zoom-container">
         <span id="close-zoom" class="close" onclick="closeZoom()">X</span>

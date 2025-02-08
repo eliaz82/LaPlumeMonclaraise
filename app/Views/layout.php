@@ -290,9 +290,9 @@
                     <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
                         <h5 class="text-primary"><i class="bi bi-image"></i> Gestion du Logo</h5>
                         <!-- Aperçu du logo -->
-                        <div class="mb-3 text-center">
-                            <img id="logoPreview" src="<?= base_url(getAssociationLogo()); ?>"
-                                class="img-fluid rounded shadow" alt="Logo actuel" style="max-width: 200px;">
+                        <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                            <img id="logoPreview" src="<?= base_url(getAssociationLogo()); ?>" alt="Logo actuel"
+                                style="max-width: 80%; max-height: 200px; border-radius: 8px; object-fit: cover; padding: 5px;">
                         </div>
                         <!-- Formulaire d'upload -->
                         <form id="logoForm" method="post" action="<?= url_to('logoUpdate') ?>"

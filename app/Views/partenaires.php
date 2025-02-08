@@ -65,11 +65,11 @@
                             <div class="mb-3">
                                 <label for="logo" class="form-label">Logo</label>
                                 <input type="file" class="form-control" id="logo" name="logo" accept="image/*"
-                                    onchange="previewImage(event, 'logoPreview')">
+                                    onchange="previewImage(event, 'logoPreviewAjout')">
                             </div>
-                            <div class="text-center mb-3">
-                                <img id="logoPreview" src="#" alt="Prévisualisation"
-                                    class="img-fluid rounded-circle shadow" style="max-width: 150px; display: none;">
+                            <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                                <img id="logoPreviewAjout" src="#" alt="Prévisualisation"
+                                    style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
                             </div>
                             <div class="mb-3">
                                 <label for="info" class="form-label">Informations de texte</label>
@@ -108,11 +108,10 @@
                                 <label for="modifier-logo" class="form-label">Logo</label>
                                 <input type="file" class="form-control" id="modifier-logo" name="logo" accept="image/*"
                                     onchange="previewImage(event, 'modifierLogoPreview')">
-                                <div class="text-center mt-3">
-                                    <img id="modifierLogoPreview" src="#" alt="Logo actuel"
-                                        class="img-fluid rounded-circle shadow"
-                                        style="max-width: 150px; display: none;">
-                                </div>
+                            </div>
+                            <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                                <img id="modifierLogoPreview" src="#" alt="Logo actuel"
+                                    style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
                             </div>
                             <div class="mb-3">
                                 <label for="modifier-info" class="form-label">Informations de texte</label>
