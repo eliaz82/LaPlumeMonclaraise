@@ -44,7 +44,7 @@ class Facebook extends BaseController
         if ($jsonData) {
             $hashtag = $jsonData->hashtag;
             $pageName = $jsonData->pageName;
-            
+
             if ($hashtag[0] !== '#') {
                 $hashtag = '#' . $hashtag;
             }
@@ -116,8 +116,8 @@ class Facebook extends BaseController
         $this->facebookCache->getFacebookPosts(); // Recréer le cache
 
         return $this->response->setJSON([
-            'status' => 'success',
-            'message' => 'Cache Facebook rafraîchi !'
+            'status' => 'success'
         ]);
     }
+
 }

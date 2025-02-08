@@ -7,6 +7,8 @@
         <i class="fa fa-plus me-2"></i> Ajouter un Album photo
     </button>
 </div>
+
+
 <form method="get" action="<?= site_url('albums-photo') ?>" class="filter-form mb-3">
     <div class="d-flex align-items-center justify-content-start">
         <div class="dropdown">
@@ -31,6 +33,9 @@
         </div>
     </div>
 </form>
+<button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>" class="btn btn-light">
+    <i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir
+</button>
 <style>
     .dropdown-item.active {
         background-color: #007bff;

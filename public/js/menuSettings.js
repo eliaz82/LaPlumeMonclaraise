@@ -266,29 +266,6 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify({ etat: etat })
         }).catch(error => console.error("Erreur lors de la mise à jour :", error));
     });
-
-    // -------------------------------
-    // Gestion du Refresh via jQuery
-    // -------------------------------
-    $(document).ready(function () {
-        $('#refreshButton').click(function () {
-            let refreshUrl = $(this).data('refresh-url');
-            $.ajax({
-                url: refreshUrl,
-                type: 'POST',
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status === 'success') {
-                        alert(response.message);
-                        location.reload();
-                    }
-                },
-                error: function () {
-                    alert('Erreur lors de l\'actualisation du cache');
-                }
-            });
-        });
-    });
 });
 
 

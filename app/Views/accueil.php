@@ -78,7 +78,10 @@
   </div>
 </div>
 
-<button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>">Rafraîchir</button>
+<button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>" class="btn btn-light">
+  <i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir
+</button>
+
 
 <?php if (!empty($posts)): ?>
 
