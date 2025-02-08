@@ -1,5 +1,4 @@
 "use strict";
-
 document.addEventListener("DOMContentLoaded", function () {
     // Récupération des éléments du DOM
     const pageSelect = document.getElementById("pageSelect");
@@ -8,9 +7,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const hashtagInput = document.getElementById("hashtagInput");
     const tokenCountdown = document.getElementById("tokenCountdown");
     const resetTokenBtn = document.getElementById("resetTokenBtn");
-    const emailReceptionInput = document.getElementById("mailContact");
-    const idAssociationInput = document.getElementById("idAssociation");
-    const backToTopButton = document.getElementById("back-to-top");
+    const configData = document.getElementById("config-data");
+
+    const siteUrl = configData.dataset.siteUrl;
+    const createUrl = configData.dataset.createUrl;
+    const deleteUrl = configData.dataset.deleteUrl;
+    const expirationUrl = configData.dataset.expirationUrl;
+    const loginUrl = configData.dataset.loginUrl;
+    const getEmailReceptionUrl = configData.dataset.emailReceptionUrl;
+    const getAssociationDataUrl = configData.dataset.associationDataUrl;
+    const getFichierInscriptionEtatUrl = configData.dataset.fichierInscriptionEtatUrl;
+    const updateFichierInscriptionEtatUrl = configData.dataset.updateFichierInscriptionEtatUrl;
 
     // -------------------------------
     // Gestion des Hashtags
@@ -228,47 +235,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Erreur lors de la récupération des données de localisation :", error));
 
-
-    // -------------------------------
-    // Bouton "Back to Top"
-    // -------------------------------
-
-    window.onscroll = function () {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            backToTopButton.style.display = "flex";
-        } else {
-            backToTopButton.style.display = "none";
-        }
-    };
-
-    backToTopButton.onclick = function () {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return false;
-    };
-});
-
-// -------------------------------
-// Gestion du Refresh via jQuery
-// -------------------------------
-$(document).ready(function () {
-    $('#refreshButton').click(function () {
-        let refreshUrl = $(this).data('refresh-url');
-        $.ajax({
-            url: refreshUrl,
-            type: 'POST',
-            dataType: 'json',
-            success: function (response) {
-                if (response.status === 'success') {
-                    alert(response.message);
-                    location.reload();
-                }
-            },
-            error: function () {
-                alert('Erreur lors de l\'actualisation du cache');
-            }
-        });
-    });
-
     // ----------------------------------------------
     // Gestion du bouton on/off fichierInscription
     // ----------------------------------------------
@@ -284,20 +250,47 @@ $(document).ready(function () {
             }
         })
         .catch(error => console.error("Erreur lors de la récupération de l'état :", error));
+
+    // Modification du switch avec AJAX
+    document.getElementById("switchFichierInscription")?.addEventListener("change", function () {
+        let etat = this.checked ? 1 : 0;
+        let switchLabel = document.getElementById("switchLabel");
+
+        if (switchLabel) {
+            switchLabel.textContent = this.checked ? "Activé" : "Désactivé";
+        }
+
+        fetch(updateFichierInscriptionEtatUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ etat: etat })
+        }).catch(error => console.error("Erreur lors de la mise à jour :", error));
+    });
+
+    // -------------------------------
+    // Gestion du Refresh via jQuery
+    // -------------------------------
+    $(document).ready(function () {
+        $('#refreshButton').click(function () {
+            let refreshUrl = $(this).data('refresh-url');
+            $.ajax({
+                url: refreshUrl,
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        alert(response.message);
+                        location.reload();
+                    }
+                },
+                error: function () {
+                    alert('Erreur lors de l\'actualisation du cache');
+                }
+            });
+        });
+    });
 });
 
-// Modification du switch avec AJAX
-document.getElementById("switchFichierInscription")?.addEventListener("change", function () {
-    let etat = this.checked ? 1 : 0;
-    let switchLabel = document.getElementById("switchLabel");
 
-    if (switchLabel) {
-        switchLabel.textContent = this.checked ? "Activé" : "Désactivé";
-    }
 
-    fetch(updateFichierInscriptionEtatUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ etat: etat })
-    }).catch(error => console.error("Erreur lors de la mise à jour :", error));
-});
+

@@ -41,7 +41,8 @@
           // Supposons que $localisation contienne les données de localisation récupérées en BDD
           ?>
           <p>
-            <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
+            <i class="bi bi-geo-alt"></i> Adresse : <span
+              class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
             <i class="bi bi-envelope"></i> Email : <span class="emailDisplay">contact@club.fr</span><br>
             <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
           </p>
@@ -80,8 +81,6 @@
 <button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>">Rafraîchir</button>
 
 <?php if (!empty($posts)): ?>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
 
   <div class="carousel-container" style="background: #e2e6ea; padding: 1rem;">
     <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 3000 }'>
@@ -102,8 +101,9 @@
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
 
-<?= script_tag('js/carousel.js') ?>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous"
   src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=603470049247384"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
+
 <?= $this->endSection() ?>

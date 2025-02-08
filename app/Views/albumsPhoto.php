@@ -127,11 +127,12 @@
                                 $isFacebookAlbum = filter_var($album['photo'], FILTER_VALIDATE_URL);
                                 ?>
                                 <form action="<?= url_to('albumsPhotoDelete') ?>" method="post" class="d-inline"
-                                    onsubmit="return confirmerSuppression(this, '<?= esc($album['postFacebookUrl']) ?>');">
+                                    onsubmit="return confirmerSuppression('<?= esc($album['postFacebookUrl']) ?>');">
                                     <?= csrf_field() ?>
                                     <input type="hidden" name="idAlbums" value="<?= esc($album['idAlbums']) ?>">
                                     <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
                                 </form>
+
                             </div>
                         </div>
                     </div>
@@ -140,17 +141,6 @@
         <?php endforeach; ?>
     </div>
 </div>
-<script>
-    function confirmerSuppression(form, facebookPostUrl) {
-        if (facebookPostUrl) {
-            if (confirm("Cet album provient de Facebook. Vous devez d'abord le supprimer sur Facebook, puis ici pour qu'il soit complètement supprimé.\n\nVoulez-vous aller sur le post Facebook ?")) {
-                window.open(facebookPostUrl, "_blank");
-            }
-            return false;
-        }
-        return confirm("Êtes-vous sûr de vouloir supprimer cet album photo ?");
-    }
-</script>
 <style>
     .facebook-overlay-icon {
         position: absolute;
@@ -242,7 +232,6 @@
         background-color: #dc3545;
     }
 </style>
-
 <!-- Modal de modification pour les albums photos -->
 <div class="modal fade" id="modalModifierAlbum" tabindex="-1" aria-labelledby="modalModifierAlbumLabel"
     aria-hidden="true">
@@ -285,4 +274,5 @@
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <?= script_tag('js/form-modifications.js') ?>
+<?= script_tag('js/albumsConfirm.js') ?>
 <?= $this->endSection() ?>

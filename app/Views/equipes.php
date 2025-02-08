@@ -1,6 +1,5 @@
 <section id="equipe">
     <div>
-
         <!-- Bouton d'ajout -->
         <div class="text-center mb-4">
             <button id="bouton-ajouter-adherent" class="btn btn-primary btn-lg shadow-sm" data-bs-toggle="modal"
@@ -8,7 +7,6 @@
                 <i class="fa fa-plus me-2"></i> Ajouter un adhérent
             </button>
         </div>
-
         <!-- Modal d'ajout -->
         <h2 class="text-center mb-4">Nos adhérents</h2>
         <div class="modal fade" id="modalAjouterAdherent" tabindex="-1" aria-labelledby="modalAjouterAdherentLabel"

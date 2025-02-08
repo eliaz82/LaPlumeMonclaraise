@@ -5,20 +5,29 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
 
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Flickity CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flickity@2.2.2/dist/flickity.min.css">
 
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Flickity CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- FullCalendar CSS -->
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 </head>
+
 
 <style>
 </style>
@@ -336,19 +345,13 @@
         </div>
     </div>
 </div>
-<script>
-    const siteUrl = "<?= site_url() ?>";
-    const createUrl = "<?= site_url('facebook/create') ?>";
-    const deleteUrl = "<?= site_url('facebook/delete') ?>";
-    const expirationUrl = "<?= site_url('facebook/expiration') ?>";
-    const loginUrl = "<?= site_url('facebook/login') ?>";
-    const getEmailReceptionUrl = "<?= route_to('getEmailReception') ?>";
-    const getAssociationDataUrl = "<?= route_to('getAssociationData') ?>";
-    const getFichierInscriptionEtatUrl = "<?= base_url('getFichierInscriptionEtat') ?>";
-    const updateFichierInscriptionEtatUrl = "<?= base_url('updateFichierInscriptionEtat') ?>";
-</script>
-
-
+<div id="config-data" data-site-url="<?= site_url() ?>" data-create-url="<?= site_url('facebook/create') ?>"
+    data-delete-url="<?= site_url('facebook/delete') ?>" data-expiration-url="<?= site_url('facebook/expiration') ?>"
+    data-login-url="<?= site_url('facebook/login') ?>" data-email-reception-url="<?= route_to('getEmailReception') ?>"
+    data-association-data-url="<?= route_to('getAssociationData') ?>"
+    data-fichier-inscription-etat-url="<?= base_url('getFichierInscriptionEtat') ?>"
+    data-update-fichier-inscription-etat-url="<?= base_url('updateFichierInscriptionEtat') ?>">
+</div>
 
 
 <style>
@@ -456,7 +459,7 @@
         crossorigin="anonymous"></script>
     <?= script_tag('js/main.js') ?>
     <?= script_tag('js/image-preview.js') ?>
-    <?= script_tag('js/facebook.js') ?>
+    <?= script_tag('js/menuSettings.js') ?>
 
 </body>
 
@@ -520,8 +523,4 @@
             </svg>
         </button>
     </a>
-
-
-
-
 </footer>
