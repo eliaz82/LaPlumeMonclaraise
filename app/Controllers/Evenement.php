@@ -39,8 +39,9 @@ class Evenement extends BaseController
         // Date actuelle fixée à 23:59:59
         $currentDate = new \DateTime();
         $currentDate->setTime(23, 59, 59);
+        $currentTimestamp = $currentDate->getTimestamp();
 
-        // Traitement de chaque post
+        // Traitement de chaque post Facebook
         foreach ($filteredPosts as &$post) {
             $post['image'] = $post['attachments']['data'][0]['media']['image']['src'] ?? null;
             preg_match('/\*(.*?)\*/', $post['message'], $matches);
@@ -52,36 +53,45 @@ class Evenement extends BaseController
                     $post['date'] = $matches[1];
                     $eventDateTime = new \DateTime("$year-$month-$day");
                     $eventDateTime->setTime(23, 59, 59);
-                    $post['status'] = ($eventDateTime < $currentDate) ? "Événement passé" : "Événement futur";
+                    $post['status'] = ($eventDateTime->getTimestamp() < $currentTimestamp) ? "Événement passé" : "Événement futur";
                     $post['timestamp'] = $eventDateTime->getTimestamp();
                 }
             } else {
                 $post['status'] = "Date inconnue";
             }
         }
+        unset($post); // Bonne pratique après une boucle avec référence
+
+        // Récupérer les événements de la base de données
         $evenements = $this->evenementsModel->findAll();
         foreach ($evenements as &$event) {
-            // Ajouter un timestamp basé sur la date
+            // Créer un objet DateTime à partir de la date (en supposant qu'elle soit au format 'YYYY-MM-DD' ou convertible)
             $eventDate = new \DateTime($event['date']);
+            $eventDate->setTime(23, 59, 59);
             $event['timestamp'] = $eventDate->getTimestamp();
-            $event['status'] = ($eventDate < $currentDate) ? "Événement passé" : "Événement futur";
+            $event['status'] = ($event['timestamp'] < $currentTimestamp) ? "Événement passé" : "Événement futur";
         }
+        unset($event);
 
         // Fusionner les événements de Facebook et ceux de la base de données
         $allPosts = array_merge($filteredPosts, $evenements);
 
-
-        // Limiter à 30 posts maximum
-        usort($allPosts, function ($a, $b) {
-            return $b['timestamp'] ?? strtotime($b['date']) <=> $a['timestamp'] ?? strtotime($a['date']);
+        // Ne conserver que les événements futurs (ceux dont le timestamp est >= à la date actuelle)
+        $allPosts = array_filter($allPosts, function ($post) use ($currentTimestamp) {
+            return isset($post['timestamp']) && $post['timestamp'] >= $currentTimestamp;
         });
-        $allPosts = array_slice($allPosts, 0, 15);
+
+        // Trier les événements par date croissante (les plus proches en premier)
+        usort($allPosts, function ($a, $b) {
+            return $a['timestamp'] <=> $b['timestamp'];
+        });
 
         return view('evenements', [
             'posts' => $allPosts,
             'highlightId' => $id,
         ]);
     }
+
     public function createEvenement()
     {
         // Récupérer les données envoyées par le formulaire
@@ -114,54 +124,54 @@ class Evenement extends BaseController
         return redirect()->to('/evenement')->with('success', 'Événement ajouté avec succès');
     }
     public function updateEvenement()
-{
-    // Récupérer l'ID de l'événement à modifier
-    $idEvenement = $this->request->getPost('idEvenement');
-    $data = $this->request->getPost();
-    
-    // Trouver l'événement existant
-    $evenement = $this->evenementsModel->find($idEvenement);
+    {
+        // Récupérer l'ID de l'événement à modifier
+        $idEvenement = $this->request->getPost('idEvenement');
+        $data = $this->request->getPost();
 
-    // Gestion de l'upload de la nouvelle image
-    $image = $this->request->getFile('image');
-    if ($image && $image->isValid()) {
-        // Déplacer la nouvelle image dans le répertoire de stockage définitif
-        $filePath = FCPATH . 'uploads/evenements/';
-        $image->move($filePath);
-        $imageUrl = 'uploads/evenements/' . $image->getName();
-        
-        // Supprimer l'ancienne image si elle existe
-        if (!empty($evenement['image']) && file_exists(FCPATH . $evenement['image'])) {
-            unlink(FCPATH . $evenement['image']);
+        // Trouver l'événement existant
+        $evenement = $this->evenementsModel->find($idEvenement);
+
+        // Gestion de l'upload de la nouvelle image
+        $image = $this->request->getFile('image');
+        if ($image && $image->isValid()) {
+            // Déplacer la nouvelle image dans le répertoire de stockage définitif
+            $filePath = FCPATH . 'uploads/evenements/';
+            $image->move($filePath);
+            $imageUrl = 'uploads/evenements/' . $image->getName();
+
+            // Supprimer l'ancienne image si elle existe
+            if (!empty($evenement['image']) && file_exists(FCPATH . $evenement['image'])) {
+                unlink(FCPATH . $evenement['image']);
+            }
+
+            // Ajouter le chemin de la nouvelle image aux données
+            $data['image'] = $imageUrl;
         }
-        
-        // Ajouter le chemin de la nouvelle image aux données
-        $data['image'] = $imageUrl;
+
+        // Mettre à jour les données de l'événement
+        $this->evenementsModel->update($idEvenement, $data);
+
+        // Rediriger vers la page des événements avec un message de succès
+        return redirect()->to('/evenement')->with('success', 'L\'événement a été modifié avec succès');
     }
-
-    // Mettre à jour les données de l'événement
-    $this->evenementsModel->update($idEvenement, $data);
-
-    // Rediriger vers la page des événements avec un message de succès
-    return redirect()->to('/evenement')->with('success', 'L\'événement a été modifié avec succès');
-}
 
     public function evenementDelete()
     {
         // Récupérer l'ID de l'événement à supprimer
         $idEvenement = $this->request->getPost('idEvenement');
         $evenement = $this->evenementsModel->find($idEvenement);
-        
+
         if (!empty($evenement['image']) && file_exists(FCPATH . $evenement['image'])) {
             // Supprimer l'image associée à l'événement
             unlink(FCPATH . $evenement['image']);
         }
-        
+
         // Supprimer l'événement de la base de données
         $this->evenementsModel->delete($idEvenement);
-    
+
         // Rediriger vers la page des événements avec un message de succès
         return redirect()->to('/evenement')->with('success', 'L\'événement a été supprimé avec succès.');
     }
-    
+
 }

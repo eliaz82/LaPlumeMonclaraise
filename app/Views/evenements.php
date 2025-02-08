@@ -259,7 +259,19 @@
                                         Ouvrir sur Facebook
                                     </a>
                                 <?php else: ?>
-                                 
+                                    <button class="btn btn-warning bouton-modifier-evenement" data-bs-toggle="modal"
+                                        data-bs-target="#editEventModal" data-id="<?= esc($post['idEvenement']) ?>"
+                                        data-titre="<?= esc($post['titre']) ?>" data-message="<?= esc($post['message']) ?>"
+                                        data-date="<?= esc($post['date']) ?>" data-image="<?= esc($post['image']) ?>">
+                                        Modifier
+                                    </button>
+                                    <form action="<?= esc(url_to('evenementDelete')) ?>" method="POST">
+                                        <input type="hidden" name="idEvenement" value="<?= esc($post['idEvenement']) ?>">
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">
+                                            Supprimer
+                                        </button>
+                                    </form>
                                 <?php endif; ?>
                             </div>
 

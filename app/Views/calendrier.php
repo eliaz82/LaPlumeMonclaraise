@@ -40,7 +40,13 @@
         </div>
     </div>
 </div>
-
+<style>
+    .past-event {
+        opacity: 0.5;
+        /* Tu peux aussi modifier la couleur de fond ou d'autres styles, par exemple : */
+        background-color: #d9534f !important;
+    }
+</style>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const calendarEl = document.getElementById('calendar');
@@ -58,7 +64,7 @@
             <?php foreach ($posts as $post): ?>
                 originalPosts.push({
                     date: "<?= isset($post['date']) ? esc($post['date']) : '' ?>",
-                    titre: "<?= isset($post['titre']) ? esc($post['titre']) : '' ?>",
+                    titre: "<?= isset($post['titre']) ? htmlspecialchars_decode(esc($post['titre'])) : '' ?>",
                     image: <?= isset($post['image']) ? json_encode($post['image']) : 'null' ?>,
                     id: "<?= isset($post['id']) ? esc($post['id']) : '' ?>"
                 });
@@ -250,6 +256,9 @@
                     titleElement.innerHTML = ''; // Effacer l'ancien contenu
                     titleElement.appendChild(span); // Ajouter le nouveau contenu
                 }
+                if (info.event.extendedProps.past) {
+                    info.el.classList.add('past-event');
+                }
             },
             buttonText: {
                 today: 'Aujourd\'hui',
@@ -297,7 +306,6 @@
 
                 highlightDayInCalendar(clickedDate);
             },
-
             dateClick: function (info) {
                 const clickedDate = info.dateStr; // Format "YYYY-MM-DD"
 
