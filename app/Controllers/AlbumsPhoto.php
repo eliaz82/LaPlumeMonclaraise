@@ -64,7 +64,7 @@ class AlbumsPhoto extends BaseController
             if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
                 $facebookMapping[$dateAlbums] = $post['id'];
             }
-            
+
 
             preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
             $titreAlbums = isset($titleMatches[1]) ? $titleMatches[1] : $dateAlbums;
@@ -220,20 +220,26 @@ class AlbumsPhoto extends BaseController
     public function createPhoto()
     {
         $idAlbums = $this->request->getPost('idAlbums');
-        $photoData = $this->request->getPost();
-        $photo = $this->request->getFile('photo');
 
-        if ($photo && $photo->isValid()) {
-            $filePath = FCPATH . 'uploads/photos/';
-            $photo->move($filePath);
-            $photoData['photo'] = 'uploads/photos/' . $photo->getName();
-            $photoData['idAlbums'] = $idAlbums;
+        $files = $this->request->getFiles();
+
+        if (isset($files['photo'])) {
+            foreach ($files['photo'] as $photo) {
+                if ($photo->isValid() && !$photo->hasMoved()) {
+                    $filePath = FCPATH . 'uploads/photos/';
+                    $photo->move($filePath);
+                    $data = [
+                        'photo' => 'uploads/photos/' . $photo->getName(),
+                        'idAlbums' => $idAlbums,
+                    ];
+                    $this->photoModel->insert($data);
+                }
+            }
         }
-
-        $this->photoModel->insert($photoData);
-
-        return redirect()->to("/albums-photo/{$idAlbums}")->with('success', 'Photo ajoutée avec succès.');
+        return redirect()->to("/albums-photo/{$idAlbums}")
+            ->with('success', 'Photo(s) ajoutée(s) avec succès.');
     }
+
 
     public function photoDelete()
     {

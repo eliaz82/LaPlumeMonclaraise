@@ -7,7 +7,7 @@
 <?= $this->section('contenu') ?>
 
 <div class="container mt-4">
-    <h1 class="text-center mb-4">Album : <?= esc($album['nom']) ?></h1>
+    <h1 class="text-center mb-4"><?= esc($album['nom']) ?></h1>
 
     <div class="text-center mb-3">
         <a href="<?= route_to('albumsPhoto') ?>" class="btn btn-secondary">Retour aux albums</a>
@@ -16,33 +16,33 @@
     <div class="text-center mb-4">
         <button id="bouton-ajouter-photo" class="btn btn-primary btn-lg shadow-sm" data-bs-toggle="modal"
             data-bs-target="#modalAjouter">
-            <i class="fa fa-plus me-2"></i> Ajouter une Photo
+            <i class="fa fa-plus me-2"></i> Ajouter des Photos
         </button>
     </div>
-
     <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form method="post" action="<?= route_to('createPhoto', $album['idAlbums']) ?>"
                     enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title text-primary" id="modalAjouterLabel">Ajouter une Photo</h5>
+                        <h5 class="modal-title text-primary" id="modalAjouterLabel">Ajouter des Photos</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <!-- Champ caché pour envoyer l'ID de l'album -->
                         <input type="hidden" name="idAlbums" value="<?= $album['idAlbums'] ?>">
 
-                        <!-- Champ pour la photo -->
+                        <!-- Champ pour les photos -->
                         <div class="mb-3">
-                            <label for="photo" class="form-label">Photo</label>
-                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*"
-                                onchange="previewImage(event, 'photoPreview')" required>
+                            <label for="photo" class="form-label">Photos</label>
+                            <input type="file" class="form-control" id="photo" name="photo[]" accept="image/*"
+                                onchange="previewImagesPhotos(event)" multiple required>
                         </div>
-                        <!-- Prévisualisation de la photo -->
-                        <div class="mb-3 d-flex justify-content-center align-items-center text-center">
-                            <img id="photoPreview" src="#" alt="Prévisualisation"
-                                style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
+
+                        <!-- Prévisualisation des photos -->
+                        <div class="mb-3 d-flex flex-wrap justify-content-center align-items-center text-center"
+                            id="photoPreview">
+                            <!-- Les images prévisualisées seront insérées ici -->
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -50,7 +50,6 @@
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -79,13 +78,17 @@
     </div>
 
     <style>
-        /* --- Conteneur de la galerie avec effet mural d'art --- */
         .photo-gallery {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 20px;
             column-count: 3;
             column-gap: 15px;
-            padding: 20px;
-            background: rgb(219, 219, 219);
-            /* Gris clair avec blanc */
+            box-sizing: border-box;
+            background: rgb(240, 240, 240);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
 
