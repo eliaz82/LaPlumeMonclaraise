@@ -15,17 +15,10 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Flickity CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
-
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-
-    <!-- FullCalendar CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+    <?= $this->renderSection('css') ?>
 </head>
 
 
@@ -359,10 +352,11 @@
         max-width: 75vw;
     }
 
-    body {
-        cursor: url('/image/cursor.cur') 16 16, auto;
-
+    /* Applique le curseur personnalisé à tous les éléments interactifs */
+    * {
+        cursor: url('/image/cursor.cur') 16 16, auto !important;
     }
+
 
     .button {
         width: 50px;
@@ -460,7 +454,7 @@
     <?= script_tag('js/main.js') ?>
     <?= script_tag('js/image-preview.js') ?>
     <?= script_tag('js/menuSettings.js') ?>
-
+    <?= $this->renderSection('scripts') ?>
 </body>
 
 <footer class="footer-section py-4" style="background-color:rgb(29, 34, 67); color: white;">

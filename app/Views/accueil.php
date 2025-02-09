@@ -1,4 +1,9 @@
 <?= $this->extend('layout') ?>
+<?= $this->section('css') ?>
+<!-- Flickity CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
+<?= $this->endSection() ?>
+
 <?= $this->section('contenu') ?>
 
 <div id="carousel-container" class="position-relative">
@@ -103,7 +108,9 @@
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
+<?= $this->endSection() ?>
 
+<?= $this->section('scripts') ?>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous"
   src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=603470049247384"></script>

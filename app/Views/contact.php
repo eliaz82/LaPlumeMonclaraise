@@ -1,4 +1,10 @@
 <?= $this->extend('layout') ?>
+
+<?= $this->section('css') ?>
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<?= $this->endSection() ?>
+
 <?= $this->section('contenu') ?>
 
 <div class="container">
@@ -35,8 +41,8 @@
     <!-- Contact Form -->
     <div class="contact-wrapper">
         <div class="contact-map" id="map" style="width: 100%; height: 600px;"></div>
-        <div id="map-container" data-logo="<?= esc(base_url(getAssociationLogo())); ?>"
-            data-lat="<?= esc($lat) ?>" data-lon="<?= esc($lon) ?>"></div>
+        <div id="map-container" data-logo="<?= esc(base_url(getAssociationLogo())); ?>" data-lat="<?= esc($lat) ?>"
+            data-lon="<?= esc($lon) ?>"></div>
 
         <div class="contact-container">
             <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
@@ -93,7 +99,13 @@
     </div>
 
 </div>
-<?= script_tag('js/leaflet-map.js') ?>
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Google reCAPTCHA -->
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!-- Script personnalisé pour la carte -->
+<?= script_tag('js/leaflet-map.js') ?>
 <?= $this->endSection() ?>

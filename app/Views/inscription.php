@@ -1,11 +1,17 @@
 <?= $this->extend('layout') ?>
+
+<?= $this->section('css') ?>
+
+<?= $this->endSection() ?>
+
 <?= $this->section('contenu') ?>
 
 <?php if (isset($inscriptionsClosed) && $inscriptionsClosed): ?>
     <!-- Message lorsque les inscriptions sont terminées -->
     <div class="container">
         <h2 class="text-center mb-4">Oups désolé, les inscriptions sont terminées</h2>
-        <p class="text-center lead">Nous vous remercions de l'intérêt que vous portez à notre club. Pour toute question, n'hésitez pas à nous contacter.</p>
+        <p class="text-center lead">Nous vous remercions de l'intérêt que vous portez à notre club. Pour toute question,
+            n'hésitez pas à nous contacter.</p>
     </div>
 <?php else: ?>
     <!-- Contenu de la page Fichier d'inscription -->
@@ -13,7 +19,9 @@
         <h2 class="text-center mb-4">Téléchargement du fichier d'inscription</h2>
 
         <p class="lead text-center mb-4">
-            Téléchargez le fichier d'inscription ci-dessous. Une fois le fichier téléchargé, vous devez l'imprimer, le remplir et le remettre au gymnase, soit en main propre, soit par e-mail. Merci de suivre ces instructions afin de compléter votre inscription pour la saison à venir.
+            Téléchargez le fichier d'inscription ci-dessous. Une fois le fichier téléchargé, vous devez l'imprimer, le
+            remplir et le remettre au gymnase, soit en main propre, soit par e-mail. Merci de suivre ces instructions afin
+            de compléter votre inscription pour la saison à venir.
         </p>
 
         <div class="row align-items-center">
@@ -79,12 +87,16 @@
                                     <?= csrf_field() ?>
                                     <div class="text-center mb-3">
                                         <span class="h4 d-block">Téléversez votre fichier</span>
-                                        <p class="text-muted">Le fichier doit être une image ou un document (PDF, Word, etc.). Il sera ensuite disponible pour les autres utilisateurs à télécharger.</p>
+                                        <p class="text-muted">Le fichier doit être une image ou un document (PDF, Word,
+                                            etc.). Il sera ensuite disponible pour les autres utilisateurs à télécharger.
+                                        </p>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="fichier_inscription" class="form-label">Sélectionner le fichier d'inscription (PDF, Word, etc.) :</label>
+                                        <label for="fichier_inscription" class="form-label">Sélectionner le fichier
+                                            d'inscription (PDF, Word, etc.) :</label>
                                         <div id="drop-area" class="drop-container p-4 border-dashed text-center rounded-3">
-                                            <span class="drop-title d-block mb-2">Déposez les fichiers ici ou cliquez pour sélectionner</span>
+                                            <span class="drop-title d-block mb-2">Déposez les fichiers ici ou cliquez pour
+                                                sélectionner</span>
                                             <input type="file" name="fichier_inscription" id="fichier_inscription"
                                                 accept=".pdf,.doc,.docx,.jpg,.png" class="form-control d-none" required>
                                             <label for="fichier_inscription" class="btn btn-outline-primary">
@@ -105,10 +117,13 @@
             </div>
         </div>
     </div>
-    
+
+    <?= $this->section('scripts') ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Charger ton script après jQuery -->
     <?= script_tag('js/file-drag-and-drop.js') ?>
+    <?= $this->endSection() ?>
+
 <?php endif; ?>
 
 <?= $this->endSection() ?>

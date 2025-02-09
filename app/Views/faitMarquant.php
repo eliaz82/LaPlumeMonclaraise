@@ -1,4 +1,9 @@
 <?= $this->extend('layout') ?>
+
+<?= $this->section('css') ?>
+
+<?= $this->endSection() ?>
+
 <?= $this->section('contenu') ?>
 
 <style>
@@ -140,6 +145,8 @@
         <p class="no-posts">Aucun fait marquant trouvé pour le moment.</p>
     <?php endif; ?>
 </div>
+<?= $this->endSection() ?>
 
+<?= $this->section('scripts') ?>
 <?= script_tag('js/readMore.js') ?>
 <?= $this->endSection() ?>

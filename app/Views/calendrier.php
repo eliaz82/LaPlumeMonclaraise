@@ -1,4 +1,10 @@
 <?= $this->extend('layout') ?>
+
+<?= $this->section('css') ?>
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+<?= $this->endSection() ?>
+
 <?= $this->section('contenu') ?>
 
 <div class="container mt-5">
@@ -55,7 +61,13 @@
     data-events="<?= htmlspecialchars(json_encode($events)) ?>">
 </div>
 
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
+<!-- FullCalendar Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/locales/fr.js"></script>
+
 <?= script_tag('js/eventCalendar.js') ?>
+
 <?= $this->endSection() ?>

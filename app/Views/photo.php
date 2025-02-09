@@ -1,4 +1,9 @@
 <?= $this->extend('layout') ?>
+
+<?= $this->section('css') ?>
+
+<?= $this->endSection() ?>
+
 <?= $this->section('contenu') ?>
 
 <div class="container mt-4">
@@ -220,5 +225,8 @@
 
 
 </div>
+<?= $this->endSection() ?>
+
+<?= $this->section('scripts') ?>
 
 <?= $this->endSection() ?>

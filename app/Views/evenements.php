@@ -1,4 +1,9 @@
 <?= $this->extend('layout') ?>
+
+<?= $this->section('css') ?>
+
+<?= $this->endSection() ?>
+
 <?= $this->section('contenu') ?>
 
 <!-- Vos styles personnalisés -->
@@ -346,7 +351,9 @@
     </div>
 </div>
 
+<?= $this->endSection() ?>
 
+<?= $this->section('scripts') ?>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <?= script_tag('js/form-modifications.js') ?>
 <?= script_tag('js/events-ui.js') ?>
