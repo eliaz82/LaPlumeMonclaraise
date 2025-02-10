@@ -77,8 +77,8 @@
           Plongez dans l'univers du badminton avec nous et vivez des moments uniques, qu'ils soient compétitifs ou
           purement récréatifs.
         </p>
-        <a href="<?= esc(url_to('FusionAssociation')) ?>#histoire" class="btn btn-primary">Lire plus</a>
-      </div>
+        <a href="<?= esc(url_to('FusionAssociation').'#histoire', 'attr'); ?>" class="btn btn-primary">Lire plus</a>
+        </div>
     </div>
   </div>
 </div>
