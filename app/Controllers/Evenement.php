@@ -9,152 +9,194 @@ class Evenement extends BaseController
     private $facebookModel;
     private $facebookCache;
     private $evenementsModel;
+    private $validation;
+
 
     public function __construct()
     {
         $this->facebookModel = model('Facebook');
         $this->facebookCache = new FacebookCache();
         $this->evenementsModel = model('Evenements');
+        $this->validation = \Config\Services::validation();
     }
     public function evenement(string $id = null): string
     {
-        // Récupération des posts et des hashtags
-        $posts = $this->facebookCache->getFacebookPosts();
-        $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll();
-        $hashtagList = array_column($hashtags, 'hashtag');
+        try {
+            // Récupération sécurisée des posts et des hashtags
+            $posts = $this->facebookCache->getFacebookPosts() ?? ['data' => []];
+            $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll() ?? [];
+            $hashtagList = array_column($hashtags, 'hashtag');
 
-        // Filtrer les posts qui contiennent l'un des hashtags
-        $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
-            if (!isset($post['message'])) {
+            if (empty($posts['data'])) {
+                log_message('error', "Aucun post récupéré depuis Facebook pour l'événement.");
+            }
+
+            // Filtrer les posts qui contiennent l'un des hashtags
+            $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
+                if (!isset($post['message'])) {
+                    return false;
+                }
+                foreach ($hashtagList as $hashtag) {
+                    if (strpos($post['message'], $hashtag) !== false) {
+                        return true;
+                    }
+                }
                 return false;
-            }
-            foreach ($hashtagList as $hashtag) {
-                if (strpos($post['message'], $hashtag) !== false) {
-                    return true;
+            });
+
+            // Date actuelle fixée à 23:59:59
+            $currentDate = new \DateTime();
+            $currentDate->setTime(23, 59, 59);
+            $currentTimestamp = $currentDate->getTimestamp();
+
+            // Traitement des posts Facebook sécurisés
+            foreach ($filteredPosts as &$post) {
+                $post['image'] = $post['attachments']['data'][0]['media']['image']['src'] ?? null;
+                preg_match('/\*(.*?)\*/', $post['message'], $matches);
+                $post['titre'] = $matches[1] ?? substr($post['message'], 0, 50);
+
+                if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
+                    [$day, $month, $year] = explode('/', $matches[1]);
+                    if (checkdate($month, $day, $year)) {
+                        $post['date'] = "$year-$month-$day";
+                        $eventDateTime = new \DateTime("$year-$month-$day 23:59:59");
+                        $post['status'] = ($eventDateTime->getTimestamp() < $currentTimestamp) ? "Événement passé" : "Événement futur";
+                        $post['timestamp'] = $eventDateTime->getTimestamp();
+                    }
+                } else {
+                    $post['status'] = "Date inconnue";
                 }
             }
-            return false;
-        });
+            unset($post);
 
-        // Date actuelle fixée à 23:59:59
-        $currentDate = new \DateTime();
-        $currentDate->setTime(23, 59, 59);
-        $currentTimestamp = $currentDate->getTimestamp();
-
-        // Traitement de chaque post Facebook
-        foreach ($filteredPosts as &$post) {
-            $post['image'] = $post['attachments']['data'][0]['media']['image']['src'] ?? null;
-            preg_match('/\*(.*?)\*/', $post['message'], $matches);
-            $post['titre'] = $matches[1] ?? substr($post['message'], 0, 50);
-
-            if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
-                list($day, $month, $year) = explode('/', $matches[1]);
-                if (checkdate($month, $day, $year)) {
-                    $post['date'] = $matches[1];
-                    $eventDateTime = new \DateTime("$year-$month-$day");
-                    $eventDateTime->setTime(23, 59, 59);
-                    $post['status'] = ($eventDateTime->getTimestamp() < $currentTimestamp) ? "Événement passé" : "Événement futur";
-                    $post['timestamp'] = $eventDateTime->getTimestamp();
+            // Récupérer et sécuriser les événements de la BDD
+            $evenements = $this->evenementsModel->findAll() ?? [];
+            foreach ($evenements as &$event) {
+                try {
+                    $eventDate = new \DateTime($event['date']);
+                    $eventDate->setTime(23, 59, 59);
+                    $event['timestamp'] = $eventDate->getTimestamp();
+                    $event['status'] = ($event['timestamp'] < $currentTimestamp) ? "Événement passé" : "Événement futur";
+                } catch (\Exception $e) {
+                    log_message('error', "Erreur lors du traitement d'un événement: " . $e->getMessage());
+                    continue;
                 }
-            } else {
-                $post['status'] = "Date inconnue";
             }
+            unset($event);
+
+            // Fusionner et trier les événements
+            $allPosts = array_merge($filteredPosts, $evenements);
+            $allPosts = array_filter($allPosts, fn($post) => isset($post['timestamp']) && $post['timestamp'] >= $currentTimestamp);
+            usort($allPosts, fn($a, $b) => $a['timestamp'] <=> $b['timestamp']);
+
+            return view('evenements', [
+                'posts' => $allPosts,
+                'highlightId' => $id,
+            ]);
+        } catch (\Exception $e) {
+            log_message('error', "Erreur dans la méthode evenement: " . $e->getMessage());
+            return view('evenements', [
+                'posts' => [],
+                'highlightId' => $id,
+            ]);
         }
-        unset($post); // Bonne pratique après une boucle avec référence
-
-        // Récupérer les événements de la base de données
-        $evenements = $this->evenementsModel->findAll();
-        foreach ($evenements as &$event) {
-            // Créer un objet DateTime à partir de la date (en supposant qu'elle soit au format 'YYYY-MM-DD' ou convertible)
-            $eventDate = new \DateTime($event['date']);
-            $eventDate->setTime(23, 59, 59);
-            $event['timestamp'] = $eventDate->getTimestamp();
-            $event['status'] = ($event['timestamp'] < $currentTimestamp) ? "Événement passé" : "Événement futur";
-        }
-        unset($event);
-
-        // Fusionner les événements de Facebook et ceux de la base de données
-        $allPosts = array_merge($filteredPosts, $evenements);
-
-        // Ne conserver que les événements futurs (ceux dont le timestamp est >= à la date actuelle)
-        $allPosts = array_filter($allPosts, function ($post) use ($currentTimestamp) {
-            return isset($post['timestamp']) && $post['timestamp'] >= $currentTimestamp;
-        });
-
-        // Trier les événements par date croissante (les plus proches en premier)
-        usort($allPosts, function ($a, $b) {
-            return $a['timestamp'] <=> $b['timestamp'];
-        });
-
-        return view('evenements', [
-            'posts' => $allPosts,
-            'highlightId' => $id,
-        ]);
     }
+
 
     public function createEvenement()
     {
-        // Récupérer les données envoyées par le formulaire
-        $evenement = $this->request->getPost();
-        $image = $this->request->getFile('image');
+        try {
+            // Validation des données avec les règles définies dans validation.php
+            $rules = config('Validation')->evenements_rules;
 
-        // Vérifier si une image a été téléchargée
-        if ($image && $image->isValid() && !$image->hasMoved()) {
-            // Déplacer l'image du répertoire temporaire vers un répertoire de stockage définitif
-            $filePath = FCPATH . 'uploads/evenements/';
-            $image->move($filePath);
-            $imageUrl = 'uploads/evenements/' . $image->getName();
-        } else {
-            // Si aucune image n'a été téléchargée, ne pas modifier le chemin de l'image
-            $imageUrl = null;
-        }
-
-        // Préparer les données à insérer dans la base de données
-        $evenementData = [
-            'titre' => $evenement['titre'],
-            'message' => $evenement['message'],
-            'image' => $imageUrl,
-            'date' => $evenement['date']
-        ];
-
-        // Insérer les données dans la table 'evenements'
-        $this->evenementsModel->insert($evenementData);
-
-        // Rediriger vers la page des événements avec un message de succès
-        return redirect()->to('/evenement')->with('success', 'Événement ajouté avec succès');
-    }
-    public function updateEvenement()
-    {
-        // Récupérer l'ID de l'événement à modifier
-        $idEvenement = $this->request->getPost('idEvenement');
-        $data = $this->request->getPost();
-
-        // Trouver l'événement existant
-        $evenement = $this->evenementsModel->find($idEvenement);
-
-        // Gestion de l'upload de la nouvelle image
-        $image = $this->request->getFile('image');
-        if ($image && $image->isValid()) {
-            // Déplacer la nouvelle image dans le répertoire de stockage définitif
-            $filePath = FCPATH . 'uploads/evenements/';
-            $image->move($filePath);
-            $imageUrl = 'uploads/evenements/' . $image->getName();
-
-            // Supprimer l'ancienne image si elle existe
-            if (!empty($evenement['image']) && file_exists(FCPATH . $evenement['image'])) {
-                unlink(FCPATH . $evenement['image']);
+            // Validation des données
+            if (!$this->validate($rules)) {
+                return redirect()->back()->withInput()->with('error', implode('<br>', $this->validator->getErrors()));
             }
 
-            // Ajouter le chemin de la nouvelle image aux données
-            $data['image'] = $imageUrl;
+            $evenement = $this->request->getPost();
+            $image = $this->request->getFile('image');
+            $imageUrl = null;
+
+            // Vérifier et traiter l'image si elle est fournie
+            if ($image && $image->isValid() && !$image->hasMoved()) {
+                $newName = $image->getRandomName();
+                $image->move(FCPATH . 'uploads/evenements/', $newName);
+                $imageUrl = 'uploads/evenements/' . $newName;
+            }
+
+            // Insérer l'événement dans la base de données
+            $this->evenementsModel->insert([
+                'titre' => esc($evenement['titre']),
+                'message' => esc($evenement['message']),
+                'image' => $imageUrl,
+                'date' => esc($evenement['date'])
+            ]);
+
+            return redirect()->to('/evenement')->with('success', 'Événement ajouté avec succès');
+        } catch (\Exception $e) {
+            log_message('error', 'Erreur lors de l\'ajout de l\'événement : ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Une erreur est survenue.');
         }
-
-        // Mettre à jour les données de l'événement
-        $this->evenementsModel->update($idEvenement, $data);
-
-        // Rediriger vers la page des événements avec un message de succès
-        return redirect()->to('/evenement')->with('success', 'L\'événement a été modifié avec succès');
     }
+
+    public function updateEvenement()
+    {
+        try {
+            // Récupérer l'ID de l'événement à modifier
+            $idEvenement = $this->request->getPost('idEvenement');
+    
+            // Vérifier si l'événement existe
+            $evenement = $this->evenementsModel->find($idEvenement);
+            if (!$evenement) {
+                return redirect()->back()->with('error', 'Événement introuvable.');
+            }
+    
+            // Récupérer les règles de validation
+            $rules = config('Validation')->evenements_rules;
+    
+            // Supprimer la contrainte "required" sur l'image car ce n'est pas obligatoire en mise à jour
+            unset($rules['image']);
+    
+            // Valider les données
+            if (!$this->validate($rules)) {
+                return redirect()->back()->withInput()->with('error', implode('<br>', $this->validator->getErrors()));
+            }
+    
+            // Récupérer les données envoyées
+            $data = [
+                'titre'   => esc($this->request->getPost('titre')),
+                'message' => esc($this->request->getPost('message')),
+                'date'    => esc($this->request->getPost('date')),
+            ];
+    
+            // Gestion de l'upload de la nouvelle image
+            $image = $this->request->getFile('image');
+            if ($image && $image->isValid() && !$image->hasMoved()) {
+                $filePath = FCPATH . 'uploads/evenements/';
+                $newName = $image->getRandomName();
+                $image->move($filePath, $newName);
+                $imageUrl = 'uploads/evenements/' . $newName;
+    
+                // Supprimer l'ancienne image si elle existe et n'est pas vide
+                if (!empty($evenement['image']) && file_exists(FCPATH . $evenement['image'])) {
+                    unlink(FCPATH . $evenement['image']);
+                }
+    
+                // Ajouter la nouvelle image aux données
+                $data['image'] = $imageUrl;
+            }
+    
+            // Mise à jour de l'événement
+            $this->evenementsModel->update($idEvenement, $data);
+    
+            return redirect()->to('/evenement')->with('success', 'L\'événement a été modifié avec succès');
+        } catch (\Exception $e) {
+            log_message('error', 'Erreur lors de la modification de l\'événement : ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Une erreur est survenue.');
+        }
+    }
+    
 
     public function evenementDelete()
     {
