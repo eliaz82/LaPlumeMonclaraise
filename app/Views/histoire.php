@@ -57,7 +57,7 @@
                     une communauté dynamique et amicale qui vous encourage à atteindre vos objectifs sportifs.</p>
 
                 <div class="text-center mt-4">
-                    <?php if ($association['fichierInscriptionVisible'] == 0): ?>
+                    <?php if (isset($association['fichierInscriptionVisible']) && $association['fichierInscriptionVisible'] == 0): ?>
                         <div class="alert alert-danger text-center fw-bold shadow-sm mb-3" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i>
                             Les inscriptions sont actuellement fermées. Restez connectés pour la prochaine ouverture !

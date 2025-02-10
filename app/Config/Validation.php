@@ -41,4 +41,12 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+    public $album_photo_rules = [
+        'dateAlbums' => 'valid_date[Y-m-d]',
+        'nom' => 'required|min_length[3]|max_length[128]',
+        'photo' => 'uploaded[photo]|is_image[photo]|max_size[photo,10240]',
+    ];
+    public $photo_rules = [
+        'photo' => 'required|uploaded[photo]|is_image[photo]|max_size[photo,10240]',
+    ];
 }

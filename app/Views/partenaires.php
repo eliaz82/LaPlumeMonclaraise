@@ -17,8 +17,8 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="card shadow-lg border-0 h-100">
                             <?php if (!empty($p['lien'])): ?>
-                                <a href="<?= esc($p['lien'], 'attr'); ?>" target="_blank" class="text-decoration-none text-dark">
-                            <?php endif; ?>
+                                <a href="<?= esc($p['lien'], 'attr'); ?>" target="_blank" class="text-decoration-none text-dark" rel="noopener noreferrer">
+                                <?php endif; ?>
                                 <div class="text-center mt-4">
                                     <img src="<?= esc(base_url($p['logo']), 'attr'); ?>" class="img-fluid rounded-circle shadow"
                                         alt="<?= esc($p['info'], 'attr'); ?>"
@@ -27,7 +27,7 @@
                                 <div class="card-body text-center">
                                     <h5 class="card-title fw-bold"><?= esc($p['info'], 'attr'); ?></h5>
                                 </div>
-                            <?php if (!empty($p['lien'])): ?>
+                                <?php if (!empty($p['lien'])): ?>
                                 </a>
                             <?php endif; ?>
                             <div class="card-footer text-center">
@@ -69,7 +69,7 @@
                             <div class="mb-3">
                                 <label for="logo" class="form-label">Logo</label>
                                 <input type="file" class="form-control" id="logo" name="logo" accept="image/*"
-                                    onchange="previewImage(event, 'logoPreviewAjout')">
+                                    onchange="previewImage(event, 'logoPreviewAjout')" required>
                             </div>
                             <div class="mb-3 d-flex justify-content-center align-items-center text-center">
                                 <img id="logoPreviewAjout" src="#" alt="Prévisualisation"
@@ -77,12 +77,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="info" class="form-label">Informations de texte</label>
-                                <textarea class="form-control" id="info" name="info" rows="3"></textarea>
+                                <textarea class="form-control" id="info" name="info" rows="3" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="lien" class="form-label">Lien</label>
-                                <input type="url" class="form-control" id="lien" name="lien"
-                                    placeholder="https://example.com">
+                                <input type="url" class="form-control" id="lien" name="lien" placeholder="https://example.com" pattern="https?://.*">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -110,7 +109,7 @@
                             <div class="mb-3">
                                 <label for="modifier-logo" class="form-label">Logo</label>
                                 <input type="file" class="form-control" id="modifier-logo" name="logo" accept="image/*"
-                                    onchange="previewImage(event, 'modifierLogoPreview')">
+                                    onchange="previewImage(event, 'modifierLogoPreview')" >
                             </div>
                             <div class="mb-3 d-flex justify-content-center align-items-center text-center">
                                 <img id="modifierLogoPreview" src="#" alt="Logo actuel"
@@ -118,12 +117,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="modifier-info" class="form-label">Informations de texte</label>
-                                <textarea class="form-control" id="modifier-info" name="info" rows="3"></textarea>
+                                <textarea class="form-control" id="modifier-info" name="info" rows="3" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="modifier-lien" class="form-label">Lien</label>
                                 <input type="url" class="form-control" id="modifier-lien" name="lien"
-                                    placeholder="https://example.com">
+                                    placeholder="https://example.com" pattern="https?://.*" >
                             </div>
                         </div>
                         <div class="modal-footer">

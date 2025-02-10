@@ -15,6 +15,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form action="<?= route_to('contactUpdate'); ?>" method="post">
+                    <?= csrf_field() ?>
                     <div class="modal-header">
                         <h5 class="modal-title text-primary" id="modalModifierContactLabel">Modifier l'e-mail de contact
                         </h5>

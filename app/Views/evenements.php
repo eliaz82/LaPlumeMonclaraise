@@ -174,6 +174,7 @@
             </div>
             <div class="modal-body">
                 <form action="<?= esc(url_to('createEvenement')) ?>" method="POST" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
                     <div class="mb-3">
                         <label for="titre" class="form-label">Titre de l'événement</label>
                         <input type="text" class="form-control" id="titre" name="titre" required>
@@ -317,6 +318,7 @@
             </div>
             <div class="modal-body">
                 <form action="<?= esc(url_to('updateEvenement')) ?>" method="POST" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
                     <input type="hidden" name="idEvenement" id="editEventId">
                     <div class="mb-3">
                         <label for="editTitre" class="form-label">Titre</label>
