@@ -213,27 +213,49 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then(data => {
+            // Mise à jour de l'adresse
             if (data.adresse) {
-                // Mise à jour du champ input dans le formulaire
                 const adresseInput = document.getElementById("adresse");
                 if (adresseInput) {
                     adresseInput.value = data.adresse;
                     adresseInput.dispatchEvent(new Event("input"));
                 }
-
-                // Mise à jour de tous les éléments affichant l'adresse
                 document.querySelectorAll(".adresseDisplay").forEach(el => {
                     el.textContent = data.adresse;
                 });
             }
+
+            // Mise à jour de la latitude
             if (data.latitude) {
-                document.getElementById("latitude").value = data.latitude;
+                const latitudeInput = document.getElementById("latitude");
+                if (latitudeInput) {
+                    latitudeInput.value = data.latitude;
+                }
             }
+
+            // Mise à jour de la longitude
             if (data.longitude) {
-                document.getElementById("longitude").value = data.longitude;
+                const longitudeInput = document.getElementById("longitude");
+                if (longitudeInput) {
+                    longitudeInput.value = data.longitude;
+                }
+            }
+
+            // Mise à jour du téléphone
+            if (data.tel) {
+                const telephoneInput = document.getElementById("telephoneInput");
+                if (telephoneInput) {
+                    telephoneInput.value = data.tel;
+                    telephoneInput.dispatchEvent(new Event("input"));
+                }
+                // Si vous avez des éléments affichant le téléphone ailleurs
+                document.querySelectorAll(".telephoneDisplay").forEach(el => {
+                    el.textContent = data.tel;
+                });
             }
         })
         .catch(error => console.error("Erreur lors de la récupération des données de localisation :", error));
+
 
     // ----------------------------------------------
     // Gestion du bouton on/off fichierInscription

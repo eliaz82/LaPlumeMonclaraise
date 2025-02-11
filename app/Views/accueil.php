@@ -50,7 +50,7 @@
           <div class="icon-container">
             <i class="bi bi-envelope-fill fs-3 text-primary"></i>
             <div class="popup-info">
-              Email : <span class="emailDisplay"><?= esc($email ?? 'Email non défini'); ?></span>
+              <span class="emailDisplay"><?= esc($email ?? 'Email non défini'); ?></span>
             </div>
           </div>
 
@@ -58,7 +58,7 @@
           <div class="icon-container">
             <i class="bi bi-geo-alt-fill fs-3 text-primary"></i>
             <div class="popup-info">
-              Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span>
+            <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span>
             </div>
           </div>
 
@@ -66,7 +66,7 @@
           <div class="icon-container">
             <i class="bi bi-telephone-fill fs-3 text-primary"></i>
             <div class="popup-info">
-              Téléphone : <span class="telephoneDisplay"><?= esc($telephone ?? 'Téléphone non défini'); ?></span>
+             <span class="telephoneDisplay"><?= esc($telephone ?? 'Téléphone non défini'); ?></span>
             </div>
           </div>
         </div>

@@ -36,32 +36,59 @@ class Association extends Controller
             'lon' => $lon
         ]);
     }
+
+    public function tel()
+    {
+        // Récupération des données envoyées en POST
+        $telephone    = $this->request->getPost('telephone');
+        $associationId = $this->request->getPost('idAssociation');
+
+        // Vous pouvez ajouter des validations sur le numéro de téléphone ici
+
+        // Préparation des données à mettre à jour
+        $data = [
+            'tel' => $telephone,
+        ];
+
+        // Mise à jour dans la base de données
+        if ($this->associationModel->update($associationId, $data)) {
+            // Succès : rediriger en renvoyant un message
+            return redirect()->back()->with('message', 'Téléphone mis à jour avec succès.');
+        } else {
+            // Erreur : rediriger avec un message d'erreur
+            return redirect()->back()->with('error', 'Erreur lors de la mise à jour du téléphone.');
+        }
+    }
     public function getAssociationData()
     {
         // Récupérer l'association (par exemple avec l'ID 1)
         $association = $this->associationModel->find(1);
 
-        // Vérifier si l'association existe et contient les coordonnées
+        // Vérifier si l'association existe et contient les informations requises
         if ($association) {
-            $lat = $association['latitude'];  // Latitude de l'association
-            $lon = $association['longitude']; // Longitude de l'association
-            $adresse = $association['adresse'];   // Adresse de l'association
+            $lat     = $association['latitude'];   // Latitude de l'association
+            $lon     = $association['longitude'];  // Longitude de l'association
+            $adresse = $association['adresse'];      // Adresse de l'association
+            $tel     = $association['tel'];          // Téléphone de l'association
         } else {
             // Valeurs par défaut en cas d'absence de données
-            $lat = 43.966742479238754;
-            $lon = 1.5866446106619663;
+            $lat     = 43.966742479238754;
+            $lon     = 1.5866446106619663;
             $adresse = "Adresse non définie";
+            $tel     = ""; // Ou une valeur par défaut comme "Téléphone non défini"
         }
 
         // Préparer les données à renvoyer
         $data = [
-            'latitude' => $lat,
+            'latitude'  => $lat,
             'longitude' => $lon,
-            'adresse' => $adresse,
+            'adresse'   => $adresse,
+            'tel'       => $tel,
         ];
 
         return $this->response->setJSON($data);
     }
+
 
 
 
