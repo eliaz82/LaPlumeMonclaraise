@@ -58,7 +58,7 @@
           <div class="icon-container">
             <i class="bi bi-geo-alt-fill fs-3 text-primary"></i>
             <div class="popup-info">
-            <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span>
+              <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span>
             </div>
           </div>
 
@@ -66,13 +66,11 @@
           <div class="icon-container">
             <i class="bi bi-telephone-fill fs-3 text-primary"></i>
             <div class="popup-info">
-             <span class="telephoneDisplay"><?= esc($telephone ?? 'Téléphone non défini'); ?></span>
+              <span class="telephoneDisplay"><?= esc($telephone ?? 'Téléphone non défini'); ?></span>
             </div>
           </div>
         </div>
       </div>
-
-
     </div>
   </div>
 </div>
@@ -122,9 +120,7 @@
         </div>
       <?php endforeach; ?>
     </div>
-</div>
-
-
+  </div>
 
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
@@ -136,5 +132,4 @@
 <script async defer crossorigin="anonymous"
   src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=603470049247384"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
-
 <?= $this->endSection() ?>

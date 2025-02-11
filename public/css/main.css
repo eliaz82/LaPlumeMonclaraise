@@ -1,1497 +1,1367 @@
-.logo {
-  max-width: 60px;
-  height: auto;
-}
-
-.mt-navbar {
-  margin-top: 4.5rem;
-}
-
-body {
-  font-family: 'Arial', sans-serif;
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.row {
-  margin-bottom: 20px;
-}
-
-.col-md-6 {
-  padding: 20px;
-}
-
-.img-fluid {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-h1,
-h2,
-h3 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-p {
-  margin-bottom: 20px;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.mt-5 {
-  margin-top: 50px;
-}
-
-.mb-3 {
-  margin-bottom: 30px;
-}
-
-.mb-5 {
-  margin-bottom: 50px;
-}
-
-html, body {
-  overflow-x: hidden;
-}
-
-/*carousel actualite page d'accueil*/
-.carousel-cell {
-  width: 400px;
-  /* Largeur fixe pour chaque cellule */
-  height: 450px;
-  /* Hauteur fixe pour chaque cellule */
+/* =========================================================================
+   BOUTON TÉLÉCHARGER - PAGE INSCRIPTION
+   ========================================================================= */
+   .botao {
+    width: 125px;
+    height: 45px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 1px 1px rgba(129, 161, 208, 1);
+    padding: 5px 10px;
+    background: rgb(47, 93, 197);
+    background: linear-gradient(160deg, rgba(47, 93, 197, 1) 0%, rgba(29, 34, 67, 1) 5%, rgba(29, 34, 67, 1) 100%, rgba(129, 161, 208, 1) 57%, rgba(153, 187, 234, 1) 71%);
+    color: #fff;
+    font-family: Roboto, sans-serif;
+    font-weight: 505;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    position: relative;
+    transition: .5s linear;
+  }
   
-}
-
-.fb-post {
-  width: 100px;
-}
-
-
-/*bouton télécharger page inscription*/
-.botao {
-  width: 125px;
-  height: 45px;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 1px 1px rgba(129, 161, 208, 1);
-  padding: 5px 10px;
-  background: rgb(47, 93, 197);
-  background: linear-gradient(160deg, rgba(47, 93, 197, 1) 0%, rgba(29, 34, 67, 1) 5%, rgba(29, 34, 67, 1) 100%, rgba(129, 161, 208, 1) 57%, rgba(153, 187, 234, 1) 71%);
-  color: #fff;
-  font-family: Roboto, sans-serif;
-  font-weight: 505;
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  position: relative;
-  transition: .5s linear;
-}
-
-.botao .mysvg {
-  display: none;
-  /* La flèche est cachée par défaut */
-}
-
-.botao .texto {
-  display: inline;
-  /* Le texte "Télécharger" est visible par défaut */
-}
-
-.botao:hover {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  padding: 0;
-  background: #81A1D0;
-  /* couleur de fond au survol */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-.botao:hover .mysvg {
-  display: inline;
-  /* La flèche apparaît au survol */
-}
-
-.botao:hover .texto {
-  display: none;
-  /* Le texte "Télécharger" disparaît au survol */
-}
-
-.botao:hover::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 3.5px solid transparent;
-  border-top: 3.5px solid #fff;
-  border-right: 3.5px solid #fff;
-  border-radius: 50%;
-  animation: animateC 2s linear infinite;
-}
-
-@keyframes animateC {
-  0% {
-    transform: rotate(0deg);
+  .botao .mysvg {
+    display: none;
   }
-
-  100% {
-    transform: rotate(360deg);
+  
+  .botao .texto {
+    display: inline;
   }
-}
-
-/* Assurez-vous que le lien est bien positionné sur le bouton */
-.btn-download {
-  display: inline-block;
-  text-decoration: none;
-  color: inherit;
-  position: relative;
-}
-
-.botao a {
-  text-decoration: none;
-  color: #fff;
-  /* Définit la couleur du texte en blanc */
-}
-
-.botao a .texto {
-  color: inherit;
-  /* Hérite de la couleur définie pour le lien */
-}
-
-
-/* boutton envoyer page contact*/
-.button-container {
-  display: flex;
-  justify-content: center;
-  /* Centre horizontalement */
-  align-items: center;
-  /* Centre verticalement */
-}
-
-.btn-unique {
-  font-family: inherit;
-  font-size: 20px;
-  background-color: white;
-  /* Fond blanc */
-  color: #1D2243;
-  /* Texte en bleu (le bleu de fond original) */
-  padding: 0.7em 1em;
-  padding-left: 0.9em;
-  display: flex;
-  align-items: center;
-
-  /* Bordure noire */
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.2s;
-  cursor: pointer;
-  width: 150px;
-  /* Fixe la largeur du bouton */
-  justify-content: center;
-  /* Centre le contenu horizontalement */
-}
-
-.btn-unique .btn-label {
-  display: block;
-  margin-left: 0.3em;
-  transition: all 0.3s ease-in-out;
-}
-
-.btn-unique svg {
-  display: block;
-  transform-origin: center center;
-  transition: transform 0.3s ease-in-out;
-}
-
-.btn-unique:hover .icon-wrapper-inner {
-  animation: fly-animation 0.6s ease-in-out infinite alternate;
-}
-
-.btn-unique:hover svg {
-  transform: translateX(1.2em) rotate(45deg) scale(1.1);
-}
-
-.btn-unique:hover .btn-label {
-  transform: translateX(5em);
-}
-
-.btn-unique:active {
-  transform: scale(0.95);
-}
-
-@keyframes fly-animation {
-  from {
-    transform: translateY(0.1em);
+  
+  .botao:hover {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0;
+    background: #81A1D0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
   }
-
-  to {
-    transform: translateY(-0.1em);
+  
+  .botao:hover .mysvg {
+    display: inline;
   }
-}
-
-/* Footer général */
-/*boutton reseaux layout*/
-.footer-section {
-  background-color: rgb(29, 34, 67);
-  color: white;
-}
-
-.footer-section h5 {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.footer-section p,
-.footer-section ul {
-  margin-bottom: 1rem;
-}
-
-.footer-links-list {
-  padding: 0;
-}
-
-.footer-link {
-  text-decoration: none;
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-
-.footer-section {
-  background-color: rgb(29, 34, 67);
-  color: white;
-  /* Texte par défaut en blanc */
-}
-
-.footer-section h5 {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-  color: white;
-  /* Assure que le titre est en blanc */
-}
-
-.footer-section p,
-.footer-section ul {
-  margin-bottom: 1rem;
-  color: white;
-  /* Texte de paragraphes en blanc */
-}
-
-.footer-link {
-  text-decoration: none;
-  color: white;
-  /* Liens en blanc */
-  transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-  color: rgba(255, 255, 255, 0.7);
-  /* Liens au survol en blanc plus léger */
-}
-
-/* Boutons réseaux sociaux */
-.social-btn {
-  position: relative;
-  border: none;
-  margin: 10px;
-  background-color: transparent;
-}
-
-.social-link {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
-  /* Coins légèrement arrondis */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid white;
-  /* Contour blanc */
-  box-shadow: 0 5px 45px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(2px);
-  transition: 0.5s;
-  overflow: hidden;
-  background-color: rgb(255, 255, 255);
-  /* Fond légèrement blanc mais non rond */
-}
-
-.social-link:hover {
-  transform: translateY(-20px);
-  background-color: rgba(255, 255, 255, 0.2);
-  /* Fond plus clair au survol */
-}
-
-.social-link::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 50px;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
-  transform: skewX(45deg) translateX(150px);
-  transition: 0.5s ease;
-}
-
-.social-link:hover::before {
-  transform: skewX(45deg) translateX(-150px);
-}
-
-.social-icon {
-  width: 3em;
-  color: white;
-  /* Icône en blanc */
-}
-
-#facebook {
-  color: rgba(10, 128, 236, 0.7);
-  /* Icône bleue */
-}
-
-
-
-/* Style du bouton Modifier page inscription*/
-#bouton-modifier-inscription {
-  padding: 0.5rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: 0.5rem;
-  background-color: #1D2243;
-  color: white;
-  border: 1px solid #1D2243;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Changement de couleur au survol */
-#bouton-modifier-inscription:hover {
-  background-color: #81A1D0;
-  border-color: #81A1D0;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Effet au clic */
-#bouton-modifier-inscription:active {
-  background-color: #81A1D0;
-  border-color: #1D2243;
-  transform: translateY(2px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-/* Option de focus */
-#bouton-modifier-inscription:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(29, 34, 67, 1);
-}
-
-#drop-area {
-  border: 2px dashed #ccc;
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-#drop-area:hover {
-  background: rgba(29, 34, 67, 1);
-}
-
-#drop-area .drop-title {
-  font-size: 1rem;
-  color: #666;
-}
-
-.text-center button {
-  margin-right: 15px;
-}
-
-
-/* page histoire */
-.custom-title-color {
-  color: rgba(129, 161, 208, 1);
-}
-
-/* Effet de zoom pour l'image */
-.hover-scale {
-  transition: transform 0.3s ease-in-out;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-/* Couleur personnalisée pour les titres */
-.custom-title-color {
-  color: rgba(129, 161, 208, 1);
-}
-
-/* Effet de grisement */
-.image-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.image-container img {
-  transition: transform 0.5s ease-in-out;
-}
-
-.image-container:hover img {
-  transform: scale(1.1);
-}
-
-.custom-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.custom-image-container:hover .custom-overlay {
-  opacity: 1;
-}
-
-
-
-/* Styles pour le formulaire de contact */
-
-
-/* Agrandissement global du formulaire */
-.contact-map {
-  max-width: 100%;
-}
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  /* Espacement entre les champs */
-  width: 100%;
-  /* Champs prennent toute la largeur du formulaire */
-}
-
-
-#contact-heading {
-  text-align: center;
-  margin-bottom: 1em;
-  color: #ffffff;
-  font-size: 1.5em;
-}
-
-.contact-field {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  border-radius: 20px;
-  padding: 0.5em 1em;
-  background-color: #ffffff;
-  box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
-}
-
-.contact-input,
-.contact-textarea {
-  background: none;
-  border: none;
-  outline: none;
-  width: 100%;
-  color: #333333;
-  font-size: 0.9em;
-  padding: 0.4em;
-}
-
-.contact-textarea {
-  resize: none;
-  height: 100px;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 1em;
-}
-
-.btn-unique {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* Centrer le texte dans le bouton */
-  gap: 10px;
-  padding: 0.7em 2em;
-  /* Ajuster la taille du bouton */
-  background-color: #ffffff;
-  /* Fond blanc */
-  color: #1D2243;
-  /* Texte en couleur sombre pour contraster avec le fond blanc */
-  font-size: 1.1em;
-  /* Taille de texte ajustée pour plus de lisibilité */
-  border: none;
-  border-radius: 25px;
-  transition: 0.4s ease-in-out;
-  white-space: nowrap;
-  /* Empêche le texte de se couper sur une nouvelle ligne */
-}
-
-.btn-unique:hover {
-  background-color: #ffffff;
-  color: rgb(31, 31, 31);
-  /* Le texte devient blanc au survol */
-  transform: scale(1.05);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-.recaptcha-container {
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
-}
-
-
-
-.contact-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  /* Aligne les éléments en haut */
-  gap: 2rem;
-  /* Espacement entre le formulaire et l'image */
-  padding: 2em;
-}
-
-.contact-container {
-  flex: none;
-  /* Empêche le formulaire de s'étirer automatiquement */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5em;
-  background-color: #1D2243;
-  border-radius: 25px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  /* Augmente la largeur maximale du formulaire */
-  width: 100%;
-  /* Le formulaire s'adapte à la largeur disponible */
-}
-
-/* Bouton de suppression page association */
-.btn-danger {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  padding: 5px 10px;
-}
-
-
-
-/* ------------------- Généralités et Mise en page ------------------- */
-
-/* Logo */
-.logo {
-  max-width: 60px;
-  height: auto;
-}
-
-/* Marges du navbar */
-.mt-navbar {
-  margin-top: 4.5rem;
-}
-
-/* Police générale */
-body {
-  font-family: 'Arial', sans-serif;
-}
-
-/* Container général */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-/* Structure des lignes et colonnes */
-.row {
-  margin-bottom: 20px;
-}
-
-.col-md-6 {
-  padding: 20px;
-}
-
-/* Images responsives */
-.img-fluid {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Styles des titres */
-h1, h2, h3 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-/* Styles des paragraphes */
-p {
-  margin-bottom: 20px;
-}
-
-/* Textes centrés */
-.text-center {
-  text-align: center;
-}
-
-/* Marges supplémentaires */
-.mt-5 {
-  margin-top: 50px;
-}
-
-.mb-3 {
-  margin-bottom: 30px;
-}
-
-.mb-5 {
-  margin-bottom: 50px;
-}
-
-/* Empêcher le défilement horizontal */
-html, body {
-  overflow-x: hidden;
-}
-
-
-/* ------------------- Carrousel Actualités (Page d'accueil) ------------------- */
-
-.carousel-cell {
-  width: 400px;
-  height: 450px;
-}
-
-/* Publication Facebook */
-.fb-post {
-  width: 100px;
-}
-
-
-/* ------------------- Boutons et Formulaires ------------------- */
-
-/* Bouton télécharger (Page Inscription) */
-.botao {
-  width: 125px;
-  height: 45px;
-  border-radius: 20px;
-  border: none;
-  box-shadow: 1px 1px rgba(129, 161, 208, 1);
-  padding: 5px 10px;
-  background: rgb(47, 93, 197);
-  background: linear-gradient(160deg, rgba(47, 93, 197, 1) 0%, rgba(29, 34, 67, 1) 5%, rgba(29, 34, 67, 1) 100%, rgba(129, 161, 208, 1) 57%, rgba(153, 187, 234, 1) 71%);
-  color: #fff;
-  font-family: Roboto, sans-serif;
-  font-weight: 505;
-  font-size: 16px;
-  line-height: 1;
-  cursor: pointer;
-  position: relative;
-  transition: .5s linear;
-}
-
-/* Effets de survol pour le bouton Télécharger */
-.botao:hover {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  padding: 0;
-  background: #81A1D0;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
-
-/* Bouton pour envoyer (Page Contact) */
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.btn-unique {
-  font-family: inherit;
-  font-size: 20px;
-  background-color: white;
-  color: #1D2243;
-  padding: 0.7em 1em;
-  padding-left: 0.9em;
-  display: flex;
-  align-items: center;
-  border-radius: 16px;
-  transition: all 0.2s;
-  cursor: pointer;
-  width: 150px;
-  justify-content: center;
-}
-
-.btn-unique:hover {
-  background-color: #ffffff;
-  color: rgb(31, 31, 31);
-  transform: scale(1.05);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-
-/* ------------------- Footer ------------------- */
-
-.footer-section {
-  background-color: rgb(29, 34, 67);
-  color: white;
-}
-
-.footer-section h5 {
-  font-size: 1.25rem;
-  margin-bottom: 1rem;
-}
-
-.footer-link {
-  text-decoration: none;
-  color: white;
-  transition: color 0.3s ease;
-}
-
-.footer-link:hover {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-/* Boutons Réseaux Sociaux */
-.social-btn {
-  position: relative;
-  border: none;
-  margin: 10px;
-  background-color: transparent;
-}
-
-.social-link {
-  width: 80px;
-  height: 80px;
-  border-radius: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 2px solid white;
-  box-shadow: 0 5px 45px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(2px);
-  transition: 0.5s;
-  background-color: rgb(255, 255, 255);
-}
-
-/* Effets au survol des boutons réseaux sociaux */
-.social-link:hover {
-  transform: translateY(-20px);
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.social-icon {
-  width: 3em;
-  color: white;
-}
-
-#facebook {
-  color: rgba(10, 128, 236, 0.7);
-}
-
-
-/* ------------------- Formulaire de Contact ------------------- */
-
-/* Structure du formulaire de contact */
-.contact-map {
-  max-width: 100%;
-}
-
-.contact-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-}
-
-/* Titre du formulaire */
-#contact-heading {
-  text-align: center;
-  margin-bottom: 1em;
-  color: #ffffff;
-  font-size: 1.5em;
-}
-
-/* Champs du formulaire */
-.contact-field {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  border-radius: 20px;
-  padding: 0.5em 1em;
-  background-color: #ffffff;
-  box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
-}
-
-/* Champs texte */
-.contact-input, .contact-textarea {
-  background: none;
-  border: none;
-  outline: none;
-  width: 100%;
-  color: #333333;
-  font-size: 0.9em;
-  padding: 0.4em;
-}
-
-.contact-textarea {
-  resize: none;
-  height: 100px;
-}
-
-/* Bouton du formulaire */
-.btn-unique {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 0.7em 2em;
-  background-color: #ffffff;
-  color: #1D2243;
-  font-size: 1.1em;
-  border: none;
-  border-radius: 25px;
-  transition: 0.4s ease-in-out;
-  white-space: nowrap;
-}
-
-/* Effet de survol du bouton */
-.btn-unique:hover {
-  background-color: #ffffff;
-  color: rgb(31, 31, 31);
-  transform: scale(1.05);
-  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
-}
-
-/* ------------------- Page Histoire ------------------- */
-
-/* Titre avec couleur personnalisée */
-.custom-title-color {
-  color: rgba(129, 161, 208, 1);
-}
-
-/* Effet de zoom sur les images */
-.hover-scale {
-  transition: transform 0.3s ease-in-out;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-/* Container d'image avec effet de survol */
-.image-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.image-container img {
-  transition: transform 0.5s ease-in-out;
-}
-
-.image-container:hover img {
-  transform: scale(1.1);
-}
-
-.custom-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.custom-image-container:hover .custom-overlay {
-  opacity: 1;
-}
-
-
-/* ------------------- Carousel (Page Calendrier) ------------------- */
-
-/* Conteneur principal du carousel page calendrier */
-.carousel-container {
-  position: relative;
-  height: 500px; /* Fixe la hauteur du carousel */
-  background: #f8f9fa;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden; /* Empêche les éléments de déborder */
-}
-
-/* Positionner les flèches dans leur conteneur spécifique */
-.carousel-nav-up, .carousel-nav-down {
-  position: absolute; /* Positionnement absolu pour les flèches */
-  width: 100%;
-  text-align: center;
-  background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
-  padding: 10px 0;
-  border: none;
-  cursor: pointer;
-  z-index: 10;
-}
-
-/* Positionner la flèche du haut en haut du conteneur */
-.carousel-nav-up {
-  top: 0; /* Aligne la flèche en haut du conteneur */
-}
-
-/* Positionner la flèche du bas en bas du conteneur */
-.carousel-nav-down {
-  bottom: 0; /* Aligne la flèche en bas du conteneur */
-}
-
-/* Icônes des flèches */
-.carousel-nav-up i, .carousel-nav-down i {
-  font-size: 20px;
-}
-
-/* Style du carousel */
-.carousel {
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease-in-out;
-}
-
-/* Style des posts */
-.carousel .post {
-  padding: 20px;
-  box-sizing: border-box;
-  background: #ffffff;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease;
-}
-
-/* Survol des posts */
-.carousel .post:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-/* Texte des posts */
-.carousel .post p {
-  font-size: 16px;
-  line-height: 1.5;
-  color: #333;
-}
-
-/* Mettre en surbrillance l'élément sélectionné */
-.highlight {
-  background-color: #4a90e2 !important;
-  border: 2px solid #f5a623 !important;
-  border-radius: 5px;
-}
-
-.post {
-  display: flex;  /* Aligne le texte et l'image sur la même ligne */
-  align-items: center;  /* Assure que l'image et le texte sont bien alignés verticalement */
-}
-
-.post p {
-  margin-right: 10px; /* Ajoute un espace légèrement plus grand entre le texte et l'image */
-  flex-grow: 1;  /* Permet au texte de prendre tout l'espace restant */
-}
-
-.post-image {
-  width: 80px; /* Agrandit l'image */
-  height: 80px;
-  object-fit: cover; /* Maintient l'intégrité de l'image sans la déformer */
-}
-
-#zoom-container {
+  
+  .botao:hover .texto {
+    display: none;
+  }
+  
+  .botao:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3.5px solid transparent;
+    border-top: 3.5px solid #fff;
+    border-right: 3.5px solid #fff;
+    border-radius: 50%;
+    animation: animateC 2s linear infinite;
+  }
+  
+  @keyframes animateC {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .btn-download {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+  
+  .botao a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .botao a .texto {
+    color: inherit;
+  }
+  
+  /* =========================================================================
+     BOUTON ENVOYER - PAGE CONTACT
+     ========================================================================= */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .btn-unique {
+    font-family: inherit;
+    font-size: 20px;
+    background-color: white;
+    color: #1D2243;
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    transition: all 0.2s;
+    cursor: pointer;
+    width: 150px;
+    justify-content: center;
+  }
+  
+  .btn-unique .btn-label {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-unique svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .btn-unique:hover .icon-wrapper-inner {
+    animation: fly-animation 0.6s ease-in-out infinite alternate;
+  }
+  
+  .btn-unique:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+  
+  .btn-unique:hover .btn-label {
+    transform: translateX(5em);
+  }
+  
+  .btn-unique:active {
+    transform: scale(0.95);
+  }
+  
+  @keyframes fly-animation {
+    from {
+      transform: translateY(0.1em);
+    }
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
+  
+  /* =========================================================================
+     FOOTER GÉNÉRAL
+     ========================================================================= */
+  .footer-section {
+    background-color: rgb(29, 34, 67);
+    color: white;
+  }
+  
+  .footer-section h5 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-section p,
+  .footer-section ul {
+    margin-bottom: 1rem;
+  }
+  
+  .footer-links-list {
+    padding: 0;
+  }
+  
+  .footer-link {
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-link:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  
+  /* =========================================================================
+     BOUTONS RÉSEAUX SOCIAUX
+     ========================================================================= */
+  .social-btn {
+    position: relative;
+    border: none;
+    margin: 10px;
+    background-color: transparent;
+  }
+  
+  .social-link {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid white;
+    box-shadow: 0 5px 45px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    transition: 0.5s;
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+  }
+  
+  .social-link:hover {
+    transform: translateY(-20px);
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: skewX(45deg) translateX(150px);
+    transition: 0.5s ease;
+  }
+  
+  .social-link:hover::before {
+    transform: skewX(45deg) translateX(-150px);
+  }
+  
+  .social-icon {
+    width: 3em;
+    color: white;
+  }
+  
+  #facebook {
+    color: rgba(10, 128, 236, 0.7);
+  }
+  
+  /* =========================================================================
+     BOUTON MODIFIER - PAGE INSCRIPTION
+     ========================================================================= */
+  #bouton-modifier-inscription {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    background-color: #1D2243;
+    color: white;
+    border: 1px solid #1D2243;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  #bouton-modifier-inscription:hover {
+    background-color: #81A1D0;
+    border-color: #81A1D0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  #bouton-modifier-inscription:active {
+    background-color: #81A1D0;
+    border-color: #1D2243;
+    transform: translateY(2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  #bouton-modifier-inscription:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(29, 34, 67, 1);
+  }
+  
+  /* =========================================================================
+     ZONE DE DÉPÔT
+     ========================================================================= */
+  #drop-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  #drop-area:hover {
+    background: rgba(29, 34, 67, 1);
+  }
+  
+  #drop-area .drop-title {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .text-center button {
+    margin-right: 15px;
+  }
+  
+  /* =========================================================================
+     PAGE HISTOIRE (Section Images et Effets)
+     ========================================================================= */
+  .custom-title-color {
+    color: rgba(129, 161, 208, 1);
+  }
+  
+  .hover-scale {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  .image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image-container img {
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .image-container:hover img {
+    transform: scale(1.1);
+  }
+  
+  .custom-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .custom-image-container:hover .custom-overlay {
+    opacity: 1;
+  }
+  
+  /* =========================================================================
+     FORMULAIRE DE CONTACT
+     ========================================================================= */
+  .contact-map {
+    max-width: 100%;
+  }
+  
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+  
+  #contact-heading {
+    text-align: center;
+    margin-bottom: 1em;
+    color: #ffffff;
+    font-size: 1.5em;
+  }
+  
+  .contact-field {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    border-radius: 20px;
+    padding: 0.5em 1em;
+    background-color: #ffffff;
+    box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
+  }
+  
+  .contact-input,
+  .contact-textarea {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    color: #333333;
+    font-size: 0.9em;
+    padding: 0.4em;
+  }
+  
+  .contact-textarea {
+    resize: none;
+    height: 100px;
+  }
+  
+  .recaptcha-container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  
+  .contact-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2em;
+  }
+  
+  .contact-container {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5em;
+    background-color: #1D2243;
+    border-radius: 25px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  /* =========================================================================
+     BOUTON DE SUPPRESSION - PAGE ASSOCIATION
+     ========================================================================= */
+  .btn-danger {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    padding: 5px 10px;
+  }
+  
+  /* =========================================================================
+     GÉNÉRALITÉS ET MISE EN PAGE
+     ========================================================================= */
+  .logo {
+    max-width: 60px;
+    height: auto;
+  }
+  
+  .mt-navbar {
+    margin-top: 4.5rem;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .row {
+    margin-bottom: 20px;
+  }
+  
+  .col-md-6 {
+    padding: 20px;
+  }
+  
+  .img-fluid {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  h1, h2, h3 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin-bottom: 20px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mt-5 {
+    margin-top: 50px;
+  }
+  
+  .mb-3 {
+    margin-bottom: 30px;
+  }
+  
+  .mb-5 {
+    margin-bottom: 50px;
+  }
+  
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  /* =========================================================================
+     CARROUSEL ACTUALITÉS
+     ========================================================================= */
+  .carousel-cell {
+    width: 400px;
+    height: 450px;
+  }
+  
+  .fb-post {
+    width: 100px;
+  }
+  
+  /* =========================================================================
+     PAGE HISTOIRE (Répétition - Effets sur images & Titres)
+     ========================================================================= */
+  .custom-title-color {
+    color: rgba(129, 161, 208, 1);
+  }
+  
+  .hover-scale {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.05);
+  }
+  
+  .image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .image-container img {
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .image-container:hover img {
+    transform: scale(1.1);
+  }
+  
+  .custom-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .custom-image-container:hover .custom-overlay {
+    opacity: 1;
+  }
+  
+  /* =========================================================================
+     CAROUSEL - PAGE CALENDRIER
+     ========================================================================= */
+  .carousel-container {
+    position: relative;
+    height: 500px; /* Hauteur fixe du carousel */
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Empêche le débordement */
+  }
+  
+  .carousel-nav-up, .carousel-nav-down {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px 0;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  .carousel-nav-up {
+    top: 0;
+  }
+  
+  .carousel-nav-down {
+    bottom: 0;
+  }
+  
+  .carousel-nav-up i, .carousel-nav-down i {
+    font-size: 20px;
+  }
+  
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .carousel .post {
+    padding: 20px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .carousel .post:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .carousel .post p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .highlight {
+    background-color: #4a90e2 !important;
+    border: 2px solid #f5a623 !important;
+    border-radius: 5px;
+  }
+  
+  .post {
+    display: flex;
+    align-items: center;
+  }
+  
+  .post p {
+    margin-right: 10px;
+    flex-grow: 1;
+  }
+  
+  .post-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+  }
+  
+  #zoom-container {
     display: none;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.8); /* Masque tout sauf l'image zoomée */
+    background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
-    z-index: 9999; /* S'assure que le zoom est au-dessus de tous les autres éléments */
-}
-
-#zoomed-image {
+    z-index: 9999;
+  }
+  
+  #zoomed-image {
     max-width: 90%;
     max-height: 90%;
     object-fit: contain; 
-}
-
-.post {
-  display: flex;
-  align-items: center; /* Aligner verticalement */
-  gap: 10px; /* Ajoute un espace entre l'image et le bouton */
-}
-
-.post img {
-  max-width: 100px; /* Ajuste selon tes besoins */
-  height: auto;
-  border-radius: 5px;
-}
-
-.read-more-button {
-  font-size: 14px;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
-  white-space: nowrap;
-  min-width: 80px;
-  text-align: center;
-}
-
-.read-more-button:hover {
-  background-color: #0056b3;
-  transform: scale(1.05);
-}
-
-.read-more-button:active {
-  transform: scale(0.98);
-}
-
-.scrolling-text {
-  display: inline-block;
-  white-space: nowrap;
-  padding-left: 100%;
-  animation: scrollText 8s linear infinite;
-}
-
-@keyframes scrollText {
-  from {
-      transform: translateX(0);
   }
-  to {
-      transform: translateX(-100%);
+  
+  .post {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .post img {
+    max-width: 100px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .read-more-button {
+    font-size: 14px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    white-space: nowrap;
+    min-width: 80px;
+    text-align: center;
+  }
+  
+  .read-more-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  .read-more-button:active {
+    transform: scale(0.98);
+  }
+  
+  .scrolling-text {
+    display: inline-block;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: scrollText 8s linear infinite;
+  }
+  
+  @keyframes scrollText {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+  }
+  
+  /* =========================================================================
+     LOGO - PAGE D'ACCUEIL
+     ========================================================================= */
+  .icon-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .popup-info {
+    visibility: hidden;
+    width: max-content;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 10;
+  }
+  
+  .icon-container:hover .popup-info {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* =========================================================================
+     LAYOUT GÉNÉRAL & CURSEUR PERSONNALISÉ
+     ========================================================================= */
+  .custom-modal {
+    max-width: 75vw;
+  }
+  
+  /* Applique le curseur personnalisé à tous les éléments interactifs */
+  * {
+    cursor: url('/image/cursor.cur') 16 16, auto !important;
+  }
+  
+  .button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgb(20, 20, 20);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 0px 4px rgba(112, 177, 238, 0.25);
+    cursor: pointer;
+    transition-duration: 0.3s;
+    overflow: hidden;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .svgIcon {
+    width: 12px;
+    transition-duration: 0.3s;
+  }
+  
+  .svgIcon path {
+    fill: white;
+  }
+  
+  .button:hover {
+    width: 140px;
+    border-radius: 50px;
+    transition-duration: 0.3s;
+    background-color: rgba(129, 161, 208, 1);
+    align-items: center;
+  }
+  
+  .button:hover .svgIcon {
+    transform: translateY(-200%);
+    transition-duration: 0.3s;
+  }
+  
+  .button::before {
+    position: absolute;
+    bottom: -20px;
+    content: "Haut de page";
+    color: white;
+    font-size: 0px;
+    transition-duration: 0.3s;
+  }
+  
+  .button:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    bottom: unset;
+    transition-duration: 0.3s;
+  }
+  
+  /* =========================================================================
+     ALBUM PHOTO
+     ========================================================================= */
+  .dropdown-item.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .dropdown-item.active i {
+    color: white;
+  }
+  
+  .facebook-overlay-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .facebook-icon {
+    width: 35px;
+    height: 35px;
+    color: #1877F2;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  .custom-image-container {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+  
+  .custom-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .custom-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .custom-image-container:hover .custom-overlay {
+    opacity: 1;
+  }
+  
+  .overlay-text {
+    text-align: center;
+    color: white;
+    padding: 20px;
+  }
+  
+  .overlay-text h5 {
+    font-size: 1.75rem;
+  }
+  
+  .overlay-text p {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .overlay-text .btn {
+    margin: 5px;
+  }
+  
+  .btn-primary,
+  .btn-warning,
+  .btn-danger {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .btn-primary:hover,
+  .btn-warning:hover,
+  .btn-danger:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+  }
+  
+  /* =========================================================================
+     CALENDRIER
+     ========================================================================= */
+  .past-event {
+    opacity: 0.5;
+    background-color: #d9534f;
+  }
+  
+  /* =========================================================================
+     FAIT MARQUANT - RÉINITIALISATION ET EN-TÊTE DE LA PAGE
+     ========================================================================= */
+  /* En-tête de la page */
+  .header {
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .header p {
+    font-size: 1.2rem;
+    font-weight: 300;
+  }
+  
+  /* Conteneur global */
+  .page-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+  }
+  
+  /* Conteneur de chaque post */
+  .post {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    padding: 20px;
+  }
+  
+  .post:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Inverse l'ordre pour les posts pairs */
+  .post:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  
+  /* Zone d'affichage de l'image */
+  .post-image {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+    border-radius: 8px;
+  }
+  
+  /* Contenu du post */
+  .content-container {
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .content-container p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 10px;
+    white-space: pre-line;
+  }
+  
+  /* Bouton "Lire plus" */
+  .read-more {
+    color: #0f4c75;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+  
+  /* Message en cas d'absence de faits marquants */
+  .no-posts {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-top: 40px;
+  }
+  
+  /* =========================================================================
+     PHOTO GALLERY
+     ========================================================================= */
+  .photo-gallery {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 20px;
+    column-count: 3;
+    column-gap: 15px;
+    box-sizing: border-box;
+    background: rgb(240, 240, 240);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .photo-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 15px;
+    position: relative;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  
+  .photo-item:hover {
+    transform: scale(1.03);
+    filter: brightness(0.85);
+  }
+  
+  .photo-img {
+    width: 100%;
+    border-radius: 5px;
+    display: block;
+  }
+  
+  .photo-actions {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .photo-item:hover .photo-actions {
+    opacity: 1;
+  }
+  
+  .photo-actions button {
+    background: rgba(255, 69, 58, 0.9);
+    border: none;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background 0.3s ease;
+  }
+  
+  .photo-actions button:hover {
+    background: #ff453a;
+  }
+  
+  .zoom-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .zoomed-image {
+    max-width: 85%;
+    max-height: 85%;
+    border-radius: 5px;
+    animation: zoomIn 0.3s ease-in-out;
+  }
+  
+  #close-zoom {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+  
+  #close-zoom:hover {
+    opacity: 0.8;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes zoomIn {
+    from { transform: scale(0.8); }
+    to { transform: scale(1); }
+  }
+  
+  @media (max-width: 1200px) {
+    .photo-gallery { column-count: 2; }
+  }
+  
+  @media (max-width: 768px) {
+    .photo-gallery { column-count: 1; }
+  }
+  
+  /* =========================================================================
+   RESPONSIVE ADJUSTMENTS - Déjà présents pour tablettes et mobiles moyens
+   ========================================================================= */
+@media (max-width: 991px) {
+  .container {
+    padding: 15px;
+  }
+  .row {
+    margin-bottom: 15px;
+  }
+  .col-md-6 {
+    padding: 15px;
+  }
+  
+  .botao {
+    width: 110px;
+    height: 40px;
+    font-size: 14px;
+  }
+  .btn-unique {
+    width: 130px;
+    font-size: 18px;
+    padding: 0.6em 0.8em;
+  }
+  
+  .carousel-container {
+    height: 450px;
+  }
+  .carousel .post {
+    padding: 15px;
+  }
+  
+  .contact-container {
+    width: 90%;
+    padding: 1em;
+  }
+  .post {
+    flex-direction: column;
+    text-align: center;
+  }
+  .post-image {
+    width: 100%;
+    height: auto;
   }
 }
-/* ------------------- Logo (Page d'accueil) ------------------- */
-.icon-container {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
+
+@media (max-width: 767px) {
+  .botao {
+    width: 90px;
+    height: 35px;
+    font-size: 12px;
+  }
+  .btn-unique {
+    width: 120px;
+    font-size: 16px;
+    padding: 0.5em 0.7em;
+  }
+  
+  .footer-section {
+    padding: 15px;
+    text-align: center;
+  }
+  .social-link {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .carousel-container {
+    height: 350px;
+  }
+  .carousel .post {
+    padding: 10px;
+  }
+  .post {
+    flex-direction: column;
+  }
+  .post-image {
+    width: 100%;
+    height: auto;
+  }
+  
+  .contact-container {
+    width: 100%;
+    padding: 10px;
+  }
+  .header {
+    padding: 20px 10px;
+  }
+  .header h1 {
+    font-size: 2rem;
+  }
+  .header p {
+    font-size: 1rem;
+  }
+  
+  .page-container {
+    padding: 10px;
+  }
+  
+  .custom-image-container {
+    height: 250px;
+  }
 }
 
-.popup-info {
-  visibility: hidden;
-  width: max-content;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  text-align: center;
-  padding: 5px 10px;
-  border-radius: 5px;
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s, visibility 0.3s;
-  z-index: 10;
-}
-
-.icon-container:hover .popup-info {
-  visibility: visible;
-  opacity: 1;
-}
-/* ------------------- layout ------------------- */
-.custom-modal {
-  max-width: 75vw;
-}
-
-/* Applique le curseur personnalisé à tous les éléments interactifs */
-* {
-  cursor: url('/image/cursor.cur') 16 16, auto !important;
-}
-
-
-.button {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background-color: rgb(20, 20, 20);
-  border: none;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 0px 0px 4px rgba(112, 177, 238, 0.25);
-  cursor: pointer;
-  transition-duration: 0.3s;
-  overflow: hidden;
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
-.svgIcon {
-  width: 12px;
-  transition-duration: 0.3s;
-}
-
-.svgIcon path {
-  fill: white;
-}
-
-/* Nouvelle couleur et texte au survol */
-.button:hover {
-  width: 140px;
-  border-radius: 50px;
-  transition-duration: 0.3s;
-  background-color: rgba(129, 161, 208, 1);
-  align-items: center;
-}
-
-.button:hover .svgIcon {
-  transform: translateY(-200%);
-  transition-duration: 0.3s;
-}
-
-/* Texte affiché au survol */
-.button::before {
-  position: absolute;
-  bottom: -20px;
-  content: "Haut de page";
-  color: white;
-  font-size: 0px;
-  transition-duration: 0.3s;
-}
-
-.button:hover::before {
-  font-size: 13px;
-  opacity: 1;
-  bottom: unset;
-  transition-duration: 0.3s;
-}
-/* ------------------- album photo ------------------- */
-.dropdown-item.active {
-  background-color: #007bff;
-  color: white;
-}
-
-.dropdown-item.active i {
-  color: white;
-}
-.facebook-overlay-icon {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: white;
-  padding: 8px;
-  border-radius: 50%;
-  transition: background 0.3s ease-in-out;
-}
-
-.facebook-icon {
-  width: 35px;
-  height: 35px;
-  color: #1877F2;
-  transition: color 0.3s ease-in-out;
-}
-
-.custom-image-container {
-  position: relative;
-  width: 100%;
-  height: 350px;
-  overflow: hidden;
-  border-radius: 20px;
-}
-
-.custom-image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.custom-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.custom-image-container:hover .custom-overlay {
-  opacity: 1;
-}
-
-.overlay-text {
-  text-align: center;
-  color: white;
-  padding: 20px;
-}
-
-.overlay-text h5 {
-  font-size: 1.75rem;
-}
-
-.overlay-text p {
-  font-size: 1.2rem;
-  margin-bottom: 15px;
-}
-
-.overlay-text .btn {
-  margin: 5px;
-}
-
-.btn-primary,
-.btn-warning,
-.btn-danger {
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.btn-primary:hover,
-.btn-warning:hover,
-.btn-danger:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
-}
-
-.btn-primary {
-  background-color: #007bff;
-}
-
-.btn-warning {
-  background-color: #ffc107;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-}
-
-
-/* ------------------- calendrier ------------------- */
-.past-event {
-  opacity: 0.5;
-  background-color: #d9534f;
-}
-
-/* ------------------- fait marquant ------------------- */
- /* Réinitialisation de base */
-
-
-/* En-tête de la page */
-.header {
-  color: #fff;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 10px;
-}
-
-.header p {
-  font-size: 1.2rem;
-  font-weight: 300;
-}
-
-/* Conteneur global */
-.page-container {
-  max-width: 1200px;
-  margin: 30px auto;
-  padding: 20px;
-}
-
-/* Conteneur de chaque post */
-.post {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
-  padding: 20px;
-}
-
-.post:hover {
-  transform: translateY(-5px);
-}
-
-/* Inverse l'ordre pour les posts pairs */
-.post:nth-child(even) {
-  flex-direction: row-reverse;
-}
-
-/* Zone d'affichage de l'image */
-.post-image {
-  width: 300px;
-  height: 300px;
-  overflow: hidden;
-  background-size: cover;
-  background-position: center;
-  flex-shrink: 0;
-  border-radius: 8px;
-}
-
-/* Contenu du post */
-.content-container {
-  flex: 1;
-  padding: 20px;
-  text-align: center;
-}
-
-.content-container p {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: #555;
-  margin-bottom: 10px;
-  white-space: pre-line;
-}
-
-/* Bouton "Lire plus" */
-.read-more {
-  color: #0f4c75;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: 1rem;
-  margin-top: 10px;
-}
-
-/* Message en cas d'absence de faits marquants */
-.no-posts {
-  text-align: center;
-  font-size: 1.4rem;
-  margin-top: 40px;
-}
-
-/* ------------------- Photo ------------------- */
-
-.photo-gallery {
-  width: 100vw;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 20px;
-  column-count: 3;
-  column-gap: 15px;
-  box-sizing: border-box;
-  background: rgb(240, 240, 240);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-/* --- Chaque photo s’adapte naturellement en hauteur --- */
-.photo-item {
-  display: inline-block;
-  width: 100%;
-  margin-bottom: 15px;
-  position: relative;
-  transition: transform 0.2s ease, filter 0.2s ease;
-}
-.photo-item:hover {
-  transform: scale(1.03);
-  filter: brightness(0.85);
-}
-.photo-img {
-  width: 100%;
-  border-radius: 5px;
-  display: block;
-}
-.photo-actions {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-.photo-item:hover .photo-actions {
-  opacity: 1;
-}
-.photo-actions button {
-  background: rgba(255, 69, 58, 0.9);
-  border: none;
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: background 0.3s ease;
-}
-.photo-actions button:hover {
-  background: #ff453a;
-}
-.zoom-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.9);
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
-}
-.zoomed-image {
-  max-width: 85%;
-  max-height: 85%;
-  border-radius: 5px;
-  animation: zoomIn 0.3s ease-in-out;
-}
-#close-zoom {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 40px;
-  color: #fff;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-#close-zoom:hover {
-  opacity: 0.8;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes zoomIn {
-  from { transform: scale(0.8); }
-  to { transform: scale(1); }
-}
-@media (max-width: 1200px) {
-  .photo-gallery { column-count: 2; }
-}
-@media (max-width: 768px) {
-  .photo-gallery { column-count: 1; }
+/* =========================================================================
+   RESPONSIVE POUR TÉLÉPHONES (max-width: 480px)
+   ========================================================================= */
+@media (max-width: 480px) {
+  /* Généralités */
+  html, body {
+    font-size: 14px; /* Ajustement global de la taille de police si besoin */
+  }
+  
+  .container {
+    padding: 10px;
+    max-width: 100%;
+  }
+  
+  /* Bouton Télécharger (.botao) */
+  .botao {
+    width: 75px;
+    height: 30px;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  .botao:hover {
+    /* Pour mobile, on peut désactiver le hover (s’il y a lieu)
+       ou prévoir que l’effet hover ne se déclenche pas naturellement */
+    width: 75px; /* Garder la taille en mode tactile */
+    height: 30px;
+  }
+  
+  /* Bouton Envoyer (.btn-unique) */
+  .btn-unique {
+    width: 100%;
+    max-width: 200px;
+    font-size: 14px;
+    padding: 0.5em 0.8em;
+    justify-content: center;
+  }
+  .btn-unique .btn-label {
+    margin-left: 0.2em;
+    font-size: 12px;
+  }
+  
+  /* Footer et réseaux sociaux */
+  .footer-section {
+    padding: 10px;
+  }
+  .social-link {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+  }
+  
+  /* Zone de dépôt */
+  #drop-area {
+    padding: 15px;
+  }
+  
+  /* Carousel Actualités et Calendrier */
+  .carousel-container {
+    height: auto;
+    padding: 10px;
+  }
+  .carousel-cell {
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+  .carousel .post {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* Formulaire de Contact */
+  .contact-container {
+    width: 100%;
+    padding: 10px;
+  }
+  .contact-field {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  .contact-input,
+  .contact-textarea {
+    font-size: 0.85em;
+    padding: 0.3em;
+  }
+  
+  /* Posts et Faits Marquants */
+  .post {
+    flex-direction: column;
+    padding: 10px;
+  }
+  .post-image {
+    width: 100%;
+    height: auto;
+  }
+  .content-container {
+    padding: 10px;
+  }
+  .read-more {
+    font-size: 0.9rem;
+  }
+  
+  /* Album Photo / Photo Gallery */
+  .photo-gallery {
+    padding: 10px;
+    column-count: 1;
+  }
+  .photo-item {
+    margin-bottom: 10px;
+  }
+  
+  /* Bouton "Haut de page" personnalisé */
+  .button {
+    width: 40px;
+    height: 40px;
+    bottom: 10px;
+    right: 10px;
+  }
+  .button:hover {
+    width: 100px;
+    border-radius: 20px;
+  }
+  
+  /* Réduire la taille des logos et autres images */
+  .logo {
+    max-width: 50px;
+  }
+  
+  /* Ajustements pour le calendrier */
+  .past-event {
+    font-size: 0.9rem;
+  }
+  
+  /* Popup et infos sur icônes */
+  .popup-info {
+    font-size: 0.8rem;
+    padding: 3px 6px;
+    bottom: 25px;
+  }
+  
+  /* Ajustement des boutons d’album photo */
+  .photo-actions button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
 }
