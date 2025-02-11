@@ -102,7 +102,10 @@ class Home extends BaseController
         } catch (\Exception $e) {
             // Log de l'erreur pour aider au débogage
             log_message('error', 'Erreur lors du traitement de la demande : ' . $e->getMessage());
-            return redirect()->to('/')->with('error', 'Une erreur est survenue. Veuillez réessayer plus tard.');
+            $logo = $this->associationModel->find(1);
+            return view('accueil', [
+                'logo' => $logo
+            ]);
         }
     }
 }
