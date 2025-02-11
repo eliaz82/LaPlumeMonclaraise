@@ -71,307 +71,311 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= url_to('contact') ?>">Contact</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        <i class="fas fa-cog settings-icon"></i>
-                    </a>
+                <?php if (auth()->loggedIn()): ?>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-cog settings-icon"></i>
+                        </a>
 
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profilModal">
-                                <i class="fas fa-user"></i> Profil
-                            </a>
-                        </li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">
-                                <i class="fas fa-tools"></i> Paramètres
-                            </a>
-                        </li>
-                        <li><a class="dropdown-item" href="#">
-                                <i class="fas fa-sign-out-alt"></i> Déconnexion
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#profilModal">
+                                    <i class="fas fa-user"></i> Profil
+                                </a>
+                            </li>
+                            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#settingsModal">
+                                    <i class="fas fa-tools"></i> Paramètres
+                                </a>
+                            </li>
+                            <li><a class="dropdown-item" href="<?= url_to('logout') ?>">
+                                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                <?php endif; ?>
+
             </ul>
         </div>
     </div>
 </nav>
-<!-- Modal Paramètres -->
-<div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <!-- En-tête de la modal -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="settingsModalLabel">
-                    <i class="bi bi-gear"></i> Paramètres
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
-            <!-- Corps de la modal -->
-            <div class="modal-body">
-                <!-- Onglets de navigation -->
-                <ul class="nav nav-tabs" id="settingsTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="token-tab" data-bs-toggle="tab" data-bs-target="#token"
-                            type="button" role="tab" aria-controls="token" aria-selected="true">
-                            <i class="bi bi-key"></i> Token d'Accès
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="hashtags-tab" data-bs-toggle="tab" data-bs-target="#hashtags"
-                            type="button" role="tab" aria-controls="hashtags" aria-selected="false">
-                            <i class="bi bi-hash"></i> Hashtags
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="fichier-inscription-tab" data-bs-toggle="tab"
-                            data-bs-target="#fichier-inscription" type="button" role="tab"
-                            aria-controls="fichier-inscription" aria-selected="false">
-                            <i class="bi bi-file-earmark-text"></i> Fichier Inscription
-                        </button>
-                    </li>
-                </ul>
+<?php if (auth()->loggedIn()): ?>
+    <!-- Modal Paramètres -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- En-tête de la modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">
+                        <i class="bi bi-gear"></i> Paramètres
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <!-- Corps de la modal -->
+                <div class="modal-body">
+                    <!-- Onglets de navigation -->
+                    <ul class="nav nav-tabs" id="settingsTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="token-tab" data-bs-toggle="tab" data-bs-target="#token"
+                                type="button" role="tab" aria-controls="token" aria-selected="true">
+                                <i class="bi bi-key"></i> Token d'Accès
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="hashtags-tab" data-bs-toggle="tab" data-bs-target="#hashtags"
+                                type="button" role="tab" aria-controls="hashtags" aria-selected="false">
+                                <i class="bi bi-hash"></i> Hashtags
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="fichier-inscription-tab" data-bs-toggle="tab"
+                                data-bs-target="#fichier-inscription" type="button" role="tab"
+                                aria-controls="fichier-inscription" aria-selected="false">
+                                <i class="bi bi-file-earmark-text"></i> Fichier Inscription
+                            </button>
+                        </li>
+                    </ul>
 
-                <!-- Contenu des onglets -->
-                <div class="tab-content mt-3" id="settingsTabContent">
-                    <!-- Gestion du Token -->
-                    <div class="tab-pane fade show active" id="token" role="tabpanel" aria-labelledby="token-tab">
-                        <h4>
-                            <i class="bi bi-shield-lock"></i> Gestion du Token d'Accès
-                        </h4>
-                        <div class="alert alert-info">
-                            <strong>Temps restant avant expiration :</strong>
-                            <span id="tokenCountdown">Calcul en cours...</span>
-                        </div>
-                        <button class="btn btn-warning mt-2" id="resetTokenBtn">
-                            <i class="bi bi-arrow-clockwise"></i> Réinitialiser le Token
-                        </button>
-                    </div>
-
-                    <!-- Gestion des Hashtags -->
-                    <div class="tab-pane fade" id="hashtags" role="tabpanel" aria-labelledby="hashtags-tab">
-                        <h4>
-                            <i class="bi bi-tags"></i> Gestion des Hashtags
-                        </h4>
-                        <!-- Sélection de la page -->
-                        <label for="pageSelect" class="form-label">Choisir une page :</label>
-                        <select id="pageSelect" class="form-select mb-3">
-                            <option value="evenementCalendrier">Événement+Calendrier</option>
-                            <option value="albumsphoto">Albums Photo</option>
-                            <option value="faitmarquant">Fait Marquant</option>
-                        </select>
-                        <!-- Ajout de hashtag -->
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport"
-                                value="#">
-                            <button class="btn btn-primary" id="addHashtag">
-                                <i class="bi bi-plus-lg"></i> Ajouter
+                    <!-- Contenu des onglets -->
+                    <div class="tab-content mt-3" id="settingsTabContent">
+                        <!-- Gestion du Token -->
+                        <div class="tab-pane fade show active" id="token" role="tabpanel" aria-labelledby="token-tab">
+                            <h4>
+                                <i class="bi bi-shield-lock"></i> Gestion du Token d'Accès
+                            </h4>
+                            <div class="alert alert-info">
+                                <strong>Temps restant avant expiration :</strong>
+                                <span id="tokenCountdown">Calcul en cours...</span>
+                            </div>
+                            <button class="btn btn-warning mt-2" id="resetTokenBtn">
+                                <i class="bi bi-arrow-clockwise"></i> Réinitialiser le Token
                             </button>
                         </div>
-                        <!-- Liste des hashtags -->
-                        <ul class="list-group" id="hashtagList">
-                            <?php if (isset($hashtags)): ?>
-                                <?php foreach ($hashtags as $hashtag): ?>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <?= $hashtag['hashtag'] ?>
-                                        <button class="btn btn-danger btn-sm remove-hashtag"
-                                            data-id="<?= $hashtag['idFacebook'] ?>">
-                                            <i class="bi bi-x-circle"></i>
-                                        </button>
-                                    </li>
-                                <?php endforeach; ?>
-                            <?php endif; ?>
-                        </ul>
-                    </div>
-                    <!-- Gestion du Fichier d'Inscription -->
-                    <div class="tab-pane fade" id="fichier-inscription" role="tabpanel"
-                        aria-labelledby="fichier-inscription-tab">
-                        <h4>
-                            <i class="bi bi-file-earmark-check"></i> Fichier d'Inscription
-                        </h4>
-                        <!-- Switch ON/OFF pour activer/désactiver l'affichage du fichier d'inscription -->
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="switchFichierInscription">
-                            <label class="form-check-label" for="switchFichierInscription" id="switchLabel">
-                                Chargement...
-                            </label>
+
+                        <!-- Gestion des Hashtags -->
+                        <div class="tab-pane fade" id="hashtags" role="tabpanel" aria-labelledby="hashtags-tab">
+                            <h4>
+                                <i class="bi bi-tags"></i> Gestion des Hashtags
+                            </h4>
+                            <!-- Sélection de la page -->
+                            <label for="pageSelect" class="form-label">Choisir une page :</label>
+                            <select id="pageSelect" class="form-select mb-3">
+                                <option value="evenementCalendrier">Événement+Calendrier</option>
+                                <option value="albumsphoto">Albums Photo</option>
+                                <option value="faitmarquant">Fait Marquant</option>
+                            </select>
+                            <!-- Ajout de hashtag -->
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" id="hashtagInput" placeholder="Ex: #Sport"
+                                    value="#">
+                                <button class="btn btn-primary" id="addHashtag">
+                                    <i class="bi bi-plus-lg"></i> Ajouter
+                                </button>
+                            </div>
+                            <!-- Liste des hashtags -->
+                            <ul class="list-group" id="hashtagList">
+                                <?php if (isset($hashtags)): ?>
+                                    <?php foreach ($hashtags as $hashtag): ?>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <?= $hashtag['hashtag'] ?>
+                                            <button class="btn btn-danger btn-sm remove-hashtag"
+                                                data-id="<?= $hashtag['idFacebook'] ?>">
+                                                <i class="bi bi-x-circle"></i>
+                                            </button>
+                                        </li>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </ul>
+                        </div>
+                        <!-- Gestion du Fichier d'Inscription -->
+                        <div class="tab-pane fade" id="fichier-inscription" role="tabpanel"
+                            aria-labelledby="fichier-inscription-tab">
+                            <h4>
+                                <i class="bi bi-file-earmark-check"></i> Fichier d'Inscription
+                            </h4>
+                            <!-- Switch ON/OFF pour activer/désactiver l'affichage du fichier d'inscription -->
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="switchFichierInscription">
+                                <label class="form-check-label" for="switchFichierInscription" id="switchLabel">
+                                    Chargement...
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Footer de la modal -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="bi bi-x-lg"></i> Fermer
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-<!-- Modal Profil -->
-<!-- Style personnalisé -->
-<style>
-    .custom-modal {
-        max-width: 75vw;
-    }
-
-    .settings-icon {
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .nav-link:hover .settings-icon {
-        transform: rotate(180deg);
-    }
-</style>
-
-<!-- Modal Profil -->
-<div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg"> <!-- Utilisation de modal-lg pour un modal de taille réduite -->
-        <div class="modal-content">
-            <!-- En-tête du modal -->
-            <div class="modal-header">
-                <h5 class="modal-title" id="profilModalLabel">
-                    <i class="bi bi-person"></i> Profil de l'association
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
-
-            <!-- Corps du modal avec navigation par onglets -->
-            <div class="modal-body">
-                <!-- Onglets de navigation -->
-                <ul class="nav nav-tabs" id="profilTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="localisation-tab" data-bs-toggle="tab"
-                            data-bs-target="#localisation" type="button" role="tab" aria-controls="localisation"
-                            aria-selected="true">
-                            <i class="bi bi-geo-alt"></i> Localisation
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo" type="button"
-                            role="tab" aria-controls="logo" aria-selected="false">
-                            <i class="bi bi-image"></i> Logo
-                        </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email"
-                            type="button" role="tab" aria-controls="email" aria-selected="false">
-                            <i class="bi bi-envelope"></i> Email
-                        </button>
-                    </li>
-                    <!-- Nouvel onglet Téléphone -->
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="telephone-tab" data-bs-toggle="tab" data-bs-target="#telephone"
-                            type="button" role="tab" aria-controls="telephone" aria-selected="false">
-                            <i class="bi bi-telephone"></i> Téléphone
-                        </button>
-                    </li>
-                </ul>
-
-                <!-- Contenu des onglets -->
-                <div class="tab-content mt-3" id="profilTabContent">
-                    <!-- Onglet Localisation -->
-                    <div class="tab-pane fade show active" id="localisation" role="tabpanel"
-                        aria-labelledby="localisation-tab">
-                        <h5 class="text-primary"><i class="bi bi-geo-alt"></i> Modifier la localisation</h5>
-                        <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
-                            <?= csrf_field() ?>
-                            <div class="mb-3">
-                                <label for="adresse" class="form-label">Adresse</label>
-                                <input type="text" id="adresse" name="adresse" class="form-control" required>
-                            </div>
-                            <!-- Champs cachés pour latitude et longitude -->
-                            <input type="hidden" id="latitude" name="latitude">
-                            <input type="hidden" id="longitude" name="longitude">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-save"></i> Modifier la localisation
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Onglet Logo -->
-                    <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
-                        <h5 class="text-primary"><i class="bi bi-image"></i> Gestion du Logo</h5>
-                        <!-- Aperçu du logo -->
-                        <div class="mb-3 d-flex justify-content-center align-items-center text-center">
-                            <img id="logoPreview" src="<?= base_url(getAssociationLogo()); ?>" alt="Logo actuel"
-                                style="max-width: 80%; max-height: 200px; border-radius: 8px; object-fit: cover; padding: 5px;">
-                        </div>
-                        <!-- Formulaire d'upload -->
-                        <form id="logoForm" method="post" action="<?= url_to('logoUpdate') ?>"
-                            enctype="multipart/form-data">
-                            <?= csrf_field() ?>
-                            <div class="mb-3">
-                                <input type="file" class="form-control" id="logoUpload" name="logo" accept="image/*"
-                                    onchange="previewImage(event, 'logoPreview')">
-                            </div>
-                            <button type="submit" class="btn btn-success">
-                                <i class="bi bi-upload"></i> Mettre à jour le Logo
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Onglet Email -->
-                    <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
-                        <h5 class="text-primary"><i class="bi bi-envelope-at"></i> Modifier l'Email de Réception</h5>
-                        <form action="<?= route_to('contactUpdate'); ?>" method="post">
-                            <?= csrf_field() ?>
-                            <div class="mb-3">
-                                <label for="mailContact" class="form-label">E-mail de réception :</label>
-                                <input type="email" id="mailContact" name="mailContact" class="form-control" required>
-                            </div>
-                            <!-- Champ caché pour l'id de l'association -->
-                            <input type="hidden" id="idAssociation" name="idAssociation">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-save"></i> Modifier
-                            </button>
-                        </form>
-                    </div>
-
-                    <!-- Nouvel Onglet Téléphone -->
-                    <div class="tab-pane fade" id="telephone" role="tabpanel" aria-labelledby="telephone-tab">
-                        <h5 class="text-primary"><i class="bi bi-telephone"></i> Modifier le numéro de téléphone</h5>
-                        <form action="<?= route_to('tel'); ?>" method="post">
-                            <?= csrf_field() ?>
-                            <div class="mb-3">
-                                <label for="telephoneInput" class="form-label">Numéro de téléphone :</label>
-                                <input type="tel" id="telephoneInput" name="telephone" class="form-control" required>
-                            </div>
-                            <!-- Champ caché pour l'id de l'association (ici, on suppose l'id 1, à adapter si besoin) -->
-                            <input type="hidden" id="idAssociationTelephone" name="idAssociation" value="1">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="bi bi-save"></i> Modifier le numéro
-                            </button>
-                        </form>
-                    </div>
-
-
+                <!-- Footer de la modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Fermer
+                    </button>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Footer du modal -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    <i class="bi bi-x-lg"></i> Fermer
-                </button>
+
+
+
+
+
+    <!-- Modal Profil -->
+    <!-- Style personnalisé -->
+    <style>
+        .custom-modal {
+            max-width: 75vw;
+        }
+
+        .settings-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link:hover .settings-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+
+    <!-- Modal Profil -->
+    <div class="modal fade" id="profilModal" tabindex="-1" aria-labelledby="profilModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg"> <!-- Utilisation de modal-lg pour un modal de taille réduite -->
+            <div class="modal-content">
+                <!-- En-tête du modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profilModalLabel">
+                        <i class="bi bi-person"></i> Profil de l'association
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+
+                <!-- Corps du modal avec navigation par onglets -->
+                <div class="modal-body">
+                    <!-- Onglets de navigation -->
+                    <ul class="nav nav-tabs" id="profilTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="localisation-tab" data-bs-toggle="tab"
+                                data-bs-target="#localisation" type="button" role="tab" aria-controls="localisation"
+                                aria-selected="true">
+                                <i class="bi bi-geo-alt"></i> Localisation
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="logo-tab" data-bs-toggle="tab" data-bs-target="#logo" type="button"
+                                role="tab" aria-controls="logo" aria-selected="false">
+                                <i class="bi bi-image"></i> Logo
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="email-tab" data-bs-toggle="tab" data-bs-target="#email"
+                                type="button" role="tab" aria-controls="email" aria-selected="false">
+                                <i class="bi bi-envelope"></i> Email
+                            </button>
+                        </li>
+                        <!-- Nouvel onglet Téléphone -->
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="telephone-tab" data-bs-toggle="tab" data-bs-target="#telephone"
+                                type="button" role="tab" aria-controls="telephone" aria-selected="false">
+                                <i class="bi bi-telephone"></i> Téléphone
+                            </button>
+                        </li>
+                    </ul>
+
+                    <!-- Contenu des onglets -->
+                    <div class="tab-content mt-3" id="profilTabContent">
+                        <!-- Onglet Localisation -->
+                        <div class="tab-pane fade show active" id="localisation" role="tabpanel"
+                            aria-labelledby="localisation-tab">
+                            <h5 class="text-primary"><i class="bi bi-geo-alt"></i> Modifier la localisation</h5>
+                            <form id="localisationForm" action="<?= route_to('localisation'); ?>" method="post">
+                                <?= csrf_field() ?>
+                                <div class="mb-3">
+                                    <label for="adresse" class="form-label">Adresse</label>
+                                    <input type="text" id="adresse" name="adresse" class="form-control" required>
+                                </div>
+                                <!-- Champs cachés pour latitude et longitude -->
+                                <input type="hidden" id="latitude" name="latitude">
+                                <input type="hidden" id="longitude" name="longitude">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Modifier la localisation
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Onglet Logo -->
+                        <div class="tab-pane fade" id="logo" role="tabpanel" aria-labelledby="logo-tab">
+                            <h5 class="text-primary"><i class="bi bi-image"></i> Gestion du Logo</h5>
+                            <!-- Aperçu du logo -->
+                            <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                                <img id="logoPreview" src="<?= base_url(getAssociationLogo()); ?>" alt="Logo actuel"
+                                    style="max-width: 80%; max-height: 200px; border-radius: 8px; object-fit: cover; padding: 5px;">
+                            </div>
+                            <!-- Formulaire d'upload -->
+                            <form id="logoForm" method="post" action="<?= url_to('logoUpdate') ?>"
+                                enctype="multipart/form-data">
+                                <?= csrf_field() ?>
+                                <div class="mb-3">
+                                    <input type="file" class="form-control" id="logoUpload" name="logo" accept="image/*"
+                                        onchange="previewImage(event, 'logoPreview')">
+                                </div>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-upload"></i> Mettre à jour le Logo
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Onglet Email -->
+                        <div class="tab-pane fade" id="email" role="tabpanel" aria-labelledby="email-tab">
+                            <h5 class="text-primary"><i class="bi bi-envelope-at"></i> Modifier l'Email de Réception</h5>
+                            <form action="<?= route_to('contactUpdate'); ?>" method="post">
+                                <?= csrf_field() ?>
+                                <div class="mb-3">
+                                    <label for="mailContact" class="form-label">E-mail de réception :</label>
+                                    <input type="email" id="mailContact" name="mailContact" class="form-control" required>
+                                </div>
+                                <!-- Champ caché pour l'id de l'association -->
+                                <input type="hidden" id="idAssociation" name="idAssociation">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Modifier
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Nouvel Onglet Téléphone -->
+                        <div class="tab-pane fade" id="telephone" role="tabpanel" aria-labelledby="telephone-tab">
+                            <h5 class="text-primary"><i class="bi bi-telephone"></i> Modifier le numéro de téléphone</h5>
+                            <form action="<?= route_to('tel'); ?>" method="post">
+                                <?= csrf_field() ?>
+                                <div class="mb-3">
+                                    <label for="telephoneInput" class="form-label">Numéro de téléphone :</label>
+                                    <input type="tel" id="telephoneInput" name="telephone" class="form-control" required>
+                                </div>
+                                <!-- Champ caché pour l'id de l'association (ici, on suppose l'id 1, à adapter si besoin) -->
+                                <input type="hidden" id="idAssociationTelephone" name="idAssociation" value="1">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Modifier le numéro
+                                </button>
+                            </form>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- Footer du modal -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-lg"></i> Fermer
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="config-data" data-site-url="<?= site_url() ?>" data-create-url="<?= site_url('facebook/create') ?>"
-    data-delete-url="<?= site_url('facebook/delete') ?>" data-expiration-url="<?= site_url('facebook/expiration') ?>"
-    data-login-url="<?= site_url('facebook/login') ?>" data-email-reception-url="<?= route_to('getEmailReception') ?>"
-    data-association-data-url="<?= route_to('getAssociationData') ?>"
-    data-fichier-inscription-etat-url="<?= base_url('getFichierInscriptionEtat') ?>"
-    data-update-fichier-inscription-etat-url="<?= base_url('updateFichierInscriptionEtat') ?>">
-</div>
+    <div id="config-data" data-site-url="<?= site_url() ?>" data-create-url="<?= site_url('facebook/create') ?>"
+        data-delete-url="<?= site_url('facebook/delete') ?>" data-expiration-url="<?= site_url('facebook/expiration') ?>"
+        data-login-url="<?= site_url('facebook/login') ?>" data-email-reception-url="<?= route_to('getEmailReception') ?>"
+        data-association-data-url="<?= route_to('getAssociationData') ?>"
+        data-fichier-inscription-etat-url="<?= base_url('getFichierInscriptionEtat') ?>"
+        data-update-fichier-inscription-etat-url="<?= base_url('updateFichierInscriptionEtat') ?>">
+    </div>
+<?php endif; ?>
 
 
 
@@ -408,7 +412,10 @@
         crossorigin="anonymous"></script>
     <?= script_tag('js/main.js') ?>
     <?= script_tag('js/image-preview.js') ?>
-    <?= script_tag('js/menuSettings.js') ?>
+    <?php if (auth()->loggedIn()): ?>
+        <?= script_tag('js/menuSettings.js') ?>
+    <?php endif; ?>
+
     <?= $this->renderSection('scripts') ?>
 </body>
 
