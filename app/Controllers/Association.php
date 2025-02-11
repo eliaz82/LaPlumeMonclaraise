@@ -52,32 +52,40 @@ class Association extends Controller
 
     public function tel()
     {
-        // Récupération des données envoyées en POST
-        $telephone    = $this->request->getPost('telephone');
-        $associationId = $this->request->getPost('idAssociation');
-
-        // Vous pouvez ajouter des validations sur le numéro de téléphone ici
-
-        // Préparation des données à mettre à jour
-        $data = [
-            'tel' => $telephone,
-        ];
-
-        // Mise à jour dans la base de données
-        if ($this->associationModel->update($associationId, $data)) {
-            // Succès : rediriger en renvoyant un message
-            return redirect()->back()->with('message', 'Téléphone mis à jour avec succès.');
-        } else {
-            // Erreur : rediriger avec un message d'erreur
-            return redirect()->back()->with('error', 'Erreur lors de la mise à jour du téléphone.');
+        try {
+            // Récupération des données envoyées en POST
+            $telephone    = $this->request->getPost('telephone');
+            $associationId = $this->request->getPost('idAssociation');
+    
+            // Vérification si les données sont valides
+            if (empty($telephone) || empty($associationId)) {
+                return redirect()->back()->with('error', 'Numéro de téléphone ou ID de l\'association manquant.');
+            }
+    
+            // Préparation des données à mettre à jour
+            $data = [
+                'tel' => $telephone,
+            ];
+    
+            // Mise à jour dans la base de données
+            if ($this->associationModel->update($associationId, $data)) {
+                // Succès : rediriger en renvoyant un message
+                return redirect()->back()->with('message', 'Téléphone mis à jour avec succès.');
+            } else {
+                // Erreur : rediriger avec un message d'erreur
+                return redirect()->back()->with('error', 'Erreur lors de la mise à jour du téléphone.');
+            }
+        } catch (\Exception $e) {
+            // Gestion des erreurs
+            return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
         }
     }
+    
 
     public function getAssociationData()
     {
-        try {
-            // Récupérer l'association (par exemple avec l'ID 1)
-            $association = $this->associationModel->find(1);
+        // Récupérer l'association (par exemple avec l'ID 1)
+        $association = $this->associationModel->find(1);
 
         // Vérifier si l'association existe et contient les informations requises
         if ($association) {
@@ -92,27 +100,6 @@ class Association extends Controller
             $adresse = "Adresse non définie";
             $tel     = ""; // Ou une valeur par défaut comme "Téléphone non défini"
         }
-            // Vérifier si l'association existe
-            if (!$association) {
-                // Renvoi des valeurs par défaut en cas d'absence de données
-                return $this->response->setJSON([
-                    'latitude' => 43.966742479238754,
-                    'longitude' => 1.5866446106619663,
-                    'adresse' => "Adresse non définie",
-                ]);
-            }
-
-            // Valider les données récupérées
-            $lat = $association['latitude'];
-            $lon = $association['longitude'];
-            $adresse = $association['adresse'] ?? "Adresse non définie"; // Valeur par défaut si adresse est vide
-
-            // Vérifier si la latitude et la longitude sont valides (par exemple, entre -90 et 90 pour latitude et -180 et 180 pour longitude)
-            if (!is_numeric($lat) || !is_numeric($lon) || $lat < -90 || $lat > 90 || $lon < -180 || $lon > 180) {
-                return $this->response->setJSON([
-                    'error' => 'Données géographiques invalides.',
-                ]);
-            }
 
         // Préparer les données à renvoyer
         $data = [
@@ -121,23 +108,8 @@ class Association extends Controller
             'adresse'   => $adresse,
             'tel'       => $tel,
         ];
-            // Préparer les données à renvoyer
-            $data = [
-                'latitude' => $lat,
-                'longitude' => $lon,
-                'adresse' => $adresse,
-            ];
 
-            return $this->response->setJSON($data);
-        } catch (\Exception $e) {
-            // Log de l'erreur pour le débogage
-            log_message('error', 'Erreur lors de la récupération des données de l\'association : ' . $e->getMessage());
-
-            // Retourner une réponse d'erreur générique
-            return $this->response->setJSON([
-                'error' => 'Une erreur est survenue lors de la récupération des données.',
-            ]);
-        }
+        return $this->response->setJSON($data);
     }
 
 
