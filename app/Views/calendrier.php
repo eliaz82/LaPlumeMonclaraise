@@ -51,15 +51,16 @@
 <style>
     .past-event {
         opacity: 0.5;
-        /* Tu peux aussi modifier la couleur de fond ou d'autres styles, par exemple : */
-        background-color: #d9534f !important;
+        background-color: #d9534f;
     }
 </style>
 
-<div id="eventData" data-event-url="<?= site_url('evenement') ?>"
-    data-posts="<?= htmlspecialchars(json_encode($posts)) ?>"
-    data-events="<?= htmlspecialchars(json_encode($events)) ?>">
+<div id="eventData"
+    data-event-url="<?= esc(site_url('evenement'), 'attr') ?>"
+    data-posts="<?= esc(json_encode($posts), 'attr') ?>"
+    data-events="<?= esc(json_encode($events), 'attr') ?>">
 </div>
+
 
 <?= $this->endSection() ?>
 

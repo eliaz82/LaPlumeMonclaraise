@@ -15,6 +15,7 @@
                 <div class="modal-content">
                     <form id="formulaire-ajouter-adherent" method="post"
                         action="<?= esc(url_to('equipeSubmit'), 'attr') ?>" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" id="modalAjouterAdherentLabel">Ajouter un adhérent</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -96,6 +97,7 @@
             <div class="modal-content">
                 <form id="formulaire-modifier-adherent" method="post"
                     action="<?= esc(url_to('equipeUpdate'), 'attr') ?>" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
                     <div class="modal-header">
                         <h5 class="modal-title text-primary" id="modalModifierAdherentLabel">Modifier un adhérent</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

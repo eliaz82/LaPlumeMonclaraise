@@ -10,6 +10,7 @@ class AlbumsPhoto extends BaseController
     private $photoModel;
     private $facebookModel;
     private $facebookCache;
+    private $validation;
 
     public function __construct()
     {
@@ -17,241 +18,457 @@ class AlbumsPhoto extends BaseController
         $this->photoModel = model('Photo');
         $this->facebookModel = model('Facebook');
         $this->facebookCache = new FacebookCache();
+        $this->validation = \Config\Services::validation();
     }
 
     public function albumsPhoto(): string
     {
-        $albumsPhotos = $this->albumsPhoto->findAll();
+        // Initialisation des variables
+        $albumsPhotos = [];
+        $facebookMapping = [];
 
-        // Appels à l'API pour récupérer les posts et les images
-        $posts = $this->facebookCache->getFacebookPosts();
+        try {
+            // Récupérer tous les albums photos
+            $albumsPhotos = $this->albumsPhoto->findAll();
 
-        $hashtags = $this->facebookModel->where('pageName', 'albumsphoto')->findAll();
-        $hashtagList = array_column($hashtags, 'hashtag');
+            // Récupérer les posts Facebook via le cache
+            $posts = $this->facebookCache->getFacebookPosts();
+            if (empty($posts['data'])) {
+                throw new \Exception("Aucun post récupéré depuis Facebook.");
+            }
 
-        $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
-            if (isset($post['message'])) {
-                foreach ($hashtagList as $hashtag) {
-                    if (strpos($post['message'], $hashtag) !== false) {
-                        return true;
+            // Récupérer les hashtags liés aux albums
+            $hashtags = array_column(
+                $this->facebookModel->where('pageName', 'albumsphoto')->findAll(),
+                'hashtag'
+            );
+
+            // Filtrer les posts Facebook avec les hashtags
+            $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtags) {
+                return isset($post['message']) && array_filter($hashtags, fn($tag) => strpos($post['message'], $tag) !== false);
+            });
+
+            // Gestion des albums depuis Facebook
+            foreach ($filteredPosts as $post) {
+                $dateAlbums = null;
+
+                // Extraction et validation de la date
+                if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
+                    [$day, $month, $year] = explode('/', $matches[1]);
+                    if (checkdate($month, $day, $year)) {
+                        $dateAlbums = "$year-$month-$day";
                     }
                 }
-            }
-            return false;
-        });
-        foreach ($filteredPosts as $post) {
-            // Extraire la date de l'événement depuis le message du post
-            $dateAlbums = null;
-            if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
-                $dateAlbums = $matches[1];
-            }
-
-            // Vérifier la validité de la date extraite
-            if ($dateAlbums) {
-                list($day, $month, $year) = explode('/', $dateAlbums);
-                if (!checkdate($month, $day, $year)) {
-                    $dateAlbums = null; // Date invalide, on l'ignore
+                if (!$dateAlbums) {
+                    $dateAlbums = date('Y-m-d', strtotime($post['created_time']));
                 }
-            }
 
-            // Si aucune date n'a été extraite, utiliser la date de publication
-            if (!$dateAlbums) {
-                $dateAlbums = date('Y-m-d', strtotime($post['created_time']));
-            } else {
-                // Convertir en format `Y-m-d`
-                $dateAlbums = "$year-$month-$day";
-            }
-            if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
-                $facebookMapping[$dateAlbums] = $post['id'];
-            }
+                // Récupération du titre
+                preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
+                $titreAlbums = $titleMatches[1] ?? $dateAlbums;
 
+                // Vérifier et récupérer l'image principale
+                $photo = $post['attachments']['data'][0]['media']['image']['src'] ?? null;
 
-            preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
-            $titreAlbums = isset($titleMatches[1]) ? $titleMatches[1] : $dateAlbums;
+                if ($photo) {
+                    $facebookMapping[$dateAlbums] = $post['id'];
 
-            // Vérifier s'il y a des pièces jointes (images)
-            if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
-                // Récupérer la première image
-                $photo = $post['attachments']['data'][0]['media']['image']['src'];
+                    // Vérifier si un album existe déjà
+                    $existingAlbum = $this->albumsPhoto->where('dateAlbums', $dateAlbums)->first();
+                    $idAlbums = $existingAlbum['idAlbums'] ?? null;
 
-                // Vérifier si un album avec la même date existe déjà
-                $existingAlbum = $this->albumsPhoto->where('dateAlbums', $dateAlbums)
-                    ->first();
-                // Si l'album n'existe pas déjà, on crée un nouvel album
-                if (!$existingAlbum) {
-                    // Créer un nouvel album photo
-                    $this->albumsPhoto->save([
-                        'dateAlbums' => $dateAlbums,
-                        'nom' => $titreAlbums, // Pas de nom pour l'album
-                        'photo' => $photo, // Première photo du post
-                    ]);
-                    // Récupérer l'ID de l'album nouvellement créé
-                    $idAlbums = $this->albumsPhoto->getInsertID();
-                } else {
-                    // Si l'album existe déjà, on récupère l'ID
-                    $idAlbums = $existingAlbum['idAlbums'];
-                }
-                // Initialiser un tableau pour stocker les URLs des photos à ajouter
-                $photosFacebook = [];
-                $seenImageUrls = [];
-                // Vérifier les pièces jointes principales (attachments)
-                if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
-                    $imageSrc = $post['attachments']['data'][0]['media']['image']['src'];
-                    $imageId = $post['attachments']['data'][0]['target']['id'];
-                    if (!in_array($imageSrc, $seenImageUrls)) {
-                        $photosFacebook[] = ['url' => $imageSrc, 'id' => $imageId];
-                        $seenImageUrls[] = $imageSrc;  // Marquer cette URL comme déjà vue
+                    if (!$existingAlbum) {
+                        // Créer un nouvel album
+                        $this->albumsPhoto->save([
+                            'dateAlbums' => $dateAlbums,
+                            'nom' => $titreAlbums,
+                            'photo' => $photo,
+                        ]);
+                        $idAlbums = $this->albumsPhoto->getInsertID();
                     }
-                }
-                // Vérifier les subattachments (sous-pièces jointes)
-                if (isset($post['attachments']['data'][0]['subattachments']['data'])) {
-                    foreach ($post['attachments']['data'][0]['subattachments']['data'] as $subattachment) {
-                        if (isset($subattachment['media']['image']['src'])) {
-                            $imageSrc = $subattachment['media']['image']['src'];
-                            $imageId = $subattachment['target']['id'];
-                            if (!in_array($imageSrc, $seenImageUrls)) {
+
+                    // Gestion des photos associées
+                    $photosFacebook = [];
+                    $seenImageUrls = [];
+
+                    // Ajouter l'image principale
+                    if (!in_array($photo, $seenImageUrls)) {
+                        $photosFacebook[] = ['url' => $photo, 'id' => $post['attachments']['data'][0]['target']['id']];
+                        $seenImageUrls[] = $photo;
+                    }
+
+                    // Ajouter les images des sous-pièces jointes
+                    if (isset($post['attachments']['data'][0]['subattachments']['data'])) {
+                        foreach ($post['attachments']['data'][0]['subattachments']['data'] as $subattachment) {
+                            $imageSrc = $subattachment['media']['image']['src'] ?? null;
+                            $imageId = $subattachment['target']['id'] ?? null;
+
+                            if ($imageSrc && !in_array($imageSrc, $seenImageUrls)) {
                                 $photosFacebook[] = ['url' => $imageSrc, 'id' => $imageId];
-                                $seenImageUrls[] = $imageSrc;  // Marquer cette URL comme déjà vue
+                                $seenImageUrls[] = $imageSrc;
                             }
                         }
                     }
-                }
-                foreach ($photosFacebook as $photoData) {
-                    // Vérifier si l'image existe déjà dans la base de données
-                    $imageExists = $this->photoModel->where('idPhotoFacebook', $photoData['id'])->first();
 
-                    if (!$imageExists) {
-                        // Enregistrer l'image si elle n'existe pas déjà
-                        $this->photoModel->save([
-                            'idAlbums' => $idAlbums,
-                            'photo' => $photoData['url'],
-                            'idPhotoFacebook' => $photoData['id'],
-                        ]);
+                    // Enregistrer les images si elles n'existent pas déjà
+                    foreach ($photosFacebook as $photoData) {
+                        if (!$this->photoModel->where('idPhotoFacebook', $photoData['id'])->first()) {
+                            $this->photoModel->save([
+                                'idAlbums' => $idAlbums,
+                                'photo' => $photoData['url'],
+                                'idPhotoFacebook' => $photoData['id'],
+                            ]);
+                        }
                     }
                 }
             }
-        }
-        $tri = $this->request->getGet('tri') ?? 'desc'; // Par défaut, tri du plus récent au plus ancien
 
-        $albumsPhotos = $this->albumsPhoto->orderBy('dateAlbums', $tri)->findAll();
+            // Gestion du tri
+            $tri = $this->request->getGet('tri') ?? 'desc';
+            $albumsPhotos = $this->albumsPhoto->orderBy('dateAlbums', $tri)->findAll();
 
-        foreach ($albumsPhotos as $key => $album) {
-            // Si une correspondance a été trouvée pour la date de cet album, on ajoute l'URL
-            if (isset($facebookMapping[$album['dateAlbums']])) {
-                $albumsPhotos[$key]['postFacebookUrl'] = "https://www.facebook.com/" . $facebookMapping[$album['dateAlbums']];
-            } else {
-                $albumsPhotos[$key]['postFacebookUrl'] = ""; // ou null si aucune correspondance
+            // Associer les posts Facebook aux albums
+            foreach ($albumsPhotos as $key => $album) {
+                $albumsPhotos[$key]['postFacebookUrl'] = isset($facebookMapping[$album['dateAlbums']])
+                    ? "https://www.facebook.com/" . $facebookMapping[$album['dateAlbums']]
+                    : "";
             }
+
+            // Retourner la vue avec les albums
+            return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos, 'tri' => $tri]);
+        } catch (\Exception $e) {
+            log_message('error', $e->getMessage());
+
+            return view('albumsPhoto', [
+                'albumsPhotos' => [],
+                'tri' => 'desc',
+            ]);
         }
-        return view('albumsPhoto', ['albumsPhotos' => $albumsPhotos, 'tri' => $tri]);
     }
 
     public function createAlbumsPhoto()
     {
+        // Récupérer les données envoyées
         $albumPhotoData = $this->request->getPost();
-        $photo = $this->request->getFile('photo');
 
-        if ($photo && $photo->isValid()) {
-            $filePath = FCPATH . 'uploads/albumsPhoto/';
-            $photo->move($filePath);
-            $albumPhotoData['photo'] = 'uploads/albumsPhoto/' . $photo->getName();
+        // Appliquer les règles de validation
+        if (!$this->validation->run($albumPhotoData, 'album_photo_rules')) {
+            return redirect()->back()->withInput()->with('validation', $this->validation->getErrors());
         }
 
-        $this->albumsPhoto->insert($albumPhotoData);
+        // Récupérer le fichier photo
+        $photo = $this->request->getFile('photo');
+
+        // Vérifier si un fichier est bien téléchargé et valide
+        if (!$photo->isValid() || $photo->hasMoved()) {
+            return redirect()->back()->withInput()->with('error', 'Le fichier est invalide ou déjà déplacé.');
+        }
+
+        // Vérifier le type de fichier
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
+        if (!in_array($photo->getExtension(), $allowedExtensions)) {
+            return redirect()->back()->withInput()->with('error', 'Format de fichier non autorisé.');
+        }
+
+        // Définir le chemin de destination
+        $uploadPath = FCPATH . 'uploads/albumsPhoto/';
+
+        // Vérifier et créer le dossier si nécessaire
+        if (!is_dir($uploadPath) && !mkdir($uploadPath, 0755, true) && !is_dir($uploadPath)) {
+            return redirect()->back()->withInput()->with('error', 'Impossible de créer le dossier de stockage.');
+        }
+
+        // Générer un nom de fichier unique
+        $newFileName = $photo->getRandomName();
+
+        // Déplacer le fichier
+        if (!$photo->move($uploadPath, $newFileName)) {
+            return redirect()->back()->withInput()->with('error', 'Erreur lors du téléchargement de la photo.');
+        }
+
+        // Ajouter le chemin de la photo aux données de l'album
+        $albumPhotoData['photo'] = 'uploads/albumsPhoto/' . $newFileName;
+
+        // Insérer l'album photo dans la base de données avec gestion des erreurs
+        if (!$this->albumsPhoto->insert($albumPhotoData)) {
+            return redirect()->back()->withInput()->with('error', "Erreur lors de l'ajout de l'album photo en base.");
+        }
+
+        // Succès
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été ajouté avec succès.");
     }
 
+
+
+
     public function updateAlbumsPhoto()
     {
-        $idAlbums = $this->request->getPost('idAlbums');
-        $data = $this->request->getPost();
+        // Récupérer les données envoyées
+        $albumPhotoData = $this->request->getPost();
 
+        // Vérifier si l'ID de l'album est bien fourni
+        $idAlbums = $this->request->getPost('idAlbums');
+        if (!$idAlbums) {
+            return redirect()->back()->with('error', 'ID d\'album manquant.');
+        }
+
+        // Vérifier si l'album existe
         $album = $this->albumsPhoto->find($idAlbums);
+        if (!$album) {
+            return redirect()->back()->with('error', 'Album introuvable.');
+        }
+
+        // Appliquer les règles de validation
+        if (!$this->validation->run($albumPhotoData, 'album_photo_rules')) {
+            return redirect()->back()->withInput()->with('validation', $this->validation->getErrors());
+        }
+
+        // Récupérer le fichier photo
         $photo = $this->request->getFile('photo');
 
-        if ($photo && $photo->isValid()) {
-            $filePath = FCPATH . 'uploads/albumsPhoto/';
-            $photo->move($filePath);
-            $photoUrl = 'uploads/albumsPhoto/' . $photo->getName();
+        if ($photo && $photo->isValid() && !$photo->hasMoved()) {
+            // Vérifier l'extension du fichier
+            $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
+            if (!in_array($photo->getExtension(), $allowedExtensions)) {
+                return redirect()->back()->withInput()->with('error', 'Format de fichier non autorisé.');
+            }
 
+            // Définir le chemin de destination
+            $uploadPath = FCPATH . 'uploads/albumsPhoto/';
+
+            // Vérifier et créer le dossier si nécessaire
+            if (!is_dir($uploadPath) && !mkdir($uploadPath, 0755, true) && !is_dir($uploadPath)) {
+                return redirect()->back()->withInput()->with('error', 'Impossible de créer le dossier de stockage.');
+            }
+
+            // Générer un nom de fichier unique
+            $newFileName = $photo->getRandomName();
+
+            // Déplacer le fichier
+            if (!$photo->move($uploadPath, $newFileName)) {
+                return redirect()->back()->withInput()->with('error', 'Erreur lors du téléchargement de la photo.');
+            }
+
+            // Supprimer l'ancienne photo si elle existe
             if (!empty($album['photo']) && file_exists(FCPATH . $album['photo'])) {
                 unlink(FCPATH . $album['photo']);
             }
-            $data['photo'] = $photoUrl;
+
+            // Ajouter le nouveau chemin de la photo aux données de l'album
+            $albumPhotoData['photo'] = 'uploads/albumsPhoto/' . $newFileName;
         }
 
-        $this->albumsPhoto->update($idAlbums, $data);
+        // Mettre à jour l'album photo dans la base de données
+        if (!$this->albumsPhoto->update($idAlbums, $albumPhotoData)) {
+            return redirect()->back()->with('error', "Erreur lors de la mise à jour de l'album photo.");
+        }
+
+        // Succès
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été modifié avec succès.");
     }
 
+
     public function albumsPhotoDelete()
     {
-        $idAlbums = $this->request->getPost('idAlbums');
-        $album = $this->albumsPhoto->find($idAlbums);
+        // Récupérer l'instance de la base de données
+        $db = \Config\Database::connect();
+        $db->transBegin(); // Démarrer une transaction
 
-        $photos = $this->photoModel->where('idAlbums', $idAlbums)->findAll();
-        foreach ($photos as $photo) {
-            if (!empty($photo['photo']) && file_exists(FCPATH . $photo['photo']) && is_writable(FCPATH . $photo['photo'])) {
-                unlink(FCPATH . $photo['photo']);
+        try {
+            // Récupérer l'ID de l'album photo à supprimer
+            $idAlbums = $this->request->getPost('idAlbums');
+
+            // Vérification de l'ID
+            if (empty($idAlbums) || !ctype_digit($idAlbums)) {
+                throw new \Exception("ID d'album invalide.");
             }
-        }
-        $this->photoModel->where('idAlbums', $idAlbums)->delete();
 
-        if (!empty($album['photo']) && file_exists(FCPATH . $album['photo'])) {
-            unlink(FCPATH . $album['photo']);
-        }
+            // Récupérer l'album
+            $album = $this->albumsPhoto->find($idAlbums);
+            if (!$album) {
+                throw new \Exception("L'album photo n'existe pas.");
+            }
 
-        $this->albumsPhoto->delete($idAlbums);
-        return redirect()->route('albumsPhoto')->with('success', "L'album photo a été supprimé avec succès.");
+            // Récupérer les photos associées
+            $photos = $this->photoModel->where('idAlbums', $idAlbums)->findAll();
+
+            // Supprimer les fichiers des photos associées
+            foreach ($photos as $photo) {
+                $photoPath = FCPATH . $photo['photo'];
+                if (!empty($photo['photo']) && file_exists($photoPath) && is_writable($photoPath)) {
+                    unlink($photoPath);
+                }
+            }
+
+            // Supprimer les photos associées en base de données
+            $this->photoModel->where('idAlbums', $idAlbums)->delete();
+
+            // Supprimer la photo de l'album
+            $albumPhotoPath = FCPATH . $album['photo'];
+            if (!empty($album['photo']) && file_exists($albumPhotoPath) && is_writable($albumPhotoPath)) {
+                unlink($albumPhotoPath);
+            }
+
+            // Supprimer l'album
+            $this->albumsPhoto->delete($idAlbums);
+
+            // Commit de la transaction
+            $db->transCommit();
+
+            return redirect()->route('albumsPhoto')->with('success', "L'album photo a été supprimé avec succès.");
+        } catch (\Exception $e) {
+            $db->transRollback(); // Annulation de la transaction en cas d'erreur
+            return redirect()->route('albumsPhoto')->with('error', "Erreur : " . $e->getMessage());
+        }
     }
+
+
 
     public function photo($idAlbums)
     {
-        $photos = $this->photoModel->findPhotobyAlbumsPhotoId($idAlbums);
-
-        $album = $this->albumsPhoto->find($idAlbums);
-
-        if (empty($photos)) {
-            $photos = [];
+        // Vérifier si l'ID est valide
+        if (!$idAlbums || !is_numeric($idAlbums)) {
+            return redirect()->back()->with('error', 'Album invalide.');
         }
 
-        return view('photo', ['photos' => $photos, 'idAlbums' => $idAlbums, 'album' => $album]);
+        // Récupérer l'album
+        $album = $this->albumsPhoto->find($idAlbums);
+        if (!$album) {
+            return redirect()->back()->with('error', 'Album introuvable.');
+        }
+
+        // Récupérer les photos de l'album
+        $photos = $this->photoModel->findPhotobyAlbumsPhotoId($idAlbums) ?? [];
+
+        return view('photo', [
+            'photos' => $photos,
+            'idAlbums' => $idAlbums,
+            'album' => $album
+        ]);
     }
+
     public function createPhoto()
     {
         $idAlbums = $this->request->getPost('idAlbums');
+        if (!$idAlbums) {
+            return redirect()->back()->with('error', 'L\'album est introuvable.');
+        }
 
         $files = $this->request->getFiles();
+        if (!isset($files['photo']) || empty($files['photo'])) {
+            return redirect()->back()->with('error', 'Aucune photo sélectionnée.');
+        }
 
-        if (isset($files['photo'])) {
-            foreach ($files['photo'] as $photo) {
-                if ($photo->isValid() && !$photo->hasMoved()) {
-                    $filePath = FCPATH . 'uploads/photos/';
-                    $photo->move($filePath);
-                    $data = [
-                        'photo' => 'uploads/photos/' . $photo->getName(),
-                        'idAlbums' => $idAlbums,
-                    ];
-                    $this->photoModel->insert($data);
+        $uploadPath = FCPATH . 'uploads/photos/';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
+        // Définition des types et extensions autorisés
+        $allowedMimeTypes = [
+            'image/jpeg',
+            'image/png',
+            'image/gif',
+            'image/svg+xml',
+            'image/bmp',
+            'image/webp',
+            'image/tiff',
+            'image/x-icon'
+        ];
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg', 'bmp', 'webp', 'tif', 'tiff', 'ico'];
+        $maxFileSize = 10 * 1024 * 1024; // 10 Mo en octets
+
+        foreach ($files['photo'] as $photo) {
+            if (!$photo->isValid() || $photo->hasMoved()) {
+                return redirect()->back()->with('error', "Le fichier {$photo->getClientName()} est invalide ou déjà déplacé.");
+            }
+
+            // Vérification de la taille
+            if ($photo->getSize() > $maxFileSize) {
+                return redirect()->back()->with('error', "Le fichier {$photo->getClientName()} dépasse la taille maximale autorisée (10 Mo).");
+            }
+
+            // Vérification du type MIME
+            if (!in_array($photo->getMimeType(), $allowedMimeTypes)) {
+                return redirect()->back()->with('error', "Le fichier {$photo->getClientName()} n'est pas un format d'image valide.");
+            }
+
+            // Vérification de l'extension
+            $ext = strtolower($photo->getExtension());
+            if (!in_array($ext, $allowedExtensions)) {
+                return redirect()->back()->with('error', "Le fichier {$photo->getClientName()} a une extension non autorisée.");
+            }
+
+            // ⚠️ Sécurisation des SVG
+            if ($ext === 'svg') {
+                $fileContent = file_get_contents($photo->getTempName());
+                if (preg_match('/<script|onload|onclick|onerror|onmouseover/i', $fileContent)) {
+                    return redirect()->back()->with('error', "Le fichier {$photo->getClientName()} contient du code potentiellement dangereux.");
                 }
             }
+
+            // Renommage du fichier avec un nom unique
+            $newFileName = $photo->getRandomName();
+            if (!$photo->move($uploadPath, $newFileName)) {
+                log_message('error', "Erreur lors du déplacement du fichier {$photo->getClientName()}.");
+                return redirect()->back()->with('error', "Erreur lors du téléchargement de {$photo->getClientName()}.");
+            }
+
+            // Insérer dans la base de données
+            $data = [
+                'photo' => 'uploads/photos/' . $newFileName,
+                'idAlbums' => $idAlbums,
+            ];
+            if (!$this->photoModel->insert($data)) {
+                log_message('error', "Erreur lors de l'insertion en base de {$photo->getClientName()}.");
+                return redirect()->back()->with('error', "Erreur lors de l'insertion de {$photo->getClientName()} en base.");
+            }
         }
+
         return redirect()->to("/albums-photo/{$idAlbums}")
             ->with('success', 'Photo(s) ajoutée(s) avec succès.');
     }
 
 
+
     public function photoDelete()
     {
         $idPhoto = $this->request->getPost('idPhoto');
-        $photo = $this->photoModel->find($idPhoto);
 
-        if (!empty($photo['photo']) && file_exists(FCPATH . $photo['photo'])) {
-            unlink(FCPATH . $photo['photo']);
+        // Vérifier si l'ID de la photo est valide
+        if (!$idPhoto || !is_numeric($idPhoto)) {
+            return redirect()->back()->with('error', 'ID de la photo invalide.');
         }
 
-        $this->photoModel->delete($idPhoto);
+        // Récupérer la photo depuis la base de données
+        $photo = $this->photoModel->find($idPhoto);
+
+        // Vérifier si la photo existe bien en base
+        if (!$photo) {
+            return redirect()->back()->with('error', 'Photo introuvable.');
+        }
+
+        $filePath = FCPATH . $photo['photo'];
+
+        // Vérifier que le fichier existe bien avant de le supprimer
+        if (!empty($photo['photo']) && file_exists($filePath)) {
+            // Protection pour éviter de supprimer des fichiers système par erreur
+            if (strpos(realpath($filePath), realpath(FCPATH . 'uploads/photos/')) !== 0) {
+                return redirect()->back()->with('error', 'Tentative de suppression non autorisée.');
+            }
+
+            // Tentative de suppression
+            if (!unlink($filePath)) {
+                return redirect()->back()->with('error', 'Erreur lors de la suppression du fichier.');
+            }
+        }
+
+        // Supprimer l'entrée de la base de données
+        if (!$this->photoModel->delete($idPhoto)) {
+            return redirect()->back()->with('error', 'Erreur lors de la suppression en base de données.');
+        }
 
         return redirect()->to("/albums-photo/{$photo['idAlbums']}")->with('success', 'Photo supprimée avec succès.');
     }
+
 }

@@ -34,11 +34,23 @@ class Validation extends BaseConfig
      * @var array<string, string>
      */
     public array $templates = [
-        'list'   => 'CodeIgniter\Validation\Views\list',
+        'list' => 'CodeIgniter\Validation\Views\list',
         'single' => 'CodeIgniter\Validation\Views\single',
     ];
 
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+    public $album_photo_rules = [
+        'dateAlbums' => 'valid_date[Y-m-d]',
+        'nom' => 'required|min_length[3]|max_length[128]',
+        'photo' => 'uploaded[photo]|is_image[photo]|max_size[photo,10240]',
+    ];
+    public $evenements_rules = [
+        'titre' => 'required|string|min_length[3]|max_length[255]',
+        'message' => 'required|string|min_length[5]',
+        'date' => 'required|valid_date[Y-m-d]',
+        'image' => 'permit_empty|uploaded[image]|is_image[image]|max_size[image,2048]|mime_in[image,image/jpeg,image/png,image/gif]'
+    ];
+
 }

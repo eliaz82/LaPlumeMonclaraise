@@ -17,31 +17,35 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="card shadow-lg border-0 h-100">
                             <?php if (!empty($p['lien'])): ?>
-                                <a href="<?= esc($p['lien']) ?>" target="_blank" class="text-decoration-none text-dark">
+                                <a href="<?= esc($p['lien'], 'attr'); ?>" target="_blank" class="text-decoration-none text-dark" rel="noopener noreferrer">
                                 <?php endif; ?>
                                 <div class="text-center mt-4">
-                                    <img src="<?= esc(base_url($p['logo'])) ?>" class="img-fluid rounded-circle shadow"
-                                        alt="<?= esc($p['info']) ?>"
+                                    <img src="<?= esc(base_url($p['logo']), 'attr'); ?>" class="img-fluid rounded-circle shadow"
+                                        alt="<?= esc($p['info'], 'attr'); ?>"
                                         style="width: 150px; height: 150px; object-fit: cover;">
                                 </div>
                                 <div class="card-body text-center">
-                                    <h5 class="card-title fw-bold"><?= esc($p['info']) ?></h5>
+                                    <h5 class="card-title fw-bold"><?= esc($p['info'], 'attr'); ?></h5>
                                 </div>
                                 <?php if (!empty($p['lien'])): ?>
                                 </a>
                             <?php endif; ?>
                             <div class="card-footer text-center">
                                 <button class="btn btn-warning btn-sm me-2 bouton-modifier-partenaire"
-                                    data-id="<?= esc($p['idPartenaires']) ?>" data-info="<?= esc($p['info'], 'html') ?>"
-                                    data-lien="<?= esc($p['lien'], 'html') ?>" data-logo="<?= esc(base_url($p['logo'])) ?>"
+                                    data-id="<?= esc($p['idPartenaires'], 'attr'); ?>"
+                                    data-info="<?= esc($p['info'], 'attr'); ?>"
+                                    data-lien="<?= esc($p['lien'], 'attr'); ?>"
+                                    data-logo="<?= esc(base_url($p['logo']), 'attr'); ?>"
                                     data-bs-toggle="modal" data-bs-target="#modalModifier">
                                     Modifier
                                 </button>
-                                <form action="<?= route_to('partenairesDelete') ?>" method="post" class="d-inline">
+                                <form action="<?= esc(route_to('partenairesDelete'), 'attr'); ?>" method="post" class="d-inline">
                                     <?= csrf_field() ?>
-                                    <input type="hidden" name="idPartenaire" value="<?= esc($p['idPartenaires']) ?>">
+                                    <input type="hidden" name="idPartenaire" value="<?= esc($p['idPartenaires'], 'attr'); ?>">
                                     <button type="submit" class="btn btn-danger btn-sm"
-                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">Supprimer</button>
+                                        onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce partenaire ?');">
+                                        Supprimer
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -54,7 +58,7 @@
         <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form id="formulaire-ajouter" method="post" action="<?= route_to('partenairesSubmit') ?>"
+                    <form id="formulaire-ajouter" method="post" action="<?= esc(route_to('partenairesSubmit'), 'attr'); ?>"
                         enctype="multipart/form-data">
                         <?= csrf_field() ?>
                         <div class="modal-header">
@@ -65,7 +69,7 @@
                             <div class="mb-3">
                                 <label for="logo" class="form-label">Logo</label>
                                 <input type="file" class="form-control" id="logo" name="logo" accept="image/*"
-                                    onchange="previewImage(event, 'logoPreviewAjout')">
+                                    onchange="previewImage(event, 'logoPreviewAjout')" required>
                             </div>
                             <div class="mb-3 d-flex justify-content-center align-items-center text-center">
                                 <img id="logoPreviewAjout" src="#" alt="Prévisualisation"
@@ -73,12 +77,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="info" class="form-label">Informations de texte</label>
-                                <textarea class="form-control" id="info" name="info" rows="3"></textarea>
+                                <textarea class="form-control" id="info" name="info" rows="3" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="lien" class="form-label">Lien</label>
-                                <input type="url" class="form-control" id="lien" name="lien"
-                                    placeholder="https://example.com">
+                                <input type="url" class="form-control" id="lien" name="lien" placeholder="https://example.com" pattern="https?://.*">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -90,12 +93,11 @@
             </div>
         </div>
 
-        <!-- Modal de modification (existant) -->
-        <div class="modal fade" id="modalModifier" tabindex="-1" aria-labelledby="modalModifierLabel"
-            aria-hidden="true">
+        <!-- Modal de modification -->
+        <div class="modal fade" id="modalModifier" tabindex="-1" aria-labelledby="modalModifierLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form id="formulaire-modifier" method="post" action="<?= route_to('partenairesUpdate') ?>"
+                    <form id="formulaire-modifier" method="post" action="<?= esc(route_to('partenairesUpdate'), 'attr'); ?>"
                         enctype="multipart/form-data">
                         <?= csrf_field() ?>
                         <div class="modal-header">
@@ -107,7 +109,7 @@
                             <div class="mb-3">
                                 <label for="modifier-logo" class="form-label">Logo</label>
                                 <input type="file" class="form-control" id="modifier-logo" name="logo" accept="image/*"
-                                    onchange="previewImage(event, 'modifierLogoPreview')">
+                                    onchange="previewImage(event, 'modifierLogoPreview')" >
                             </div>
                             <div class="mb-3 d-flex justify-content-center align-items-center text-center">
                                 <img id="modifierLogoPreview" src="#" alt="Logo actuel"
@@ -115,12 +117,12 @@
                             </div>
                             <div class="mb-3">
                                 <label for="modifier-info" class="form-label">Informations de texte</label>
-                                <textarea class="form-control" id="modifier-info" name="info" rows="3"></textarea>
+                                <textarea class="form-control" id="modifier-info" name="info" rows="3" required></textarea>
                             </div>
                             <div class="mb-3">
                                 <label for="modifier-lien" class="form-label">Lien</label>
                                 <input type="url" class="form-control" id="modifier-lien" name="lien"
-                                    placeholder="https://example.com">
+                                    placeholder="https://example.com" pattern="https?://.*" >
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -131,5 +133,6 @@
                 </div>
             </div>
         </div>
+
     </div>
 </section>

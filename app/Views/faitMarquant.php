@@ -1,11 +1,6 @@
 <?= $this->extend('layout') ?>
 
 <?= $this->section('css') ?>
-
-<?= $this->endSection() ?>
-
-<?= $this->section('contenu') ?>
-
 <style>
     /* Réinitialisation de base */
     * {
@@ -109,10 +104,13 @@
         margin-top: 40px;
     }
 </style>
+<?= $this->endSection() ?>
+
+<?= $this->section('contenu') ?>
 
 <!-- En-tête de la page -->
 <div class="header">
-    <h1>La Plume Monclaraise </h1>
+    <h1>La Plume Monclaraise</h1>
     <p>Découvrez nos faits marquants et moments forts de la saison</p>
 </div>
 
@@ -121,22 +119,25 @@
         <?php foreach ($posts as $index => $post): ?>
             <div class="post">
                 <?php if (!empty($post['image'])): ?>
-                    <div class="post-image" style="background-image: url('<?= esc($post['image'], 'attr') ?>');"></div>
+                    <div class="post-image" style="background-image: url('<?= esc($post['image'], 'attr'); ?>');"></div>
                 <?php endif; ?>
                 <div class="content-container">
                     <?php
-                    $message = esc($post['message']); // Échapper le message pour éviter les attaques XSS
-                    $message = trim($message); // Supprime les espaces au début et à la fin du texte
-                    // Normalisation des retours à la ligne : on remplace toutes les formes par un seul \n
+                    // Récupère le message brut et le traite pour afficher les retours à la ligne
+                    $rawMessage = $post['message'];
+                    // Échapper le message pour éviter les attaques XSS
+                    $message = esc($rawMessage);
+                    $message = trim($message);
+                    // Normalise les retours à la ligne en un seul "\n"
                     $message = str_replace(["\r\n", "\r"], "\n", $message);
                     // Remplace les espaces multiples par un seul espace
                     $message = preg_replace('/\s{2,}/', ' ', $message);
-                    // Ajoute un <br> après chaque '.' pour gérer les retours à la ligne HTML
+                    // Ajoute un <br> après chaque point suivi d'éventuels espaces
                     $message = preg_replace('/([.])\s*/', '$1<br>', $message);
-                    // Applique les retours à la ligne HTML
+                    // Applique nl2br pour convertir les retours à la ligne en balises <br>
                     $message = nl2br($message);
                     ?>
-                    <p class="post-message"><?= $message ?></p>
+                    <p class="post-message"><?= $message; ?></p>
                     <span class="read-more">Lire plus</span>
                 </div>
             </div>
@@ -145,6 +146,7 @@
         <p class="no-posts">Aucun fait marquant trouvé pour le moment.</p>
     <?php endif; ?>
 </div>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
