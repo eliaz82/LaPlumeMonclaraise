@@ -265,6 +265,13 @@
                             <i class="bi bi-envelope"></i> Email
                         </button>
                     </li>
+                    <!-- Nouvel onglet Téléphone -->
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="telephone-tab" data-bs-toggle="tab" data-bs-target="#telephone"
+                            type="button" role="tab" aria-controls="telephone" aria-selected="false">
+                            <i class="bi bi-telephone"></i> Téléphone
+                        </button>
+                    </li>
                 </ul>
 
                 <!-- Contenu des onglets -->
@@ -326,6 +333,23 @@
                             </button>
                         </form>
                     </div>
+
+                    <!-- Nouvel Onglet Téléphone -->
+                    <div class="tab-pane fade" id="telephone" role="tabpanel" aria-labelledby="telephone-tab">
+                        <h5 class="text-primary"><i class="bi bi-telephone"></i> Modifier le numéro de téléphone</h5>
+                        <form action="<?= route_to('telephoneUpdate'); ?>" method="post">
+                            <?= csrf_field() ?>
+                            <div class="mb-3">
+                                <label for="telephoneInput" class="form-label">Numéro de téléphone :</label>
+                                <input type="tel" id="telephoneInput" name="telephone" class="form-control" required>
+                            </div>
+                            <!-- Champ caché pour l'id de l'association si nécessaire -->
+                            <input type="hidden" id="idAssociationTelephone" name="idAssociation">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Modifier le numéro
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
@@ -338,6 +362,7 @@
         </div>
     </div>
 </div>
+
 <div id="config-data" data-site-url="<?= site_url() ?>" data-create-url="<?= site_url('facebook/create') ?>"
     data-delete-url="<?= site_url('facebook/delete') ?>" data-expiration-url="<?= site_url('facebook/expiration') ?>"
     data-login-url="<?= site_url('facebook/login') ?>" data-email-reception-url="<?= route_to('getEmailReception') ?>"

@@ -141,7 +141,7 @@
 
 <?php if (!empty($posts)): ?>
 
-  <div class="carousel-container" style="background: #e2e6ea; padding: 1rem;">
+  <div class="carousel-container" style="background: linear-gradient(135deg, #0f4c75, #3282b8);padding: 1rem;">
     <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 3000 }'>
       <?php
       // Limiter le nombre de publications à 10
@@ -154,7 +154,9 @@
         </div>
       <?php endforeach; ?>
     </div>
-  </div>
+</div>
+
+
 
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
