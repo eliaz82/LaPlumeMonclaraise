@@ -190,7 +190,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="createImage" class="form-label">Image (optionnel)</label>
-                        <input type="file" class="form-control" id="createImage" name="image"
+                        <input type="file" class="form-control" id="createImage" name="image" accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
                             onchange="previewImage(event, 'createImagePreview')">
                     </div>
                     <!-- Prévisualisation de l'image -->
