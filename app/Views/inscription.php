@@ -63,57 +63,60 @@
                             </button>
                         </a>
                     <?php endif; ?>
-
-                    <!-- Bouton pour ouvrir le modal de modification -->
-                    <button id="bouton-modifier-inscription" class="btn btn-modify" data-bs-toggle="modal"
-                        data-bs-target="#modalModifierInscription">
-                        Modifier le fichier d'inscription
-                    </button>
+                    <?php if (auth()->loggedIn()): ?>
+                        <!-- Bouton pour ouvrir le modal de modification -->
+                        <button id="bouton-modifier-inscription" class="btn btn-modify" data-bs-toggle="modal"
+                            data-bs-target="#modalModifierInscription">
+                            Modifier le fichier d'inscription
+                        </button>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Modal de modification du fichier d'inscription -->
-                <div class="modal fade" id="modalModifierInscription" tabindex="-1"
-                    aria-labelledby="modalModifierInscriptionLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title text-primary" id="modalModifierInscriptionLabel">Modifier le fichier
-                                    d'inscription</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form action="<?= route_to('fichierInscriptionSubmit') ?>" method="post"
-                                    enctype="multipart/form-data" class="mt-4 p-4 border shadow-sm rounded-3">
-                                    <?= csrf_field() ?>
-                                    <div class="text-center mb-3">
-                                        <span class="h4 d-block">Téléversez votre fichier</span>
-                                        <p class="text-muted">Le fichier doit être une image ou un document (PDF, Word,
-                                            etc.). Il sera ensuite disponible pour les autres utilisateurs à télécharger.
-                                        </p>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="fichier_inscription" class="form-label">Sélectionner le fichier
-                                            d'inscription (PDF, Word, etc.) :</label>
-                                        <div id="drop-area" class="drop-container p-4 border-dashed text-center rounded-3">
-                                            <span class="drop-title d-block mb-2">Déposez les fichiers ici ou cliquez pour
-                                                sélectionner</span>
-                                            <input type="file" name="fichier_inscription" id="fichier_inscription"
-                                                accept=".pdf,.doc,.docx,.jpg,.png" class="form-control d-none" required>
-                                            <label for="fichier_inscription" class="btn btn-outline-primary">
-                                                <i class="upload-icon">📁</i> Sélectionner un fichier
-                                            </label>
-                                            <div id="file-name" class="mt-2 text-muted"></div>
+                <?php if (auth()->loggedIn()): ?>
+                    <div class="modal fade" id="modalModifierInscription" tabindex="-1"
+                        aria-labelledby="modalModifierInscriptionLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title text-primary" id="modalModifierInscriptionLabel">Modifier le fichier
+                                        d'inscription</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="<?= route_to('fichierInscriptionSubmit') ?>" method="post"
+                                        enctype="multipart/form-data" class="mt-4 p-4 border shadow-sm rounded-3">
+                                        <?= csrf_field() ?>
+                                        <div class="text-center mb-3">
+                                            <span class="h4 d-block">Téléversez votre fichier</span>
+                                            <p class="text-muted">Le fichier doit être une image ou un document (PDF, Word,
+                                                etc.). Il sera ensuite disponible pour les autres utilisateurs à télécharger.
+                                            </p>
                                         </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-success w-100">Téléverser le fichier</button>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <div class="mb-3">
+                                            <label for="fichier_inscription" class="form-label">Sélectionner le fichier
+                                                d'inscription (PDF, Word, etc.) :</label>
+                                            <div id="drop-area" class="drop-container p-4 border-dashed text-center rounded-3">
+                                                <span class="drop-title d-block mb-2">Déposez les fichiers ici ou cliquez pour
+                                                    sélectionner</span>
+                                                <input type="file" name="fichier_inscription" id="fichier_inscription"
+                                                    accept=".pdf,.doc,.docx,.jpg,.png" class="form-control d-none" required>
+                                                <label for="fichier_inscription" class="btn btn-outline-primary">
+                                                    <i class="upload-icon">📁</i> Sélectionner un fichier
+                                                </label>
+                                                <div id="file-name" class="mt-2 text-muted"></div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-success w-100">Téléverser le fichier</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

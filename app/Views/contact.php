@@ -42,8 +42,10 @@
     <!-- Contact Form -->
     <div class="contact-wrapper">
         <div class="contact-map" id="map" style="width: 100%; height: 600px;"></div>
-        <div id="map-container" data-logo="<?= esc(base_url(getAssociationLogo())); ?>" data-lat="<?= esc($lat) ?>"
-            data-lon="<?= esc($lon) ?>" data-adresse="<?= $association['adresse'] ?>" ></div>
+        <div id="map-container" data-logo="<?= esc(base_url(getAssociationLogo())); ?>" data-lat="<?= esc($lat); ?>"
+            data-lon="<?= esc($lon); ?>" data-adresse="<?= esc($association['adresse']); ?>">
+        </div>
+
         <div class="contact-container">
             <form class="contact-form" action="<?= route_to('contactSubmit'); ?>" method="post">
                 <?= csrf_field() ?>
