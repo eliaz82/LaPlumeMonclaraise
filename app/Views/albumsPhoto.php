@@ -41,16 +41,6 @@
 <button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>" class="btn btn-light">
     <i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir
 </button>
-<style>
-    .dropdown-item.active {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .dropdown-item.active i {
-        color: white;
-    }
-</style>
 
 <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -157,97 +147,7 @@
         <?php endif; ?>
         </div>
 </div>
-<style>
-    .facebook-overlay-icon {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: white;
-        padding: 8px;
-        border-radius: 50%;
-        transition: background 0.3s ease-in-out;
-    }
 
-    .facebook-icon {
-        width: 35px;
-        height: 35px;
-        color: #1877F2;
-        transition: color 0.3s ease-in-out;
-    }
-
-    .custom-image-container {
-        position: relative;
-        width: 100%;
-        height: 350px;
-        overflow: hidden;
-        border-radius: 20px;
-    }
-
-    .custom-image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .custom-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.6);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .custom-image-container:hover .custom-overlay {
-        opacity: 1;
-    }
-
-    .overlay-text {
-        text-align: center;
-        color: white;
-        padding: 20px;
-    }
-
-    .overlay-text h5 {
-        font-size: 1.75rem;
-    }
-
-    .overlay-text p {
-        font-size: 1.2rem;
-        margin-bottom: 15px;
-    }
-
-    .overlay-text .btn {
-        margin: 5px;
-    }
-
-    .btn-primary,
-    .btn-warning,
-    .btn-danger {
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .btn-primary:hover,
-    .btn-warning:hover,
-    .btn-danger:hover {
-        background-color: #0056b3;
-        transform: scale(1.1);
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-    }
-
-    .btn-warning {
-        background-color: #ffc107;
-    }
-
-    .btn-danger {
-        background-color: #dc3545;
-    }
-</style>
 <!-- Modal de modification pour les albums photos -->
 <div class="modal fade" id="modalModifierAlbum" tabindex="-1" aria-labelledby="modalModifierAlbumLabel"
     aria-hidden="true">

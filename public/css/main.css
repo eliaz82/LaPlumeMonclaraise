@@ -602,6 +602,340 @@ html, body {
 
 
 
+/* ------------------- Généralités et Mise en page ------------------- */
+
+/* Logo */
+.logo {
+  max-width: 60px;
+  height: auto;
+}
+
+/* Marges du navbar */
+.mt-navbar {
+  margin-top: 4.5rem;
+}
+
+/* Police générale */
+body {
+  font-family: 'Arial', sans-serif;
+}
+
+/* Container général */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Structure des lignes et colonnes */
+.row {
+  margin-bottom: 20px;
+}
+
+.col-md-6 {
+  padding: 20px;
+}
+
+/* Images responsives */
+.img-fluid {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles des titres */
+h1, h2, h3 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Styles des paragraphes */
+p {
+  margin-bottom: 20px;
+}
+
+/* Textes centrés */
+.text-center {
+  text-align: center;
+}
+
+/* Marges supplémentaires */
+.mt-5 {
+  margin-top: 50px;
+}
+
+.mb-3 {
+  margin-bottom: 30px;
+}
+
+.mb-5 {
+  margin-bottom: 50px;
+}
+
+/* Empêcher le défilement horizontal */
+html, body {
+  overflow-x: hidden;
+}
+
+
+/* ------------------- Carrousel Actualités (Page d'accueil) ------------------- */
+
+.carousel-cell {
+  width: 400px;
+  height: 450px;
+}
+
+/* Publication Facebook */
+.fb-post {
+  width: 100px;
+}
+
+
+/* ------------------- Boutons et Formulaires ------------------- */
+
+/* Bouton télécharger (Page Inscription) */
+.botao {
+  width: 125px;
+  height: 45px;
+  border-radius: 20px;
+  border: none;
+  box-shadow: 1px 1px rgba(129, 161, 208, 1);
+  padding: 5px 10px;
+  background: rgb(47, 93, 197);
+  background: linear-gradient(160deg, rgba(47, 93, 197, 1) 0%, rgba(29, 34, 67, 1) 5%, rgba(29, 34, 67, 1) 100%, rgba(129, 161, 208, 1) 57%, rgba(153, 187, 234, 1) 71%);
+  color: #fff;
+  font-family: Roboto, sans-serif;
+  font-weight: 505;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  position: relative;
+  transition: .5s linear;
+}
+
+/* Effets de survol pour le bouton Télécharger */
+.botao:hover {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 0;
+  background: #81A1D0;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Bouton pour envoyer (Page Contact) */
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-unique {
+  font-family: inherit;
+  font-size: 20px;
+  background-color: white;
+  color: #1D2243;
+  padding: 0.7em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  border-radius: 16px;
+  transition: all 0.2s;
+  cursor: pointer;
+  width: 150px;
+  justify-content: center;
+}
+
+.btn-unique:hover {
+  background-color: #ffffff;
+  color: rgb(31, 31, 31);
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ------------------- Footer ------------------- */
+
+.footer-section {
+  background-color: rgb(29, 34, 67);
+  color: white;
+}
+
+.footer-section h5 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.footer-link {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Boutons Réseaux Sociaux */
+.social-btn {
+  position: relative;
+  border: none;
+  margin: 10px;
+  background-color: transparent;
+}
+
+.social-link {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid white;
+  box-shadow: 0 5px 45px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  transition: 0.5s;
+  background-color: rgb(255, 255, 255);
+}
+
+/* Effets au survol des boutons réseaux sociaux */
+.social-link:hover {
+  transform: translateY(-20px);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.social-icon {
+  width: 3em;
+  color: white;
+}
+
+#facebook {
+  color: rgba(10, 128, 236, 0.7);
+}
+
+
+/* ------------------- Formulaire de Contact ------------------- */
+
+/* Structure du formulaire de contact */
+.contact-map {
+  max-width: 100%;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Titre du formulaire */
+#contact-heading {
+  text-align: center;
+  margin-bottom: 1em;
+  color: #ffffff;
+  font-size: 1.5em;
+}
+
+/* Champs du formulaire */
+.contact-field {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  border-radius: 20px;
+  padding: 0.5em 1em;
+  background-color: #ffffff;
+  box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
+}
+
+/* Champs texte */
+.contact-input, .contact-textarea {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #333333;
+  font-size: 0.9em;
+  padding: 0.4em;
+}
+
+.contact-textarea {
+  resize: none;
+  height: 100px;
+}
+
+/* Bouton du formulaire */
+.btn-unique {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0.7em 2em;
+  background-color: #ffffff;
+  color: #1D2243;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 25px;
+  transition: 0.4s ease-in-out;
+  white-space: nowrap;
+}
+
+/* Effet de survol du bouton */
+.btn-unique:hover {
+  background-color: #ffffff;
+  color: rgb(31, 31, 31);
+  transform: scale(1.05);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ------------------- Page Histoire ------------------- */
+
+/* Titre avec couleur personnalisée */
+.custom-title-color {
+  color: rgba(129, 161, 208, 1);
+}
+
+/* Effet de zoom sur les images */
+.hover-scale {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Container d'image avec effet de survol */
+.image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.image-container img {
+  transition: transform 0.5s ease-in-out;
+}
+
+.image-container:hover img {
+  transform: scale(1.1);
+}
+
+.custom-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.custom-image-container:hover .custom-overlay {
+  opacity: 1;
+}
+
+
+/* ------------------- Carousel (Page Calendrier) ------------------- */
+
 /* Conteneur principal du carousel page calendrier */
 .carousel-container {
   position: relative;
@@ -693,6 +1027,7 @@ html, body {
   height: 80px;
   object-fit: cover; /* Maintient l'intégrité de l'image sans la déformer */
 }
+
 #zoom-container {
     display: none;
     position: fixed;
@@ -746,6 +1081,7 @@ html, body {
 .read-more-button:active {
   transform: scale(0.98);
 }
+
 .scrolling-text {
   display: inline-block;
   white-space: nowrap;
@@ -760,4 +1096,402 @@ html, body {
   to {
       transform: translateX(-100%);
   }
+}
+/* ------------------- Logo (Page d'accueil) ------------------- */
+.icon-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.popup-info {
+  visibility: hidden;
+  width: max-content;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-align: center;
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 10;
+}
+
+.icon-container:hover .popup-info {
+  visibility: visible;
+  opacity: 1;
+}
+/* ------------------- layout ------------------- */
+.custom-modal {
+  max-width: 75vw;
+}
+
+/* Applique le curseur personnalisé à tous les éléments interactifs */
+* {
+  cursor: url('/image/cursor.cur') 16 16, auto !important;
+}
+
+
+.button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 0px 4px rgba(112, 177, 238, 0.25);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+/* Nouvelle couleur et texte au survol */
+.button:hover {
+  width: 140px;
+  border-radius: 50px;
+  transition-duration: 0.3s;
+  background-color: rgba(129, 161, 208, 1);
+  align-items: center;
+}
+
+.button:hover .svgIcon {
+  transform: translateY(-200%);
+  transition-duration: 0.3s;
+}
+
+/* Texte affiché au survol */
+.button::before {
+  position: absolute;
+  bottom: -20px;
+  content: "Haut de page";
+  color: white;
+  font-size: 0px;
+  transition-duration: 0.3s;
+}
+
+.button:hover::before {
+  font-size: 13px;
+  opacity: 1;
+  bottom: unset;
+  transition-duration: 0.3s;
+}
+/* ------------------- album photo ------------------- */
+.dropdown-item.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.dropdown-item.active i {
+  color: white;
+}
+.facebook-overlay-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: white;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.3s ease-in-out;
+}
+
+.facebook-icon {
+  width: 35px;
+  height: 35px;
+  color: #1877F2;
+  transition: color 0.3s ease-in-out;
+}
+
+.custom-image-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.custom-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-image-container:hover .custom-overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.overlay-text h5 {
+  font-size: 1.75rem;
+}
+
+.overlay-text p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.overlay-text .btn {
+  margin: 5px;
+}
+
+.btn-primary,
+.btn-warning,
+.btn-danger {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+
+/* ------------------- calendrier ------------------- */
+.past-event {
+  opacity: 0.5;
+  background-color: #d9534f;
+}
+
+/* ------------------- fait marquant ------------------- */
+ /* Réinitialisation de base */
+
+
+/* En-tête de la page */
+.header {
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+/* Conteneur global */
+.page-container {
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+/* Conteneur de chaque post */
+.post {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  padding: 20px;
+}
+
+.post:hover {
+  transform: translateY(-5px);
+}
+
+/* Inverse l'ordre pour les posts pairs */
+.post:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+/* Zone d'affichage de l'image */
+.post-image {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+/* Contenu du post */
+.content-container {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.content-container p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 10px;
+  white-space: pre-line;
+}
+
+/* Bouton "Lire plus" */
+.read-more {
+  color: #0f4c75;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
+/* Message en cas d'absence de faits marquants */
+.no-posts {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-top: 40px;
+}
+
+/* ------------------- Photo ------------------- */
+
+.photo-gallery {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  column-count: 3;
+  column-gap: 15px;
+  box-sizing: border-box;
+  background: rgb(240, 240, 240);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+/* --- Chaque photo s’adapte naturellement en hauteur --- */
+.photo-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.photo-item:hover {
+  transform: scale(1.03);
+  filter: brightness(0.85);
+}
+.photo-img {
+  width: 100%;
+  border-radius: 5px;
+  display: block;
+}
+.photo-actions {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+.photo-item:hover .photo-actions {
+  opacity: 1;
+}
+.photo-actions button {
+  background: rgba(255, 69, 58, 0.9);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background 0.3s ease;
+}
+.photo-actions button:hover {
+  background: #ff453a;
+}
+.zoom-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.zoomed-image {
+  max-width: 85%;
+  max-height: 85%;
+  border-radius: 5px;
+  animation: zoomIn 0.3s ease-in-out;
+}
+#close-zoom {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+#close-zoom:hover {
+  opacity: 0.8;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes zoomIn {
+  from { transform: scale(0.8); }
+  to { transform: scale(1); }
+}
+@media (max-width: 1200px) {
+  .photo-gallery { column-count: 2; }
+}
+@media (max-width: 768px) {
+  .photo-gallery { column-count: 1; }
 }

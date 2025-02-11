@@ -48,13 +48,6 @@
 </div>
 
 
-<style>
-    .past-event {
-        opacity: 0.5;
-        background-color: #d9534f;
-    }
-</style>
-
 <div id="eventData"
     data-event-url="<?= esc(site_url('evenement'), 'attr') ?>"
     data-posts="<?= esc(json_encode($posts), 'attr') ?>"
