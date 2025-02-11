@@ -73,7 +73,8 @@
                 </li>
                 <?php if (auth()->loggedIn()): ?>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
                             <i class="fas fa-cog settings-icon"></i>
                         </a>
 
@@ -370,14 +371,14 @@
 
     <div id="config-data" data-site-url="<?= site_url() ?>" data-create-url="<?= site_url('facebook/create') ?>"
         data-delete-url="<?= site_url('facebook/delete') ?>" data-expiration-url="<?= site_url('facebook/expiration') ?>"
-        data-login-url="<?= site_url('facebook/login') ?>" data-email-reception-url="<?= route_to('getEmailReception') ?>"
-        data-association-data-url="<?= route_to('getAssociationData') ?>"
+        data-login-url="<?= site_url('facebook/login') ?>"
         data-fichier-inscription-etat-url="<?= base_url('getFichierInscriptionEtat') ?>"
         data-update-fichier-inscription-etat-url="<?= base_url('updateFichierInscriptionEtat') ?>">
     </div>
 <?php endif; ?>
 
-
+<div id="asso-data" data-association-data-url="<?= route_to('getAssociationData') ?>">
+</div>
 
 <body>
     <!-- Messages de notification -->
@@ -412,6 +413,7 @@
         crossorigin="anonymous"></script>
     <?= script_tag('js/main.js') ?>
     <?= script_tag('js/image-preview.js') ?>
+    <?= script_tag('js/associationData.js') ?>
     <?php if (auth()->loggedIn()): ?>
         <?= script_tag('js/menuSettings.js') ?>
     <?php endif; ?>
@@ -446,11 +448,13 @@
             <div class="footer-contact col-md-4">
                 <h5>Contact</h5>
                 <p>
-                    <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
-                    <i class="bi bi-envelope"></i> Email : <span class="emailDisplay"><?= esc($emailContact ?? 'contact@club.fr'); ?></span><br>
-                    <i class="bi bi-telephone"></i> Téléphone : <span class="telephoneDisplay"><?= esc($localisation['tel'] ?? 'Téléphone non défini'); ?></span>
+                    <i class="bi bi-geo-alt"></i> Adresse : <span
+                        class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
+                    <i class="bi bi-envelope"></i> Email : <span
+                        class="emailDisplay"><?= esc($emailContact ?? 'Email non définie'); ?></span><br>
+                    <i class="bi bi-telephone"></i> Téléphone : <span
+                        class="telephoneDisplay"><?= esc($localisation['tel'] ?? 'Téléphone non défini'); ?></span>
                 </p>
-
                 <!-- Boutons réseaux sociaux -->
                 <div class="footer-socials">
                     <!-- Bouton Facebook -->

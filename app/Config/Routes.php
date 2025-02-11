@@ -15,7 +15,6 @@ $routes->get('contact', 'Association::contact', ['as' => 'contact']);
 $routes->post('contact-submit', 'Association::contactSubmit', ['as' => 'contactSubmit']);
 
 $routes->post('contact-update', 'Association::contactUpdate', ['as' => 'contactUpdate']);
-$routes->get('email-reception', 'Association::getEmailReception', ['as' => 'getEmailReception']);
 
 // ------------------------------------------- fichierInscription -------------------------------------------
 $routes->get('fichier-inscription', 'Association::fichierInscription', ['as' => 'fichierInscription']);

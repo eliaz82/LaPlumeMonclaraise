@@ -54,19 +54,19 @@ class Association extends Controller
     {
         try {
             // Récupération des données envoyées en POST
-            $telephone    = $this->request->getPost('telephone');
+            $telephone = $this->request->getPost('telephone');
             $associationId = $this->request->getPost('idAssociation');
-    
+
             // Vérification si les données sont valides
             if (empty($telephone) || empty($associationId)) {
                 return redirect()->back()->with('error', 'Numéro de téléphone ou ID de l\'association manquant.');
             }
-    
+
             // Préparation des données à mettre à jour
             $data = [
                 'tel' => $telephone,
             ];
-    
+
             // Mise à jour dans la base de données
             if ($this->associationModel->update($associationId, $data)) {
                 // Succès : rediriger en renvoyant un message
@@ -80,7 +80,7 @@ class Association extends Controller
             return redirect()->back()->with('error', 'Une erreur est survenue : ' . $e->getMessage());
         }
     }
-    
+
 
     public function getAssociationData()
     {
@@ -89,31 +89,31 @@ class Association extends Controller
 
         // Vérifier si l'association existe et contient les informations requises
         if ($association) {
-            $lat     = $association['latitude'];   // Latitude de l'association
-            $lon     = $association['longitude'];  // Longitude de l'association
-            $adresse = $association['adresse'];      // Adresse de l'association
-            $tel     = $association['tel'];          // Téléphone de l'association
+            $lat = $association['latitude'];   // Latitude de l'association
+            $lon = $association['longitude'];  // Longitude de l'association
+            $adresse = $association['adresse'];    // Adresse de l'association
+            $tel = $association['tel'];        // Téléphone de l'association
+            $email = $association['mailContact']; // Email de contact de l'association
         } else {
             // Valeurs par défaut en cas d'absence de données
-            $lat     = 43.966742479238754;
-            $lon     = 1.5866446106619663;
+            $lat = 43.966742479238754;
+            $lon = 1.5866446106619663;
             $adresse = "Adresse non définie";
-            $tel     = ""; // Ou une valeur par défaut comme "Téléphone non défini"
+            $tel = ""; // Ou une valeur par défaut comme "Téléphone non défini"
+            $email = ""; // Valeur par défaut pour l'email
         }
 
         // Préparer les données à renvoyer
         $data = [
-            'latitude'  => $lat,
+            'latitude' => $lat,
             'longitude' => $lon,
-            'adresse'   => $adresse,
-            'tel'       => $tel,
+            'adresse' => $adresse,
+            'tel' => $tel,
+            'email' => $email, // Ajout de l'email dans la réponse
         ];
 
         return $this->response->setJSON($data);
     }
-
-
-
 
     public function fichierInscription()
     {

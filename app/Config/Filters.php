@@ -90,6 +90,7 @@ class Filters extends BaseFilters
                     'favicon.ico',
                     'facebook/login',
                     'contact-submit',
+                    'getAssociationData',
                 ],
             ],
         ],

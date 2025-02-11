@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const deleteUrl = configData.dataset.deleteUrl;
     const expirationUrl = configData.dataset.expirationUrl;
     const loginUrl = configData.dataset.loginUrl;
-    const getEmailReceptionUrl = configData.dataset.emailReceptionUrl;
-    const getAssociationDataUrl = configData.dataset.associationDataUrl;
     const getFichierInscriptionEtatUrl = configData.dataset.fichierInscriptionEtatUrl;
     const updateFichierInscriptionEtatUrl = configData.dataset.updateFichierInscriptionEtatUrl;
 
@@ -178,85 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
     resetTokenBtn.addEventListener("click", function () {
         window.location.href = loginUrl;
     });
-
-    // -------------------------------
-    // Récupération des Données d'Email et d'Association
-    // -------------------------------
-
-    // Récupération de l'email de réception
-    fetch(getEmailReceptionUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.emailContact) {
-                // Pré-remplissage du champ input dans le formulaire
-                const mailContactInput = document.getElementById("mailContact");
-                if (mailContactInput) {
-                    mailContactInput.value = data.emailContact;
-                    mailContactInput.dispatchEvent(new Event("input")); // Déclenche un éventuel écouteur d'événements
-                }
-
-                // Mise à jour de tous les affichages de l'email
-                document.querySelectorAll(".emailDisplay").forEach(el => {
-                    el.textContent = data.emailContact;
-                });
-            }
-        })
-        .catch(error => console.error("Erreur AJAX:", error));
-
-
-    // Récupération des données de l'association
-    fetch(getAssociationDataUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("Erreur lors de la récupération des données.");
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Mise à jour de l'adresse
-            if (data.adresse) {
-                const adresseInput = document.getElementById("adresse");
-                if (adresseInput) {
-                    adresseInput.value = data.adresse;
-                    adresseInput.dispatchEvent(new Event("input"));
-                }
-                document.querySelectorAll(".adresseDisplay").forEach(el => {
-                    el.textContent = data.adresse;
-                });
-            }
-
-            // Mise à jour de la latitude
-            if (data.latitude) {
-                const latitudeInput = document.getElementById("latitude");
-                if (latitudeInput) {
-                    latitudeInput.value = data.latitude;
-                }
-            }
-
-            // Mise à jour de la longitude
-            if (data.longitude) {
-                const longitudeInput = document.getElementById("longitude");
-                if (longitudeInput) {
-                    longitudeInput.value = data.longitude;
-                }
-            }
-
-            // Mise à jour du téléphone
-            if (data.tel) {
-                const telephoneInput = document.getElementById("telephoneInput");
-                if (telephoneInput) {
-                    telephoneInput.value = data.tel;
-                    telephoneInput.dispatchEvent(new Event("input"));
-                }
-                // Si vous avez des éléments affichant le téléphone ailleurs
-                document.querySelectorAll(".telephoneDisplay").forEach(el => {
-                    el.textContent = data.tel;
-                });
-            }
-        })
-        .catch(error => console.error("Erreur lors de la récupération des données de localisation :", error));
-
-
+    
     // ----------------------------------------------
     // Gestion du bouton on/off fichierInscription
     // ----------------------------------------------
