@@ -13,11 +13,11 @@
         font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         background-color: #eef2f3;
         color: #333;
+        background: linear-gradient(135deg, #0f4c75, #3282b8);
     }
 
     /* En-tête de la page */
     .header {
-        background: linear-gradient(135deg, #0f4c75, #3282b8);
         color: #fff;
         padding: 40px 20px;
         text-align: center;
