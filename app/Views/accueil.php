@@ -50,7 +50,7 @@
           <div class="icon-container">
             <i class="bi bi-envelope-fill fs-3 text-primary"></i>
             <div class="popup-info">
-              Email : <span class="emailDisplay"><?= esc($email ?? 'Email non défini'); ?></span>
+              <span class="emailDisplay"><?= esc($email ?? 'Email non défini'); ?></span>
             </div>
           </div>
 
@@ -58,7 +58,7 @@
           <div class="icon-container">
             <i class="bi bi-geo-alt-fill fs-3 text-primary"></i>
             <div class="popup-info">
-              Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span>
+            <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span>
             </div>
           </div>
 
@@ -66,43 +66,11 @@
           <div class="icon-container">
             <i class="bi bi-telephone-fill fs-3 text-primary"></i>
             <div class="popup-info">
-              Téléphone : <span class="telephoneDisplay"><?= esc($telephone ?? 'Téléphone non défini'); ?></span>
+             <span class="telephoneDisplay"><?= esc($telephone ?? 'Téléphone non défini'); ?></span>
             </div>
           </div>
         </div>
       </div>
-
-
-      <style>
-        .icon-container {
-          position: relative;
-          display: inline-block;
-          cursor: pointer;
-        }
-
-        .popup-info {
-          visibility: hidden;
-          width: max-content;
-          background-color: rgba(0, 0, 0, 0.8);
-          color: #fff;
-          text-align: center;
-          padding: 5px 10px;
-          border-radius: 5px;
-          position: absolute;
-          bottom: 30px;
-          left: 50%;
-          transform: translateX(-50%);
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.3s, visibility 0.3s;
-          z-index: 10;
-        }
-
-        .icon-container:hover .popup-info {
-          visibility: visible;
-          opacity: 1;
-        }
-      </style>
 
 
     </div>

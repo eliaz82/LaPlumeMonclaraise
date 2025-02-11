@@ -337,19 +337,21 @@
                     <!-- Nouvel Onglet Téléphone -->
                     <div class="tab-pane fade" id="telephone" role="tabpanel" aria-labelledby="telephone-tab">
                         <h5 class="text-primary"><i class="bi bi-telephone"></i> Modifier le numéro de téléphone</h5>
-                        <form action="<?= route_to('telephoneUpdate'); ?>" method="post">
+                        <form action="<?= route_to('tel'); ?>" method="post">
                             <?= csrf_field() ?>
                             <div class="mb-3">
                                 <label for="telephoneInput" class="form-label">Numéro de téléphone :</label>
                                 <input type="tel" id="telephoneInput" name="telephone" class="form-control" required>
                             </div>
-                            <!-- Champ caché pour l'id de l'association si nécessaire -->
-                            <input type="hidden" id="idAssociationTelephone" name="idAssociation">
+                            <!-- Champ caché pour l'id de l'association (ici, on suppose l'id 1, à adapter si besoin) -->
+                            <input type="hidden" id="idAssociationTelephone" name="idAssociation" value="1">
                             <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-save"></i> Modifier le numéro
                             </button>
                         </form>
                     </div>
+
+
                 </div>
             </div>
 
@@ -371,78 +373,6 @@
     data-update-fichier-inscription-etat-url="<?= base_url('updateFichierInscriptionEtat') ?>">
 </div>
 
-
-<style>
-    .custom-modal {
-        max-width: 75vw;
-    }
-
-    /* Applique le curseur personnalisé à tous les éléments interactifs */
-    * {
-        cursor: url('/image/cursor.cur') 16 16, auto !important;
-    }
-
-
-    .button {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: rgb(20, 20, 20);
-        border: none;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-shadow: 0px 0px 0px 4px rgba(112, 177, 238, 0.25);
-        cursor: pointer;
-        transition-duration: 0.3s;
-        overflow: hidden;
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1000;
-    }
-
-    .svgIcon {
-        width: 12px;
-        transition-duration: 0.3s;
-    }
-
-    .svgIcon path {
-        fill: white;
-    }
-
-    /* Nouvelle couleur et texte au survol */
-    .button:hover {
-        width: 140px;
-        border-radius: 50px;
-        transition-duration: 0.3s;
-        background-color: rgba(129, 161, 208, 1);
-        align-items: center;
-    }
-
-    .button:hover .svgIcon {
-        transform: translateY(-200%);
-        transition-duration: 0.3s;
-    }
-
-    /* Texte affiché au survol */
-    .button::before {
-        position: absolute;
-        bottom: -20px;
-        content: "Haut de page";
-        color: white;
-        font-size: 0px;
-        transition-duration: 0.3s;
-    }
-
-    .button:hover::before {
-        font-size: 13px;
-        opacity: 1;
-        bottom: unset;
-        transition-duration: 0.3s;
-    }
-</style>
 
 
 <body>
@@ -509,11 +439,11 @@
             <div class="footer-contact col-md-4">
                 <h5>Contact</h5>
                 <p>
-                    <i class="bi bi-geo-alt"></i> Adresse : <span
-                        class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
-                    <i class="bi bi-envelope"></i> Email : <span class="emailDisplay">contact@club.fr</span><br>
-                    <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
+                    <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
+                    <i class="bi bi-envelope"></i> Email : <span class="emailDisplay"><?= esc($emailContact ?? 'contact@club.fr'); ?></span><br>
+                    <i class="bi bi-telephone"></i> Téléphone : <span class="telephoneDisplay"><?= esc($localisation['tel'] ?? 'Téléphone non défini'); ?></span>
                 </p>
+
                 <!-- Boutons réseaux sociaux -->
                 <div class="footer-socials">
                     <!-- Bouton Facebook -->
