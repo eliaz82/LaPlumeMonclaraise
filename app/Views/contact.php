@@ -52,7 +52,7 @@
 
                 <div class="contact-field">
                     <input autocomplete="off" placeholder="Nom" id="nom" name="nom" class="contact-input" type="text"
-                        value="<?= esc(old('name')); ?>">
+                        value="<?= esc(old('nom')); ?>" required>
                 </div>
 
                 <div class="contact-field">

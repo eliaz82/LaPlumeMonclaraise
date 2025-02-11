@@ -6,6 +6,8 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 
+service('auth')->routes($routes);
+
 $routes->get('/', 'Home::index', ['as' => 'accueil']);
 
 // ------------------------------------------- contact -------------------------------------------
@@ -64,7 +66,6 @@ $routes->post('evenement-delete', 'Evenement::evenementDelete', ['as' => 'evenem
 
 // ------------------------------------------- faitMarquant -------------------------------------------
 $routes->get('fais-marquant', 'Actualite::actualite', ['as' => 'actualite']);
-$routes->get('fais-marquant/(:num)', 'Actualite::actualite/$1', ['as' => 'actualiteClick']);
 // ------------------------------------------- logo -------------------------------------------
 $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
 // ------------------------------------------- localisation -------------------------------------------
@@ -88,8 +89,3 @@ $routes->get('facebook/getPosts', 'Facebook::getPosts', ['as' => 'facebook.getPo
 $routes->post('facebook/refresh', 'Facebook::refresh', ['as' => 'facebook.refresh']);
 
 $routes->get('getAssociationData', 'Association::getAssociationData');
-
-
-
-
-

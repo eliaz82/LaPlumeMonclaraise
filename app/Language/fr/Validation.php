@@ -26,4 +26,5 @@ return [
     'max_size'            => 'Le fichier {field} ne doit pas dépasser {param} Ko.',
     'ext_in'              => 'Le fichier {field} doit être de type {param}.',
     'max_dims'            => 'Le fichier {field} dépasse les dimensions maximales autorisées ({param}).',
+    'phone'               => 'Le champ {field} n\'est pas au format correct.',
 ];

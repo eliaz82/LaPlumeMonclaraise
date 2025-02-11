@@ -69,15 +69,33 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
+            'session' => [
+                'except' => [
+                    'login*',
+                    'register',
+                    'auth/a/*',
+                    'logout',
+                    '/',
+                    'contact',
+                    'fichier-inscription',
+                    'download/*',
+                    'association',
+                    'histoire',
+                    'albums-photo',
+                    'albums-photo/*',
+                    'calendrier',
+                    'evenement/*',
+                    'evenement',
+                    'fais-marquant',
+                    'favicon.ico',
+                    'facebook/login',
+                    'contact-submit',
+                ],
+            ],
         ],
-        'after' => [
-            // 'honeypot',
-            // 'secureheaders',
-        ],
+        'after' => [],
     ];
+
 
     /**
      * List of filter aliases that works on a

@@ -160,53 +160,99 @@
 </style>
 
 <!-- Bouton pour ouvrir le modal d'ajout d'événement -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">
-    Ajouter un événement
-</button>
+<?php if (auth()->loggedIn()): ?>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEventModal">
+        Ajouter un événement
+    </button>
 
-<!-- Modal d'ajout d'événement -->
-<div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-primary" id="addEventModalLabel">Ajouter un événement</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
-            <div class="modal-body">
-                <form action="<?= esc(url_to('createEvenement')) ?>" method="POST" enctype="multipart/form-data">
-                    <?= csrf_field() ?>
-                    <div class="mb-3">
-                        <label for="titre" class="form-label">Titre de l'événement</label>
-                        <input type="text" class="form-control" id="titre" name="titre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Message</label>
-                        <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Date de l'événement</label>
-                        <input type="date" class="form-control" id="date" name="date" required
-                            value="<?= date('Y-m-d') ?>">
-                    </div>
-                    <div class="mb-3">
-                        <label for="createImage" class="form-label">Image (optionnel)</label>
-                        <input type="file" class="form-control" id="createImage" name="image" accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
-                            onchange="previewImage(event, 'createImagePreview')">
-                    </div>
-                    <!-- Prévisualisation de l'image -->
-                    <div class="mb-3 d-flex justify-content-center align-items-center text-center">
-                        <img id="createImagePreview" src="" alt="Aperçu de l'image"
-                            style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
-                    </div>
-                </form>
+    <!-- Modal d'ajout d'événement -->
+    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="addEventModalLabel">Ajouter un événement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?= esc(url_to('createEvenement')) ?>" method="POST" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
+                        <div class="mb-3">
+                            <label for="titre" class="form-label">Titre de l'événement</label>
+                            <input type="text" class="form-control" id="titre" name="titre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date de l'événement</label>
+                            <input type="date" class="form-control" id="date" name="date" required
+                                value="<?= date('Y-m-d') ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="createImage" class="form-label">Image (optionnel)</label>
+                            <input type="file" class="form-control" id="createImage" name="image" accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
+                                onchange="previewImage(event, 'createImagePreview')">
+                        </div>
+                        <!-- Prévisualisation de l'image -->
+                        <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                            <img id="createImagePreview" src="" alt="Aperçu de l'image"
+                                style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- Modal de modification d'événement -->
+    <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-primary" id="editEventModalLabel">Modifier l'événement</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?= esc(url_to('updateEvenement')) ?>" method="POST" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
+                        <input type="hidden" name="idEvenement" id="editEventId">
+                        <div class="mb-3">
+                            <label for="editTitre" class="form-label">Titre</label>
+                            <input type="text" class="form-control" id="editTitre" name="titre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editMessage" class="form-label">Message</label>
+                            <textarea class="form-control" id="editMessage" name="message" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDate" class="form-label">Date de l'événement</label>
+                            <input type="date" class="form-control" id="editDate" name="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editImage" class="form-label">Image (optionnel)</label>
+                            <input type="file" class="form-control" id="editImage" name="image"
+                                onchange="previewImage(event, 'editImagePreview')">
+                        </div>
+                        <!-- Prévisualisation de l'image -->
+
+                        <div class="mb-3 d-flex justify-content-center align-items-center text-center">
+                            <img id="editImagePreview" src="" alt="Aperçu de l'image"
+                                style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
 
 <!-- Affichage des événements -->
 <div class="container mt-5">
@@ -265,19 +311,22 @@
                                         Ouvrir sur Facebook
                                     </a>
                                 <?php else: ?>
-                                    <button class="btn btn-warning bouton-modifier-evenement" data-bs-toggle="modal"
-                                        data-bs-target="#editEventModal" data-id="<?= esc($post['idEvenement']) ?>"
-                                        data-titre="<?= esc($post['titre']) ?>" data-message="<?= esc($post['message']) ?>"
-                                        data-date="<?= esc($post['date']) ?>" data-image="<?= esc($post['image']) ?>">
-                                        Modifier
-                                    </button>
-                                    <form action="<?= esc(url_to('evenementDelete')) ?>" method="POST">
-                                        <input type="hidden" name="idEvenement" value="<?= esc($post['idEvenement']) ?>">
-                                        <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">
-                                            Supprimer
+                                    <?php if (auth()->loggedIn()): ?>
+                                        <button class="btn btn-warning bouton-modifier-evenement" data-bs-toggle="modal"
+                                            data-bs-target="#editEventModal" data-id="<?= esc($post['idEvenement']) ?>"
+                                            data-titre="<?= esc($post['titre']) ?>" data-message="<?= esc($post['message']) ?>"
+                                            data-date="<?= esc($post['date']) ?>" data-image="<?= esc($post['image']) ?>">
+                                            Modifier
                                         </button>
-                                    </form>
+                                        <form action="<?= esc(url_to('evenementDelete')) ?>" method="POST">
+                                            <input type="hidden" name="idEvenement" value="<?= esc($post['idEvenement']) ?>">
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">
+                                                Supprimer
+                                            </button>
+                                        </form>
+                                    <?php endif; ?>
+
                                 <?php endif; ?>
                             </div>
 
@@ -308,50 +357,7 @@
     </div>
 </div>
 
-<!-- Modal de modification d'événement -->
-<div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title text-primary" id="editEventModalLabel">Modifier l'événement</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-            </div>
-            <div class="modal-body">
-                <form action="<?= esc(url_to('updateEvenement')) ?>" method="POST" enctype="multipart/form-data">
-                    <?= csrf_field() ?>
-                    <input type="hidden" name="idEvenement" id="editEventId">
-                    <div class="mb-3">
-                        <label for="editTitre" class="form-label">Titre</label>
-                        <input type="text" class="form-control" id="editTitre" name="titre" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editMessage" class="form-label">Message</label>
-                        <textarea class="form-control" id="editMessage" name="message" rows="4" required></textarea>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editDate" class="form-label">Date de l'événement</label>
-                        <input type="date" class="form-control" id="editDate" name="date" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="editImage" class="form-label">Image (optionnel)</label>
-                        <input type="file" class="form-control" id="editImage" name="image"
-                            onchange="previewImage(event, 'editImagePreview')">
-                    </div>
-                    <!-- Prévisualisation de l'image -->
 
-                    <div class="mb-3 d-flex justify-content-center align-items-center text-center">
-                        <img id="editImagePreview" src="" alt="Aperçu de l'image"
-                            style="max-width: 80%; max-height: 200px; display: none; border-radius: 8px; object-fit: cover; padding: 5px;">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="submit" class="btn btn-primary">Mettre à jour</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?= $this->endSection() ?>
 

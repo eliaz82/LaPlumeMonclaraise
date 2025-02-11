@@ -121,6 +121,7 @@
       <?php endforeach; ?>
     </div>
   </div>
+  </div>
 
 <?php else: ?>
   <p>Aucune publication trouvée.</p>

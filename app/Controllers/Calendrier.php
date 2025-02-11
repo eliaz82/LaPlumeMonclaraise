@@ -18,116 +18,143 @@ class Calendrier extends BaseController
     }
     public function calendrier(): string
     {
-        $posts = $this->facebookCache->getFacebookPosts();
-        $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll();
-        $hashtagList = array_column($hashtags, 'hashtag');
+        try {
+            // Récupération des posts depuis le cache Facebook
+            $posts = $this->facebookCache->getFacebookPosts();
     
-        $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
-            if (isset($post['message'])) {
-                foreach ($hashtagList as $hashtag) {
-                    if (strpos($post['message'], $hashtag) !== false) {
-                        return true;
+            // Vérification que les données des posts sont valides
+            if (empty($posts) || !isset($posts['data'])) {
+                log_message('error', 'Aucun post récupéré depuis Facebook.');
+                return view('calendrier', ['events' => [], 'posts' => []]);
+            }
+    
+            // Récupération des hashtags depuis la base de données
+            $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll();
+    
+            // Vérification que les hashtags sont valides
+            if (empty($hashtags)) {
+                log_message('error', 'Aucun hashtag trouvé dans la base de données.');
+                return view('calendrier', ['events' => [], 'posts' => []]);
+            }
+    
+            // Extraire les hashtags dans un tableau
+            $hashtagList = array_column($hashtags, 'hashtag');
+    
+            // Filtrage des posts pour ne garder que ceux contenant un hashtag
+            $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtagList) {
+                if (isset($post['message'])) {
+                    foreach ($hashtagList as $hashtag) {
+                        if (strpos($post['message'], $hashtag) !== false) {
+                            return true;
+                        }
                     }
                 }
-            }
-            return false;
-        });
-        $eventsFromDb = $this->evenementsModel->findAll();
-        $events = [];
-        $currentDate = new \DateTime();
-        $currentDate->setTime(23, 59, 59);
+                return false;
+            });
     
-        // Tableau global des posts destinés au carousel
-        $allPosts = [];
+            // Récupération des événements depuis la base de données
+            $eventsFromDb = $this->evenementsModel->findAll();
+            $events = [];
+            $currentDate = new \DateTime();
+            $currentDate->setTime(23, 59, 59);
     
-        // Traitement des posts Facebook
-        foreach ($filteredPosts as &$post) { // Utilisation de "&" pour modifier directement le post
-            $eventDate = null;
-            if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
-                $eventDate = $matches[1];
-            }
+            // Tableau global des posts destinés au carousel
+            $allPosts = [];
     
-            if (!$eventDate) {
-                continue; // Pas de date trouvée, on ignore ce post
-            }
-            list($day, $month, $year) = explode('/', $eventDate);
-            if (!checkdate($month, $day, $year)) {
-                continue; // Date invalide
-            }
-            $eventDateTime = new \DateTime("$year-$month-$day");
-            $eventDateTime->setTime(23, 59, 59);
+            // Traitement des posts Facebook
+            foreach ($filteredPosts as &$post) {
+                $eventDate = null;
+                if (preg_match('/(\d{2}\/\d{2}\/\d{4})/', $post['message'], $matches)) {
+                    $eventDate = $matches[1];
+                }
     
-            // Détermine si l'événement est passé
-            $past = $eventDateTime < $currentDate;
+                if (!$eventDate) {
+                    continue; // Pas de date trouvée, on ignore ce post
+                }
+                list($day, $month, $year) = explode('/', $eventDate);
+                if (!checkdate($month, $day, $year)) {
+                    continue; // Date invalide
+                }
+                $eventDateTime = new \DateTime("$year-$month-$day");
+                $eventDateTime->setTime(23, 59, 59);
     
-            // Extraction du titre (entre *...* ou les 50 premiers caractères sinon)
-            preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
-            $eventTitle = isset($titleMatches[1]) ? $titleMatches[1] : substr($post['message'], 0, 50);
+                // Détermine si l'événement est passé
+                $past = $eventDateTime < $currentDate;
     
-            // Récupération de l'image si elle existe
-            $imageUrl = null;
-            if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
-                $imageUrl = $post['attachments']['data'][0]['media']['image']['src'];
-            }
+                // Extraction du titre (entre *...* ou les 50 premiers caractères sinon)
+                preg_match('/\*(.*?)\*/', $post['message'], $titleMatches);
+                $eventTitle = isset($titleMatches[1]) ? $titleMatches[1] : substr($post['message'], 0, 50);
     
-            // Ajouter l'événement pour le calendrier avec l'indicateur "past"
-            $events[] = [
-                'title' => $eventTitle,
-                'start' => $eventDate, // Format DD/MM/YYYY (sera converti côté JS si nécessaire)
-                'image' => $imageUrl,
-                'id' => $post['id'] ?? uniqid(),
-                'past' => $past
-            ];
+                // Récupération de l'image si elle existe
+                $imageUrl = null;
+                if (isset($post['attachments']['data'][0]['media']['image']['src'])) {
+                    $imageUrl = $post['attachments']['data'][0]['media']['image']['src'];
+                }
     
-            // Ajouter le post au carousel seulement si l'événement n'est pas passé
-            if (!$past) {
-                $post['date'] = $eventDate;
-                $post['image'] = $imageUrl;
-                $post['titre'] = $eventTitle;
-                $post['id'] = $post['id'] ?? uniqid();
-                $allPosts[] = $post;
-            }
-        }
-    
-        // Traitement des événements provenant de la base de données
-        foreach ($eventsFromDb as $eventFromDb) {
-            // Assurer que la date est au format 'YYYY-MM-DD'
-            $eventDate = $eventFromDb['date'];
-            if (strpos($eventDate, '/') !== false) {
-                $eventDate = date('Y-m-d', strtotime(str_replace('/', '-', $eventDate)));
-            }
-    
-            // Créer un objet DateTime pour la date de l'événement
-            $eventDateTime = new \DateTime($eventDate);
-            $eventDateTime->setTime(23, 59, 59);
-            
-            // Détermine si l'événement est passé
-            $past = $eventDateTime < $currentDate;
-    
-            // Ajouter l'événement pour le calendrier
-            $events[] = [
-                'title' => $eventFromDb['titre'],  // Titre de l'événement
-                'start' => $eventDate,              // Date au format 'YYYY-MM-DD'
-                'image' => $eventFromDb['image'],    // Image associée à l'événement
-                'id' => $eventFromDb['idEvenement'] ?? uniqid(),  // ID de l'événement
-                'past' => $past
-            ];
-    
-            // Préparer le post pour le carousel uniquement si l'événement n'est pas passé
-            if (!$past) {
-                $postDb = [
-                    'date' => $eventFromDb['date'], // Ici, la date peut être 'YYYY-MM-DD'
-                    'titre' => $eventFromDb['titre'],
-                    'image' => $eventFromDb['image'],
-                    'id' => $eventFromDb['idEvenement'] ?? uniqid()
+                // Ajouter l'événement pour le calendrier avec l'indicateur "past"
+                $events[] = [
+                    'title' => $eventTitle,
+                    'start' => $eventDate, // Format DD/MM/YYYY (sera converti côté JS si nécessaire)
+                    'image' => $imageUrl,
+                    'id' => $post['id'] ?? uniqid(),
+                    'past' => $past
                 ];
-                $allPosts[] = $postDb;
+    
+                // Ajouter le post au carousel seulement si l'événement n'est pas passé
+                if (!$past) {
+                    $post['date'] = $eventDate;
+                    $post['image'] = $imageUrl;
+                    $post['titre'] = $eventTitle;
+                    $post['id'] = $post['id'] ?? uniqid();
+                    $allPosts[] = $post;
+                }
             }
+    
+            // Traitement des événements provenant de la base de données
+            foreach ($eventsFromDb as $eventFromDb) {
+                // Assurer que la date est au format 'YYYY-MM-DD'
+                $eventDate = $eventFromDb['date'];
+                if (strpos($eventDate, '/') !== false) {
+                    $eventDate = date('Y-m-d', strtotime(str_replace('/', '-', $eventDate)));
+                }
+    
+                // Créer un objet DateTime pour la date de l'événement
+                $eventDateTime = new \DateTime($eventDate);
+                $eventDateTime->setTime(23, 59, 59);
+                
+                // Détermine si l'événement est passé
+                $past = $eventDateTime < $currentDate;
+    
+                // Ajouter l'événement pour le calendrier
+                $events[] = [
+                    'title' => $eventFromDb['titre'],  // Titre de l'événement
+                    'start' => $eventDate,              // Date au format 'YYYY-MM-DD'
+                    'image' => $eventFromDb['image'],    // Image associée à l'événement
+                    'id' => $eventFromDb['idEvenement'] ?? uniqid(),  // ID de l'événement
+                    'past' => $past
+                ];
+    
+                // Préparer le post pour le carousel uniquement si l'événement n'est pas passé
+                if (!$past) {
+                    $postDb = [
+                        'date' => $eventFromDb['date'], // Ici, la date peut être 'YYYY-MM-DD'
+                        'titre' => $eventFromDb['titre'],
+                        'image' => $eventFromDb['image'],
+                        'id' => $eventFromDb['idEvenement'] ?? uniqid()
+                    ];
+                    $allPosts[] = $postDb;
+                }
+            }
+    
+            // On transmet $allPosts pour le carousel et $events pour le calendrier
+            return view('calendrier', ['events' => $events, 'posts' => $allPosts]);
+    
+        } catch (\Exception $e) {
+            // Log toutes les exceptions
+            log_message('error', 'Erreur inconnue : ' . $e->getMessage());
+            // Si erreur générale, on continue d'afficher la vue sans événements ou posts
+            return view('calendrier', ['events' => [], 'posts' => []]);
         }
-    
-        // On transmet $allPosts pour le carousel et $events pour le calendrier
-        return view('calendrier', ['events' => $events, 'posts' => $allPosts]);
-    }
-    
+    }    
 
 }
