@@ -46,14 +46,14 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#histoire">Histoire</a>
                         </li>
-                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#equipe">Équipe</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('FusionAssociation') ?>#equipe">Bureau</a></li>
 
                         <li><a class="dropdown-item"
                                 href="<?= url_to('FusionAssociation') ?>#partenaire">Partenaires</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= url_to('actualite') ?>">Fait marquant</a>
+                    <a class="nav-link" href="<?= url_to('actualite') ?>">Fait marquants</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= url_to('calendrier') ?>">Calendrier</a>
@@ -64,8 +64,8 @@
                         Vie du club
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="<?= url_to('evenement') ?>">Evenement</a></li>
-                        <li><a class="dropdown-item" href="<?= url_to('albumsPhoto') ?>">Albums photo</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('evenement') ?>">Événements</a></li>
+                        <li><a class="dropdown-item" href="<?= url_to('albumsPhoto') ?>">Albums photos</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">

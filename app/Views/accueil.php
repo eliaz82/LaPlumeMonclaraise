@@ -30,7 +30,7 @@
     <div class="d-flex justify-content-between align-items-center h-100 text-white">
       <div class="ms-3">
         <h2 class="fw-bold" style="font-family: 'Playfair Display', serif; font-size: 45px; color: #fff;">
-          La Plume Monclaraise
+          LA PLUME MONCLARAISE
         </h2>
 
         <p class="font-size-18" style="font-family: Arial, sans-serif;">Nouveau club de badminton loisirs dans la
@@ -38,26 +38,77 @@
         <p class="font-size-18" style="font-family: Arial, sans-serif;">Sport · Terrain de badminton</p>
       </div>
       <div class="me-3 text-end">
-        <img src="<?= esc(base_url(getAssociationLogo()), 'attr'); ?>" class="img-fluid img-thumbnail rounded-circle"
-          alt="Logo" style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
+        <img src="<?= esc(base_url(getAssociationLogo()), 'attr'); ?>"
+          class="img-fluid img-thumbnail rounded-circle"
+          alt="Logo"
+          style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
 
-        <div class="col-md-4" style="width: 200px; text-align: center;">
-          <?php
-          // Supposons que $localisation contienne les données de localisation récupérées en BDD
-          ?>
-          <p>
-            <i class="bi bi-geo-alt"></i> Adresse : <span
-              class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span><br>
-            <i class="bi bi-envelope"></i> Email : <span class="emailDisplay">contact@club.fr</span><br>
-            <i class="bi bi-telephone"></i> Téléphone : 07 82 17 69 70
-          </p>
+        <!-- Icônes avec pop-up au survol -->
+        <div class="mt-2 d-flex justify-content-center gap-4">
 
+          <!-- Email -->
+          <div class="icon-container">
+            <i class="bi bi-envelope-fill fs-3 text-primary"></i>
+            <div class="popup-info">
+              Email : <span class="emailDisplay"><?= esc($email ?? 'Email non défini'); ?></span>
+            </div>
+          </div>
 
+          <!-- Adresse -->
+          <div class="icon-container">
+            <i class="bi bi-geo-alt-fill fs-3 text-primary"></i>
+            <div class="popup-info">
+              Adresse : <span class="adresseDisplay"><?= esc($localisation['adresse'] ?? 'Adresse non définie'); ?></span>
+            </div>
+          </div>
+
+          <!-- Téléphone -->
+          <div class="icon-container">
+            <i class="bi bi-telephone-fill fs-3 text-primary"></i>
+            <div class="popup-info">
+              Téléphone : <span class="telephoneDisplay"><?= esc($telephone ?? 'Téléphone non défini'); ?></span>
+            </div>
+          </div>
         </div>
       </div>
+
+
+      <style>
+        .icon-container {
+          position: relative;
+          display: inline-block;
+          cursor: pointer;
+        }
+
+        .popup-info {
+          visibility: hidden;
+          width: max-content;
+          background-color: rgba(0, 0, 0, 0.8);
+          color: #fff;
+          text-align: center;
+          padding: 5px 10px;
+          border-radius: 5px;
+          position: absolute;
+          bottom: 30px;
+          left: 50%;
+          transform: translateX(-50%);
+          white-space: nowrap;
+          opacity: 0;
+          transition: opacity 0.3s, visibility 0.3s;
+          z-index: 10;
+        }
+
+        .icon-container:hover .popup-info {
+          visibility: visible;
+          opacity: 1;
+        }
+      </style>
+
+
     </div>
   </div>
 </div>
+
 
 <div class="container my-5" style="padding-bottom: 100px;">
   <div class="position-relative">
@@ -77,8 +128,8 @@
           Plongez dans l'univers du badminton avec nous et vivez des moments uniques, qu'ils soient compétitifs ou
           purement récréatifs.
         </p>
-        <a href="<?= esc(url_to('FusionAssociation').'#histoire', 'attr'); ?>" class="btn btn-primary">Lire plus</a>
-        </div>
+        <a href="<?= esc(url_to('FusionAssociation') . '#histoire', 'attr'); ?>" class="btn btn-primary">Lire plus</a>
+      </div>
     </div>
   </div>
 </div>
