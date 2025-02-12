@@ -362,7 +362,11 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<?= script_tag('js/form-modifications.js') ?>
+<?php if (auth()->loggedIn()): ?>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <?= script_tag('js/form-modifications.js') ?>
+<?php endif; ?>
 <?= script_tag('js/events-ui.js') ?>
+
+
 <?= $this->endSection() ?>
