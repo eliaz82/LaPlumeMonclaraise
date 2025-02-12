@@ -2,7 +2,7 @@
 
 <?= $this->section('css') ?>
 <!-- FullCalendar CSS -->
-<link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
+
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 
