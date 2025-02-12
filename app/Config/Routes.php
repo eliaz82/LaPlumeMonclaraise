@@ -88,3 +88,5 @@ $routes->get('facebook/getPosts', 'Facebook::getPosts', ['as' => 'facebook.getPo
 $routes->post('facebook/refresh', 'Facebook::refresh', ['as' => 'facebook.refresh']);
 
 $routes->get('getAssociationData', 'Association::getAssociationData');
+
+$routes->get('check-token-email', 'Facebook::check_and_send_email');

@@ -44,11 +44,15 @@ class Facebook extends BaseController
             // Calculer l'intervalle de jours entre la date actuelle et la date d'expiration
             $interval = $current_date->diff($expiration_date);
             $remainingDays = $interval->days; // Nombre de jours restants
-    
-            // Si l'expiration est dans des jours valides (10, 5, 1) en fonction du cron job
-            if (in_array($remainingDays, [10, 5, 1])) {
-                // Appel de la méthode login pour générer l'URL de renouvellement
-                $renewLink = $this->login();
+  
+            // Si l'expiration est dans des jours valides (10, 5, 3, 2, 1) en fonction du cron job
+            if (in_array($remainingDays, [10, 5, 3, 2, 1])) {
+                // Générer l'URL de renouvellement manuellement
+                $clientId = '603470049247384';
+                $redirectUri = base_url();  // Redirige après le renouvellement (peut être ajusté)
+                $scope = 'public_profile,user_posts,user_videos,user_photos';
+                $renewLink = "https://www.facebook.com/v21.0/dialog/oauth?"
+                    . "client_id={$clientId}&redirect_uri={$redirectUri}&scope={$scope}&response_type=code";
     
                 // Préparer le message HTML à envoyer avec le lien de renouvellement
                 $htmlMessage = "
@@ -118,7 +122,8 @@ class Facebook extends BaseController
         }
     }
     
-    
+
+
 
     public function getHashtagsByPage($pageName)
     {

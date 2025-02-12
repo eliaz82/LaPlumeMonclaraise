@@ -92,6 +92,7 @@ class Filters extends BaseFilters
                     'contact-submit',
                     'getAssociationData',
                     'facebook/refresh',
+                    'check-token-email',
                 ],
             ],
         ],
