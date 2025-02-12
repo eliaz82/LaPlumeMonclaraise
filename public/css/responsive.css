@@ -360,13 +360,114 @@
      }
  }
 
- @media (max-width: 480px) {
+ @media (max-width: 768px) {
+    .custom-image-container {
+      width: 100% !important; /* Prend toute la largeur du conteneur */
+      height: auto !important; /* Ajuste la hauteur automatiquement */
+      max-height: 250px !important; /* Hauteur max pour éviter que ça prenne trop de place */
+    }
+  
+    .custom-image-container img {
+      width: 100% !important; /* S'assure que l'image prend la largeur du conteneur */
+      height: 100% !important; /* Évite les déformations */
+      object-fit: cover !important; /* Garde le cadrage correct */
+    }
+    
+    .custom-overlay {
+      width: 100% !important; /* Recouvre bien l'image */
+      height: 100% !important; /* Ajuste bien l'effet de grisement */
+    }
+  }
+  
 
-     /* Cible toutes les images des items du carousel */
-     #carousel-container .carousel-item img {
-         height: 200px !important;
-         /* Réduit la hauteur pour mobile */
-         object-fit: cover !important;
-         /* Pour s'assurer que l'image reste bien cadrée */
-     }
- }
+
+  @media (max-width: 768px) {
+    .post {
+        display: flex;
+        flex-direction: column !important; /* Toujours en colonne */
+        align-items: center;
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .post-image {
+        width: 100% !important;
+        height: 200px !important;
+        background-size: cover !important;
+        background-position: center !important;
+        border-radius: 10px;
+    }
+
+    .content-container {
+        width: 100% !important; /* Corrige le problème du texte qui disparaît */
+        text-align: center;
+        padding: 10px;
+        display: block !important; /* Forcer l'affichage du texte */
+    }
+
+    .post-message {
+        font-size: 14px;
+        word-wrap: break-word;
+        color: #333 !important; /* S'assurer que le texte est visible */
+        display: block !important; /* Éviter qu'il soit caché */
+    }
+
+    .read-more {
+        font-size: 12px;
+        display: block;
+        margin-top: 10px;
+        color: #007bff;
+        cursor: pointer;
+    }
+}
+
+
+
+/* Styles généraux pour les écrans larges */
+.contact-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* Styles pour les écrans mobiles */
+@media (max-width: 768px) {
+    .contact-wrapper {
+        flex-direction: column; /* Dispose les éléments en colonne */
+        align-items: center; /* Centre les éléments */
+        justify-content: center;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .contact-map {
+        width: 100% !important;  /* La carte prend toute la largeur */
+        height: 300px !important;  /* Ajuste la hauteur de la carte */
+        margin-bottom: 20px;  /* Ajoute un espace en bas */
+    }
+
+    .contact-container {
+        width: 100% !important; /* Le formulaire prend toute la largeur */
+    }
+
+    .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .btn-unique {
+        width: 100% !important;
+        max-width: 300px;
+    }
+}
