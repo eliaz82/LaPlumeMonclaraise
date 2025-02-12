@@ -5,7 +5,6 @@ Photos
 <?= $this->section('css') ?>
 <!-- Tu peux ajouter ici tes styles CSS personnalisés -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/photo-gallery.css') ?>">
-<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <?= $this->endSection() ?>
 
 <?= $this->section('contenu') ?>
@@ -27,7 +26,8 @@ Photos
         <div class="modal fade" id="modalAjouter" tabindex="-1" aria-labelledby="modalAjouterLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <form method="post" action="<?= esc(route_to('createPhoto', $album['idAlbums']), 'attr'); ?>" enctype="multipart/form-data">
+                    <form method="post" action="<?= esc(route_to('createPhoto', $album['idAlbums']), 'attr'); ?>"
+                        enctype="multipart/form-data">
                         <?= csrf_field() ?>
                         <div class="modal-header">
                             <h5 class="modal-title text-primary" id="modalAjouterLabel">Ajouter des Photos</h5>
@@ -64,11 +64,10 @@ Photos
         <?php foreach ($photos as $photo):
             // Détermine l'URL de la photo
             $photoUrl = (filter_var($photo['photo'], FILTER_VALIDATE_URL)) ? $photo['photo'] : base_url($photo['photo']);
-        ?>
+            ?>
             <div class="photo-item">
                 <!-- Image cliquable pour zoom -->
-                <img src="<?= esc($photoUrl, 'attr'); ?>"
-                    alt="Photo de l'album" class="photo-img"
+                <img src="<?= esc($photoUrl, 'attr'); ?>" alt="Photo de l'album" class="photo-img"
                     onclick="zoomImage('<?= esc($photoUrl, 'js'); ?>')">
 
                 <!-- Formulaire de suppression sous l'image -->
@@ -78,7 +77,8 @@ Photos
                             <?= csrf_field() ?>
                             <input type="hidden" name="idPhoto" value="<?= esc($photo['idPhoto'], 'attr'); ?>">
                             <input type="hidden" name="idAlbums" value="<?= esc($album['idAlbums'], 'attr'); ?>">
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Supprimer cette photo ?');">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Supprimer cette photo ?');">
                                 Supprimer
                             </button>
                         </form>
@@ -92,7 +92,11 @@ Photos
     <!-- Conteneur pour l'image agrandie (mode zoom) -->
     <div id="zoom-container" class="zoom-container">
         <span id="close-zoom" class="close" onclick="closeZoom()">X</span>
-        <img id="zoomed-image" class="zoomed-image" />
+        <div class="zoom-controls">
+            <button id="zoom-in" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
+            <button id="zoom-out" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
+        </div>
+        <img id="zoomed-image" class="zoomed-image" loading="lazy" />
     </div>
 </div>
 

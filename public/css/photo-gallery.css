@@ -1,219 +1,333 @@
-
-  
-  /* =========================================================================
+/* =========================================================================
      ALBUM PHOTO
      ========================================================================= */
-     .dropdown-item.active {
-        background-color: #007bff;
-        color: white;
-      }
-      
-      .dropdown-item.active i {
-        color: white;
-      }
-      
-      .facebook-overlay-icon {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: white;
-        padding: 8px;
-        border-radius: 50%;
-        transition: background 0.3s ease-in-out;
-      }
-      
-      .facebook-icon {
-        width: 35px;
-        height: 35px;
-        color: #1877F2;
-        transition: color 0.3s ease-in-out;
-      }
-      
-      .custom-image-container {
-        position: relative;
-        width: 100%;
-        height: 350px;
-        overflow: hidden;
-        border-radius: 20px;
-      }
-      
-      .custom-image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      
-      .custom-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.6);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-      
-      .custom-image-container:hover .custom-overlay {
-        opacity: 1;
-      }
-      
-      .overlay-text {
-        text-align: center;
-        color: white;
-        padding: 20px;
-      }
-      
-      .overlay-text h5 {
-        font-size: 1.75rem;
-      }
-      
-      .overlay-text p {
-        font-size: 1.2rem;
-        margin-bottom: 15px;
-      }
-      
-      .overlay-text .btn {
-        margin: 5px;
-      }
-      
-      .btn-primary,
-      .btn-warning,
-      .btn-danger {
-        transition: background-color 0.3s ease, transform 0.2s ease;
-      }
-      
-      .btn-primary:hover,
-      .btn-warning:hover,
-      .btn-danger:hover {
-        background-color: #0056b3;
-        transform: scale(1.1);
-      }
-      
-      .btn-primary {
-        background-color: #007bff;
-      }
-      
-      .btn-warning {
-        background-color: #ffc107;
-      }
-      
-      .btn-danger {
-        background-color: #dc3545;
-      }
- /* =========================================================================
+.dropdown-item.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.dropdown-item.active i {
+  color: white;
+}
+
+.facebook-overlay-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: white;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.3s ease-in-out;
+}
+
+.facebook-icon {
+  width: 35px;
+  height: 35px;
+  color: #1877F2;
+  transition: color 0.3s ease-in-out;
+}
+
+.custom-image-container {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.custom-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.custom-image-container:hover .custom-overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.overlay-text h5 {
+  font-size: 1.75rem;
+}
+
+.overlay-text p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+.overlay-text .btn {
+  margin: 5px;
+}
+
+.btn-primary,
+.btn-warning,
+.btn-danger {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-primary:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+/* =========================================================================
      PHOTO GALLERY
      ========================================================================= */
-     .photo-gallery {
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 20px;
-        column-count: 3;
-        column-gap: 15px;
-        box-sizing: border-box;
-        background: rgb(240, 240, 240);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      }
-      
-      .photo-item {
-        display: inline-block;
-        width: 100%;
-        margin-bottom: 15px;
-        position: relative;
-        transition: transform 0.2s ease, filter 0.2s ease;
-      }
-      
-      .photo-item:hover {
-        transform: scale(1.03);
-        filter: brightness(0.85);
-      }
-      
-      .photo-img {
-        width: 100%;
-        border-radius: 5px;
-        display: block;
-      }
-      
-      .photo-actions {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
-      }
-      
-      .photo-item:hover .photo-actions {
-        opacity: 1;
-      }
-      
-      .photo-actions button {
-        background: rgba(255, 69, 58, 0.9);
-        border: none;
-        color: #fff;
-        padding: 8px 16px;
-        border-radius: 50px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        text-transform: uppercase;
-        transition: background 0.3s ease;
-      }
-      
-      .photo-actions button:hover {
-        background: #ff453a;
-      }
-      
-      .zoom-container {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-        animation: fadeIn 0.3s ease-in-out;
-      }
-      
-      .zoomed-image {
-        max-width: 85%;
-        max-height: 85%;
-        border-radius: 5px;
-        animation: zoomIn 0.3s ease-in-out;
-      }
-      
-      #close-zoom {
-        position: absolute;
-        top: 15px;
-        right: 20px;
-        font-size: 40px;
-        color: #fff;
-        cursor: pointer;
-        transition: opacity 0.3s ease;
-      }
-      
-      #close-zoom:hover {
-        opacity: 0.8;
-      }
-      
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      
-      @keyframes zoomIn {
-        from { transform: scale(0.8); }
-        to { transform: scale(1); }
-      }
-      
-      @media (max-width: 1200px) {
-        .photo-gallery { column-count: 2; }
-      }
-      
-      @media (max-width: 768px) {
-        .photo-gallery { column-count: 1; }
-      }
+.photo-gallery {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  column-count: 3;
+  column-gap: 15px;
+  box-sizing: border-box;
+  background: rgb(240, 240, 240);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.photo-item {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.photo-item:hover {
+  transform: scale(1.03);
+  filter: brightness(0.85);
+}
+
+.photo-img {
+  width: 100%;
+  border-radius: 5px;
+  display: block;
+}
+
+.photo-actions {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.photo-item:hover .photo-actions {
+  opacity: 1;
+}
+
+.photo-actions button {
+  background: rgba(255, 69, 58, 0.9);
+  border: none;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background 0.3s ease;
+}
+
+.photo-actions button:hover {
+  background: #ff453a;
+}
+
+/* Conteneur de zoom */
+.zoom-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  animation: fadeIn 0.3s ease-in-out;
+  padding: 10px; /* Pour donner de l'espace aux bords */
+}
+
+/* Image zoomée */
+.zoomed-image {
+  max-width: 85%;
+  max-height: 85%;
+  border-radius: 5px;
+  animation: zoomIn 0.3s ease-in-out;
+  z-index: 1060;
+  /* Assurez-vous que l'image soit bien au-dessus du conteneur */
+  width: auto;
+  height: auto;
+}
+
+/* Croix de fermeture */
+#close-zoom {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 40px;
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  z-index: 1070;
+}
+
+#close-zoom:hover {
+  opacity: 0.8;
+}
+
+/* Animation de fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Animation de zoom-in pour l'image */
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Réactivité pour les écrans de taille petite (téléphone) */
+@media (max-width: 768px) {
+  .zoom-container {
+    padding: 5px; /* Réduit le padding pour les petits écrans */
+  }
+
+  .zoomed-image {
+    max-width: 95%; /* Image plus grande pour les petits écrans */
+    max-height: 95%; /* Ajuste la hauteur pour correspondre */
+  }
+
+  #close-zoom {
+    top: 10px;
+    right: 15px;
+    font-size: 30px; /* Taille réduite pour la croix sur mobile */
+  }
+}
+
+/* Réactivité pour les très petits écrans (p. ex. téléphones très petits) */
+@media (max-width: 480px) {
+  .zoom-container {
+    padding: 2px; /* Encore moins d'espace pour les très petits écrans */
+  }
+
+  .zoomed-image {
+    max-width: 100%; /* Utilise toute la largeur de l'écran */
+    max-height: 100%; /* Utilise toute la hauteur de l'écran */
+  }
+
+  #close-zoom {
+    top: 5px;
+    right: 10px;
+    font-size: 25px; /* Taille encore plus petite pour la croix */
+  }
+}
+/* Conteneur des boutons de zoom */
+.zoom-controls {
+  position: absolute;
+  top: 80px; /* Augmenté pour décaler plus bas les boutons de zoom */
+  right: 15px;
+  display: flex;
+  gap: 15px; /* Espacement entre les boutons */
+  z-index: 1070;
+  flex-direction: row;
+}
+
+/* Style des boutons de zoom avec icônes */
+.zoom-controls button {
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  color: #333;
+  font-size: 28px; /* Taille des icônes */
+  padding: 12px 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Effet au survol des boutons */
+.zoom-controls button:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Effet au clic */
+.zoom-controls button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Pour les petits écrans */
+@media (max-width: 768px) {
+  .zoom-controls {
+    top: 40px; /* Ajustement pour les petits écrans */
+    right: 10px;
+    gap: 8px;
+  }
+
+  .zoom-controls button {
+    font-size: 24px;
+    padding: 10px 15px;
+  }
+}
+
+
+
+@media (max-width: 1200px) {
+  .photo-gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .photo-gallery {
+    column-count: 1;
+  }
+}
