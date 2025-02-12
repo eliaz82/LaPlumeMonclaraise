@@ -1,11 +1,12 @@
 <?= $this->extend('layout') ?>
 
 <?= $this->section('css') ?>
-
+<!-- Inclusion du fichier CSS pour les boutons -->
+<link rel="stylesheet" href="<?= base_url('css/buttons.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <?= $this->endSection() ?>
 
 <?= $this->section('contenu') ?>
-
 <?php if (isset($inscriptionsClosed) && $inscriptionsClosed): ?>
     <!-- Message lorsque les inscriptions sont terminées -->
     <div class="container">
@@ -126,7 +127,5 @@
     <!-- Charger ton script après jQuery -->
     <?= script_tag('js/file-drag-and-drop.js') ?>
     <?= $this->endSection() ?>
-
 <?php endif; ?>
-
 <?= $this->endSection() ?>

@@ -2,6 +2,10 @@
 
 <?= $this->section('css') ?>
 <!-- FullCalendar CSS -->
+     <link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
+     <link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
+     <link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
+
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 <?= $this->endSection() ?>
 

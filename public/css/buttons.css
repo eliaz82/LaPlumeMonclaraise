@@ -1,0 +1,270 @@
+/* =========================================================================
+   BOUTON TÉLÉCHARGER - PAGE INSCRIPTION
+   ========================================================================= */
+   .botao {
+    width: 125px;
+    height: 45px;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 1px 1px rgba(129, 161, 208, 1);
+    padding: 5px 10px;
+    background: rgb(47, 93, 197);
+    background: linear-gradient(160deg, rgba(47, 93, 197, 1) 0%, rgba(29, 34, 67, 1) 5%, rgba(29, 34, 67, 1) 100%, rgba(129, 161, 208, 1) 57%, rgba(153, 187, 234, 1) 71%);
+    color: #fff;
+    font-family: Roboto, sans-serif;
+    font-weight: 505;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+    position: relative;
+    transition: .5s linear;
+  }
+  
+  .botao .mysvg {
+    display: none;
+  }
+  
+  .botao .texto {
+    display: inline;
+  }
+  
+  .botao:hover {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    padding: 0;
+    background: #81A1D0;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .botao:hover .mysvg {
+    display: inline;
+  }
+  
+  .botao:hover .texto {
+    display: none;
+  }
+  
+  .botao:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 3.5px solid transparent;
+    border-top: 3.5px solid #fff;
+    border-right: 3.5px solid #fff;
+    border-radius: 50%;
+    animation: animateC 2s linear infinite;
+  }
+  
+  @keyframes animateC {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .btn-download {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+  }
+  
+  .botao a {
+    text-decoration: none;
+    color: #fff;
+  }
+  
+  .botao a .texto {
+    color: inherit;
+  }
+  
+  /* =========================================================================
+     BOUTON ENVOYER - PAGE CONTACT
+     ========================================================================= */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .btn-unique {
+    font-family: inherit;
+    font-size: 20px;
+    background-color: white;
+    color: #1D2243;
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border-radius: 16px;
+    transition: all 0.2s;
+    cursor: pointer;
+    width: 150px;
+    justify-content: center;
+  }
+  
+  .btn-unique .btn-label {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-unique svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .btn-unique:hover .icon-wrapper-inner {
+    animation: fly-animation 0.6s ease-in-out infinite alternate;
+  }
+  
+  .btn-unique:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+  
+  .btn-unique:hover .btn-label {
+    transform: translateX(5em);
+  }
+  
+  .btn-unique:active {
+    transform: scale(0.95);
+  }
+  
+  @keyframes fly-animation {
+    from {
+      transform: translateY(0.1em);
+    }
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
+
+ 
+  /* =========================================================================
+     BOUTONS RÉSEAUX SOCIAUX
+     ========================================================================= */
+     .social-btn {
+        position: relative;
+        border: none;
+        margin: 10px;
+        background-color: transparent;
+      }
+      
+      .social-link {
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid white;
+        box-shadow: 0 5px 45px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(2px);
+        transition: 0.5s;
+        overflow: hidden;
+        background-color: rgb(255, 255, 255);
+      }
+      
+      .social-link:hover {
+        transform: translateY(-20px);
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+      
+      .social-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 50px;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.5);
+        transform: skewX(45deg) translateX(150px);
+        transition: 0.5s ease;
+      }
+      
+      .social-link:hover::before {
+        transform: skewX(45deg) translateX(-150px);
+      }
+      
+      .social-icon {
+        width: 3em;
+        color: white;
+      }
+      
+      #facebook {
+        color: rgba(10, 128, 236, 0.7);
+      }
+      
+      /* =========================================================================
+         BOUTON MODIFIER - PAGE INSCRIPTION
+         ========================================================================= */
+      #bouton-modifier-inscription {
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        background-color: #1D2243;
+        color: white;
+        border: 1px solid #1D2243;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      
+      #bouton-modifier-inscription:hover {
+        background-color: #81A1D0;
+        border-color: #81A1D0;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+      }
+      
+      #bouton-modifier-inscription:active {
+        background-color: #81A1D0;
+        border-color: #1D2243;
+        transform: translateY(2px);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+      
+      #bouton-modifier-inscription:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(29, 34, 67, 1);
+      }
+  /* =========================================================================
+     ZONE DE DÉPÔT
+     ========================================================================= */
+     #drop-area {
+        border: 2px dashed #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+      
+      #drop-area:hover {
+        background: rgba(29, 34, 67, 1);
+      }
+      
+      #drop-area .drop-title {
+        font-size: 1rem;
+        color: #666;
+      }
+      
+      .text-center button {
+        margin-right: 15px;
+      }
+  
+  /* =========================================================================
+     BOUTON DE SUPPRESSION - PAGE ASSOCIATION
+     ========================================================================= */
+     .btn-danger {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        padding: 5px 10px;
+      }    

@@ -1,0 +1,74 @@
+ /* =========================================================================
+     FORMULAIRE DE CONTACT
+     ========================================================================= */
+     .contact-map {
+        max-width: 100%;
+      }
+      
+      .contact-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+      }
+      
+      #contact-heading {
+        text-align: center;
+        margin-bottom: 1em;
+        color: #ffffff;
+        font-size: 1.5em;
+      }
+      
+      .contact-field {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+        border-radius: 20px;
+        padding: 0.5em 1em;
+        background-color: #ffffff;
+        box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
+      }
+      
+      .contact-input,
+      .contact-textarea {
+        background: none;
+        border: none;
+        outline: none;
+        width: 100%;
+        color: #333333;
+        font-size: 0.9em;
+        padding: 0.4em;
+      }
+      
+      .contact-textarea {
+        resize: none;
+        height: 100px;
+      }
+      
+      .recaptcha-container {
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+      }
+      
+      .contact-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 2rem;
+        padding: 2em;
+      }
+      
+      .contact-container {
+        flex: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5em;
+        background-color: #1D2243;
+        border-radius: 25px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        width: 100%;
+      }
+      

@@ -1,0 +1,324 @@
+ 
+  
+  /* =========================================================================
+   RESPONSIVE ADJUSTMENTS - Déjà présents pour tablettes et mobiles moyens
+   ========================================================================= */
+   @media (max-width: 991px) {
+    .container {
+      padding: 15px;
+    }
+    .row {
+      margin-bottom: 15px;
+    }
+    .col-md-6 {
+      padding: 15px;
+    }
+    
+    .botao {
+      width: 110px;
+      height: 40px;
+      font-size: 14px;
+    }
+    .btn-unique {
+      width: 130px;
+      font-size: 18px;
+      padding: 0.6em 0.8em;
+    }
+    
+    .carousel-container {
+      height: 450px;
+    }
+    .carousel .post {
+      padding: 15px;
+    }
+    
+    .contact-container {
+      width: 90%;
+      padding: 1em;
+    }
+    .post {
+      flex-direction: column;
+      text-align: center;
+    }
+    .post-image {
+      width: 100%;
+      height: auto;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .botao {
+      width: 90px;
+      height: 35px;
+      font-size: 12px;
+    }
+    .btn-unique {
+      width: 120px;
+      font-size: 16px;
+      padding: 0.5em 0.7em;
+    }
+    
+    .footer-section {
+      padding: 15px;
+      text-align: center;
+    }
+    .social-link {
+      width: 60px;
+      height: 60px;
+    }
+    
+    .carousel-container {
+      height: 350px;
+    }
+    .carousel .post {
+      padding: 10px;
+    }
+    .post {
+      flex-direction: column;
+    }
+    .post-image {
+      width: 100%;
+      height: auto;
+    }
+    
+    .contact-container {
+      width: 100%;
+      padding: 10px;
+    }
+    .header {
+      padding: 20px 10px;
+    }
+    .header h1 {
+      font-size: 2rem;
+    }
+    .header p {
+      font-size: 1rem;
+    }
+    
+    .page-container {
+      padding: 10px;
+    }
+    
+    .custom-image-container {
+      height: 250px;
+    }
+  }
+  
+  /* =========================================================================
+     RESPONSIVE POUR TÉLÉPHONES (max-width: 480px)
+     ========================================================================= */
+  @media (max-width: 480px) {
+    /* Généralités */
+    html, body {
+      font-size: 14px; /* Ajustement global de la taille de police si besoin */
+    }
+    
+    .container {
+      padding: 10px;
+      max-width: 100%;
+    }
+    
+    /* Bouton Télécharger (.botao) */
+    .botao {
+      width: 75px;
+      height: 30px;
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+    .botao:hover {
+      /* Pour mobile, on peut désactiver le hover (s’il y a lieu)
+         ou prévoir que l’effet hover ne se déclenche pas naturellement */
+      width: 75px; /* Garder la taille en mode tactile */
+      height: 30px;
+    }
+    
+    /* Bouton Envoyer (.btn-unique) */
+    .btn-unique {
+      width: 100%;
+      max-width: 200px;
+      font-size: 14px;
+      padding: 0.5em 0.8em;
+      justify-content: center;
+    }
+    .btn-unique .btn-label {
+      margin-left: 0.2em;
+      font-size: 12px;
+    }
+    
+    /* Footer et réseaux sociaux */
+    .footer-section {
+      padding: 10px;
+    }
+    .social-link {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+    }
+    
+    /* Zone de dépôt */
+    #drop-area {
+      padding: 15px;
+    }
+    
+    /* Carousel Actualités et Calendrier */
+    .carousel-container {
+      height: auto;
+      padding: 10px;
+    }
+    .carousel-cell {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+    .carousel .post {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    
+    /* Formulaire de Contact */
+    .contact-container {
+      width: 100%;
+      padding: 10px;
+    }
+    .contact-field {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+    .contact-input,
+    .contact-textarea {
+      font-size: 0.85em;
+      padding: 0.3em;
+    }
+    
+    /* Posts et Faits Marquants */
+    .post {
+      flex-direction: column;
+      padding: 10px;
+    }
+    .post-image {
+      width: 100%;
+      height: auto;
+    }
+    .content-container {
+      padding: 10px;
+    }
+    .read-more {
+      font-size: 0.9rem;
+    }
+    
+    /* Album Photo / Photo Gallery */
+    .photo-gallery {
+      padding: 10px;
+      column-count: 1;
+    }
+    .photo-item {
+      margin-bottom: 10px;
+    }
+    
+    /* Bouton "Haut de page" personnalisé */
+    .button {
+      width: 40px;
+      height: 40px;
+      bottom: 10px;
+      right: 10px;
+    }
+    .button:hover {
+      width: 100px;
+      border-radius: 20px;
+    }
+    
+    /* Réduire la taille des logos et autres images */
+    .logo {
+      max-width: 50px;
+    }
+    
+    /* Ajustements pour le calendrier */
+    .past-event {
+      font-size: 0.9rem;
+    }
+    
+    /* Popup et infos sur icônes */
+    .popup-info {
+      font-size: 0.8rem;
+      padding: 3px 6px;
+      bottom: 25px;
+    }
+    
+    /* Ajustement des boutons d’album photo */
+    .photo-actions button {
+      padding: 6px 12px;
+      font-size: 0.8rem;
+    }
+  }
+
+  
+
+
+
+
+
+  
+
+  @media (max-width: 480px) {
+    /* Titre de l'overlay */
+    .overlay h2 {
+      font-size: 20px !important;
+      text-align: center;
+    }
+    
+    /* Paragraphe de l'overlay */
+    .overlay p {
+      font-size: 13px;
+      text-align: center;
+      padding: 0 10px;
+    }
+    
+    /* Réduire la taille du logo */
+    .img-fluid.img-thumbnail {
+      width: 100px !important;
+      height: 100px !important;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    /* Limiter la largeur du conteneur de l'overlay */
+    .overlay > div {
+      max-width: 90%;
+      margin: 0 auto;
+      padding: 0 10px;
+    }
+    
+    /* Carousel : réduire la hauteur des images */
+    #carousel-container .carousel-item img {
+      height: 200px !important;
+    }
+    
+    /* Ajuster éventuellement d'autres éléments pour qu'ils restent proportionnels */
+  }
+  
+
+  @media (max-width: 480px) {
+    /* Cible le conteneur par sa classe composée de classes utilisées inline */
+    .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow {
+      width: 80% !important;         /* Augmente la largeur pour occuper 90% de l'écran */
+      left: 5% !important;           /* Centre le conteneur horizontalement */
+      transform: translateX(0) translateY(-20%) !important; /* Ajuste la position */
+      padding: 10px !important;      /* Réduit le padding */
+      top: 40% !important;           /* Ajuste la position verticale */
+    }
+    
+    /* Pour le titre */
+    .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow h1 {
+      font-size: 20px !important;    /* Réduit la taille de la police */
+      text-align: center !important;
+    }
+    
+    /* Pour le paragraphe */
+    .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow p {
+      font-size: 10px !important;    /* Réduit la taille du texte */
+      padding: 0 10px !important;    /* Ajoute un padding pour éviter que le texte touche les bords */
+      text-align: center !important;
+    }
+  }
+  

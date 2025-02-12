@@ -1,7 +1,7 @@
 <?= $this->extend('layout') ?>
 
 <?= $this->section('css') ?>
-<!-- Ajout de styles spécifiques si nécessaire -->
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <?= $this->endSection() ?>
 
 <?= $this->section('contenu') ?>

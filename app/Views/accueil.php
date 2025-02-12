@@ -1,6 +1,9 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('css') ?>
 <!-- Flickity CSS -->
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
 <?= $this->endSection() ?>
 

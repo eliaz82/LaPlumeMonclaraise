@@ -2,6 +2,8 @@
 
 <?= $this->section('css') ?>
 <!-- Tu peux ajouter ici tes styles CSS personnalisés -->
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/photo-gallery.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <?= $this->endSection() ?>
 
 <?= $this->section('contenu') ?>

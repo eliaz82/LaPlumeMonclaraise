@@ -3,6 +3,9 @@
 <?= $this->section('css') ?>
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<link rel="stylesheet" href="<?= base_url('css/buttons.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/contact.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <?= $this->endSection() ?>
 
 <?= $this->section('contenu') ?>
