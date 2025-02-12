@@ -126,9 +126,13 @@
         </div>
     </div>
 </form>
-<button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>" class="btn btn-light">
+<?php if (auth()->loggedIn()): ?>
+<button id="refreshButton"
+        data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>"
+        class="btn btn-light">
     <i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir
 </button>
+<?php endif; ?>
 
 
 <div class="container mt-4">

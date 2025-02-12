@@ -91,6 +91,7 @@ class Filters extends BaseFilters
                     'facebook/login',
                     'contact-submit',
                     'getAssociationData',
+                    'facebook/refresh',
                 ],
             ],
         ],
