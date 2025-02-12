@@ -12,104 +12,141 @@ class Facebook extends BaseController
     private $facebookModel;
     private $facebookCache;
 
+    private $clientId;
+    private $redirectUri;
+    private $scope;
+
+
     public function __construct()
     {
         $this->associationModel = model('Association');
         $this->facebookModel = model('Facebook');
         $this->facebookCache = new FacebookCache();
+
+        $this->clientId = env('FACEBOOK_CLIENT_ID');
+        $this->redirectUri = base_url();
+        $this->scope = env('FACEBOOK_SCOPE');
     }
 
     public function login()
     {
-        $clientId = '603470049247384';
-        $redirectUri = base_url();
-        $scope = 'public_profile,user_posts,user_videos,user_photos';
         $url = "https://www.facebook.com/v21.0/dialog/oauth?"
-            . "client_id={$clientId}&redirect_uri={$redirectUri}&scope={$scope}&response_type=code";
+            . "client_id={$this->clientId}&redirect_uri={$this->redirectUri}&scope={$this->scope}&response_type=code";
 
         return redirect()->to($url);
     }
+
     public function check_and_send_email()
     {
         // Récupérer les informations du token
         $association = $this->associationModel->find(1);
         $email = $association['mailContact']; // Utilisation de l'email du contact
-    
+
         // Vérifier si l'association existe
         if ($association) {
-            // Récupérer la date d'expiration du token et l'actuelle
             $expiration_date = new DateTime($association['tokenExpirationDate']);
             $current_date = new DateTime();
-    
-            // Calculer l'intervalle de jours entre la date actuelle et la date d'expiration
-            $interval = $current_date->diff($expiration_date);
+
+            // Comparer uniquement les dates (en format Y-m-d)
+            $expiration_date_str = $expiration_date->format('Y-m-d'); // Format: "2025-02-13"
+            $current_date_str = $current_date->format('Y-m-d'); // Format: "2025-02-12"
+
+            // Calculer la différence entre la date actuelle et la date d'expiration
+            $expiration_date_only = new DateTime($expiration_date_str);
+            $current_date_only = new DateTime($current_date_str);
+
+            $interval = $current_date_only->diff($expiration_date_only);
             $remainingDays = $interval->days; // Nombre de jours restants
-  
+
+            // Vérifier si la date actuelle est supérieure à la date d'expiration
+            if ($current_date_only > $expiration_date_only) {
+                $remainingDays = -$remainingDays;  // Si la date d'expiration est passée, mettre le nombre de jours négatif
+            }
+
             // Si l'expiration est dans des jours valides (10, 5, 3, 2, 1) en fonction du cron job
             if (in_array($remainingDays, [10, 5, 3, 2, 1])) {
                 // Générer l'URL de renouvellement manuellement
-                $clientId = '603470049247384';
-                $redirectUri = base_url();  // Redirige après le renouvellement (peut être ajusté)
-                $scope = 'public_profile,user_posts,user_videos,user_photos';
                 $renewLink = "https://www.facebook.com/v21.0/dialog/oauth?"
-                    . "client_id={$clientId}&redirect_uri={$redirectUri}&scope={$scope}&response_type=code";
-    
+                    . "client_id={$this->clientId}&redirect_uri={$this->redirectUri}&scope={$this->scope}&response_type=code";
                 // Préparer le message HTML à envoyer avec le lien de renouvellement
                 $htmlMessage = "
-                    <html>
-                    <head>
-                        <style>
-                            body {
-                                font-family: 'Arial', sans-serif;
-                                margin: 0;
-                                padding: 0;
-                                background-color: #f4f4f4;
-                            }
-                            .container {
-                                width: 100%;
-                                max-width: 600px;
-                                margin: 0 auto;
-                                background-color: #ffffff;
-                                padding: 20px;
-                                border-radius: 8px;
-                                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                            }
-                            h3 {
-                                color: #333333;
-                                text-align: center;
-                                font-size: 24px;
-                                margin-bottom: 20px;
-                            }
-                            p {
-                                font-size: 16px;
-                                color: #555555;
-                                margin: 10px 0;
-                            }
-                            .link {
-                                font-size: 16px;
-                                color: #007BFF;
-                                text-decoration: none;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class='container'>
-                            <h3>Notification d'expiration du token</h3>
-                            <p>Votre token expire dans <strong>{$remainingDays}</strong> jours. Veuillez le renouveler bientôt.</p>
-                            <p><a href='{$renewLink}' class='link'>Cliquez ici pour renouveler votre token</a></p>
-                        </div>
-                    </body>
-                    </html>
-                ";
-    
+                <html>
+                <head>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #f4f4f4;
+                            text-align: center;
+                        }
+                        .container {
+                            width: 100%;
+                            max-width: 600px;
+                            margin: 40px auto;
+                            background-color: #ffffff;
+                            padding: 25px;
+                            border-radius: 10px;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                        }
+                        h3 {
+                            color: #d9534f;
+                            font-size: 26px;
+                            margin-bottom: 20px;
+                        }
+                        p {
+                            font-size: 17px;
+                            color: #333;
+                            margin: 12px 0;
+                            line-height: 1.6;
+                        }
+                        .btn {
+                            display: inline-block;
+                            background-color: #007bff;
+                            color: #ffffff;
+                            text-decoration: none;
+                            padding: 12px 24px;
+                            font-size: 18px;
+                            border-radius: 8px;
+                            font-weight: bold;
+                            border: 2px solid #007bff;
+                            transition: all 0.3s ease;
+                        }
+                        .btn:hover {
+                            background-color: #0056b3;
+                            border-color: #0056b3;
+                            transform: translateY(-2px);
+                        }
+                        .btn:active {
+                            background-color: #004085;
+                            border-color: #004085;
+                            transform: translateY(0);
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <h3>⚠️ Attention : Votre token Facebook expire bientôt !</h3>
+                        <p>Bonjour,</p>
+                        <p>Votre token Facebook arrive à expiration dans <strong>{$remainingDays}</strong> jours.  
+                        Afin d'éviter toute interruption de service, veuillez le renouveler dès maintenant.</p>
+                        <a href='{$renewLink}' class='btn'>🔄 Renouveler mon token</a>
+                    </div>
+                </body>
+                </html>
+            ";
+
+
+
+
                 // Configuration de l'email
                 $emailService = \Config\Services::email();
-                $emailService->setFrom('noreply@laplume.com', 'Support');
+                $emailService->setFrom('noreply', 'Support');
                 $emailService->setTo($email); // Utilisation de la variable $email
                 $emailService->setSubject('Expiration imminente de votre token');
                 $emailService->setMessage($htmlMessage);
                 $emailService->setMailType('html');
-    
+
                 // Envoi de l'email
                 if ($emailService->send()) {
                     log_message('info', 'Email envoyé avec succès à ' . $email);
@@ -121,7 +158,7 @@ class Facebook extends BaseController
             log_message('error', 'Aucune association trouvée pour l\'ID spécifié.');
         }
     }
-    
+
 
 
 

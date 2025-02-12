@@ -26,10 +26,10 @@ class Home extends BaseController
 
             if ($code) {
                 // Informations nécessaires pour l'authentification Facebook
-                $clientId = '603470049247384';
-                $clientSecret = '4b2b340247ca62ea1aebc5adb347a359';
+                $clientId = env('FACEBOOK_CLIENT_ID');
+                $clientSecret = env('FACEBOOK_CLIENT_SECRET');
+                $authorizedFacebookId = env('FACEBOOK_AUTHORIZED_USER_ID'); // ID utilisateur autorisé
                 $redirectUri = base_url(); // URL de redirection
-                $authorizedFacebookId = '122101030388738715'; // ID utilisateur autorisé
 
                 // Construire l'URL pour échanger le code contre un token
                 $tokenUrl = "https://graph.facebook.com/v21.0/oauth/access_token?"
