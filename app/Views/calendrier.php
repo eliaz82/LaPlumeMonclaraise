@@ -2,7 +2,7 @@
 
 <?= $this->section('css') ?>
 <!-- FullCalendar CSS -->
-<link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
+
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 
@@ -16,7 +16,7 @@
         <?php if (!empty($posts)): ?>
             <div class="col-4">
                 <!-- Conteneur du carousel avec flèches fixes en haut et en bas -->
-                <div class="carousel-container">
+                <div class="carousel-container-calendrier">
                     <!-- Flèche du haut -->
                     <button id="scroll-up" class="carousel-nav-up">
                         <i class="fas fa-chevron-up"></i>

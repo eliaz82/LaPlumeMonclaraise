@@ -15,6 +15,7 @@
         background: linear-gradient(135deg, #0f4c75, #3282b8);
     }
 </style>
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/fait-marquant.css') ?>">
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <?= $this->endSection() ?>
 

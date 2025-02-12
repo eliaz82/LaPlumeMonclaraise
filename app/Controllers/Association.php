@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 use CodeIgniter\Controller;
-use CodeIgniter\Email\Email;
-use CodeIgniter\HTTP\DownloadResponse;
 
 
 class Association extends Controller

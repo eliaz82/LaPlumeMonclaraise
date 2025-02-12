@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateCarouselPosition(animate = true) {
         const posts = carousel.querySelectorAll('.post');
         if (posts.length === 0) return;
-        const containerHeight = document.querySelector('.carousel-container').clientHeight;
+        const containerHeight = document.querySelector('.carousel-container-calendrier').clientHeight;
         const postHeight = posts[0].offsetHeight;
         const centerOffset = (containerHeight / 2) - (postHeight / 2);
         const offset = centerOffset - (currentIndex * postHeight);
