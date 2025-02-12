@@ -2,9 +2,9 @@
 
 <?= $this->section('css') ?>
 <!-- FullCalendar CSS -->
-     <link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
-     <link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
-     <link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 <?= $this->endSection() ?>
@@ -44,13 +44,30 @@
             </div>
         <?php endif; ?>
 
-        <div class="col-8">
-            <div id="calendar" class="text-end"
-                style="max-width: 800px; width: 100%; margin-left: auto; margin-right: 0;"></div>
-        </div>
-    </div>
+        <div class="col-12 col-md-8">
+        <div id="calendar" class="text-end"
+     style="max-width: 800px; width: 100%; margin-left: auto; margin-right: 0;">
 </div>
 
+        </div>
+
+    </div>
+</div>
+<style>
+  #calendar {
+    width: 100%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+@media (max-width: 576px) {
+    #calendar {
+        max-width: 100%;
+    }
+}
+
+</style>
 
 <div id="eventData"
     data-event-url="<?= esc(site_url('evenement'), 'attr') ?>"
