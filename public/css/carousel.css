@@ -13,7 +13,7 @@
   /* =========================================================================
      CAROUSEL - PAGE CALENDRIER
      ========================================================================= */
-  .carousel-container {
+  .carousel-container-calendrier {
       position: relative;
       height: 500px;
       /* Hauteur fixe du carousel */
@@ -172,7 +172,7 @@
 
   /* Responsive Design */
   @media (max-width: 768px) {
-      .carousel-container {
+      .carousel-container-calendrier {
           height: auto;
           padding: 10px;
       }
@@ -198,7 +198,7 @@
   }
 
   @media (max-width: 480px) {
-      .carousel-container {
+      .carousel-container-calendrier {
           display: none;
       }
   }

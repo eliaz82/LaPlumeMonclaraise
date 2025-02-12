@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use App\Libraries\FacebookCache;
+use DateTime;
+
 
 class Facebook extends BaseController
 {
@@ -27,6 +29,96 @@ class Facebook extends BaseController
 
         return redirect()->to($url);
     }
+    public function check_and_send_email()
+    {
+        // Récupérer les informations du token
+        $association = $this->associationModel->find(1);
+        $email = $association['mailContact']; // Utilisation de l'email du contact
+    
+        // Vérifier si l'association existe
+        if ($association) {
+            // Récupérer la date d'expiration du token et l'actuelle
+            $expiration_date = new DateTime($association['tokenExpirationDate']);
+            $current_date = new DateTime();
+    
+            // Calculer l'intervalle de jours entre la date actuelle et la date d'expiration
+            $interval = $current_date->diff($expiration_date);
+            $remainingDays = $interval->days; // Nombre de jours restants
+    
+            // Si l'expiration est dans des jours valides (10, 5, 1) en fonction du cron job
+            if (in_array($remainingDays, [10, 5, 1])) {
+                // Appel de la méthode login pour générer l'URL de renouvellement
+                $renewLink = $this->login();
+    
+                // Préparer le message HTML à envoyer avec le lien de renouvellement
+                $htmlMessage = "
+                    <html>
+                    <head>
+                        <style>
+                            body {
+                                font-family: 'Arial', sans-serif;
+                                margin: 0;
+                                padding: 0;
+                                background-color: #f4f4f4;
+                            }
+                            .container {
+                                width: 100%;
+                                max-width: 600px;
+                                margin: 0 auto;
+                                background-color: #ffffff;
+                                padding: 20px;
+                                border-radius: 8px;
+                                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                            }
+                            h3 {
+                                color: #333333;
+                                text-align: center;
+                                font-size: 24px;
+                                margin-bottom: 20px;
+                            }
+                            p {
+                                font-size: 16px;
+                                color: #555555;
+                                margin: 10px 0;
+                            }
+                            .link {
+                                font-size: 16px;
+                                color: #007BFF;
+                                text-decoration: none;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class='container'>
+                            <h3>Notification d'expiration du token</h3>
+                            <p>Votre token expire dans <strong>{$remainingDays}</strong> jours. Veuillez le renouveler bientôt.</p>
+                            <p><a href='{$renewLink}' class='link'>Cliquez ici pour renouveler votre token</a></p>
+                        </div>
+                    </body>
+                    </html>
+                ";
+    
+                // Configuration de l'email
+                $emailService = \Config\Services::email();
+                $emailService->setFrom('noreply@laplume.com', 'Support');
+                $emailService->setTo($email); // Utilisation de la variable $email
+                $emailService->setSubject('Expiration imminente de votre token');
+                $emailService->setMessage($htmlMessage);
+                $emailService->setMailType('html');
+    
+                // Envoi de l'email
+                if ($emailService->send()) {
+                    log_message('info', 'Email envoyé avec succès à ' . $email);
+                } else {
+                    log_message('error', 'Erreur lors de l\'envoi de l\'email pour l\'utilisateur ' . $email);
+                }
+            }
+        } else {
+            log_message('error', 'Aucune association trouvée pour l\'ID spécifié.');
+        }
+    }
+    
+    
 
     public function getHashtagsByPage($pageName)
     {
