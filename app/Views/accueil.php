@@ -1,4 +1,7 @@
 <?= $this->extend('layout') ?>
+<?= $this->section('title') ?>
+Accueil
+<?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <!-- Flickity CSS -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">

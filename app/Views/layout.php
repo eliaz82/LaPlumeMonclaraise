@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <link rel="shortcut icon" type="image/png" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= $this->renderSection('title') ?: 'LaPlumeMonclaraise' ?></title>
 
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url('css/buttons.css') ?>">

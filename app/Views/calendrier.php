@@ -1,5 +1,7 @@
 "<?= $this->extend('layout') ?>
-
+<?= $this->section('title') ?>
+calendrier
+<?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <!-- FullCalendar CSS -->
 
@@ -55,7 +57,7 @@
 
 
 <div id="eventData"
-    data-event-url="<?= esc(site_url('evenement'), 'attr') ?>"
+    data-event-url="<?= esc(site_url('evenements'), 'attr') ?>"
     data-posts="<?= esc(json_encode($posts), 'attr') ?>"
     data-events="<?= esc(json_encode($events), 'attr') ?>">
 </div>

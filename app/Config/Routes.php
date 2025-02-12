@@ -56,15 +56,15 @@ $routes->post('albums-photo/(:num)/delete', 'AlbumsPhoto::photoDelete', ['as' =>
 $routes->get('calendrier', 'Calendrier::calendrier', ['as' => 'calendrier']);
 // ------------------------------------------- evenement -------------------------------------------
 
-$routes->get('evenement/(:segment)', 'Evenement::evenement/$1');
-$routes->get('evenement', 'Evenement::evenement', ['as' => 'evenement']);
+$routes->get('evenements/(:segment)', 'Evenement::evenement/$1');
+$routes->get('evenements', 'Evenement::evenement', ['as' => 'evenement']);
 
 $routes->post('evenement-create', 'Evenement::createEvenement', ['as' => 'createEvenement']);
 $routes->post('evenement-update', 'Evenement::updateEvenement', ['as' => 'updateEvenement']);
 $routes->post('evenement-delete', 'Evenement::evenementDelete', ['as' => 'evenementDelete']);
 
-// ------------------------------------------- faitMarquant -------------------------------------------
-$routes->get('fais-marquant', 'Actualite::actualite', ['as' => 'actualite']);
+// ------------------------------------------- faitsMarquants -------------------------------------------
+$routes->get('faits-marquants', 'Actualite::actualite', ['as' => 'actualite']);
 // ------------------------------------------- logo -------------------------------------------
 $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
 // ------------------------------------------- localisation -------------------------------------------

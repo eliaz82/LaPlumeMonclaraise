@@ -1,5 +1,7 @@
 <?= $this->extend('layout') ?>
-
+<?= $this->section('title') ?>
+contact
+<?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />

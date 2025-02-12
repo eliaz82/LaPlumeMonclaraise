@@ -1,5 +1,7 @@
 <?= $this->extend('layout') ?>
-
+<?= $this->section('title') ?>
+Inscription
+<?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <!-- Inclusion du fichier CSS pour les boutons -->
 <link rel="stylesheet" href="<?= base_url('css/buttons.css') ?>">
