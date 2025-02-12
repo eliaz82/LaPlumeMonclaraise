@@ -380,7 +380,7 @@
   }
   
 
-
+/*fait marquant*/
   @media (max-width: 768px) {
     .post {
         display: flex;
@@ -438,21 +438,25 @@
 /* Styles pour les écrans mobiles */
 @media (max-width: 768px) {
     .contact-wrapper {
-        flex-direction: column; /* Dispose les éléments en colonne */
-        align-items: center; /* Centre les éléments */
+        flex-direction: column; /* Les éléments seront disposés en colonne */
+        align-items: center;
         justify-content: center;
         width: 100%;
         padding: 20px;
     }
 
+    /* La carte doit être en bas */
     .contact-map {
-        width: 100% !important;  /* La carte prend toute la largeur */
-        height: 300px !important;  /* Ajuste la hauteur de la carte */
-        margin-bottom: 20px;  /* Ajoute un espace en bas */
+        width: 100% !important;
+        height: 300px !important;  /* Hauteur ajustée pour la carte */
+        margin-bottom: 20px;
+        order: 2; /* Carte après le formulaire */
     }
 
+    /* Le formulaire doit être au-dessus de la carte */
     .contact-container {
-        width: 100% !important; /* Le formulaire prend toute la largeur */
+        order: 1; /* Le formulaire passe avant la carte */
+        width: 100% !important; /* Formulaire prend toute la largeur */
     }
 
     .contact-form {
@@ -469,5 +473,23 @@
     .btn-unique {
         width: 100% !important;
         max-width: 300px;
+    }
+}
+/* Taille par défaut pour les écrans plus larges */
+.modal-dialog {
+    max-width: 600px; /* Taille par défaut sur les écrans plus larges */
+}
+
+/* Styles spécifiques pour les écrans mobiles */
+@media (max-width: 768px) {
+    .modal-dialog {
+        width: 80%;  /* Réduit la largeur de la modale sur mobile */
+        max-width: 400px;  /* Taille maximale sur mobile */
+        margin: 15% auto;  /* Centrage vertical et horizontal */
+    }
+
+    /* Ajuste le contenu de la modale si nécessaire */
+    .modal-content {
+        padding: 15px;
     }
 }

@@ -23,23 +23,40 @@ document.addEventListener("DOMContentLoaded", function () {
     }).addTo(leafletMap);
     leafletMap.invalidateSize();
 
-    // Fonction pour générer le contenu de la popup
     function getPopupContent(logoUrl, adresse) {
         let encodedAdresse = encodeURIComponent(adresse);
         let googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAdresse}`;
         return `
             <a href="${googleMapsUrl}" target="_blank" style="text-decoration: none; color: inherit;">
-                <div id="popup-content" style="text-align: center; font-family: Arial, sans-serif; padding: 10px; border-radius: 8px; transition: background-color 0.3s ease, color 0.3s ease;" 
-                     onmouseover="this.style.backgroundColor='#1D2243'; this.style.color='white';" 
-                     onmouseout="this.style.backgroundColor='white'; this.style.color='black';">
+                <div id="popup-content" style="text-align: center; font-family: Arial, sans-serif; padding: 10px; border-radius: 8px; 
+                     transition: background-color 0.3s ease, color 0.3s ease; width: 100%; max-width: 100%; box-sizing: border-box;">
                     <img src="${logoUrl}" alt="Logo de l'association" style="width: 70px; height: auto;" />
                     <p style="margin: 5px 0; font-weight: bold;">La Plume Monclaraise</p>
                     <p style="margin: 0;">${adresse}</p>
                     <p style="font-size: 12px; color: gray;">(Cliquez pour voir sur Google Maps)</p>
                 </div>
             </a>
+            <style>
+                @media (max-width: 767px) {
+                    /* Réduction des dimensions du popup sans toucher à la taille du texte */
+                    #popup-content {
+                        width: 150px !important;
+                        max-width: 250px !important;
+                        height: 130px !important;
+                        padding: 5px !important;
+                    }
+                    #popup-content img {
+                        width: 50px !important;
+                    }
+                }
+            </style>
         `;
     }
+    
+
+
+
+
 
     // Crée le marqueur initial à la position donnée et lie la popup avec l'adresse
     let marker = L.marker([initialLat, initialLon]).addTo(leafletMap);
