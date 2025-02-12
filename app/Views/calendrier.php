@@ -1,10 +1,10 @@
-<?= $this->extend('layout') ?>
+"<?= $this->extend('layout') ?>
 
 <?= $this->section('css') ?>
 <!-- FullCalendar CSS -->
-     <link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
-     <link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
-     <link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
+<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
 <?= $this->endSection() ?>
@@ -16,7 +16,7 @@
         <?php if (!empty($posts)): ?>
             <div class="col-4">
                 <!-- Conteneur du carousel avec flèches fixes en haut et en bas -->
-                <div class="carousel-container" style="position: relative; overflow: hidden; height: 500px;">
+                <div class="carousel-container">
                     <!-- Flèche du haut -->
                     <button id="scroll-up" class="carousel-nav-up">
                         <i class="fas fa-chevron-up"></i>
@@ -44,10 +44,12 @@
             </div>
         <?php endif; ?>
 
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <div id="calendar" class="text-end"
-                style="max-width: 800px; width: 100%; margin-left: auto; margin-right: 0;"></div>
+                style="max-width: 800px; width: 100%; margin-left: auto; margin-right: 0;">
+            </div>
         </div>
+
     </div>
 </div>
 
@@ -68,4 +70,4 @@
 
 <?= script_tag('js/eventCalendar.js') ?>
 
-<?= $this->endSection() ?>
+<?= $this->endSection() ?>"
