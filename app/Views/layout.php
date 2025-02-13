@@ -410,6 +410,210 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
+    <?php
+    // Chemin vers le fichier qui va contenir la date de début du modal
+    $modalFile = WRITEPATH . 'cache/modal_start_date.txt';
+    $modalActive = true; // Par défaut, le modal est actif
+    $testDuration = 14 * 24 * 60 * 60; // 2 semaines en secondes
+    
+    // Si le fichier n'existe pas, c'est la première visite qui déclenche la période
+    if (!file_exists($modalFile)) {
+        file_put_contents($modalFile, time());
+    } else {
+        // Récupérer la date de lancement depuis le fichier
+        $startTime = (int) file_get_contents($modalFile);
+        // Si le délai est dépassé, désactiver le modal globalement
+        if (time() - $startTime > $testDuration) {
+            $modalActive = false;
+        }
+    }
+    ?>
+
+    <?php if ($modalActive): ?>
+        <!-- Modal Bootstrap de Bienvenue -->
+        <!-- Modal Bootstrap de Bienvenue -->
+        <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-small">
+                <div class="modal-content custom-modal-content">
+                    <div class="modal-header custom-modal-header">
+                        <h5 class="modal-title" id="welcomeModalLabel">Bienvenue sur notre nouveau site de badminton !</h5>
+                        <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal"
+                            aria-label="Fermer"></button>
+                    </div>
+                    <div class="modal-body custom-modal-body">
+                        <div class="emoji mb-3">🎉</div>
+                        <p class="modal-text">Bienvenue sur notre nouveau site !</p>
+                        <p class="modal-description">Découvrez notre communauté de badminton et profitez d'une expérience
+                            fluide et agréable.</p>
+                        <p class="modal-cta">Rejoignez-nous maintenant ! 🏸</p>
+                    </div>
+                    <div class="modal-footer custom-modal-footer">
+                        <button type="button" class="btn btn-primary custom-btn-primary" data-bs-dismiss="modal">Merci
+                            !</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ajouter des styles CSS personnalisés -->
+        <style>
+            /* Taille réduite du modal */
+            .modal-small .modal-dialog {
+                max-width: 300px;
+                /* Taille plus petite pour le modal */
+                width: 90%;
+            }
+
+            /* Effet de zoom au survol du modal */
+            .custom-modal-content {
+                transition: transform 0.3s ease-out, box-shadow 0.3s ease;
+                background: #E6F2FF;
+                border: none;
+                overflow: hidden;
+                border-radius: 10px;
+            }
+
+            .modal.fade.show .custom-modal-content {
+                transform: scale(1.05);
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            /* Design du header */
+            .custom-modal-header {
+                background-color: #0056b3;
+                color: white;
+                padding: 0.8rem 1.5rem;
+                border-bottom: none;
+                border-radius: 10px 10px 0 0;
+            }
+
+            .custom-modal-header h5 {
+                font-size: 1.6rem;
+                /* Augmenté la taille du texte ici */
+                font-weight: bold;
+                letter-spacing: 0.5px;
+            }
+
+            /* Design du corps du modal */
+            .custom-modal-body {
+                padding: 1.2rem;
+                font-size: 1.2rem;
+                /* Augmenté la taille du texte ici */
+                color: #333;
+                text-align: center;
+            }
+
+            .custom-modal-body .emoji {
+                font-size: 2.2rem;
+                /* L'emoji est légèrement plus grand */
+                color: #0056b3;
+            }
+
+            .custom-modal-body .modal-text {
+                font-size: 1.3rem;
+                /* Taille du texte augmentée */
+                color: #333;
+                line-height: 1.5;
+            }
+
+            .custom-modal-body .modal-description {
+                font-size: 1.2rem;
+                /* Taille du texte augmentée */
+                color: #555;
+                line-height: 1.4;
+                margin-bottom: 1rem;
+            }
+
+            .custom-modal-body .modal-cta {
+                font-size: 1.4rem;
+                /* Taille du texte augmentée */
+                color: #0056b3;
+                font-weight: bold;
+            }
+
+            /* Design du footer */
+            .custom-modal-footer {
+                background-color: #E6F2FF;
+                border-top: none;
+                padding: 1rem 1.5rem;
+            }
+
+            /* Boutons */
+            .custom-btn-close {
+                font-size: 1.3rem;
+                /* Augmenté la taille du bouton */
+                opacity: 0.9;
+            }
+
+            .custom-btn-close:hover {
+                opacity: 1;
+            }
+
+            .custom-btn-primary {
+                background-color: #0069d9;
+                border: none;
+                font-weight: bold;
+                font-size: 1.1rem;
+                /* Taille du bouton augmentée */
+                padding: 8px 25px;
+                border-radius: 30px;
+                transition: background-color 0.3s;
+            }
+
+            .custom-btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+            /* Design responsif */
+            @media (max-width: 768px) {
+                .modal-small .modal-dialog {
+                    max-width: 80%;
+                    width: 100%;
+                }
+
+                .custom-modal-body {
+                    font-size: 1.1rem;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .custom-modal-header h5 {
+                    font-size: 1.4rem;
+                }
+
+                .custom-modal-body .modal-text {
+                    font-size: 1.1rem;
+                }
+
+                .custom-modal-body .modal-description {
+                    font-size: 1.1rem;
+                }
+
+                .custom-modal-body .modal-cta {
+                    font-size: 1.3rem;
+                }
+
+                .custom-btn-primary {
+                    font-size: 1rem;
+                    padding: 8px 20px;
+                }
+            }
+        </style>
+
+
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Vérifie si l'utilisateur a déjà vu le modal durant sa session
+                if (!localStorage.getItem("welcomeModalShown")) {
+                    var modalWelcome = new bootstrap.Modal(document.getElementById("welcomeModal"));
+                    modalWelcome.show();
+                    localStorage.setItem("welcomeModalShown", "true");
+                }
+            });
+        </script>
+    <?php endif; ?>
+
     <?= $this->renderSection('contenu') ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
