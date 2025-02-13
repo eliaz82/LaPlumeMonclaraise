@@ -1,32 +1,31 @@
-  
   /* =========================================================================
      PAGE HISTOIRE (Section Images et Effets)
      ========================================================================= */
   .custom-title-color {
     color: rgba(129, 161, 208, 1);
   }
-  
+
   .hover-scale {
     transition: transform 0.3s ease-in-out;
   }
-  
+
   .hover-scale:hover {
     transform: scale(1.05);
   }
-  
+
   .image-container {
     position: relative;
     overflow: hidden;
   }
-  
+
   .image-container img {
     transition: transform 0.5s ease-in-out;
   }
-  
+
   .image-container:hover img {
     transform: scale(1.1);
   }
-  
+
   .custom-overlay {
     position: absolute;
     top: 0;
@@ -37,11 +36,11 @@
     opacity: 0;
     transition: opacity 0.5s ease-in-out;
   }
-  
+
   .custom-image-container:hover .custom-overlay {
     opacity: 1;
   }
-  
+
   /* =========================================================================
      GÉNÉRALITÉS ET MISE EN PAGE
      ========================================================================= */
@@ -49,65 +48,68 @@
     max-width: 60px;
     height: auto;
   }
-  
+
   .mt-navbar {
     margin-top: 4.5rem;
   }
-  
+
   body {
     font-family: 'Arial', sans-serif;
   }
-  
+
   .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
   }
-  
+
   .row {
     margin-bottom: 20px;
   }
-  
+
   .col-md-6 {
     padding: 20px;
   }
-  
+
   .img-fluid {
     width: 100%;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
-  
-  h1, h2, h3 {
+
+  h1,
+  h2,
+  h3 {
     color: #333;
     margin-bottom: 10px;
   }
-  
+
   p {
     margin-bottom: 20px;
   }
-  
+
   .text-center {
     text-align: center;
   }
-  
+
   .mt-5 {
     margin-top: 50px;
   }
-  
+
   .mb-3 {
     margin-bottom: 30px;
   }
-  
+
   .mb-5 {
     margin-bottom: 50px;
   }
-  
-  html, body {
+
+  html,
+  body {
     overflow-x: hidden;
   }
-  
+
   /* =========================================================================
      LOGO - PAGE D'ACCUEIL
      ========================================================================= */
@@ -116,7 +118,7 @@
     display: inline-block;
     cursor: pointer;
   }
-  
+
   .popup-info {
     visibility: hidden;
     width: max-content;
@@ -134,16 +136,78 @@
     transition: opacity 0.3s, visibility 0.3s;
     z-index: 10;
   }
-  
+
   .icon-container:hover .popup-info {
     visibility: visible;
     opacity: 1;
   }
-  
+
   /* =========================================================================
      CALENDRIER
      ========================================================================= */
   .past-event {
     opacity: 0.3;
   }
-  
+
+  /* =========================================================================
+     Photo Zoom page calendrier + photos
+     ========================================================================= */
+
+
+  /* Conteneur des boutons de zoom */
+  .zoom-controls {
+    position: absolute;
+    top: 80px;
+    /* Augmenté pour décaler plus bas les boutons de zoom */
+    right: 15px;
+    display: flex;
+    gap: 15px;
+    /* Espacement entre les boutons */
+    z-index: 1070;
+    flex-direction: row;
+  }
+
+  /* Style des boutons de zoom avec icônes */
+  .zoom-controls button {
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    color: #333;
+    font-size: 28px;
+    /* Taille des icônes */
+    padding: 12px 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Effet au survol des boutons */
+  .zoom-controls button:hover {
+    background-color: rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Effet au clic */
+  .zoom-controls button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Pour les petits écrans */
+  @media (max-width: 768px) {
+    .zoom-controls {
+      top: 40px;
+      /* Ajustement pour les petits écrans */
+      right: 10px;
+      gap: 8px;
+    }
+
+    .zoom-controls button {
+      font-size: 24px;
+      padding: 10px 15px;
+    }
+  }

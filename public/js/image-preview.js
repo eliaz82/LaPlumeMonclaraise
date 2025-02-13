@@ -96,8 +96,11 @@ document.addEventListener('keydown', function (event) {
 });
 
 // Ajout d'événement pour fermer le zoom en cliquant sur l'arrière-plan
-document.getElementById('zoom-container').addEventListener('click', function (event) {
-    if (event.target === this) {
-        closeZoom();
-    }
-});
+const zoomContainer = document.getElementById('zoom-container');
+if (zoomContainer) {
+    zoomContainer.addEventListener('click', function (event) {
+        if (event.target === this) {
+            closeZoom();
+        }
+    });
+}

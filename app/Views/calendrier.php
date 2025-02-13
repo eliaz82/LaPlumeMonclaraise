@@ -28,11 +28,16 @@ calendrier
                         <!-- Les éléments du carousel (posts avec images cliquables) vont ici -->
                     </div>
                     <!-- Conteneur pour zoomer sur l'image -->
+
                     <div id="zoom-container" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
                         background-color: rgba(0, 0, 0, 0.8); justify-content: center; align-items: center;">
                         <img id="zoomed-image" src="" alt="Zoomed Image" style="max-width: 90%; max-height: 90%;" />
                         <button onclick="closeZoom()"
                             style="position: absolute; top: 20px; right: 20px; color: white; font-size: 30px; background: none; border: none;">X</button>
+                        <div class="zoom-controls">
+                            <button id="zoom-in" onclick="zoomIn()"><i class="fas fa-search-plus"></i></button>
+                            <button id="zoom-out" onclick="zoomOut()"><i class="fas fa-search-minus"></i></button>
+                        </div>
                     </div>
                     <!-- Flèche du bas -->
                     <button id="scroll-down" class="carousel-nav-down">
