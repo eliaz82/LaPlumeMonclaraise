@@ -47,6 +47,10 @@
   .logo {
     max-width: 60px;
     height: auto;
+    border-radius: 50%;
+    width: 50px; /* ajuste cette valeur selon la taille du logo */
+    height: 50px; /* ajuste cette valeur selon la taille du logo */
+    object-fit: cover; 
   }
 
   .mt-navbar {
