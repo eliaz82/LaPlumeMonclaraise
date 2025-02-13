@@ -14,8 +14,8 @@ L'association
 
 <?= $this->section('scripts') ?>
 <?php if (auth()->loggedIn()): ?>
-    <!-- Utilisation de jQuery avec intégrité pour assurer l'intégrité du fichier -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KJ3o2DKtIkvYIKW2Jv8j0D1k2+fmv6KTJt2IH5tHqJQFpnHpN9sz9Rj6qpmJXCBF" crossorigin="anonymous"></script>
+    <!-- Utilisation de jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <?= script_tag('js/form-modifications.js') ?>
 <?php endif; ?>
 

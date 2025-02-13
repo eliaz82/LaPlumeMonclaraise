@@ -65,12 +65,15 @@ function closeZoom() {
     const zoomContainer = document.getElementById('zoom-container');
     const zoomedImage = document.getElementById('zoomed-image');
 
-    zoomedImage.style.transform = `scale(1)`; // Réinitialiser le zoom
-    zoomedImage.style.transition = 'transform 0.3s ease';
-    setTimeout(() => {
-        zoomContainer.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Réactive le défilement
-    }, 300); // Attente de la fin de l'animation
+    // Vérifier si les éléments existent avant de les manipuler
+    if (zoomContainer && zoomedImage) {
+        zoomedImage.style.transform = `scale(1)`; // Réinitialiser le zoom
+        zoomedImage.style.transition = 'transform 0.3s ease';
+        setTimeout(() => {
+            zoomContainer.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Réactive le défilement
+        }, 300); // Attente de la fin de l'animation
+    }
 }
 
 // Fonction pour zoomer (+)
