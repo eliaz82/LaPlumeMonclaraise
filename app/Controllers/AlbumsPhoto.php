@@ -14,7 +14,7 @@ class AlbumsPhoto extends BaseController
 
     public function __construct()
     {
-        $this->albumsPhoto = model('AlbumsPhoto');
+        $this->albumsPhoto = model('Albumsphoto');
         $this->photoModel = model('Photo');
         $this->facebookModel = model('Facebook');
         $this->facebookCache = new FacebookCache();
