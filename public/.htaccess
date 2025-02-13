@@ -7,34 +7,12 @@ Options -Indexes
 # Activation du moteur de réécriture
 # ----------------------------------------------------------------------
 <IfModule mod_rewrite.c>
-    Options +FollowSymlinks
     RewriteEngine On
-
-    # 🔹 Si CodeIgniter est dans un sous-dossier, décommente et adapte cette ligne :
-    # RewriteBase /mon-sous-dossier/
-
-    # 🔹 Redirection des slashes en trop (ex: /page/ -> /page)
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
-
-    # 🔹 Suppression de "www" pour uniformiser l'URL (décommente pour en ligne)
-    # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-    # RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
-
-    # 🔹 Redirection vers HTTPS (⚠️ Décommente UNIQUEMENT pour la mise en ligne)
-    # RewriteCond %{HTTPS} !=on
-    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
-
-    # 🔹 Envoi des requêtes vers index.php si le fichier/dossier n'existe pas
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^([\s\S]*)$ index.php/$1 [L,NC,QSA]
-
-    # 🔹 Assurer que l'en-tête Authorization est bien transmis (utile pour les API REST)
-    RewriteCond %{HTTP:Authorization} .
-    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
 
 <IfModule !mod_rewrite.c>
     # 🔹 Si mod_rewrite n'est pas dispo, renvoyer toutes les 404 vers index.php
