@@ -28,10 +28,10 @@ class AlbumsPhoto extends BaseController
         $facebookMapping = [];
 
         try {
+            dd($this->albumsPhoto);
             // Récupérer tous les albums photos
             $albumsPhotos = $this->albumsPhoto->findAll();
          
-            dd($this->albumsPhoto);
 
             // Récupérer les posts Facebook via le cache
             $posts = $this->facebookCache->getFacebookPosts();
