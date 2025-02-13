@@ -1,9 +1,74 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
+# ----------------------------------------------------------------------
+# Désactiver l'indexation des dossiers
+# ----------------------------------------------------------------------
+Options -Indexes
 
-    # Redirection vers index.php si le fichier/dossier n'existe pas
+# ----------------------------------------------------------------------
+# Activation du moteur de réécriture
+# ----------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+
+    # 🔹 Si CodeIgniter est dans un sous-dossier, décommente et adapte cette ligne :
+    # RewriteBase /mon-sous-dossier/
+
+    # 🔹 Redirection des slashes en trop (ex: /page/ -> /page)
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # 🔹 Suppression de "www" pour uniformiser l'URL (décommente pour en ligne)
+    # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    # RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
+
+    # 🔹 Redirection vers HTTPS (⚠️ Décommente UNIQUEMENT pour la mise en ligne)
+    # RewriteCond %{HTTPS} !=on
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+    # 🔹 Envoi des requêtes vers index.php si le fichier/dossier n'existe pas
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.*)$ index.php/$1 [L]
+    RewriteRule ^([\s\S]*)$ index.php/$1 [L,NC,QSA]
+
+    # 🔹 Assurer que l'en-tête Authorization est bien transmis (utile pour les API REST)
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
+<IfModule !mod_rewrite.c>
+    # 🔹 Si mod_rewrite n'est pas dispo, renvoyer toutes les 404 vers index.php
+    ErrorDocument 404 index.php
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 🔐 Sécurisation des fichiers sensibles (déjà actif en local)
+# ----------------------------------------------------------------------
+<FilesMatch "^(.*)\.(env|ini|log|sh|sql|bak|config|json|lock)$">
+    Require all denied
+</FilesMatch>
+
+# ----------------------------------------------------------------------
+# 🔐 Protection contre l'exécution de PHP dans uploads (⚠️ Active seulement en ligne)
+# ----------------------------------------------------------------------
+# <Directory "/writable/uploads/">
+#     <FilesMatch "\.php$">
+#         Require all denied
+#     </FilesMatch>
+# </Directory>
+
+# ----------------------------------------------------------------------
+# 🔐 Sécurité HTTP (⚠️ À activer en ligne uniquement)
+# ----------------------------------------------------------------------
+# <IfModule mod_headers.c>
+#     Header always set X-Frame-Options "DENY"
+#     Header always set X-XSS-Protection "1; mode=block"
+#     Header always set X-Content-Type-Options "nosniff"
+#     Header always set Referrer-Policy "strict-origin-when-cross-origin"
+#     Header always set Content-Security-Policy "default-src 'self'"
+# </IfModule>
+
+# ----------------------------------------------------------------------
+# 🔹 Désactivation de la signature Apache (déjà actif en local)
+# ----------------------------------------------------------------------
+ServerSignature Off
