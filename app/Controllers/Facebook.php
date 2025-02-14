@@ -62,7 +62,6 @@ class Facebook extends BaseController
             if ($current_date_only > $expiration_date_only) {
                 $remainingDays = -$remainingDays;  // Si la date d'expiration est passée, mettre le nombre de jours négatif
             }
-
             // Si l'expiration est dans des jours valides (10, 5, 3, 2, 1) en fonction du cron job
             if (in_array($remainingDays, [10, 5, 3, 2, 1])) {
                 // Générer l'URL de renouvellement manuellement

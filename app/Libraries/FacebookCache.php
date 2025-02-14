@@ -30,7 +30,6 @@ class FacebookCache
         } else {
             // Si le cache n'existe pas ou est expiré, appeler l'API Facebook
             $tokenFacebook = $this->associationModel->find(1);  // Obtenir le token de Facebook
-            $scope = env('FACEBOOK_SCOPE');
             $posts = $this->callApi->callApi("https://graph.facebook.com/me/feed?fields=id,message,created_time,permalink_url,attachments&access_token={$tokenFacebook['tokenFacebook']}");
 
             // Mettre en cache les nouvelles données
