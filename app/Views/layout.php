@@ -436,7 +436,7 @@
             <div class="modal-dialog modal-dialog-centered modal-small">
                 <div class="modal-content custom-modal-content">
                     <div class="modal-header custom-modal-header">
-                        <h5 class="modal-title" id="welcomeModalLabel">Bienvenue sur notre nouveau site de badminton !</h5>
+                        <h5 class="modal-title" id="welcomeModalLabel">Bienvenue sur La Plume Monclaraise !</h5>
                         <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal"
                             aria-label="Fermer"></button>
                     </div>
@@ -445,7 +445,7 @@
                         <p class="modal-text">Bienvenue sur notre nouveau site !</p>
                         <p class="modal-description">Découvrez notre communauté de badminton et profitez d'une expérience
                             fluide et agréable.</p>
-                        <p class="modal-cta">Rejoignez-nous maintenant ! 🏸</p>
+                            <p class="modal-cta">Explorez nos contenus et restez informé des dernières actualités ! 🏸</p>
                     </div>
                     <div class="modal-footer custom-modal-footer">
                         <button type="button" class="btn btn-primary custom-btn-primary" data-bs-dismiss="modal">Merci
