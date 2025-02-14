@@ -5,11 +5,10 @@
             <div class="text-center mb-4">
                 <button id="bouton-ajouter-adherent" class="btn btn-primary btn-lg shadow-sm" data-bs-toggle="modal"
                     data-bs-target="#modalAjouterAdherent">
-                    <i class="fa fa-plus me-2"></i> Ajouter un adhérent
+                    <i class="fa fa-plus me-2"></i> Ajouter un membre du bureau
                 </button>
             </div>
             <!-- Modal d'ajout -->
-            <h2 class="text-center mb-4">Nos adhérents</h2>
             <div class="modal fade" id="modalAjouterAdherent" tabindex="-1" aria-labelledby="modalAjouterAdherentLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
@@ -101,8 +100,11 @@
                 </div>
             </div>
         <?php endif; ?>
+
+
         <!-- Liste des adhérents -->
         <div class="row justify-content-center gy-4">
+        <h2 class="text-center mb-4">Notre bureau</h2>
             <?php foreach ($equipes as $e): ?>
                 <div class="col-lg-4 col-md-6">
                     <div class="card shadow-lg border-0 h-100">
