@@ -436,7 +436,7 @@
             <div class="modal-dialog modal-dialog-centered modal-small">
                 <div class="modal-content custom-modal-content">
                     <div class="modal-header custom-modal-header">
-                        <h5 class="modal-title" id="welcomeModalLabel">Bienvenue sur notre nouveau site de badminton !</h5>
+                        <h5 class="modal-title" id="welcomeModalLabel">Bienvenue sur La Plume Monclaraise !</h5>
                         <button type="button" class="btn-close custom-btn-close" data-bs-dismiss="modal"
                             aria-label="Fermer"></button>
                     </div>
