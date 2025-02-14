@@ -29,3 +29,13 @@
       .footer-link:hover {
         color: rgba(255, 255, 255, 0.7);
       }
+      @media (max-width: 768px) {
+        .footer-socials {
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-top: 15px;
+        }
+      }
+      
