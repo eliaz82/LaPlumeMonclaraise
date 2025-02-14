@@ -71,6 +71,14 @@ $routes->post('logo-update', 'Association::logoUpdate', ['as' => 'logoUpdate']);
 $routes->post('localisation', 'Association::localisation', ['as' => 'localisation']);
 // ------------------------------------------- téléphone -------------------------------------------
 $routes->post('tel', 'Association::tel', ['as' => 'tel']);
+// ------------------------------------------- CGU -------------------------------------------
+$routes->get('cgu', 'Association::cgu', ['as' => 'cgu']);;
+// ------------------------------------------- mentionsLegale-------------------------------------------
+$routes->get('mentions-legales', 'Association::mentionsLegale', ['as' => 'mentionsLegale']);;
+// ------------------------------------------- politiqueConfidentialite -------------------------------------------
+$routes->get('politique-de-confidentialite', 'Association::politiqueConfidentialite', ['as' => 'politiqueConfidentialite']);;
+// ------------------------------------------- politiqueConfidentialite -------------------------------------------
+$routes->get('conformite-rgpd', 'Association::conformiteRgpd', ['as' => 'conformiteRgpd']);;
 
 
 $routes->get('/favicon.ico', function () {

@@ -415,7 +415,7 @@
     $modalFile = WRITEPATH . 'cache/modal_start_date.txt';
     $modalActive = true; // Par défaut, le modal est actif
     $testDuration = 14 * 24 * 60 * 60; // 2 semaines en secondes
-    
+
     // Si le fichier n'existe pas, c'est la première visite qui déclenche la période
     if (!file_exists($modalFile)) {
         file_put_contents($modalFile, time());
@@ -445,7 +445,7 @@
                         <p class="modal-text">Bienvenue sur notre nouveau site !</p>
                         <p class="modal-description">Découvrez notre communauté de badminton et profitez d'une expérience
                             fluide et agréable.</p>
-                            <p class="modal-cta">Explorez nos contenus et restez informé des dernières actualités ! 🏸</p>
+                        <p class="modal-cta">Explorez nos contenus et restez informé des dernières actualités ! 🏸</p>
                     </div>
                     <div class="modal-footer custom-modal-footer">
                         <button type="button" class="btn btn-primary custom-btn-primary" data-bs-dismiss="modal">Merci
@@ -603,7 +603,7 @@
 
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function() {
                 // Vérifie si l'utilisateur a déjà vu le modal durant sa session
                 if (!localStorage.getItem("welcomeModalShown")) {
                     var modalWelcome = new bootstrap.Modal(document.getElementById("welcomeModal"));
@@ -629,11 +629,11 @@
     <?= $this->renderSection('scripts') ?>
 </body>
 
-<footer class="footer-section py-4" style="background-color:rgb(29, 34, 67); color: white;">
+<footer class="footer-section py-4" style="background-color: rgb(29, 34, 67); color: white;">
     <div class="footer-container container">
         <div class="footer-row row">
             <!-- Section À propos -->
-            <div class="footer-about col-md-4">
+            <div class="footer-about col-md-3">
                 <h5>À propos de nous</h5>
                 <p>
                     Bienvenue sur le site officiel de notre club ! Nous sommes engagés à
@@ -641,53 +641,59 @@
                     de convivialité et de partage.
                 </p>
             </div>
+
             <!-- Liens rapides -->
-            <div class="footer-links col-md-4">
+            <div class="footer-links col-md-3">
                 <h5>Liens rapides</h5>
                 <ul class="footer-links-list list-unstyled">
                     <li><a href="<?= url_to('accueil') ?>" class="footer-link text-white">Accueil</a></li>
-                    <li><a href="<?= url_to('FusionAssociation') ?>#histoire" class="footer-link text-white">À
-                            propos</a></li>
+                    <li><a href="<?= url_to('FusionAssociation') ?>#histoire" class="footer-link text-white">À propos</a></li>
                     <li><a href="<?= url_to('evenement') ?>" class="footer-link text-white">Événements</a></li>
                     <li><a href="<?= url_to('contact') ?>" class="footer-link text-white">Contact</a></li>
                 </ul>
             </div>
+
+            <!-- Liens légaux -->
+            <div class="footer-links col-md-3">
+                <h5>Liens légaux</h5>
+                <ul class="footer-links-list list-unstyled">
+                    <li><a href="<?= url_to('cgu') ?>" class="footer-link text-white">Conditions générales d'utilisation</a></li>
+                    <li><a href="<?= url_to('mentionsLegale') ?>#histoire" class="footer-link text-white">Mentions légales</a></li>
+                    <li><a href="<?= url_to('politiqueConfidentialite') ?>" class="footer-link text-white">Politique de confidentialité</a></li>
+                    <li><a href="<?= url_to('conformiteRgpd') ?>" class="footer-link text-white">Conformité RGPD</a></li>
+                </ul>
+            </div>
+
             <!-- Contact -->
-            <div class="footer-contact col-md-4">
+            <div class="footer-contact col-md-3">
                 <h5>Contact</h5>
                 <p>
-                    <i class="bi bi-geo-alt"></i> Adresse : <span
-                        class="adresseDisplay"><?= esc($adresse ?? 'Adresse non définie'); ?></span><br>
-                    <i class="bi bi-envelope"></i> Email : <span
-                        class="emailDisplay"><?= esc($emailContact ?? 'Email non définie'); ?></span><br>
-                    <i class="bi bi-telephone"></i> Téléphone : <span
-                        class="telephoneDisplay"><?= esc($tel ?? 'Téléphone non défini'); ?></span>
+                    <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($adresse ?? 'Adresse non définie'); ?></span><br>
+                    <i class="bi bi-envelope"></i> Email : <span class="emailDisplay"><?= esc($emailContact ?? 'Email non définie'); ?></span><br>
+                    <i class="bi bi-telephone"></i> Téléphone : <span class="telephoneDisplay"><?= esc($tel ?? 'Téléphone non défini'); ?></span>
                 </p>
+
                 <!-- Boutons réseaux sociaux -->
                 <div class="footer-socials">
-                    <!-- Bouton Facebook -->
-                    <button class="social-btn">
-                        <a href="https://www.facebook.com/profile.php?id=61562422197352" class="social-link"
-                            target="_blank" rel="noopener noreferrer">
-                            <svg viewBox="0 0 16 16" fill="currentColor" class="social-icon" id="facebook">
-                                <path
-                                    d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z">
-                                </path>
-                            </svg>
-                        </a>
-                    </button>
+                    <a href="https://www.facebook.com/profile.php?id=61562422197352" class="social-link" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 16 16" fill="currentColor" class="social-icon" id="facebook">
+                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
     <hr style="border-color: white;">
+
     <p class="footer-copyright text-center">© 2025 La plume Monclaraise. Tous droits réservés.</p>
+
+    <!-- Bouton retour en haut (version originale) -->
     <a href="#top">
         <button class="button" id="back-to-top">
             <svg class="svgIcon" viewBox="0 0 384 512">
-                <path
-                    d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z">
-                </path>
+                <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
             </svg>
         </button>
     </a>

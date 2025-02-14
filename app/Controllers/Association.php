@@ -653,4 +653,23 @@ class Association extends Controller
         // Rediriger vers la page de contact
         return redirect()->to(route_to('contact'));
     }
+
+    public function cgu()
+    {
+        return view('cgu');
+    }
+
+    public function mentionsLegale()
+    {
+        return view('mentionsLegale');
+    }
+
+    public function politiqueConfidentialite()
+    {
+        return view('politiqueConfidentialite');
+    }
+    public function conformiteRgpd()
+    {
+        return view('conformiteRgpd');
+    }
 }
