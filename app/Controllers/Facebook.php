@@ -38,6 +38,16 @@ class Facebook extends BaseController
 
     public function check_and_send_email()
     {
+        $auth_token = $this->request->getGet('auth_token');  // "auth_token" est le nom du paramètre d'URL
+
+        // Définir le token secret que tu attends
+        $valid_auth_token = '896Aj5844vD7gQCzMtinPsqqLN7LX9';  // Remplace par ton propre token secret
+
+        // Vérifier si le token est valide
+        if ($auth_token !== $valid_auth_token) {
+            // Si le token est incorrect, renvoie un message d'erreur
+            return $this->response->setStatusCode(403, 'Forbidden')->setBody('Accès interdit');
+        }
         // Récupérer les informations du token
         $association = $this->associationModel->find(1);
         $email = $association['mailContact']; // Utilisation de l'email du contact
