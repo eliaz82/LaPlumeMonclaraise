@@ -30,11 +30,22 @@ class AlbumsPhoto extends BaseController
         try {
             // Récupérer tous les albums photos
             $albumsPhotos = $this->albumsPhoto->findAll();
-            
+
             // Récupérer les posts Facebook via le cache
             $posts = $this->facebookCache->getFacebookPosts();
-            if (empty($posts['data'])) {
+
+            // Vérifier si les posts contiennent des données
+            if (empty($posts['data']) && !is_array($posts)) {
                 throw new \Exception("Aucun post récupéré depuis Facebook.");
+            }
+
+            // Utiliser directement $posts['data'] si c'est bien un tableau de posts
+            if (isset($posts['data']) && is_array($posts['data'])) {
+                $posts = $posts['data'];
+            } elseif (!isset($posts['data']) && is_array($posts)) {
+            } else {
+                // Si pas de données disponibles, on génère une exception
+                throw new \Exception("Les données des posts sont mal formées.");
             }
 
             // Récupérer les hashtags liés aux albums
@@ -44,10 +55,9 @@ class AlbumsPhoto extends BaseController
             );
 
             // Filtrer les posts Facebook avec les hashtags
-            $filteredPosts = array_filter($posts['data'], function ($post) use ($hashtags) {
+            $filteredPosts = array_filter($posts, function ($post) use ($hashtags) {
                 return isset($post['message']) && array_filter($hashtags, fn($tag) => strpos($post['message'], $tag) !== false);
             });
-
             // Gestion des albums depuis Facebook
             foreach ($filteredPosts as $post) {
                 $dateAlbums = null;
