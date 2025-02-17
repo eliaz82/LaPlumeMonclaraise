@@ -5,8 +5,6 @@ Accueil
 <?= $this->section('css') ?>
 <!-- Flickity CSS -->
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/carousel.css') ?>">
-<link rel="stylesheet" type="text/css" href="<?= base_url('css/main.css') ?>">
-<link rel="stylesheet" type="text/css" href="<?= base_url('css/responsive.css') ?>">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.min.css">
 <?= $this->endSection() ?>
 
@@ -44,10 +42,8 @@ Accueil
         <p class="font-size-18" style="font-family: Arial, sans-serif;">Sport · Terrain de badminton</p>
       </div>
       <div class="me-3 text-end">
-        <img src="<?= esc(base_url(getAssociationLogo()), 'attr'); ?>"
-          class="img-fluid img-thumbnail rounded-circle"
-          alt="Logo"
-          style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
+        <img src="<?= esc(base_url(getAssociationLogo()), 'attr'); ?>" class="img-fluid img-thumbnail rounded-circle"
+          alt="Logo" style="width: 200px; height: 200px; object-fit: cover; border: 2px solid black;">
 
         <!-- Icônes avec pop-up au survol -->
         <div class="mt-2 d-flex justify-content-center gap-4">
@@ -106,23 +102,16 @@ Accueil
   </div>
 </div>
 
-<button id="refreshButton"
-        data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>"
-        data-delay="true"
-        class="btn btn-light">
+<button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>" data-delay="true"
+  class="btn btn-light">
   <i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir
 </button>
 
 
-
 <?php if (!empty($posts)): ?>
-
   <div class="carousel-container" style="background: linear-gradient(135deg, #0f4c75, #3282b8);padding: 1rem;">
     <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 3000 }'>
-      <?php
-      // Limiter le nombre de publications à 10
-      $limited_posts = array_slice($posts, 0, 10);
-      foreach ($limited_posts as $post): ?>
+      <?php foreach ($posts as $post): ?>
         <div class="carousel-cell">
           <div class="fb-post-container">
             <div class="fb-post" data-href="<?= esc($post['permalink_url'], 'attr'); ?>" data-width="500"></div>
@@ -131,11 +120,10 @@ Accueil
       <?php endforeach; ?>
     </div>
   </div>
-  </div>
-
 <?php else: ?>
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>

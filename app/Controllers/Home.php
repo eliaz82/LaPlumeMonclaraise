@@ -86,19 +86,20 @@ class Home extends BaseController
 
             if (isset($posts['error'])) {
                 $logo = $this->associationModel->find(1);
-                return view('accueil', ['logo' => $logo, 'posts' => $posts]);
+                return view('accueil', ['logo' => $logo, 'posts' => []]); // Passer un tableau vide si erreur
             }
             // Vérifier si les posts sont sous la forme attendue
             if (isset($posts['data']) && is_array($posts['data'])) {
-                $posts = $posts['data']; // Utiliser directement les posts
+                $posts = array_slice($posts['data'], 0, 10); // Limiter à 10 posts
             } elseif (!isset($posts['data']) && is_array($posts)) {
+                $posts = array_slice($posts, 0, 10); // Sécurité supplémentaire
             } else {
                 $logo = $this->associationModel->find(1);
-                return view('accueil', ['logo' => $logo, 'posts' => $posts]);
+                return view('accueil', ['logo' => $logo, 'posts' => []]);
             }
+
             $logo = $this->associationModel->find(1);
             return view('accueil', ['logo' => $logo, 'posts' => $posts]);
-
         } catch (\Exception $e) {
             log_message('error', 'Erreur lors du traitement de la demande : ' . $e->getMessage());
             $logo = $this->associationModel->find(1);
