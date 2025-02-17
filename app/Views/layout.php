@@ -410,12 +410,13 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
+      <!--modal de Bienvenue-->
     <?php
     // Chemin vers le fichier qui va contenir la date de début du modal
     $modalFile = WRITEPATH . 'cache/modal_start_date.txt';
     $modalActive = true; // Par défaut, le modal est actif
     $testDuration = 14 * 24 * 60 * 60; // 2 semaines en secondes
-
+    
     // Si le fichier n'existe pas, c'est la première visite qui déclenche la période
     if (!file_exists($modalFile)) {
         file_put_contents($modalFile, time());
@@ -603,7 +604,7 @@
 
 
         <script>
-            document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener("DOMContentLoaded", function () {
                 // Vérifie si l'utilisateur a déjà vu le modal durant sa session
                 if (!localStorage.getItem("welcomeModalShown")) {
                     var modalWelcome = new bootstrap.Modal(document.getElementById("welcomeModal"));
@@ -613,6 +614,245 @@
             });
         </script>
     <?php endif; ?>
+          <!--Animation aprés connexion-->
+    <?php
+    // Vérifier si la session est bien chargée dans CodeIgniter
+    $session = session();
+
+    // Vérifier si l'animation a déjà été affichée
+    $showAnimation = false;
+    if (!$session->has('animation_shown') && auth()->loggedIn()) {
+        $session->set('animation_shown', true);
+        $showAnimation = true;
+    }
+    ?>
+
+    <?php if ($showAnimation): ?>
+        <div class="floating-images">
+            <img src="<?= base_url('image/jul.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/plk.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/jul.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/plk.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/jul.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/plk.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/jul.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/plk.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/jul.jpeg') ?>" class="image">
+            <img src="<?= base_url('image/plk.jpeg') ?>" class="image">
+        </div>
+
+        <style>
+            .floating-images {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: 9999;
+                pointer-events: none;
+                overflow: hidden;
+            }
+
+            .image {
+                width: 120px;
+                height: 120px;
+                position: absolute;
+            }
+
+            /* Animations */
+            .image:nth-child(1) {
+                left: 5%;
+                top: -10%;
+                animation: meteorite1 5s ease-out infinite;
+            }
+
+            .image:nth-child(2) {
+                left: 20%;
+                top: -5%;
+                animation: meteorite2 5s ease-out infinite;
+            }
+
+            .image:nth-child(3) {
+                left: 40%;
+                top: -15%;
+                animation: meteorite3 5s ease-out infinite;
+            }
+
+            .image:nth-child(4) {
+                left: 60%;
+                top: -8%;
+                animation: meteorite4 5s ease-out infinite;
+            }
+
+            .image:nth-child(5) {
+                left: 80%;
+                top: -12%;
+                animation: meteorite5 5s ease-out infinite;
+            }
+
+            .image:nth-child(6) {
+                left: 5%;
+                top: -10%;
+                animation: meteorite1b 5s ease-out infinite;
+            }
+
+            .image:nth-child(7) {
+                left: 20%;
+                top: -5%;
+                animation: meteorite2b 5s ease-out infinite;
+            }
+
+            .image:nth-child(8) {
+                left: 40%;
+                top: -15%;
+                animation: meteorite3b 5s ease-out infinite;
+            }
+
+            .image:nth-child(9) {
+                left: 60%;
+                top: -8%;
+                animation: meteorite4b 5s ease-out infinite;
+            }
+
+            .image:nth-child(10) {
+                left: 80%;
+                top: -12%;
+                animation: meteorite5b 5s ease-out infinite;
+            }
+
+            @keyframes meteorite1 {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(120vw, 120vh) rotate(720deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite2 {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(90vw, 140vh) rotate(540deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite3 {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(100vw, 110vh) rotate(360deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite4 {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(130vw, 130vh) rotate(900deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite5 {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(80vw, 150vh) rotate(1080deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite1b {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(120vw, 180vh) rotate(720deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite2b {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(90vw, 200vh) rotate(540deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite3b {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(100vw, 170vh) rotate(360deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite4b {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(130vw, 190vh) rotate(900deg);
+                    opacity: 0.5;
+                }
+            }
+
+            @keyframes meteorite5b {
+                0% {
+                    transform: translate(0, 0) rotate(0deg);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translate(80vw, 210vh) rotate(1080deg);
+                    opacity: 0.5;
+                }
+            }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                setTimeout(function () {
+                    let floatingImages = document.querySelector('.floating-images');
+                    if (floatingImages) {
+                        floatingImages.style.display = 'none';
+                    }
+                }, 5000);
+            });
+        </script>
+    <?php endif; ?>
+
 
     <?= $this->renderSection('contenu') ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -647,7 +887,8 @@
                 <h5>Liens rapides</h5>
                 <ul class="footer-links-list list-unstyled">
                     <li><a href="<?= url_to('accueil') ?>" class="footer-link text-white">Accueil</a></li>
-                    <li><a href="<?= url_to('FusionAssociation') ?>#histoire" class="footer-link text-white">À propos</a></li>
+                    <li><a href="<?= url_to('FusionAssociation') ?>#histoire" class="footer-link text-white">À
+                            propos</a></li>
                     <li><a href="<?= url_to('evenement') ?>" class="footer-link text-white">Événements</a></li>
                     <li><a href="<?= url_to('contact') ?>" class="footer-link text-white">Contact</a></li>
                 </ul>
@@ -657,10 +898,14 @@
             <div class="footer-links col-md-3">
                 <h5>Liens légaux</h5>
                 <ul class="footer-links-list list-unstyled">
-                    <li><a href="<?= url_to('cgu') ?>" class="footer-link text-white">Conditions générales d'utilisation</a></li>
-                    <li><a href="<?= url_to('mentionsLegale') ?>#histoire" class="footer-link text-white">Mentions légales</a></li>
-                    <li><a href="<?= url_to('politiqueConfidentialite') ?>" class="footer-link text-white">Politique de confidentialité</a></li>
-                    <li><a href="<?= url_to('conformiteRgpd') ?>" class="footer-link text-white">Conformité RGPD</a></li>
+                    <li><a href="<?= url_to('cgu') ?>" class="footer-link text-white">Conditions générales
+                            d'utilisation</a></li>
+                    <li><a href="<?= url_to('mentionsLegale') ?>#histoire" class="footer-link text-white">Mentions
+                            légales</a></li>
+                    <li><a href="<?= url_to('politiqueConfidentialite') ?>" class="footer-link text-white">Politique de
+                            confidentialité</a></li>
+                    <li><a href="<?= url_to('conformiteRgpd') ?>" class="footer-link text-white">Conformité RGPD</a>
+                    </li>
                 </ul>
             </div>
 
@@ -668,16 +913,22 @@
             <div class="footer-contact col-md-3">
                 <h5>Contact</h5>
                 <p>
-                    <i class="bi bi-geo-alt"></i> Adresse : <span class="adresseDisplay"><?= esc($adresse ?? 'Adresse non définie'); ?></span><br>
-                    <i class="bi bi-envelope"></i> Email : <span class="emailDisplay"><?= esc($emailContact ?? 'Email non définie'); ?></span><br>
-                    <i class="bi bi-telephone"></i> Téléphone : <span class="telephoneDisplay"><?= esc($tel ?? 'Téléphone non défini'); ?></span>
+                    <i class="bi bi-geo-alt"></i> Adresse : <span
+                        class="adresseDisplay"><?= esc($adresse ?? 'Adresse non définie'); ?></span><br>
+                    <i class="bi bi-envelope"></i> Email : <span
+                        class="emailDisplay"><?= esc($emailContact ?? 'Email non définie'); ?></span><br>
+                    <i class="bi bi-telephone"></i> Téléphone : <span
+                        class="telephoneDisplay"><?= esc($tel ?? 'Téléphone non défini'); ?></span>
                 </p>
 
                 <!-- Boutons réseaux sociaux -->
                 <div class="footer-socials">
-                    <a href="https://www.facebook.com/profile.php?id=61562422197352" class="social-link" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.facebook.com/profile.php?id=61562422197352" class="social-link" target="_blank"
+                        rel="noopener noreferrer">
                         <svg viewBox="0 0 16 16" fill="currentColor" class="social-icon" id="facebook">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"></path>
+                            <path
+                                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z">
+                            </path>
                         </svg>
                     </a>
                 </div>
@@ -693,7 +944,9 @@
     <a href="#top">
         <button class="button" id="back-to-top">
             <svg class="svgIcon" viewBox="0 0 384 512">
-                <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z"></path>
+                <path
+                    d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z">
+                </path>
             </svg>
         </button>
     </a>
