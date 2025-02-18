@@ -279,107 +279,114 @@
          font-size: 0.8rem;
      }
  }
+ /* Sur le carousel des images page accueil logo, icône (téléphone, etc.) */
+@media (max-width: 480px) {
 
-
-
-
-
-
-
-
-
- @media (max-width: 480px) {
-
-     /* Titre de l'overlay */
-     .overlay h2 {
-         font-size: 20px !important;
-         text-align: center;
-     }
-
-     /* Paragraphe de l'overlay */
-     .overlay p {
-         font-size: 13px;
-         text-align: center;
-         padding: 0 10px;
-     }
-
-     /* Réduire la taille du logo */
-     .img-fluid.img-thumbnail {
-         width: 100px !important;
-         height: 100px !important;
-         display: block;
-         margin: 0 auto;
-     }
-
-     /* Limiter la largeur du conteneur de l'overlay */
-     .overlay>div {
-         max-width: 90%;
-         margin: 0 auto;
-         padding: 0 10px;
-     }
-
-     /* Carousel : réduire la hauteur des images */
-     #carousel-container .carousel-item img {
-         height: 200px !important;
-     }
-
-     /* Ajuster éventuellement d'autres éléments pour qu'ils restent proportionnels */
- }
-
-
- @media (max-width: 480px) {
-
-     /* Cible le conteneur par sa classe composée de classes utilisées inline */
-     .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow {
-         width: 80% !important;
-         /* Augmente la largeur pour occuper 90% de l'écran */
-         left: 5% !important;
-         /* Centre le conteneur horizontalement */
-         transform: translateX(0) translateY(-20%) !important;
-         /* Ajuste la position */
-         padding: 10px !important;
-         /* Réduit le padding */
-         top: 40% !important;
-         /* Ajuste la position verticale */
-     }
-
-     /* Pour le titre */
-     .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow h1 {
-         font-size: 20px !important;
-         /* Réduit la taille de la police */
-         text-align: center !important;
-     }
-
-     /* Pour le paragraphe */
-     .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow p {
-         font-size: 10px !important;
-         /* Réduit la taille du texte */
-         padding: 0 10px !important;
-         /* Ajoute un padding pour éviter que le texte touche les bords */
-         text-align: center !important;
-     }
- }
-
- @media (max-width: 768px) {
-    .custom-image-container {
-      width: 100% !important; /* Prend toute la largeur du conteneur */
-      height: auto !important; /* Ajuste la hauteur automatiquement */
-      max-height: 250px !important; /* Hauteur max pour éviter que ça prenne trop de place */
+    /* Conteneur général */
+    .overlay {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Alignement total à gauche */
     }
+
+    /* Titre de l'overlay */
+    .overlay h2 {
+        font-size: 18px !important; /* Réduction de la taille */
+        text-align: left !important;
+        margin: 0; /* Pas de marge inutile */
+    }
+
+    /* Paragraphe de l'overlay */
+    .overlay p {
+        font-size: 12px;
+        text-align: left !important;
+        margin: 5px 0;
+    }
+
+    /* Réduire la taille du logo mais le garder plus grand que les icônes */
+    .img-fluid.img-thumbnail {
+        width: 80px !important; /* Taille intermédiaire */
+        height: 80px !important;
+        display: block;
+        margin: 10px auto;
+    }
+
+    /* Icônes plus petites sous le logo */
+    .icon-container i {
+        font-size: 16px !important; /* Réduction de la taille */
+    }
+
+    /* Ajustement du texte sous les icônes */
+    .popup-info {
+        font-size: 11px;
+    }
+
+    /* Ajustement du conteneur des icônes pour rester centré sous le logo */
+    .overlay .mt-2 {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Carousel : réduire la hauteur des images */
+    #carousel-container .carousel-item img {
+        height: 200px !important;
+    }
+}
+
+
+/*Accueil image,texte et lien vers histoire*/
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    .position-relative {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* Image de fond */
+    #image {
+        max-width: 90% !important;
+        height: auto !important;
+        margin-left: 0 !important;
+    }
+
+    /* Conteneur du texte superposé */
+    .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow {
+        position: relative !important;
+        width: 90% !important;
+        height: auto !important;
+        transform: none !important;
+        left: 0 !important;
+        top: 0 !important;
+        padding: 20px !important;
+        opacity: 1 !important;
+        box-shadow: none !important;
+    }
+
+    .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow h1 {
+        font-size: 1.5rem !important;
+    }
+
+    .position-absolute.top-50.start-0.bg-light.p-4.rounded.shadow p {
+        font-size: 1rem !important;
+    }
+
+    .btn-primary {
+        width: 100% !important;
+        max-width: 250px !important;
+        font-size: 1rem !important;
+        padding: 10px !important;
+    }
+}
+
   
-    .custom-image-container img {
-      width: 100% !important; /* S'assure que l'image prend la largeur du conteneur */
-      height: 100% !important; /* Évite les déformations */
-      object-fit: cover !important; /* Garde le cadrage correct */
-    }
-    
-    .custom-overlay {
-      width: 100% !important; /* Recouvre bien l'image */
-      height: 100% !important; /* Ajuste bien l'effet de grisement */
-    }
-  }
-  
-
 /*fait marquant*/
   @media (max-width: 768px) {
     .post {
