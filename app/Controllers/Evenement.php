@@ -157,7 +157,7 @@ class Evenement extends BaseController
                 'date' => esc($evenement['date']),
             ]);
 
-            return redirect()->to('/evenement')->with('success', 'Événement ajouté avec succès');
+            return redirect()->to('/evenements')->with('success', 'Événement ajouté avec succès');
         } catch (\Exception $e) {
             log_message('error', 'Erreur lors de l\'ajout de l\'événement : ' . $e->getMessage());
             return redirect()->back()->with('error', 'Une erreur est survenue.');
@@ -221,7 +221,7 @@ class Evenement extends BaseController
             // Mise à jour de l'événement
             $this->evenementsModel->update($idEvenement, $data);
 
-            return redirect()->to('/evenement')->with('success', 'L\'événement a été modifié avec succès');
+            return redirect()->to('/evenements')->with('success', 'L\'événement a été modifié avec succès');
         } catch (\Exception $e) {
             log_message('error', 'Erreur lors de la modification de l\'événement : ' . $e->getMessage());
             return redirect()->back()->with('error', 'Une erreur est survenue.');
@@ -252,7 +252,7 @@ class Evenement extends BaseController
             $this->evenementsModel->delete($idEvenement);
 
             // Rediriger vers la page des événements avec un message de succès
-            return redirect()->to('/evenement')->with('success', 'L\'événement a été supprimé avec succès.');
+            return redirect()->to('/evenements')->with('success', 'L\'événement a été supprimé avec succès.');
         } catch (\Exception $e) {
             log_message('error', 'Erreur lors de la suppression de l\'événement : ' . $e->getMessage());
             return redirect()->back()->with('error', 'Une erreur est survenue lors de la suppression.');
