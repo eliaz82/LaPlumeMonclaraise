@@ -208,9 +208,6 @@ class AlbumsPhoto extends BaseController
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été ajouté avec succès.");
     }
 
-
-
-
     public function updateAlbumsPhoto()
     {
         // Récupérer les données envoyées
@@ -276,6 +273,7 @@ class AlbumsPhoto extends BaseController
         // Succès
         return redirect()->route('albumsPhoto')->with('success', "L'album photo a été modifié avec succès.");
     }
+
 
 
     public function albumsPhotoDelete()
@@ -435,7 +433,7 @@ class AlbumsPhoto extends BaseController
             }
         }
 
-        return redirect()->to("/albums-photo/{$idAlbums}")
+        return redirect()->to("/albums-photos/{$idAlbums}")
             ->with('success', 'Photo(s) ajoutée(s) avec succès.');
     }
 
@@ -478,7 +476,7 @@ class AlbumsPhoto extends BaseController
             return redirect()->back()->with('error', 'Erreur lors de la suppression en base de données.');
         }
 
-        return redirect()->to("/albums-photo/{$photo['idAlbums']}")->with('success', 'Photo supprimée avec succès.');
+        return redirect()->to("/albums-photos/{$photo['idAlbums']}")->with('success', 'Photo supprimée avec succès.');
     }
 
 }

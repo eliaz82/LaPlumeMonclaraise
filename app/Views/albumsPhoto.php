@@ -169,7 +169,7 @@ albums photos
                                 <h5 class="text-white fw-bold"><?= esc($album['nom']) ?></h5>
                                 <p class="text-white"><?= (new DateTime($album['dateAlbums']))->format('d/m/Y') ?></p>
                                 <div class="mt-3">
-                                    <a href="<?= site_url('albums-photo/' . esc($album['idAlbums'])) ?>"
+                                    <a href="<?= site_url('albums-photos/' . esc($album['idAlbums'])) ?>"
                                         class="btn btn-primary btn-sm">Voir Album</a>
                                     <?php if (auth()->loggedIn()): ?>
                                         <button class="btn btn-warning btn-sm me-2 bouton-modifier-album"

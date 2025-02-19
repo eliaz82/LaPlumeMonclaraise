@@ -42,15 +42,15 @@ $routes->post('equipe-update', 'FusionAssociation::equipeUpdate', ['as' => 'equi
 $routes->post('equipe-delete', 'FusionAssociation::equipeDelete', ['as' => 'equipeDelete']);
 
 // ------------------------------------------- albums -------------------------------------------
-$routes->get('albums-photo', 'AlbumsPhoto::AlbumsPhoto', ['as' => 'albumsPhoto']);
-$routes->post('albums-photo-create', 'AlbumsPhoto::createAlbumsPhoto', ['as' => 'createAlbumsPhoto']);
-$routes->post('albums-photo-update', 'AlbumsPhoto::updateAlbumsPhoto', ['as' => 'updateAlbumsPhoto']);
-$routes->post('albums-photo-delete', 'AlbumsPhoto::AlbumsPhotoDelete', ['as' => 'albumsPhotoDelete']);
+$routes->get('albums-photos', 'AlbumsPhoto::AlbumsPhoto', ['as' => 'albumsPhoto']);
+$routes->post('albums-photos-create', 'AlbumsPhoto::createAlbumsPhoto', ['as' => 'createAlbumsPhoto']);
+$routes->post('albums-photos-update', 'AlbumsPhoto::updateAlbumsPhoto', ['as' => 'updateAlbumsPhoto']);
+$routes->post('albums-photos-delete', 'AlbumsPhoto::AlbumsPhotoDelete', ['as' => 'albumsPhotoDelete']);
 
 // ------------------------------------------- albumsPhotos -------------------------------------------
-$routes->get('albums-photo/(:num)', 'AlbumsPhoto::photo/$1', ['as' => 'photo']);
-$routes->post('albums-photo/(:num)/create', 'AlbumsPhoto::createPhoto', ['as' => 'createPhoto']);
-$routes->post('albums-photo/(:num)/delete', 'AlbumsPhoto::photoDelete', ['as' => 'photoDelete']);
+$routes->get('albums-photos/(:num)', 'AlbumsPhoto::photo/$1', ['as' => 'photo']);
+$routes->post('albums-photos/(:num)/create', 'AlbumsPhoto::createPhoto', ['as' => 'createPhoto']);
+$routes->post('albums-photos/(:num)/delete', 'AlbumsPhoto::photoDelete', ['as' => 'photoDelete']);
 
 // ------------------------------------------- calendrier -------------------------------------------
 $routes->get('calendrier', 'Calendrier::calendrier', ['as' => 'calendrier']);
