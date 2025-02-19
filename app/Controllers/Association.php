@@ -510,6 +510,10 @@ class Association extends Controller
                 'label' => 'reCAPTCHA',
                 'rules' => 'required',
             ],
+            'dataConsent' => [
+                'label' => 'Consentement RGPD',
+                'rules' => 'required',
+            ],
         ];
 
         // Validation des règles

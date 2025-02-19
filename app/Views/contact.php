@@ -80,6 +80,14 @@ Contact
                     <textarea autocomplete="on" placeholder="Message" id="message" name="message" rows="5"
                         class="contact-textarea" required><?= esc(old('message')); ?></textarea>
                 </div>
+                <div class="contact-field consent">
+                    <input type="checkbox" id="dataConsent" name="dataConsent" required>
+                    <label for="dataConsent">
+                        J'accepte que les informations saisies dans ce formulaire soient transmises à l'administrateur,
+                        conformément à la
+                        <a href="<?= url_to('conformiteRgpd') ?>" target="_blank">Conformité RGPD</a>.
+                    </label>
+                </div>
 
                 <div class="recaptcha-container">
                     <div class="g-recaptcha" data-sitekey="6LdtAcgqAAAAAPhL5TB75gKZXQ8yn64CHmr09t4E"></div>

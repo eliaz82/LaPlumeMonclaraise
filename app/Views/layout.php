@@ -164,9 +164,9 @@
                             <!-- Sélection de la page -->
                             <label for="pageSelect" class="form-label">Choisir une page :</label>
                             <select id="pageSelect" class="form-select mb-3">
-                                <option value="evenementCalendrier">Événement+Calendrier</option>
-                                <option value="albumsphoto">Albums Photo</option>
-                                <option value="faitmarquant">Fait Marquant</option>
+                                <option value="evenementCalendrier">Événements+Calendrier</option>
+                                <option value="albumsphoto">Albums Photos</option>
+                                <option value="faitmarquant">Faits Marquants</option>
                             </select>
                             <!-- Ajout de hashtag -->
                             <div class="input-group mb-3">
@@ -216,11 +216,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
 
     <!-- Modal Profil -->
     <!-- Style personnalisé -->
