@@ -57,27 +57,27 @@ Contact
                 <p id="contact-heading">Contactez-nous</p>
 
                 <div class="contact-field">
-                    <input autocomplete="off" placeholder="Nom" id="nom" name="nom" class="contact-input" type="text"
+                    <input autocomplete="on" placeholder="Nom" id="nom" name="nom" class="contact-input" type="text"
                         value="<?= esc(old('nom')); ?>" required>
                 </div>
 
                 <div class="contact-field">
-                    <input autocomplete="off" placeholder="Téléphone" id="phone" name="phone" class="contact-input"
+                    <input autocomplete="on" placeholder="Téléphone" id="phone" name="phone" class="contact-input"
                         type="text" value="<?= esc(old('phone')); ?>" required>
                 </div>
 
                 <div class="contact-field">
-                    <input autocomplete="off" placeholder="Email" id="email" name="email" class="contact-input"
+                    <input autocomplete="on" placeholder="Email" id="email" name="email" class="contact-input"
                         type="email" value="<?= esc(old('email')); ?>" required>
                 </div>
 
                 <div class="contact-field">
-                    <input autocomplete="off" placeholder="Objet" id="subject" name="subject" class="contact-input"
+                    <input autocomplete="on" placeholder="Objet" id="subject" name="subject" class="contact-input"
                         type="text" value="<?= esc(old('subject')); ?>" required>
                 </div>
 
                 <div class="contact-field">
-                    <textarea autocomplete="off" placeholder="Message" id="message" name="message" rows="5"
+                    <textarea autocomplete="on" placeholder="Message" id="message" name="message" rows="5"
                         class="contact-textarea" required><?= esc(old('message')); ?></textarea>
                 </div>
 

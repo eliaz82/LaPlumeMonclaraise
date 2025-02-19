@@ -492,7 +492,7 @@ class Association extends Controller
             ],
             'phone' => [
                 'label' => 'Téléphone',
-                'rules' => 'required|regex_match[/^\+?(\d{1,3})?(\d{10})$/]',
+                'rules' => 'required|regex_match[/^\+?(\d{1,3})?(\d{9,15})$/]',
             ],
             'email' => [
                 'label' => 'Email',
@@ -523,15 +523,17 @@ class Association extends Controller
         $mailContact = $association['mailContact'];
 
         // Récupérer les données du formulaire
-        $name = $this->request->getPost('nom');
-        $phone = $this->request->getPost('phone');
-        $email = $this->request->getPost('email');
-        $subject = $this->request->getPost('subject');
-        $message = $this->request->getPost('message');
+        $name = esc($this->request->getPost('nom'));
+        $phone = esc($this->request->getPost('phone'));
+        $email = esc($this->request->getPost('email'));
+        $subject = esc($this->request->getPost('subject'));
+        $message = esc($this->request->getPost('message'));
         $recaptchaResponse = $this->request->getPost('g-recaptcha-response'); // Récupération de la réponse reCAPTCHA
 
         // Clé secrète de reCAPTCHA v2
-        $secretKey = '6LdtAcgqAAAAAA5g8pArLvx5aMsI0gWWjD2eCm3C'; // Remplacer par ta propre clé secrète
+        //$secretKey = getenv('RECAPTCHA_SECRET');
+        $secretKey = "6LdtAcgqAAAAAA5g8pArLvx5aMsI0gWWjD2eCm3C";
+
 
         // Vérification du reCAPTCHA
         $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify';
@@ -549,90 +551,109 @@ class Association extends Controller
         $result = json_decode($response->getBody());
 
         if (!$result->success) {
-            // Si le reCAPTCHA échoue
-            session()->setFlashdata('error', 'La vérification reCAPTCHA a échoué. Veuillez réessayer.');
+            session()->setFlashdata('error', 'La vérification reCAPTCHA a échoué. Essayez à nouveau.');
             return redirect()->to(route_to('contact'))->withInput();
         }
 
-        // Préparer le message HTML à envoyer
         $htmlMessage = "
-            <html>
-            <head>
-                <style>
-                   body {
-                            font-family: 'Arial', sans-serif;
-                            margin: 0;
-                            padding: 0;
-                            background-color: #f4f4f4;
-                        }
-                        .container {
-                            width: 100%;
-                            max-width: 600px;
-                            margin: 0 auto;
-                            background-color: #ffffff;
-                            padding: 20px;
-                            border-radius: 8px;
-                            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                        }
-                        h3 {
-                            color: #333333;
-                            text-align: center;
-                            font-size: 24px;
-                            margin-bottom: 20px;
-                        }
-                        p {
-                            font-size: 16px;
-                            color: #555555;
-                            margin: 10px 0;
-                        }
-                        .label {
-                            font-weight: bold;
-                            color: #333333;
-                        }
-                        .info {
-                            background-color: #f9f9f9;
-                            padding: 10px;
-                            border-radius: 5px;
-                            border: 1px solid #ddd;
-                        }
-                        .footer {
-                            margin-top: 20px;
-                            text-align: center;
-                            font-size: 12px;
-                            color: #888888;
-                        }
-                        .footer a {
-                            color: #007BFF;
-                            text-decoration: none;
-                        }
-                </style>
-            </head>
-            <body>
-                <div class='container'>
-                    <h3>Nouvelle demande de contact</h3>
-                    <p class='label'>Nom:</p>
-                    <p class='info'>$name</p>
-    
-                    <p class='label'>Téléphone:</p>
-                    <p class='info'>$phone</p>
-    
-                    <p class='label'>Email:</p>
-                    <p class='info'>$email</p>
-    
-                    <p class='label'>Objet:</p>
-                    <p class='info'>$subject</p>
-    
-                    <p class='label'>Message:</p>
-                    <p class='info'>$message</p>
-    
-                    <div class='footer'>
-                        <p>Vous avez reçu ce message via le formulaire de contact de votre site web.</p>
-                        <p><a href='mailto:$email'>Répondre à cet email</a></p>
-                    </div>
-                </div>
-            </body>
-            </html>
+        <html>
+        <head>
+          <meta charset='UTF-8'>
+          <style>
+            body {
+              font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+              background-color: #f4f4f4;
+              margin: 0;
+              padding: 0;
+              color: #333;
+            }
+            .container {
+              max-width: 600px;
+              margin: 30px auto;
+              background: #ffffff;
+              padding: 30px;
+              border: 1px solid #e0e0e0;
+              border-radius: 8px;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            }
+            h3 {
+              font-size: 24px;
+              text-align: center;
+              color: #222;
+              border-bottom: 1px solid #e0e0e0;
+              padding-bottom: 10px;
+              margin-bottom: 25px;
+            }
+            .field {
+              margin-bottom: 20px;
+            }
+            .label {
+              display: block;
+              font-weight: bold;
+              font-size: 16px;
+              margin-bottom: 8px;
+              color: #555;
+            }
+            .info {
+              font-size: 16px;
+              line-height: 1.5;
+              background-color: #f9f9f9;
+              padding: 12px;
+              border: 1px solid #ddd;
+              border-radius: 4px;
+            }
+            .footer {
+              margin-top: 30px;
+              padding-top: 15px;
+              border-top: 1px solid #e0e0e0;
+              font-size: 12px;
+              color: #888;
+              text-align: center;
+            }
+            .footer a {
+              color: #007BFF;
+              text-decoration: none;
+            }
+          </style>
+        </head>
+        <body>
+          <div class='container'>
+            <h3>Nouvelle demande de contact</h3>
+            
+            <div class='field'>
+              <span class='label'>Nom :</span>
+              <div class='info'>$name</div>
+            </div>
+            
+            <div class='field'>
+              <span class='label'>Téléphone :</span>
+              <div class='info'>$phone</div>
+            </div>
+            
+            <div class='field'>
+              <span class='label'>Email :</span>
+              <div class='info'>$email</div>
+            </div>
+            
+            <div class='field'>
+              <span class='label'>Objet :</span>
+              <div class='info'>$subject</div>
+            </div>
+            
+            <div class='field'>
+              <span class='label'>Message :</span>
+              <div class='info'>$message</div>
+            </div>
+            
+            <div class='footer'>
+              <p>Vous avez reçu ce message via le formulaire de contact de votre site web.</p>
+              <p><a href='mailto:$email'>Répondre à cet email</a></p>
+            </div>
+          </div>
+        </body>
+        </html>
         ";
+
 
         // Configuration de l'email
         $emailService = \Config\Services::email();

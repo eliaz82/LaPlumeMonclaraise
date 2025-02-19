@@ -12,7 +12,7 @@ $routes->get('/', 'Home::index', ['as' => 'accueil']);
 
 // ------------------------------------------- contact -------------------------------------------
 $routes->get('contact', 'Association::contact', ['as' => 'contact']);
-$routes->post('contact-submit', 'Association::contactSubmit', ['as' => 'contactSubmit']);
+$routes->post('contact-submit', 'Association::contactSubmit', ['as' => 'contactSubmit','filter' => 'throttle']);
 
 $routes->post('contact-update', 'Association::contactUpdate', ['as' => 'contactUpdate']);
 
