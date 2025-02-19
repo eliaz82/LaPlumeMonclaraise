@@ -1,6 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('title') ?>
-contact
+Contact
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <!-- Leaflet CSS -->

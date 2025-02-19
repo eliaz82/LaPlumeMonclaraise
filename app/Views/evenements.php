@@ -1,6 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('title') ?>
-evenements
+Événements
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
 

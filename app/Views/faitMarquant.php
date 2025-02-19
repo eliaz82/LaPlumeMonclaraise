@@ -1,6 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('title') ?>
-fait marquants
+Faits marquants
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <style>

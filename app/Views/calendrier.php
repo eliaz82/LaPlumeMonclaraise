@@ -1,6 +1,6 @@
-"<?= $this->extend('layout') ?>
+<?= $this->extend('layout') ?>
 <?= $this->section('title') ?>
-calendrier
+Calendrier
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <!-- FullCalendar CSS -->

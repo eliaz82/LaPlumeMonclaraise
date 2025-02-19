@@ -1,6 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('title') ?>
-albums photos
+Albums photos
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <link rel="stylesheet" type="text/css" href="<?= base_url('css/photo-gallery.css') ?>">

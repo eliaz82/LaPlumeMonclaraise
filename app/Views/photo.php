@@ -1,6 +1,6 @@
 <?= $this->extend('layout') ?>
 <?= $this->section('title') ?>
-Photos
+Photos <?= esc($album['nom'], 'html'); ?>
 <?= $this->endSection() ?>
 <?= $this->section('css') ?>
 <!-- Tu peux ajouter ici tes styles CSS personnalisés -->
