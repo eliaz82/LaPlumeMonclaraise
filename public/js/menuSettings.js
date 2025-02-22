@@ -17,6 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const getFichierInscriptionEtatUrl = configData.dataset.fichierInscriptionEtatUrl;
     const updateFichierInscriptionEtatUrl = configData.dataset.updateFichierInscriptionEtatUrl;
 
+
+    const csrfName = configData.dataset.csrfName;
+    const csrfHash = configData.dataset.csrfHash;
+
     // -------------------------------
     // Gestion des Hashtags
     // -------------------------------
@@ -58,6 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
         const hashtag = hashtagInput.value.trim();
         const pageName = pageSelect.value;
 
+        // Récupérer le token CSRF actuel à chaque clic
+        const currentCsrfHash = configData.dataset.csrfHash;
+
         if (hashtag) {
             fetch(createUrl, {
                 method: "POST",
@@ -65,42 +72,58 @@ document.addEventListener("DOMContentLoaded", function () {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
+                    [csrfName]: currentCsrfHash, // Utilisation de la valeur actuelle du token
                     hashtag: hashtag,
                     pageName: pageName
                 })
             })
                 .then(response => response.json())
                 .then(data => {
+                    // Mise à jour du token CSRF pour la prochaine requête
+                    if (data.csrfHash) {
+                        configData.dataset.csrfHash = data.csrfHash;
+                    }
                     if (data.success) {
                         addHashtagToList(data.idFacebook, hashtag);
                         hashtagInput.value = "";
                     } else {
-                        alert("Erreur lors de l'ajout du hashtag");
+                        alert("Erreur lors de l'ajout du hashtag : " + data.message);
                     }
                 })
                 .catch(error => console.error("Erreur AJAX:", error));
         }
     });
 
+
+
     // Suppression d'un hashtag via AJAX
     hashtagList.addEventListener("click", function (event) {
         if (event.target.classList.contains("remove-hashtag")) {
             const id = event.target.getAttribute("data-id");
-
             if (!id) {
                 console.error("ID non défini pour la suppression du hashtag.");
                 return;
             }
+
+            // Récupération du token CSRF actuel
+            const currentCsrfHash = configData.dataset.csrfHash;
 
             fetch(`${deleteUrl}/${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ id: id })
+                body: JSON.stringify({
+                    id: id,
+                    [csrfName]: currentCsrfHash // Utilisation du token CSRF actuel
+                })
             })
                 .then(response => response.json())
                 .then(data => {
+                    // Mise à jour du token CSRF pour la prochaine requête
+                    if (data.csrfHash) {
+                        configData.dataset.csrfHash = data.csrfHash;
+                    }
                     if (data.success) {
                         event.target.closest("li").remove();
                         if (hashtagList.children.length === 0) {
@@ -113,6 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => console.error("Erreur AJAX:", error));
         }
     });
+
+
 
     // Chargement initial et changement de page
     loadHashtags(pageSelect.value);
@@ -176,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
     resetTokenBtn.addEventListener("click", function () {
         window.location.href = loginUrl;
     });
-    
+
     // ----------------------------------------------
     // Gestion du bouton on/off fichierInscription
     // ----------------------------------------------
@@ -202,12 +227,27 @@ document.addEventListener("DOMContentLoaded", function () {
             switchLabel.textContent = this.checked ? "Activé" : "Désactivé";
         }
 
+        // Récupération dynamique du token CSRF depuis l'élément de configuration
+        const currentCsrfHash = configData.dataset.csrfHash;
+
         fetch(updateFichierInscriptionEtatUrl, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ etat: etat })
-        }).catch(error => console.error("Erreur lors de la mise à jour :", error));
+            body: JSON.stringify({
+                etat: etat,
+                [csrfName]: currentCsrfHash  // Ajout du token CSRF dans la requête
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Mise à jour du token CSRF pour la prochaine requête
+                if (data.csrfHash) {
+                    configData.dataset.csrfHash = data.csrfHash;
+                }
+            })
+            .catch(error => console.error("Erreur lors de la mise à jour :", error));
     });
+
 });
 
 

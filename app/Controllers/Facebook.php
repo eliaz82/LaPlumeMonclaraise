@@ -209,8 +209,10 @@ class Facebook extends BaseController
             if (empty($jsonData->hashtag) || empty($jsonData->pageName)) {
                 return $this->response->setJSON([
                     'success' => false,
-                    'message' => 'Le hashtag ou le nom de la page est manquant.'
-                ], 400); // Code 400 pour mauvaise requête
+                    'message' => 'Le hashtag ou le nom de la page est manquant.',
+                    'csrfName' => csrf_token(),
+                    'csrfHash' => csrf_hash()
+                ], 400);
             }
 
             $hashtag = $jsonData->hashtag;
@@ -218,7 +220,7 @@ class Facebook extends BaseController
 
             // Vérification du format du hashtag
             if (strpos($hashtag, '#') !== 0) {
-                $hashtag = '#' . $hashtag; // Ajouter le "#" au début du hashtag si nécessaire
+                $hashtag = '#' . $hashtag;
             }
 
             // Vérification si le hashtag existe déjà pour cette page
@@ -230,8 +232,10 @@ class Facebook extends BaseController
             if ($existingHashtag) {
                 return $this->response->setJSON([
                     'success' => false,
-                    'message' => 'Ce hashtag est déjà associé à cette page.'
-                ], 409); // Code 409 pour conflit (doublon)
+                    'message' => 'Ce hashtag est déjà associé à cette page.',
+                    'csrfName' => csrf_token(),
+                    'csrfHash' => csrf_hash()
+                ], 409);
             }
 
             // Insérer le hashtag dans la base de données et récupérer l'ID généré
@@ -239,36 +243,43 @@ class Facebook extends BaseController
                 $id = $this->facebookModel->insert([
                     'hashtag' => $hashtag,
                     'pageName' => $pageName
-                ], true); // Le paramètre "true" permet de récupérer l'ID inséré
+                ], true);
 
                 if ($id) {
-                    // Retourner une réponse avec l'ID du nouveau hashtag
                     return $this->response->setJSON([
                         'success' => true,
                         'idFacebook' => $id,
                         'hashtag' => $hashtag,
-                        'pageName' => $pageName
+                        'pageName' => $pageName,
+                        'csrfName' => csrf_token(),
+                        'csrfHash' => csrf_hash()
                     ]);
                 } else {
                     return $this->response->setJSON([
                         'success' => false,
-                        'message' => 'Erreur lors de l\'ajout du hashtag'
-                    ], 500); // Code 500 pour erreur serveur
+                        'message' => 'Erreur lors de l\'ajout du hashtag',
+                        'csrfName' => csrf_token(),
+                        'csrfHash' => csrf_hash()
+                    ], 500);
                 }
             } catch (\Exception $e) {
-                // Gestion des erreurs en cas de problème d'insertion
                 return $this->response->setJSON([
                     'success' => false,
-                    'message' => 'Une erreur est survenue lors de l\'ajout du hashtag : ' . $e->getMessage()
+                    'message' => 'Une erreur est survenue lors de l\'ajout du hashtag : ' . $e->getMessage(),
+                    'csrfName' => csrf_token(),
+                    'csrfHash' => csrf_hash()
                 ], 500);
             }
         } else {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Données mal formatées'
-            ], 400); // Code 400 pour mauvaise requête
+                'message' => 'Données mal formatées',
+                'csrfName' => csrf_token(),
+                'csrfHash' => csrf_hash()
+            ], 400);
         }
     }
+
 
 
 
@@ -278,43 +289,51 @@ class Facebook extends BaseController
         if (empty($id) || !is_numeric($id) || $id <= 0) {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'ID invalide ou manquant'
-            ], 400); // Code 400 pour mauvaise requête
+                'message' => 'ID invalide ou manquant',
+                'csrfName' => csrf_token(),
+                'csrfHash' => csrf_hash()
+            ], 400);
         }
 
         // Vérification si le hashtag existe avant de tenter la suppression
         $hashtag = $this->facebookModel->find($id);
-
         if (!$hashtag) {
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Hashtag non trouvé pour cet ID'
-            ], 404); // Code 404 pour non trouvé
+                'message' => 'Hashtag non trouvé pour cet ID',
+                'csrfName' => csrf_token(),
+                'csrfHash' => csrf_hash()
+            ], 404);
         }
 
         // Tentative de suppression du hashtag
         try {
             $deleted = $this->facebookModel->delete($id);
-
             if ($deleted) {
                 return $this->response->setJSON([
                     'success' => true,
-                    'message' => 'Hashtag supprimé avec succès'
+                    'message' => 'Hashtag supprimé avec succès',
+                    'csrfName' => csrf_token(),
+                    'csrfHash' => csrf_hash()
                 ]);
             } else {
                 return $this->response->setJSON([
                     'success' => false,
-                    'message' => 'Erreur lors de la suppression'
-                ], 500); // Code 500 pour erreur serveur
+                    'message' => 'Erreur lors de la suppression',
+                    'csrfName' => csrf_token(),
+                    'csrfHash' => csrf_hash()
+                ], 500);
             }
         } catch (\Exception $e) {
-            // Gestion des erreurs d'exception
             return $this->response->setJSON([
                 'success' => false,
-                'message' => 'Une erreur est survenue lors de la suppression : ' . $e->getMessage()
+                'message' => 'Une erreur est survenue lors de la suppression : ' . $e->getMessage(),
+                'csrfName' => csrf_token(),
+                'csrfHash' => csrf_hash()
             ], 500);
         }
     }
+
 
 
     public function getTokenExpirationDate()

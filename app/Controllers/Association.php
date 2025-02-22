@@ -268,36 +268,44 @@ class Association extends Controller
 
             // Vérifie si le paramètre 'etat' existe et est un entier valide (0 ou 1)
             if (!isset($json->etat) || !in_array($json->etat, [0, 1], true)) {
-                // Log de l'erreur si l'état est invalide
                 log_message('error', 'Valeur invalide pour l\'état du fichier d\'inscription.');
-
-                // Retourne un message d'erreur si l'état est invalide
-                return $this->response->setJSON(['error' => 'Valeur de l\'état invalide.']);
+                return $this->response->setJSON([
+                    'error' => 'Valeur de l\'état invalide.',
+                    'csrfName' => csrf_token(),
+                    'csrfHash' => csrf_hash()
+                ]);
             }
 
             // Récupère l'association et vérifie si elle existe
             $association = $this->associationModel->find(1);
             if (!$association) {
-                // Log de l'erreur si l'association n'est pas trouvée
                 log_message('error', 'Aucune association trouvée avec l\'ID 1.');
-
-                // Retourner un message d'erreur si aucune association n'est trouvée
-                return $this->response->setJSON(['error' => 'Association non trouvée.']);
+                return $this->response->setJSON([
+                    'error' => 'Association non trouvée.',
+                    'csrfName' => csrf_token(),
+                    'csrfHash' => csrf_hash()
+                ]);
             }
 
             // Met à jour l'enregistrement (ID 1) avec la nouvelle valeur de l'état
             $this->associationModel->update(1, ['fichierInscriptionVisible' => $json->etat]);
 
-            // Retourne un message de succès
-            return $this->response->setJSON(['status' => 'success']);
+            // Retourne un message de succès avec le token CSRF actualisé
+            return $this->response->setJSON([
+                'status' => 'success',
+                'csrfName' => csrf_token(),
+                'csrfHash' => csrf_hash()
+            ]);
         } catch (\Exception $e) {
-            // Log de l'exception pour aider au débogage
             log_message('error', 'Erreur lors de la mise à jour de l\'état du fichier d\'inscription : ' . $e->getMessage());
-
-            // Retourner un message d'erreur générique en cas d'exception
-            return $this->response->setJSON(['error' => 'Une erreur est survenue lors de la mise à jour de l\'état du fichier.']);
+            return $this->response->setJSON([
+                'error' => 'Une erreur est survenue lors de la mise à jour de l\'état du fichier.',
+                'csrfName' => csrf_token(),
+                'csrfHash' => csrf_hash()
+            ]);
         }
     }
+
 
     public function contactUpdate()
     {

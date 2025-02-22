@@ -372,8 +372,10 @@
         data-delete-url="<?= site_url('facebook/delete') ?>" data-expiration-url="<?= site_url('facebook/expiration') ?>"
         data-login-url="<?= site_url('facebook/login') ?>"
         data-fichier-inscription-etat-url="<?= base_url('getFichierInscriptionEtat') ?>"
-        data-update-fichier-inscription-etat-url="<?= base_url('updateFichierInscriptionEtat') ?>">
+        data-update-fichier-inscription-etat-url="<?= base_url('updateFichierInscriptionEtat') ?>"
+        data-csrf-name="<?= csrf_token(); ?>" data-csrf-hash="<?= csrf_hash(); ?>">
     </div>
+
 <?php endif; ?>
 
 <div id="asso-data" data-association-data-url="<?= route_to('getAssociationData') ?>">
@@ -405,7 +407,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     <?php endif; ?>
-      <!--modal de Bienvenue-->
+    <!--modal de Bienvenue-->
     <?php
     // Chemin vers le fichier qui va contenir la date de début du modal
     $modalFile = WRITEPATH . 'cache/modal_start_date.txt';
@@ -609,7 +611,7 @@
             });
         </script>
     <?php endif; ?>
-          <!--Animation aprés connexion-->
+    <!--Animation aprés connexion-->
     <?php
     // Vérifier si la session est bien chargée dans CodeIgniter
     $session = session();

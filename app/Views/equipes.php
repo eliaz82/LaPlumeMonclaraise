@@ -63,7 +63,8 @@
                             action="<?= esc(url_to('equipeUpdate'), 'attr') ?>" enctype="multipart/form-data">
                             <?= csrf_field() ?>
                             <div class="modal-header">
-                                <h5 class="modal-title text-primary" id="modalModifierAdherentLabel">Modifier un adhérent</h5>
+                                <h5 class="modal-title text-primary" id="modalModifierAdherentLabel">Modifier un adhérent
+                                </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -104,7 +105,7 @@
 
         <!-- Liste des adhérents -->
         <div class="row justify-content-center gy-4">
-        <h2 class="text-center mb-4">Notre bureau</h2>
+            <h2 class="text-center mb-4">Notre bureau</h2>
             <?php foreach ($equipes as $e): ?>
                 <div class="col-lg-4 col-md-6">
                     <div class="card shadow-lg border-0 h-100">
@@ -126,6 +127,7 @@
                                     data-photo="<?= esc(base_url($e['photo']), 'attr') ?>" data-bs-toggle="modal"
                                     data-bs-target="#modalModifierAdherent">Modifier</button>
                                 <form action="<?= esc(route_to('equipeDelete'), 'attr') ?>" method="post" class="d-inline">
+                                    <?= csrf_field() ?>
                                     <input type="hidden" name="idAdherant" value="<?= esc($e['idAdherants'], 'attr') ?>">
                                     <button type="submit" class="btn btn-danger btn-sm"
                                         onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet adhérent ?');">

@@ -114,13 +114,13 @@ Albums photos
             <ul class="dropdown-menu" aria-labelledby="triDropdown">
                 <li>
                     <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'desc') ? 'active' : '' ?>"
-                        href="<?= site_url('albums-photo?tri=desc') ?>">
+                        href="<?= site_url('albums-photos?tri=desc') ?>">
                         <i class="bi bi-sort-down me-2"></i> Du plus récent au plus ancien
                     </a>
                 </li>
                 <li>
                     <a class="dropdown-item <?= (isset($_GET['tri']) && $_GET['tri'] == 'asc') ? 'active' : '' ?>"
-                        href="<?= site_url('albums-photo?tri=asc') ?>">
+                        href="<?= site_url('albums-photos?tri=asc') ?>">
                         <i class="bi bi-sort-up me-2"></i> Du plus ancien au plus récent
                     </a>
                 </li>
@@ -129,11 +129,10 @@ Albums photos
     </div>
 </form>
 <?php if (auth()->loggedIn()): ?>
-<button id="refreshButton"
-        data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>"
-        class="btn btn-light">
-    <i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir
-</button>
+    <button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>"
+        data-csrf-name="<?= csrf_token(); ?>" data-csrf-hash="<?= csrf_hash(); ?>" class="btn btn-light">
+        <i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir
+    </button>
 <?php endif; ?>
 
 
@@ -199,7 +198,7 @@ Albums photos
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
-        </div>
+    </div>
 </div>
 
 

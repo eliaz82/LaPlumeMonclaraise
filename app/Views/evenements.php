@@ -193,7 +193,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="createImage" class="form-label">Image (optionnel)</label>
-                            <input type="file" class="form-control" id="createImage" name="image" accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
+                            <input type="file" class="form-control" id="createImage" name="image"
+                                accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
                                 onchange="previewImage(event, 'createImagePreview')">
                         </div>
                         <!-- Prévisualisation de l'image -->
@@ -321,6 +322,7 @@
                                             Modifier
                                         </button>
                                         <form action="<?= esc(url_to('evenementDelete')) ?>" method="POST">
+                                            <?= csrf_field() ?>
                                             <input type="hidden" name="idEvenement" value="<?= esc($post['idEvenement']) ?>">
                                             <button type="submit" class="btn btn-danger"
                                                 onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')">

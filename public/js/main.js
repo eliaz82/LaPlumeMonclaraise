@@ -36,13 +36,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     };
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         const cooldownPeriod = 60000; // 1 minute en millisecondes
         const $refreshButton = $('#refreshButton');
-        
+
         // Détermine si le délai doit être appliqué en fonction de l'attribut data-delay
         const applyDelay = $refreshButton.data('delay') === true;
-        
+
         // Si le délai est appliqué, vérifie dans le localStorage au chargement de la page
         if (applyDelay) {
             const lastClickTime = localStorage.getItem('refreshButtonLastClick');
@@ -56,52 +56,59 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         }
-        
+
         // Gestion du clic sur le bouton
-        $refreshButton.on('click', function() {
+        $refreshButton.on('click', function () {
             // Si le bouton est déjà désactivé, ne rien faire
             if ($refreshButton.prop('disabled')) {
                 return;
             }
-            
+
             // Si le délai doit être appliqué, stocke l'heure du clic et désactive le bouton
             if (applyDelay) {
                 localStorage.setItem('refreshButtonLastClick', Date.now());
                 disableButton(cooldownPeriod);
             }
-            
-            // Récupère l'URL de rafraîchissement depuis l'attribut data
+
+            // Récupère l'URL et le jeton CSRF depuis les attributs data du bouton
             const refreshUrl = $(this).data('refresh-url');
-            
+            const csrfName = $(this).data('csrf-name');
+            const csrfHash = $(this).data('csrf-hash');
+
             // Affiche un indicateur de chargement
             $refreshButton.html('<i class="bi bi-arrow-clockwise spin"></i> Chargement...');
-            
-            // Appel AJAX
+
+            // Appel AJAX avec jeton CSRF
             $.ajax({
                 url: refreshUrl,
                 type: 'POST',
                 dataType: 'json',
-                success: function(response) {
+                data: {
+                    [csrfName]: csrfHash
+                },
+                success: function (response) {
                     // En cas de succès, recharge la page
                     location.reload();
                 },
-                error: function() {
+                error: function () {
                     alert('Erreur lors de l\'actualisation');
-                    // En cas d'erreur, vous pouvez décider de réactiver le bouton immédiatement ou non
+                    // Réactivation du bouton en cas d'échec (optionnel)
+                    $refreshButton.html('<i class="bi bi-arrow-clockwise" style="color: #007bff;"></i> Rafraîchir');
                 }
             });
         });
-        
+
+
         // Fonction qui désactive le bouton pendant une durée donnée
         function disableButton(duration) {
             $refreshButton.prop('disabled', true)
-                          .addClass('disabled') // Pour appliquer un style CSS "grisé" (à définir dans vos styles)
-                          .html('<i class="bi bi-arrow-clockwise"></i> Rafraîchir (attente)');
-            
-            setTimeout(function() {
+                .addClass('disabled') // Pour appliquer un style CSS "grisé" (à définir dans vos styles)
+                .html('<i class="bi bi-arrow-clockwise"></i> Rafraîchir (attente)');
+
+            setTimeout(function () {
                 $refreshButton.prop('disabled', false)
-                              .removeClass('disabled')
-                              .html('<i class="bi bi-arrow-clockwise"></i> Rafraîchir');
+                    .removeClass('disabled')
+                    .html('<i class="bi bi-arrow-clockwise"></i> Rafraîchir');
                 // Une fois le délai écoulé, on retire l'info du dernier clic
                 localStorage.removeItem('refreshButtonLastClick');
             }, duration);
