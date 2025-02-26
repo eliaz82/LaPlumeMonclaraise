@@ -319,9 +319,9 @@
 
     /* Ajustement du texte sous les icônes */
     .popup-info {
-        font-size: 11px;
+        font-size: 7px; /* Ajustez selon vos préférences */
     }
-
+    
     /* Ajustement du conteneur des icônes pour rester centré sous le logo */
     .overlay .mt-2 {
         display: flex;
