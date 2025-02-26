@@ -27,15 +27,15 @@ class Calendrier extends BaseController
                 log_message('error', 'Aucun post récupéré depuis Facebook ou structure incorrecte.');
                 return view('calendrier', ['events' => [], 'posts' => []]);
             }
-            
+
             // Récupération des hashtags depuis la base de données
             $hashtags = $this->facebookModel->where('pageName', 'evenementCalendrier')->findAll();
             $hashtagList = !empty($hashtags) ? array_column($hashtags, 'hashtag') : [];
-            
+
             if (empty($posts)) {
                 log_message('error', 'Aucun post récupéré depuis Facebook pour l’événement.');
             }
-            
+
             // Filtrage des posts pour ne garder que ceux contenant un hashtag
             $filteredPosts = array_filter($posts, function ($post) use ($hashtagList) {
                 if (!isset($post['message'])) {
@@ -48,6 +48,7 @@ class Calendrier extends BaseController
                 }
                 return false;
             });
+
             // Récupération des événements depuis la base de données
             $eventsFromDb = $this->evenementsModel->findAll();
             $events = [];
@@ -96,14 +97,11 @@ class Calendrier extends BaseController
                     'past' => $past
                 ];
 
-                // Ajouter le post au carousel seulement si l'événement n'est pas passé
-                if (!$past) {
-                    $post['date'] = $eventDate;
-                    $post['image'] = $imageUrl;
-                    $post['titre'] = $eventTitle;
-                    $post['id'] = $post['id'] ?? uniqid();
-                    $allPosts[] = $post;
-                }
+                $post['date'] = $eventDate;
+                $post['image'] = $imageUrl;
+                $post['titre'] = $eventTitle;
+                $post['id'] = $post['id'] ?? uniqid();
+                $allPosts[] = $post;
             }
 
             // Traitement des événements provenant de la base de données
@@ -130,18 +128,15 @@ class Calendrier extends BaseController
                     'past' => $past
                 ];
 
-                // Préparer le post pour le carousel uniquement si l'événement n'est pas passé
-                if (!$past) {
-                    $postDb = [
-                        'date' => $eventFromDb['date'], // Ici, la date peut être 'YYYY-MM-DD'
-                        'titre' => $eventFromDb['titre'],
-                        'image' => $eventFromDb['image'],
-                        'id' => $eventFromDb['idEvenement'] ?? uniqid()
-                    ];
-                    $allPosts[] = $postDb;
-                }
+                // Ajouter le post pour le carousel, qu'il soit passé ou futur
+                $postDb = [
+                    'date' => $eventFromDb['date'], // Ici, la date peut être 'YYYY-MM-DD'
+                    'titre' => $eventFromDb['titre'],
+                    'image' => $eventFromDb['image'],
+                    'id' => $eventFromDb['idEvenement'] ?? uniqid()
+                ];
+                $allPosts[] = $postDb;  // Ajouter tous les posts, passés ou futurs
             }
-
             // On transmet $allPosts pour le carousel et $events pour le calendrier
             return view('calendrier', ['events' => $events, 'posts' => $allPosts]);
 

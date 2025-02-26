@@ -24,13 +24,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Filtrer les posts pour ne garder que ceux après aujourd'hui à 00:00
     const futurePosts = originalPosts.filter(post => {
-        const postDate = post.date.split('/').reverse().join('-'); // Convertir la date au format "YYYY-MM-DD"
-        return postDate > todayMidnightStr; // Comparer avec la date d'aujourd'hui à minuit
+        const postDate = post.date.split('/').reverse().join('-'); // Format "YYYY-MM-DD"
+        return postDate > todayMidnightStr;
     });
 
-    // Nombre de posts futurs
     const count = futurePosts.length;
-    if (count === 0) return;
+    // Ne pas retourner si aucun événement futur, pour continuer à afficher le calendrier
+    if (count === 0) {
+        // Masquer le conteneur du carousel s'il n'y a que des événements passés
+        const carouselContainer = document.querySelector('.carousel-container-calendrier');
+        if (carouselContainer) {
+            carouselContainer.style.display = 'none';
+        }
+        const calendarCol = document.querySelector('.col-12.col-md-8');
+        if (calendarCol) {
+            // Remplacer la classe "col-md-8" par "col-12"
+            calendarCol.classList.remove('col-md-8');
+            calendarCol.classList.add('col-12');
+            // On peut aussi ajouter "mx-auto" pour centrer la colonne si nécessaire
+            calendarCol.classList.add('mx-auto');
+            // Optionnel : centrer le contenu de la colonne
+            calendarCol.style.textAlign = 'center';
+        }
+        
+        // Modifier le style du calendrier pour le centrer dans son conteneur
+        const calendarEl = document.getElementById('calendar');
+        if (calendarEl) {
+            // Remplacer le style inline par des marges automatiques
+            calendarEl.style.cssText = "max-width: 800px; width: 100%; margin: 0 auto;";
+            // Modifier les classes pour que le texte soit centré
+            calendarEl.classList.remove('text-end');
+            calendarEl.classList.add('text-center');
+        }
+    }
 
     // Fonction pour créer un élément post sans image
     function createPostElement(post) {
@@ -181,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     var events = JSON.parse(eventDataElement.getAttribute('data-events')) || [];
 
-    
+
     events = events.map(event => {
         if (event.start.indexOf('/') !== -1) {
             const parts = event.start.split('/');
