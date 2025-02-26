@@ -130,6 +130,6 @@ Accueil
 <?= $this->section('scripts') ?>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous"
-  src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=603470049247384"></script>
+  src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=1173693674360466"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
 <?= $this->endSection() ?>
