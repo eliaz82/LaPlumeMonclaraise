@@ -1,74 +1,101 @@
  /* =========================================================================
      FORMULAIRE DE CONTACT
      ========================================================================= */
-     .contact-map {
-        max-width: 100%;
-      }
-      
-      .contact-form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        width: 100%;
-      }
-      
-      #contact-heading {
-        text-align: center;
-        margin-bottom: 1em;
-        color: #ffffff;
-        font-size: 1.5em;
-      }
-      
-      .contact-field {
-        display: flex;
-        align-items: center;
-        gap: 1em;
-        border-radius: 20px;
-        padding: 0.5em 1em;
-        background-color: #ffffff;
-        box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
-      }
-      
-      .contact-input,
-      .contact-textarea {
-        background: none;
-        border: none;
-        outline: none;
-        width: 100%;
-        color: #333333;
-        font-size: 0.9em;
-        padding: 0.4em;
-      }
-      
-      .contact-textarea {
-        resize: none;
-        height: 100px;
-      }
-      
-      .recaptcha-container {
-        display: flex;
-        justify-content: center;
-        margin: 10px 0;
-      }
-      
-      .contact-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 2rem;
-        padding: 2em;
-      }
-      
-      .contact-container {
-        flex: none;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1.5em;
-        background-color: #1D2243;
-        border-radius: 25px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        max-width: 500px;
-        width: 100%;
-      }
-      
+ .contact-map {
+   max-width: 100%;
+ }
+
+ .contact-form {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   width: 100%;
+ }
+
+ #contact-heading {
+   text-align: center;
+   margin-bottom: 1em;
+   color: #ffffff;
+   font-size: 1.5em;
+ }
+
+ .contact-field {
+   display: flex;
+   align-items: center;
+   gap: 1em;
+   border-radius: 20px;
+   padding: 0.5em 1em;
+   background-color: #ffffff;
+   box-shadow: inset 1px 3px 6px rgb(231, 231, 231);
+ }
+
+ .contact-input,
+ .contact-textarea {
+   background: none;
+   border: none;
+   outline: none;
+   width: 100%;
+   color: #333333;
+   font-size: 0.9em;
+   padding: 0.4em;
+ }
+
+ .contact-textarea {
+   resize: none;
+   height: 100px;
+ }
+
+ .recaptcha-container {
+   display: flex;
+   justify-content: center;
+   margin: 10px 0;
+ }
+
+ .contact-wrapper {
+   display: flex;
+   justify-content: center;
+   align-items: flex-start;
+   gap: 2rem;
+   padding: 2em;
+ }
+
+ .contact-container {
+   flex: none;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   padding: 1.5em;
+   background-color: #1D2243;
+   border-radius: 25px;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+   max-width: 500px;
+   width: 100%;
+ }
+
+ /* Ajustement pour les petits écrans (téléphones) */
+ @media (max-width: 480px) {
+   .contact-field.consent {
+     font-size: 13px;
+     /* Taille du texte ajustée pour les petits écrans */
+     flex-direction: row;
+     /* Alignement horizontal de la checkbox et du texte */
+     align-items: center;
+     /* Centrer la checkbox et le texte */
+     margin: 10px 0;
+     /* Espacement entre les champs */
+   }
+
+   .contact-field.consent input[type="checkbox"] {
+     margin: 0 10px 0 0;
+     /* Espacement entre la checkbox et le texte */
+   }
+
+   .contact-field.consent label {
+     font-size: 11px;
+     /* Réduction de la taille du texte du label RGPD sur mobile */
+     color: #666;
+     /* Couleur plus douce pour le texte */
+     line-height: 1.4;
+     /* Ajustement de l'espacement du texte */
+   }
+ }
