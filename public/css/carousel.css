@@ -1,15 +1,32 @@
   /* =========================================================================
      CARROUSEL ACTUALITÉS
      ========================================================================= */
-  .carousel-cell {
-      width: 400px;
-      height: 450px;
-  }
-
-  .fb-post {
-      width: 100px;
-  }
-
+     .carousel-cell {
+        width: 400px;
+        height: 450px;
+        /* Assure-toi que la taille est un pourcentage pour être plus flexible */
+        margin: 0 10px;
+    }
+    
+    .fb-post {
+        width: 100%;
+        /* Permet d'ajuster la largeur du post */
+        max-width: 100%;
+    }
+    
+    @media (max-width: 768px) {
+        .carousel-cell {
+            width: 90%;
+            height: 300px; /* Ajuste la hauteur pour les petits écrans */
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .carousel-cell {
+            width: 100%;
+            height: 400px; /* Hauteur encore plus petite pour les très petits écrans */
+        }
+    } 
   /* =========================================================================
      CAROUSEL - PAGE CALENDRIER
      ========================================================================= */
