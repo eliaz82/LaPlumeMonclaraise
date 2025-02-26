@@ -110,7 +110,7 @@ Accueil
 
 
 <?php if (!empty($posts)): ?>
-  <div class="carousel-container" style="background: linear-gradient(135deg, #0f4c75, #3282b8);padding: 1rem;">
+  <div class="carousel-container" style="background: linear-gradient(135deg, #0f4c75, #3282b8); padding: 1rem;">
     <div class="carousel" data-flickity='{ "wrapAround": true, "autoPlay": 3000 }'>
       <?php foreach ($posts as $post): ?>
         <div class="carousel-cell">
@@ -125,11 +125,21 @@ Accueil
   <p>Aucune publication trouvée.</p>
 <?php endif; ?>
 
+
 <?= $this->endSection() ?>
 
 <?= $this->section('scripts') ?>
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous"
   src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v22.0&appId=1173693674360466"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof FB !== "undefined") {
+      FB.XFBML.parse(); // Assure-toi que Facebook a bien initialisé les publications
+    }
+  });
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/2.2.2/flickity.pkgd.min.js"></script>
 <?= $this->endSection() ?>
