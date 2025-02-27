@@ -235,6 +235,22 @@
         outline: none;
         box-shadow: 0 0 0 3px rgba(29, 34, 67, 1);
       }
+      @media (max-width: 768px) {
+        #bouton-modifier-inscription {
+          padding: 0.4rem 1rem;
+          font-size: 0.875rem; /* Taille de police plus petite */
+          border-radius: 0.4rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        #bouton-modifier-inscription {
+          padding: 0.3rem 0.8rem;
+          font-size: 0.75rem; /* Encore plus petit pour les très petits écrans */
+          border-radius: 0.3rem;
+        }
+      }
+      
   /* =========================================================================
      ZONE DE DÉPÔT
      ========================================================================= */
