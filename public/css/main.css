@@ -41,6 +41,37 @@
     opacity: 1;
   }
 
+  #bouton-rejoindre {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    background-color: #1D2243;
+    color: white;
+    border: 1px solid #1D2243;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  #bouton-rejoindre:hover {
+    background-color: #81A1D0;
+    border-color: #81A1D0;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  #bouton-rejoindre:active {
+    background-color: #81A1D0;
+    border-color: #1D2243;
+    transform: translateY(2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  #bouton-rejoindre:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(29, 34, 67, 1);
+  }
+
   /* =========================================================================
      GÉNÉRALITÉS ET MISE EN PAGE
      ========================================================================= */
@@ -48,9 +79,11 @@
     max-width: 60px;
     height: auto;
     border-radius: 50%;
-    width: 50px; /* ajuste cette valeur selon la taille du logo */
-    height: 50px; /* ajuste cette valeur selon la taille du logo */
-    object-fit: cover; 
+    width: 50px;
+    /* ajuste cette valeur selon la taille du logo */
+    height: 50px;
+    /* ajuste cette valeur selon la taille du logo */
+    object-fit: cover;
   }
 
   .mt-navbar {

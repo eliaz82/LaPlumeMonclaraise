@@ -63,7 +63,7 @@
                             Les inscriptions sont actuellement fermées. Restez connectés pour la prochaine ouverture !
                         </div>
                     <?php endif; ?>
-                    <a href="<?= esc(base_url('/fichier-inscription'), 'attr'); ?>" id="bouton-modifier-inscription"
+                    <a href="<?= esc(base_url('/fichier-inscription'), 'attr'); ?>" id="bouton-rejoindre"
                         class="btn btn-modify">Rejoignez-nous</a>
                 </div>
             </div>
