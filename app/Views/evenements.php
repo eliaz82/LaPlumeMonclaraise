@@ -238,6 +238,7 @@
                         <div class="mb-3">
                             <label for="editImage" class="form-label">Image (optionnel)</label>
                             <input type="file" class="form-control" id="editImage" name="image"
+                                accept=".jpg, .jpeg, .png, .gif, .webp, .svg"
                                 onchange="previewImage(event, 'editImagePreview')">
                         </div>
                         <!-- Prévisualisation de l'image -->
