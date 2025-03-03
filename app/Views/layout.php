@@ -844,7 +844,7 @@
                     if (floatingImages) {
                         floatingImages.style.display = 'none';
                     }
-                }, 5000);
+                },4700);
             });
         </script>
     <?php endif; ?>
