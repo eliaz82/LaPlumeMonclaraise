@@ -73,15 +73,23 @@ Photos <?= esc($album['nom'], 'html'); ?>
                 <!-- Formulaire de suppression sous l'image -->
                 <?php if (auth()->loggedIn()): ?>
                     <div class="photo-actions text-center">
-                        <form action="<?= esc(route_to('photoDelete', $album['idAlbums']), 'attr'); ?>" method="post">
-                            <?= csrf_field() ?>
-                            <input type="hidden" name="idPhoto" value="<?= esc($photo['idPhoto'], 'attr'); ?>">
-                            <input type="hidden" name="idAlbums" value="<?= esc($album['idAlbums'], 'attr'); ?>">
-                            <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Supprimer cette photo ?');">
-                                Supprimer
-                            </button>
-                        </form>
+                        <?php if (filter_var($photo['photo'], FILTER_VALIDATE_URL)): ?>
+                            <div class="alert alert-danger py-1 px-2 d-inline-flex align-items-center small" role="alert">
+                                <i class="bi bi-x-circle-fill me-2"></i>
+                                <span>Cette photo provient de Facebook et ne peut pas être supprimée ici.</span>
+                            </div>
+                        <?php else: ?>
+                            <form action="<?= esc(route_to('photoDelete', $album['idAlbums']), 'attr'); ?>" method="post">
+                                <?= csrf_field() ?>
+                                <input type="hidden" name="idPhoto" value="<?= esc($photo['idPhoto'], 'attr'); ?>">
+                                <input type="hidden" name="idAlbums" value="<?= esc($album['idAlbums'], 'attr'); ?>">
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Supprimer cette photo ?');">
+                                    Supprimer
+                                </button>
+                            </form>
+                        <?php endif; ?>
+
                     </div>
                 <?php endif; ?>
 
