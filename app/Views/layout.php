@@ -412,7 +412,7 @@
     // Chemin vers le fichier qui va contenir la date de début du modal
     $modalFile = WRITEPATH . 'cache/modal_start_date.txt';
     $modalActive = true; // Par défaut, le modal est actif
-    $testDuration = 14 * 24 * 60 * 60; // 2 semaines en secondes
+    $testDuration = 45 * 24 * 60 * 60; // 1 mois et demi en secondes
     
     // Si le fichier n'existe pas, c'est la première visite qui déclenche la période
     if (!file_exists($modalFile)) {
@@ -428,7 +428,6 @@
     ?>
 
     <?php if ($modalActive): ?>
-        <!-- Modal Bootstrap de Bienvenue -->
         <!-- Modal Bootstrap de Bienvenue -->
         <div class="modal fade" id="welcomeModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-small">
@@ -611,8 +610,8 @@
             });
         </script>
     <?php endif; ?>
-    <!--Animation aprés connexion-->
     <?php
+    //Animation aprés connexion
     // Vérifier si la session est bien chargée dans CodeIgniter
     $session = session();
 
