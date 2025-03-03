@@ -543,9 +543,7 @@ class Association extends Controller
         $recaptchaResponse = $this->request->getPost('g-recaptcha-response'); // Récupération de la réponse reCAPTCHA
 
         // Clé secrète de reCAPTCHA v2
-        //$secretKey = getenv('RECAPTCHA_SECRET');
-        $secretKey = "6LdtAcgqAAAAAA5g8pArLvx5aMsI0gWWjD2eCm3C";
-
+        $secretKey = getenv('RECAPTCHA_SECRET');
 
         // Vérification du reCAPTCHA
         $recaptchaUrl = 'https://www.google.com/recaptcha/api/siteverify';
