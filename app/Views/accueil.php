@@ -90,14 +90,16 @@ Accueil
       <div class="text-center">
         <h1 class="fw-bold text-primary">Rejoignez l'aventure de La Plume Monclaraise</h1>
         <p>
-          La Plume Monclaraise, c'est l'histoire de deux amis passionnés de badminton qui ont décidé de créer un club local pour partager leur amour du sport. En quelques années, ce projet est devenu bien plus qu'un simple club : une véritable communauté où chaque membre trouve sa place. Avec une ambiance chaleureuse et des entraînements dynamiques, venez découvrir le badminton sous un nouvel angle !
+          La Plume Monclaraise, c'est l'histoire de deux amis passionnés de badminton qui ont décidé de créer un club
+          local pour partager leur amour du sport. En quelques années, ce projet est devenu bien plus qu'un simple club
+          : une véritable communauté où chaque membre trouve sa place. Avec une ambiance chaleureuse et des
+          entraînements dynamiques, venez découvrir le badminton sous un nouvel angle !
         </p>
         <a href="<?= esc(url_to('FusionAssociation') . '#histoire', 'attr'); ?>" class="btn btn-primary">Lire plus</a>
       </div>
     </div>
   </div>
 </div>
-
 
 <button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>"
   data-csrf-name="<?= csrf_token(); ?>" data-csrf-hash="<?= csrf_hash(); ?>" data-delay="true" class="btn btn-light">
