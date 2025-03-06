@@ -84,23 +84,20 @@ Accueil
     <img src="<?= esc(base_url('image/tee_shirt.jpg'), 'attr'); ?>" alt="Image" class="img-fluid rounded"
       style="max-width: 60%; height: auto; margin-left: 45%;" id="image">
 
-    <!-- Texte superposé avec la même taille que l'image -->
+    <!-- Texte superposé -->
     <div class="position-absolute top-50 start-0 bg-light p-4 rounded shadow"
       style="width: 60%; height: 100%; transform: translateX(-13%) translateY(-30%); display: flex; justify-content: center; align-items: center; opacity: 0.8; top: calc(50% + 5%);">
       <div class="text-center">
         <h1 class="fw-bold text-primary">Rejoignez l'aventure de La Plume Monclaraise</h1>
         <p>
-          La Plume Monclaraise est bien plus qu'un simple club de badminton. C'est un lieu de rencontres, de défis et de
-          passion pour tous ceux qui souhaitent pratiquer ce sport dans une ambiance conviviale et stimulante. Que vous
-          soyez débutant ou confirmé, nous avons une place pour vous !
-          Plongez dans l'univers du badminton avec nous et vivez des moments uniques, qu'ils soient compétitifs ou
-          purement récréatifs.
+          La Plume Monclaraise, c'est l'histoire de deux amis passionnés de badminton qui ont décidé de créer un club local pour partager leur amour du sport. En quelques années, ce projet est devenu bien plus qu'un simple club : une véritable communauté où chaque membre trouve sa place. Avec une ambiance chaleureuse et des entraînements dynamiques, venez découvrir le badminton sous un nouvel angle !
         </p>
         <a href="<?= esc(url_to('FusionAssociation') . '#histoire', 'attr'); ?>" class="btn btn-primary">Lire plus</a>
       </div>
     </div>
   </div>
 </div>
+
 
 <button id="refreshButton" data-refresh-url="<?= esc(site_url('facebook/refresh'), 'attr'); ?>"
   data-csrf-name="<?= csrf_token(); ?>" data-csrf-hash="<?= csrf_hash(); ?>" data-delay="true" class="btn btn-light">
